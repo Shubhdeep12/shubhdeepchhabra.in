@@ -1,6 +1,6 @@
 import { CSSProperties, FC as ReactFunctionalComponent, ReactNode } from 'react';
 
-import type { StitchesCSS } from '../stiches.config';
+import type { StitchesCSS } from '../../stiches.config';
 
 export type ComponentChild = ReactNode | ReactNode[] | null | undefined;
 

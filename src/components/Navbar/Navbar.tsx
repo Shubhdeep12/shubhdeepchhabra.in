@@ -1,6 +1,7 @@
-import { FC } from "../../types/FC";
+import { FC } from "../../../src/types/FC";
 
-import { styled } from "../../stiches.config";
+import { styled } from "../../../stiches.config";
+import Icon from "../Icon";
 
 const Navbar: FC = () => {
     return (
@@ -11,7 +12,7 @@ const Navbar: FC = () => {
                 <li>Home</li>
                 <li>Blogs</li>
             </ul>
-            {/* <Icon name="themeButton"/> */}
+            <Icon name="themeToggle"/>
             </Nav>
         </NavbarContainer>
     );   

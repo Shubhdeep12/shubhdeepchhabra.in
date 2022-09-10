@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Layout from '../components/Layout';
 import { useTheme } from '../providers/theme'
 
-import { styled } from '../stiches.config';
+import { styled } from '../../stiches.config';
 
 const Home: NextPage = () => {
   const { isDark, toggleTheme } = useTheme();

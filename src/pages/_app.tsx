@@ -1,5 +1,5 @@
 import { ThemeProvider as NextThemeProvider } from 'next-themes';
-import { styled, globalStyles, darkTheme } from '../stiches.config'
+import { styled, globalStyles, darkTheme } from '../../stiches.config'
 
 import { ThemeProvider } from '../providers/theme';
 import type { AppProps } from 'next/app'

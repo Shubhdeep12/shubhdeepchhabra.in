@@ -1,5 +1,5 @@
 import type { FC } from '../../types/FC';
-import { styled, keyframes } from '../../stiches.config';
+import { styled, keyframes } from '../../../stiches.config';
 
 // import BackToTop from '../BackToTop';
 // import Footer from '../Footer';
