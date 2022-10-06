@@ -26,18 +26,18 @@ const mapKeywords = (keywords?: string | Array<string> | null): string => {
 };
 
 const ImageMeta: FC<{ image?: string; metaImageStyle?: MetaImageStyle }> = (
-  props,
+  props
 ) => {
   const { image, metaImageStyle = 'summary_large_image' } = props;
 
   const actualDefaultImage = useMemo<string>(
     () => (metaImageStyle === 'summary' ? defaultLogoImage : defaultImage),
-    [metaImageStyle],
+    [metaImageStyle]
   );
 
   const actualImage = useMemo<string>(
     () => image || actualDefaultImage,
-    [image, actualDefaultImage],
+    [image, actualDefaultImage]
   );
 
   const actualMetaImageStyle = useMemo<MetaImageStyle>(
@@ -45,7 +45,7 @@ const ImageMeta: FC<{ image?: string; metaImageStyle?: MetaImageStyle }> = (
       actualImage === defaultLogoImage
         ? 'summary'
         : metaImageStyle || 'summary_large_image',
-    [actualImage, metaImageStyle],
+    [actualImage, metaImageStyle]
   );
 
   return (

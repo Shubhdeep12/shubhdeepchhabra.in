@@ -3,7 +3,7 @@ import { styled, keyframes } from '../../../stiches.config';
 
 // import BackToTop from '../BackToTop';
 // import Footer from '../Footer';
-import Navbar  from '../Navbar';
+import Navbar from '../Navbar';
 
 const Layout: FC = (props) => {
   return (
