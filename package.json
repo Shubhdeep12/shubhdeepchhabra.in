@@ -1,25 +1,39 @@
 {
-  "name": "shubhdeep-portfolio",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@types/node": "20.1.5",
-    "@types/react": "18.2.6",
-    "@types/react-dom": "18.2.4",
-    "autoprefixer": "10.4.14",
-    "eslint": "8.40.0",
-    "eslint-config-next": "13.4.2",
-    "next": "13.4.2",
-    "postcss": "8.4.23",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "tailwindcss": "3.3.2",
-    "typescript": "5.0.4"
-  }
+	"name": "shubhdeep-portfolio",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"prettier": "prettier --check .",
+		"lint": "next lint",
+		"check-types": "tsc --pretty --noEmit",
+		"check-lint": "eslint . --ext ts --ext tsx --ext js",
+		"check-format": "prettier --write .",
+		"test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build",
+		"prepare": "husky install"
+	},
+	"dependencies": {
+		"@types/node": "20.1.5",
+		"@types/react": "18.2.6",
+		"@types/react-dom": "18.2.4",
+		"autoprefixer": "10.4.14",
+		"eslint-config-next": "13.4.2",
+		"next": "13.4.2",
+		"postcss": "8.4.23",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"tailwindcss": "3.3.2",
+		"typescript": "5.0.4"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.59.6",
+		"@typescript-eslint/parser": "^5.59.6",
+		"eslint": "^8.40.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-react": "^7.32.2",
+		"husky": "^8.0.0",
+		"prettier": "2.8.8"
+	}
 }
