@@ -2,22 +2,23 @@ import cx from 'clsx'
 
 export type NormalButtonProps = {
 	type?: string | React.ElementType
-	hoverStyle?: boolean
 	focusOutlined?: boolean
 	width?: string
 	height?: string
 	className?: string
 	children?: React.ReactNode
+	href?: string
+	onClick?: React.MouseEventHandler
 }
 
 function NormalButton({
 	type = 'button',
-	hoverStyle = false,
 	focusOutlined = false,
 	width = 'w-auto',
 	height = 'h-auto',
 	className = '',
 	children = <></>,
+	...props
 }: NormalButtonProps) {
 	const Component = type
 	return (
@@ -25,12 +26,11 @@ function NormalButton({
 			className={cx(
 				width,
 				height,
-				focusOutlined &&
-					'focus:outline-dashed focus:outline-2 focus:outline-offset-4 focus:outline-gray-900 focus:bg-slate-200',
-				hoverStyle && 'hover:bg-slate-200',
-
-				className
+				focusOutlined && 'focus:outline-dashed focus:outline-2 focus:outline-offset-4 focus:outline-gray-900',
+				className,
+				'hocus:bg-slate-200'
 			)}
+			{...props}
 		>
 			{children}
 		</Component>

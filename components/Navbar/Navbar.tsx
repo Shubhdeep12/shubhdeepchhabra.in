@@ -1,10 +1,13 @@
 'use client'
 
 import Button from '../Button'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { IoMoon } from 'react-icons/io5'
 import Text from '../Text'
 const Navbar = () => {
+	const pathname = usePathname()
+	const router = useRouter()
 	return (
 		<nav
 			className='
@@ -15,7 +18,7 @@ const Navbar = () => {
 		'
 		>
 			<div>
-				<Button variant='normal' focusOutlined className='rounded' hoverStyle>
+				<Button variant='normal' focusOutlined className='rounded'>
 					<Text className='font-bold text-base ' gradient>
 						Shubhdeep
 					</Text>
@@ -25,21 +28,27 @@ const Navbar = () => {
 			<section className='laptop:flex laptop:gap-8 hidden h-full'>
 				<ul className='flex gap-6'>
 					<li>
-						<Button height='h-full' variant='normal' focusOutlined className='rounded' hoverStyle>
-							<Text className='font-bold text-base' gradient>
+						<Button
+							onClick={() => router.push('/about')}
+							height='h-full'
+							variant='normal'
+							focusOutlined
+							className='rounded'
+						>
+							<Text className='font-bold text-base' gradient active={pathname === '/about'}>
 								About
 							</Text>
 						</Button>
 					</li>
 					<li>
-						<Button height='h-full' variant='normal' focusOutlined className='rounded' hoverStyle>
+						<Button height='h-full' variant='normal' focusOutlined className='rounded'>
 							<Text className='font-bold text-base ' gradient>
 								Projects
 							</Text>
 						</Button>
 					</li>
 					<li>
-						<Button height='h-full' variant='normal' focusOutlined className='rounded' hoverStyle>
+						<Button height='h-full' variant='normal' focusOutlined className='rounded'>
 							<Text className='font-bold text-base ' gradient>
 								Blog
 							</Text>
@@ -48,7 +57,7 @@ const Navbar = () => {
 				</ul>
 
 				<div>
-					<Button height='h-full' variant='normal' focusOutlined className='rounded' hoverStyle>
+					<Button height='h-full' variant='normal' focusOutlined className='rounded'>
 						<IoMoon />
 					</Button>
 				</div>

@@ -8,6 +8,7 @@ type TextProps = {
 	gTo?: string
 	children?: React.ReactNode | string
 	className?: string
+	active?: boolean
 }
 
 const Text = ({
@@ -16,13 +17,19 @@ const Text = ({
 	gTo = 'to-green-500',
 	className = '',
 	children = '',
+	active = false,
 }: TextProps) => {
 	return (
 		<span
 			className={cx(
 				'p-2',
-				gradient ? 'hocus:text-transparent hocus:bg-gradient-to-r hocus:bg-clip-text' : 'text-blue-50',
+				'transition-colors',
+				'hover:bg-slate-500',
+				gradient && 'hover:text-transparent',
+				' bg-gradient-to-r bg-clip-text',
 				`${gFrom} ${gTo}`,
+				gradient && active && 'bg-slate-500 text-transparent',
+				'rounded',
 				className
 			)}
 		>
