@@ -28,7 +28,7 @@ const Text = ({
 				gradient && 'hover:text-transparent',
 				' bg-gradient-to-r bg-clip-text',
 				`${gFrom} ${gTo}`,
-				gradient && active && 'bg-slate-500 text-transparent',
+				gradient && active && 'text-transparent',
 				'rounded',
 				className
 			)}

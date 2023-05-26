@@ -9,6 +9,7 @@ export type NormalButtonProps = {
 	children?: React.ReactNode
 	href?: string
 	onClick?: React.MouseEventHandler
+	active?: boolean
 }
 
 function NormalButton({
@@ -18,6 +19,7 @@ function NormalButton({
 	height = 'h-auto',
 	className = '',
 	children = <></>,
+	active = false,
 	...props
 }: NormalButtonProps) {
 	const Component = type
@@ -26,9 +28,11 @@ function NormalButton({
 			className={cx(
 				width,
 				height,
+				'transition-colors',
 				focusOutlined && 'focus:outline-dashed focus:outline-2 focus:outline-offset-4 focus:outline-gray-900',
 				className,
-				'hocus:bg-slate-200'
+				'hocus:bg-slate-200',
+				active && 'bg-slate-200'
 			)}
 			{...props}
 		>
