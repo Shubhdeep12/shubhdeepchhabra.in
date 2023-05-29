@@ -24,7 +24,7 @@ const Text = ({
 			className={cx(
 				'p-2',
 				'transition-colors',
-				'hover:bg-slate-500',
+				'hover:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark',
 				gradient && 'hover:text-transparent',
 				' bg-gradient-to-r bg-clip-text',
 				`${gFrom} ${gTo}`,

@@ -8,8 +8,42 @@ module.exports = {
 		'./components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
+	darkMode: 'class',
 	theme: {
 		extend: {
+			colors: {
+				text: {
+					light: '#EBFOFED9',
+					dark: '#000',
+				},
+				background: {
+					primary: {
+						light: '#FFF',
+						dark: '#0c121e',
+					},
+					nav: {
+						light: '#c1d8e7',
+						dark: '#121b2ca6',
+					},
+					button: {
+						hover: {
+							light: 'rgba(45,82,171, 0.1)',
+							dark: 'rgba(18,27,44,.65)',
+						},
+					},
+				},
+				button: {},
+				border: {
+					nav: {
+						dark: '#2867d61f',
+						light: '#afc2ef1f',
+					},
+				},
+			},
+			boxShadow: {
+				light: '',
+				dark: '0px 0px 8px 2px rgba(56, 103, 214, 0.16)',
+			},
 			screens: {
 				laptop: '600px',
 			},

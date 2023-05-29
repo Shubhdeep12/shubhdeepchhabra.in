@@ -29,10 +29,10 @@ function NormalButton({
 				width,
 				height,
 				'transition-colors',
-				focusOutlined && 'focus:outline-dashed focus:outline-2 focus:outline-offset-4 focus:outline-gray-900',
+				focusOutlined && 'focus:outline-dashed focus:outline-2 focus:outline-offset-4',
 				className,
-				'hocus:bg-slate-200',
-				active && 'bg-slate-200'
+				'hocus:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark',
+				active && 'bg-background-button-hover-light dark:bg-background-button-hover-dark'
 			)}
 			{...props}
 		>
