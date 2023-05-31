@@ -10,6 +10,7 @@ export type NormalButtonProps = {
 	href?: string
 	onClick?: React.MouseEventHandler
 	active?: boolean
+	hoverable?: boolean
 }
 
 function NormalButton({
@@ -20,6 +21,7 @@ function NormalButton({
 	className = '',
 	children = <></>,
 	active = false,
+	hoverable = true,
 	...props
 }: NormalButtonProps) {
 	const Component = type
@@ -29,10 +31,10 @@ function NormalButton({
 				width,
 				height,
 				'transition-colors',
-				focusOutlined && 'focus:outline-dashed focus:outline-2 focus:outline-offset-4 focus:outline-gray-900',
+				focusOutlined && 'focus:outline-dashed focus:outline-2 focus:outline-offset-4',
 				className,
-				'hocus:bg-slate-200',
-				active && 'bg-slate-200'
+				hoverable && 'hocus:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark',
+				hoverable && active && 'bg-background-button-hover-light dark:bg-background-button-hover-dark'
 			)}
 			{...props}
 		>

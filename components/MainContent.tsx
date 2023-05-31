@@ -1,9 +1,8 @@
-import React from 'react'
-
+'use client'
 type MainProps = {
 	children?: React.ReactNode
 }
-export default function Main({ children }: MainProps) {
+export default function MainContent({ children }: MainProps) {
 	return (
 		<div
 			className='
@@ -12,7 +11,7 @@ export default function Main({ children }: MainProps) {
       w-full
       max-w-laptop
       mx-auto
-			pt-[72px]
+			pt-[110px]
   '
 		>
 			{children}
