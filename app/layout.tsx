@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar/Navbar'
 import { Manrope } from 'next/font/google'
-import Main from '@/components/Main'
+import MainContent from '@/components/MainContent'
 import './globals.css'
 import { Providers } from '@/providers'
 
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className={`${manrope.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark`}>
 				<Providers>
 					<Navbar />
-					<Main>{children}</Main>
+					<MainContent>{children}</MainContent>
 				</Providers>
 			</body>
 		</html>

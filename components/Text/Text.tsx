@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from '@/providers/theme-provider'
 import cx from 'clsx'
 
 type TextProps = {
@@ -9,6 +10,10 @@ type TextProps = {
 	children?: React.ReactNode | string
 	className?: string
 	active?: boolean
+	hoverable?: boolean
+	shadow?: boolean
+	shadowColor?: string
+	transitioned?: boolean
 }
 
 const Text = ({
@@ -17,21 +22,36 @@ const Text = ({
 	gTo = 'to-green-500',
 	className = '',
 	children = '',
+	hoverable = false,
 	active = false,
+	shadow = false,
+	shadowColor = 'yellow',
+	transitioned = true,
+	...props
 }: TextProps) => {
+	const { isDark } = useTheme()
+
+	const SHADOW_COLOR: { [key: string]: string } = {
+		orange: '[text-shadow:0.125rem_0.125rem_0_#fca893]',
+		purple: '[text-shadow:0.125rem_0.125rem_0_#c093fc]',
+		yellow: '[text-shadow:0.125rem_0.125rem_0_#fce1a8]',
+	}
+
 	return (
 		<span
 			className={cx(
-				'p-2',
-				'transition-colors',
-				'hover:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark',
-				gradient && 'hover:text-transparent',
-				' bg-gradient-to-r bg-clip-text',
-				`${gFrom} ${gTo}`,
-				gradient && active && 'text-transparent',
+				className,
+				'flex justify-center items-center',
+				transitioned && 'transition-colors',
 				'rounded',
-				className
+				shadow && !isDark && `${SHADOW_COLOR[shadowColor]}`,
+				hoverable && 'hover:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark',
+				gradient && 'hover:text-transparent',
+				'bg-gradient-to-r bg-clip-text',
+				gradient && `${gFrom} ${gTo}`,
+				gradient && active && 'text-transparent'
 			)}
+			{...props}
 		>
 			{children}
 		</span>

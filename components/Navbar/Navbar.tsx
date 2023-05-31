@@ -10,13 +10,48 @@ import { useTheme } from '@/providers/theme-provider'
 
 import Button from '../Button'
 import Text from '../Text'
+import { useIsMounted } from '@/hooks/isMounted'
 
 const Navbar = () => {
 	const pathname = usePathname()
 	const router = useRouter()
 	const [navbarExpanded, setNavbarExpanded] = useState(false)
 	const { isDark, toggleTheme } = useTheme()
+	const isMounted = useIsMounted()
 
+	const NAVBAR_ITEMS = [
+		{
+			key: 'about',
+			title: 'About',
+			route: '/about',
+			gradient: true,
+			gFrom: 'from-blue-500',
+			gTo: 'to-green-500',
+			active: pathname === '/about',
+		},
+		{
+			key: 'projects',
+			title: 'Projects',
+			route: '/projects',
+			gradient: true,
+			gFrom: 'from-[#c86827]',
+			gTo: 'to-[#c69227]',
+			active: pathname === '/projects',
+		},
+		{
+			key: 'blogs',
+			title: 'Blogs',
+			route: '/blogs',
+			gradient: true,
+			gFrom: 'from-[#bc2f48]',
+			gTo: 'to-[#7a4cbb]',
+			active: pathname === '/blogs',
+		},
+	]
+
+	if (!isMounted) {
+		return <div />
+	}
 	return (
 		<nav
 			className={cx(
@@ -25,74 +60,47 @@ const Navbar = () => {
 				'transition-all',
 				'rounded-lg',
 				'p-[10px]',
-				'bg-background-nav-light/20 dark:bg-background-nav-dark/20 backdrop-blur-[10px] backdrop-saturate-150',
+				'bg-background-nav-light/20 dark:bg-background-nav-dark backdrop-blur-[10px] backdrop-saturate-150',
 				'hover:shadow-dark',
-				'border border-border-nav-dark dark:border-border-nav-light'
+				'border border-border-nav-dark dark:border-border-nav-light',
+				'z-10'
 			)}
 		>
 			<section className='h-[40px] flex gap-4 justify-between items-center'>
 				<div className='h-full'>
 					<Button onClick={() => router.push('/')} height='h-full' variant='normal' focusOutlined className='rounded'>
-						<Text className='font-semibold text-base'>Shubhdeep</Text>
+						<Text className='font-semibold text-base p-2' hoverable>
+							Shubhdeep
+						</Text>
 					</Button>
 				</div>
 
 				<section className='flex grow justify-end h-full'>
 					<ul className='hidden laptop:flex gap-6'>
-						<li>
-							<Button
-								onClick={() => router.push('/about')}
-								height='h-full'
-								variant='normal'
-								focusOutlined
-								className='rounded'
-								active={pathname === '/about'}
-							>
-								<Text className='font-semibold text-base' gradient active={pathname === '/about'}>
-									About
-								</Text>
-							</Button>
-						</li>
-						<li>
-							<Button
-								onClick={() => router.push('/projects')}
-								height='h-full'
-								variant='normal'
-								focusOutlined
-								className='rounded'
-								active={pathname === '/projects'}
-							>
-								<Text
-									className='font-semibold text-base '
-									gradient
-									gFrom='from-[#c86827]'
-									gTo='to-[#c69227]'
-									active={pathname === '/projects'}
+						{NAVBAR_ITEMS.map((item) => (
+							<li key={item.key}>
+								<Button
+									onClick={() => router.push(item.route)}
+									height='h-full'
+									width='w-full'
+									variant='normal'
+									focusOutlined
+									className='rounded flex justify-center'
+									active={item.active}
 								>
-									Projects
-								</Text>
-							</Button>
-						</li>
-						<li>
-							<Button
-								onClick={() => router.push('/blogs')}
-								height='h-full'
-								variant='normal'
-								focusOutlined
-								className='rounded'
-								active={pathname === '/blogs'}
-							>
-								<Text
-									className='font-semibold text-base'
-									gFrom='from-[#bc2f48]'
-									gTo='to-[#7a4cbb]'
-									gradient
-									active={pathname === '/blogs'}
-								>
-									Blogs
-								</Text>
-							</Button>
-						</li>
+									<Text
+										className='font-semibold text-base p-2'
+										gFrom={item.gFrom}
+										gTo={item.gTo}
+										gradient={item.gradient}
+										active={item.active}
+										hoverable
+									>
+										{item.title}
+									</Text>
+								</Button>
+							</li>
+						))}
 					</ul>
 				</section>
 				<div className='h-full w-[42px]'>
@@ -133,71 +141,31 @@ const Navbar = () => {
 					navbarExpanded ? 'h-[calc(100vh-75px)]' : 'h-0'
 				} transition-all w-full flex items-center laptop:hidden`}
 			>
-				<ul className={navbarExpanded ? 'laptop:hidden flex align-middle w-full flex-col gap-6' : 'hidden'}>
-					<li>
-						<Button
-							onClick={() => {
-								router.push('/about')
-								setNavbarExpanded(false)
-							}}
-							height='h-[42px]'
-							width='w-full'
-							variant='normal'
-							focusOutlined
-							className='rounded'
-							active={pathname === '/about'}
-						>
-							<Text className='font-semibold text-base' gradient active={pathname === '/about'}>
-								About
-							</Text>
-						</Button>
-					</li>
-					<li>
-						<Button
-							onClick={() => {
-								router.push('/projects')
-								setNavbarExpanded(false)
-							}}
-							height='h-[42px] w-full'
-							variant='normal'
-							focusOutlined
-							className='rounded'
-							active={pathname === '/projects'}
-						>
-							<Text
-								className='font-semibold text-base '
-								gradient
-								gFrom='from-[#c86827]'
-								gTo='to-[#c69227]'
-								active={pathname === '/projects'}
+				<ul className={navbarExpanded ? 'laptop:hidden flex align-middle w-full h-[42px] flex-col gap-6' : 'hidden'}>
+					{NAVBAR_ITEMS.map((item) => (
+						<li key={item.key}>
+							<Button
+								onClick={() => router.push(item.route)}
+								height='h-full'
+								width='w-full'
+								variant='normal'
+								focusOutlined
+								className='rounded flex justify-center'
+								active={item.active}
 							>
-								Projects
-							</Text>
-						</Button>
-					</li>
-					<li>
-						<Button
-							onClick={() => {
-								router.push('/blogs')
-								setNavbarExpanded(false)
-							}}
-							height='h-[42px] w-full'
-							variant='normal'
-							focusOutlined
-							className='rounded'
-							active={pathname === '/blogs'}
-						>
-							<Text
-								className='font-semibold text-base'
-								gFrom='from-[#bc2f48]'
-								gTo='to-[#7a4cbb]'
-								gradient
-								active={pathname === '/blogs'}
-							>
-								Blogs
-							</Text>
-						</Button>
-					</li>
+								<Text
+									className='font-semibold text-base p-2'
+									gFrom={item.gFrom}
+									gTo={item.gTo}
+									gradient={item.gradient}
+									active={item.active}
+									hoverable
+								>
+									{item.title}
+								</Text>
+							</Button>
+						</li>
+					))}
 				</ul>
 			</section>
 		</nav>
