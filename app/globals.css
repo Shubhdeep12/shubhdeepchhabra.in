@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-}
-
-body {
+@layer base {
+	body {
+		@apply text-text-dark dark:text-text-light;
+	}
 }
