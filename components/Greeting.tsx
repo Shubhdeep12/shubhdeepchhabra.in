@@ -26,13 +26,13 @@ const Greeting = () => {
 				</Text>
 			</div>
 			<div className='flex gap-1 items-center text-3xl w-fit'>
-				<Text shadow shadowColor='purple' className='font-semibold text-3xl text-heading-dark dark:text-heading-light'>
+				<Text shadow shadowColor='blue' className='font-semibold text-3xl text-heading-dark dark:text-heading-light'>
 					{`I'm`}
 				</Text>
 				&nbsp;
 				<Text
 					shadow={!isDark}
-					shadowColor='purple'
+					shadowColor='blue'
 					gradient={isDark}
 					active={isDark}
 					className='font-semibold text-3xl text-heading-dark'

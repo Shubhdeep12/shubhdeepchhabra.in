@@ -33,8 +33,9 @@ const Text = ({
 
 	const SHADOW_COLOR: { [key: string]: string } = {
 		orange: '[text-shadow:0.125rem_0.125rem_0_#fca893]',
-		purple: '[text-shadow:0.125rem_0.125rem_0_#c093fc]',
+		purple: '[text-shadow:0.125rem_0.125rem_0_#bf9cec]',
 		yellow: '[text-shadow:0.125rem_0.125rem_0_#fce1a8]',
+		blue: '[text-shadow:0.125rem_0.125rem_0_#a7d4f0]',
 	}
 
 	return (

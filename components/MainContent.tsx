@@ -12,6 +12,7 @@ export default function MainContent({ children }: MainProps) {
       max-w-laptop
       mx-auto
 			pt-[110px]
+			pb-10
   '
 		>
 			{children}
