@@ -4,7 +4,6 @@ import { EyeIcon, ProfileIcon, ResumeIcon, StarIcon } from '@/assets/Icons'
 import Button from '@/components/Button'
 import Greeting from '@/components/Greeting'
 import Skills from '@/components/Skills'
-import SkillsAnimation from '@/components/Skills'
 import SocialButtons from '@/components/SocialButtons'
 import Text from '@/components/Text'
 import { useIsMounted } from '@/hooks/isMounted'
@@ -178,7 +177,7 @@ const Home = () => {
 						shadowColor='purple'
 						gradient={isDark}
 						active={isDark}
-						className='font-semibold text-3xl text-heading-dark'
+						className='font-bold text-3xl text-heading-dark'
 					>
 						Featured Projects
 					</Text>
@@ -285,7 +284,7 @@ const Home = () => {
 					shadowColor='blue'
 					gradient={isDark}
 					active={isDark}
-					className='font-semibold text-2xl text-heading-dark'
+					className='font-bold text-2xl text-heading-dark'
 				>
 					Skills
 				</Text>

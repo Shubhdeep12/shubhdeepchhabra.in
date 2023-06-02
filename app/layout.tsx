@@ -3,6 +3,8 @@ import { Manrope } from 'next/font/google'
 import MainContent from '@/components/MainContent'
 import './globals.css'
 import { Providers } from '@/providers'
+import Footer from '@/components/Footer'
+import { BackToTop } from '@/components/BackToTop'
 
 const manrope = Manrope({
 	subsets: ['latin'],
@@ -17,10 +19,14 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang='en'>
-			<body className={`${manrope.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark`}>
+			<body
+				className={`${manrope.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
+			>
 				<Providers>
 					<Navbar />
 					<MainContent>{children}</MainContent>
+					<Footer />
+					<BackToTop />
 				</Providers>
 			</body>
 		</html>

@@ -43,14 +43,14 @@ const Text = ({
 			className={cx(
 				className,
 				'flex justify-center items-center',
-				transitioned && 'transition-colors',
+				transitioned && 'transition',
 				'rounded',
 				shadow && !isDark && `${SHADOW_COLOR[shadowColor]}`,
 				hoverable && 'hover:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark',
-				gradient && 'hover:text-transparent',
-				'bg-gradient-to-r bg-clip-text',
+				gradient && 'hover:text-transparent bg-clip-text',
+				gradient && 'hover:bg-gradient-to-r',
 				gradient && `${gFrom} ${gTo}`,
-				gradient && active && 'text-transparent'
+				gradient && active && 'bg-gradient-to-r text-transparent'
 			)}
 			{...props}
 		>
