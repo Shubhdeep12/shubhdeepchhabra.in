@@ -17,7 +17,6 @@ const Navbar = () => {
 	const router = useRouter()
 	const [navbarExpanded, setNavbarExpanded] = useState(false)
 	const { isDark, toggleTheme } = useTheme()
-	const isMounted = useIsMounted()
 
 	const NAVBAR_ITEMS = [
 		{
@@ -49,9 +48,6 @@ const Navbar = () => {
 		},
 	]
 
-	if (!isMounted) {
-		return <div />
-	}
 	return (
 		<nav
 			className={cx(

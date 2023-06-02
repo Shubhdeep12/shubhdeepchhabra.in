@@ -8,7 +8,7 @@ import {
 	ResumeIcon,
 	TwitterIcon,
 } from '@/assets/Icons'
-import Button from './Button'
+import Button from '../Button'
 import cx from 'clsx'
 
 type SocialButtonsProps = {
