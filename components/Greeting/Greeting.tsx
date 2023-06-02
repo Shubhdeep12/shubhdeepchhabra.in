@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Text from './Text'
+import Text from '../Text'
 import { useTheme } from '@/providers/theme-provider'
 
 const greetings = ['Hello, world', 'हैलो, वर्ल्ड']

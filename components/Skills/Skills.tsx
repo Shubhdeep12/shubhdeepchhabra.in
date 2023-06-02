@@ -19,7 +19,7 @@ import {
 	TypeScriptIcon,
 } from '@/assets/Icons'
 import clsx from 'clsx'
-import Text from './Text'
+import Text from '../Text'
 
 type SkillProp = {
 	id: string
@@ -71,7 +71,7 @@ const SKILLS: SkillProp[] = [
 		id: 'javascript',
 		title: 'JavaScript',
 		bgColor: 'hocus:bg-[#f7df1e1f] dark:hocus:bg-[#f7df1e2e]',
-		borderColor: 'border hocus:border-[#f7df1e8f] dark:hocus:border-[#f7df1e8f]',
+		borderColor: 'border border-grey-100 dark:border-grey-400 hocus:border-[#f7df1e8f] dark:hocus:border-[#f7df1e8f]',
 		wIcon: 15,
 		hIcon: 15,
 		position: 'left',
@@ -229,7 +229,8 @@ const Skills = () => {
 						>
 							<div
 								className={clsx(
-									'group w-auto h-auto p-2 rounded-full transition-all flex items-center gap-1 hocus:underline-none hocus:transform hocus:scale-[1.015]',
+									'group w-auto h-auto p-2 rounded-full transition flex items-center gap-1 hocus:underline-none hocus:transform hocus:scale-[1.015]',
+									'bg-background-primary-light dark:bg-background-primary-dark border border-gray-200 dark:border-gray-600',
 									skill.bgColor,
 									skill.borderColor
 								)}
@@ -239,7 +240,7 @@ const Skills = () => {
 									height={skill.hIcon}
 									className='group-hocus:fill-black dark:group-hocus:fill-white transition'
 								/>
-								<Text className='text-sm font-medium group-hocus:text-black dark:group-hocus:text-white'>
+								<Text className='text-sm font-bold group-hocus:text-black dark:group-hocus:text-white'>
 									{skill.title}
 								</Text>
 							</div>
