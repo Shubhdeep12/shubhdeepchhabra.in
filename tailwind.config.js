@@ -48,6 +48,9 @@ module.exports = {
 				light: '',
 				dark: '0px 0px 8px 2px rgba(56, 103, 214, 0.16)',
 			},
+			dropShadow: {
+				doodle: ['-4px -4px 2px #c0b4f0', '4px 4px 2px #c0b4f0', '4px -4px 2px #c0b4f0', '-4px 4px 2px #c0b4f0'],
+			},
 			screens: {
 				laptop: '600px',
 			},

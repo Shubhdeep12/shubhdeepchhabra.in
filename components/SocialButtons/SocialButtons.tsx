@@ -1,4 +1,5 @@
 import {
+	BackToTopIcon,
 	EyeIcon,
 	GithubIcon,
 	IconProps,
@@ -10,10 +11,13 @@ import {
 } from '@/assets/Icons'
 import Button from '../Button'
 import cx from 'clsx'
+import { scrollToTop } from '../BackToTop'
 
 type SocialButtonsProps = {
 	socials?: SocialProps[]
 	bordered?: boolean
+	backToTop?: boolean
+	className?: string
 }
 
 type SocialProps = {
@@ -33,7 +37,12 @@ const SOCIAL_ICONS: Record<string, React.FC<IconProps>> = {
 	eye: EyeIcon,
 }
 
-export default function SocialButtons({ socials = [], bordered = false }: SocialButtonsProps) {
+export default function SocialButtons({
+	socials = [],
+	bordered = false,
+	backToTop = false,
+	className = '',
+}: SocialButtonsProps) {
 	return (
 		<div
 			className={cx(
@@ -41,7 +50,8 @@ export default function SocialButtons({ socials = [], bordered = false }: Social
 				'flex gap-2 items-center',
 				bordered && 'border border-slate-200 hover:border-blue-800 dark:border-slate-800 dark:hover:border-blue-200',
 				'rounded-lg w-fit h-[42px] ',
-				'px-[6px]'
+				'px-[6px]',
+				className
 			)}
 		>
 			{socials.map((social: SocialProps) => {
@@ -59,6 +69,23 @@ export default function SocialButtons({ socials = [], bordered = false }: Social
 					</Button>
 				)
 			})}
+
+			{backToTop && (
+				<Button
+					height='h-[30px]'
+					width='w-[30px]'
+					focusOutlined
+					className='group rounded flex items-center justify-center'
+					onClick={() => scrollToTop()}
+				>
+					<BackToTopIcon
+						width={22}
+						height={22}
+						color='#5f5f5f'
+						className='group-hocus:fill-black dark:group-hocus:fill-slate-200 dark:fill-slate-400'
+					/>
+				</Button>
+			)}
 		</div>
 	)
 }

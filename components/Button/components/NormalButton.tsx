@@ -30,7 +30,7 @@ function NormalButton({
 			className={cx(
 				width,
 				height,
-				'transition',
+				'transition-colors',
 				focusOutlined && 'focus:outline-dashed focus:outline-2 focus:outline-offset-4',
 				className,
 				hoverable && 'hocus:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark',

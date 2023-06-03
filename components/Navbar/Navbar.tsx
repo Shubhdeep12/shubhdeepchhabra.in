@@ -11,6 +11,7 @@ import { useTheme } from '@/providers/theme-provider'
 import Button from '../Button'
 import Text from '../Text'
 import { useIsMounted } from '@/hooks/isMounted'
+import Image from 'next/image'
 
 const Navbar = () => {
 	const pathname = usePathname()
@@ -64,10 +65,21 @@ const Navbar = () => {
 		>
 			<section className='h-[40px] flex gap-4 justify-between items-center'>
 				<div className='h-full'>
-					<Button onClick={() => router.push('/')} height='h-full' variant='normal' focusOutlined className='rounded'>
-						<Text className='font-semibold text-base p-2' hoverable>
-							Shubhdeep
-						</Text>
+					<Button
+						onClick={() => router.push('/')}
+						height='h-full'
+						variant='normal'
+						focusOutlined
+						className='group rounded overflow-hidden flex items-center'
+					>
+						<Image
+							src={require('../../assets/shubh-avatar-1.png')}
+							height={32}
+							width={32}
+							alt='shubh-avatar'
+							className='group-hocus:opacity-100 group-hocus:scale-100  opacity-0 scale-0 transition transform'
+						/>
+						<Text className='font-semibold text-base p-2'>Shubhdeep</Text>
 					</Button>
 				</div>
 

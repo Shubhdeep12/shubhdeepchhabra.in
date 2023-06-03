@@ -63,8 +63,7 @@ const Footer = () => {
 		<footer
 			className='
 				w-full max-w-laptop mx-auto
-				flex flex-col gap-9 py-9 px-2 border-t bottom-0
-			'
+				flex flex-col gap-9 py-9 px-2 border-t bottom-0'
 		>
 			<div className='flex gap-9'>
 				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4'>
@@ -99,11 +98,11 @@ const Footer = () => {
 							<Button
 								focusOutlined
 								hoverable={false}
-								className='rounded-sm hocus:underline
-								hocus:underline-offset-2
-								hocus:decoration-2
-								'
-								onClick={() => window.open(item.route, '_blank')}
+								className={cx(
+									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
+									item.underline
+								)}
+								onClick={() => router.push(item.route)}
 							>
 								<Text
 									gradient
@@ -121,11 +120,17 @@ const Footer = () => {
 			</div>
 
 			<div className='flex justify-between'>
-				<Button focusOutlined hoverable={false} className='rounded-sm' onClick={() => router.push('/')}>
+				<Button
+					focusOutlined
+					hoverable={false}
+					className='rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2'
+					onClick={() => router.push('/')}
+				>
 					<Text className={cx('font-semibold')}>Shubhdeep</Text>
 				</Button>
 
 				<SocialButtons
+					backToTop
 					socials={[
 						{
 							key: 'github',

@@ -7,3 +7,22 @@
 		@apply text-text-dark dark:text-text-light;
 	}
 }
+
+html,
+body {
+	scroll-behavior: smooth;
+	margin-left: calc(100vw - 100%);
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #6882f5ad;
+	border-radius: 20px;
+}

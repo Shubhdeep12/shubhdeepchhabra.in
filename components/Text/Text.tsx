@@ -43,7 +43,7 @@ const Text = ({
 			className={cx(
 				className,
 				'flex justify-center items-center',
-				transitioned && 'transition',
+				transitioned && 'transition-colors',
 				'rounded',
 				shadow && !isDark && `${SHADOW_COLOR[shadowColor]}`,
 				hoverable && 'hover:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark',
