@@ -50,10 +50,20 @@ export const MediumIcon = ({ width = 24, height = 24, color = '#FFF', className 
 		<path
 			d='M13.4093 12.2471C13.4093 15.6973 10.6313 18.4944 7.20451 18.4944C3.77768 18.4944 0.999969 15.6982 0.999969 12.2471C0.999969 8.79604 3.77789 6 7.20451 6C10.6311 6 13.4093 8.79688 13.4093 12.2471ZM20.2159 12.2471C20.2159 15.4951 18.8269 18.1278 17.1136 18.1278C15.4003 18.1278 14.0112 15.4942 14.0112 12.2471C14.0112 8.99998 15.4003 6.36639 17.1136 6.36639C18.8269 6.36639 20.2159 8.99998 20.2159 12.2471ZM23 12.2471C23 15.1571 22.5114 17.516 21.9088 17.516C21.3063 17.516 20.8177 15.1563 20.8177 12.2471C20.8177 9.33792 21.3063 6.97822 21.909 6.97822C22.5118 6.97822 23 9.33729 23 12.2471Z'
 			stroke={color}
-			stroke-width='2'
+			strokeWidth='2'
 			stroke-linejoin='round'
 			className={className}
 		/>
+	</svg>
+)
+
+export const EmailIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
+	<svg xmlns='http://www.w3.org/2000/svg' width={width} height={height} viewBox='0 0 24 24' fill='none'>
+		<path
+			d='M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z'
+			fill={color}
+			className={className}
+		></path>
 	</svg>
 )
 
@@ -235,5 +245,15 @@ export const PythonIcon = ({ width = 24, height = 24, color = 'currentColor', cl
 export const ChevronUp = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation' className={className}>
 		<path d='M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z' fill={color} />
+	</svg>
+)
+
+export const BackToTopIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
+	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation' className={className}>
+		<path
+			d='M19 2H5C3.3 2 2 3.3 2 5v14c0 1.7 1.3 3 3 3h14c1.7 0 3-1.3 3-3V5c0-1.7-1.3-3-3-3zm1 17c0 .6-.4 1-1 1H5c-.6 0-1-.4-1-1V5c0-.6.4-1 1-1h14c.6 0 1 .4 1 1v14zm-3.3-5.7c.4.4.4 1 0 1.4-.2.2-.4.3-.7.3s-.5-.1-.7-.3L12 11.4l-3.3 3.3c-.4.4-1 .4-1.4 0s-.4-1 0-1.4l4-4c.4-.4 1-.4 1.4 0l4 4z'
+			fill={color}
+			className={className}
+		></path>
 	</svg>
 )
