@@ -1,6 +1,5 @@
 'use client'
 
-import { useTheme } from '@/providers/theme-provider'
 import Text from '../Text'
 import Button from '../Button'
 import { ResumeIcon, StarIcon } from '@/assets/Icons'
@@ -84,20 +83,13 @@ const PROJECTS: ProjectProps[] = [
 ]
 
 const AllProjects = () => {
-	const { isDark } = useTheme()
 	return (
 		<section id='featured-projects' className='flex flex-col gap-8'>
 			<div
 				id='featured-projects-header'
 				className='flex flex-col gap-6 laptop:flex-row justify-between items-start laptop:items-center'
 			>
-				<Text
-					shadow={!isDark}
-					shadowColor='purple'
-					gradient={isDark}
-					active={isDark}
-					className='font-bold text-3xl text-heading-dark'
-				>
+				<Text shadow shadowColor='purple' className='font-bold text-3xl text-heading-dark'>
 					Projects
 				</Text>
 
@@ -145,7 +137,7 @@ const AllProjects = () => {
 							alt='p1'
 							src={require('../../assets/frames.png')}
 							className={cx(
-								'p-1 dark:bg-opacity-[0.07] transition rounded-lg group-hocus:bg-opacity-0 group-hocus:scale-110',
+								'p-1 dark:bg-opacity-[0.07] transition rounded-lg group-hocus:bg-opacity-0 group-hocus:scale-110 min-w-[64px]',
 								project.imageStyles
 							)}
 						/>

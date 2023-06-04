@@ -24,6 +24,20 @@ export const ThemeProvider = (props: PropsWithChildren) => {
 			setTheme(actualTheme === 'dark' ? 'light' : 'dark')
 		},
 	}
+	// const colorMetaTags = [
+	// 	'theme-color',
+	// 	'msapplication-TileColor',
+	// 	'msapplication-navbutton-color',
+	// 	'apple-mobile-web-app-status-bar-style',
+	// ]
+
+	// useEffect(() => {
+	// 	colorMetaTags.forEach((tag) => {
+	// 		document.head
+	// 			.querySelector(`meta[name="${tag}"]`)
+	// 			?.setAttribute('content', actualTheme === 'dark' ? '#080f1e' : '#ffffff')
+	// 	})
+	// }, [actualTheme])
 
 	return <ThemeContext.Provider value={themeContextValue}>{props.children}</ThemeContext.Provider>
 }

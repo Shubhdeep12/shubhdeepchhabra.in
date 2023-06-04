@@ -20,6 +20,23 @@ export const Blog = defineDocumentType(() => ({
 			type: 'string',
 			resolve: (doc) => doc._raw.sourceFileName.replace('.mdx', ''),
 		},
+		structuredData: {
+			type: 'json',
+			resolve: (doc) => ({
+				'@context': 'https://schema.org',
+				'@type': 'BlogPosting',
+				headline: doc.title,
+				datePublished: doc.publishedAt,
+				dateModified: doc.publishedAt,
+				description: doc.description,
+				// image: doc.image ? `https://shubhdeep-chhabra.vercel.app${doc.image}` : `https://shubhdeep-chhabra.vercel.app/api/og?title=${doc.title}`,
+				url: `https://shubhdeep-chhabra.vercel.app/blog/${doc._raw.flattenedPath}`,
+				author: {
+					'@type': 'Person',
+					name: 'Shubhdeep Chhabra',
+				},
+			}),
+		},
 	},
 }))
 

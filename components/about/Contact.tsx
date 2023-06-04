@@ -3,22 +3,12 @@
 import { EmailIcon, TwitterIcon } from '@/assets/Icons'
 import Button from '../Button'
 import Text from '../Text'
-import { useRouter } from 'next/navigation'
-import { useTheme } from '@/providers/theme-provider'
 import Image from 'next/image'
 
 const Contact = () => {
-	const { isDark } = useTheme()
-	const router = useRouter()
 	return (
 		<section id='contact' className='flex flex-col items-start gap-6'>
-			<Text
-				shadow={!isDark}
-				shadowColor='blue'
-				gradient={isDark}
-				active={isDark}
-				className='font-bold text-3xl text-heading-dark'
-			>
+			<Text shadow shadowColor='blue' className='font-bold text-3xl text-heading-dark'>
 				Contact
 			</Text>
 

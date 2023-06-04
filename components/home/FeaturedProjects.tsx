@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation'
 import Button from '../Button'
 import Text from '../Text'
-import { useTheme } from '@/providers/theme-provider'
 import { EyeIcon, ResumeIcon, StarIcon } from '@/assets/Icons'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -86,7 +85,6 @@ const PROJECTS: ProjectProps[] = [
 
 const FeaturedProjects = () => {
 	const router = useRouter()
-	const { isDark } = useTheme()
 
 	return (
 		<section id='featured-projects' className='flex flex-col gap-4'>
@@ -94,13 +92,7 @@ const FeaturedProjects = () => {
 				id='featured-projects-header'
 				className='flex flex-col gap-6 laptop:flex-row justify-between items-start laptop:items-center'
 			>
-				<Text
-					shadow={!isDark}
-					shadowColor='purple'
-					gradient={isDark}
-					active={isDark}
-					className='font-bold text-3xl text-heading-dark'
-				>
+				<Text shadow shadowColor='purple' className='font-bold text-3xl text-heading-dark'>
 					Featured Projects
 				</Text>
 
@@ -164,7 +156,7 @@ const FeaturedProjects = () => {
 							alt='p1'
 							src={require('../../assets/blueprint.png')}
 							className={cx(
-								'p-1 dark:bg-opacity-[0.07] transition rounded-lg group-hocus:bg-opacity-0 group-hocus:scale-110',
+								'p-1 dark:bg-opacity-[0.07] transition rounded-lg group-hocus:bg-opacity-0 group-hocus:scale-110 min-w-[64px]',
 								project.imageStyles
 							)}
 						/>

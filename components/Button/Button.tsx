@@ -1,3 +1,4 @@
+'use client'
 import NormalButton, { NormalButtonProps } from './components/NormalButton'
 import TextButton, { TextButtonProps } from './components/TextButton'
 

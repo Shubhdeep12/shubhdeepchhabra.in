@@ -1,13 +1,11 @@
+'use client'
 import { useState, useEffect } from 'react'
 import Text from '../Text'
-import { useTheme } from '@/providers/theme-provider'
 
 const greetings = ['Hello, world', 'हैलो, वर्ल्ड']
 
 const Greeting = () => {
 	const [hello, setHello] = useState(0)
-	const { isDark } = useTheme()
-
 	useEffect(() => {
 		const changeHello = setInterval(() => {
 			setHello((helloo) => (helloo >= greetings.length - 1 ? 0 : helloo + 1))
@@ -28,13 +26,7 @@ const Greeting = () => {
 					{`I'm`}
 				</Text>
 				&nbsp;
-				<Text
-					shadow={!isDark}
-					shadowColor='blue'
-					gradient={isDark}
-					active={isDark}
-					className='font-semibold text-3xl text-heading-dark'
-				>
+				<Text shadow shadowColor='blue' className='font-semibold text-3xl text-heading-dark'>
 					Shubhdeep Chhabra
 				</Text>
 			</div>
