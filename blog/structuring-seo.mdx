@@ -1,0 +1,97 @@
+---
+title: 'Structuring SEO and Format of a page in Next.js Effectively'
+publishedAt: 'February 4, 2022'
+description: 'Organizing your Next.js application and using components.'
+cover: 'https://cdn-images-1.medium.com/max/1000/1*kUzEBuj0NTTNER_1hUt5Ag.png'
+---
+
+---
+
+Organizing your Next.js application and using components.
+
+Imagine you want to use Next.js to build an application and that you want each page to have a distinct SEO strategy as well as the same header, footer, and navbar.
+
+What you can manage to do?
+
+The simple option is to build a shared component that is called repeatedly on each page.
+
+But, You might try this 👇
+
+- I hope you have already developed a Next.js app before reading this.  
+  If not, visit this page 👉 [https://nextjs.org/docs/getting-started](https://nextjs.org/docs/getting-started)
+- Create two components with the names **Format** and **SEOSetup** in a new folder called components inside the src directory.
+- This component, “**Format**,” refers to the layout of the page.  
+  Here, in this case, the layout of every page will be in this flow Navbar then Main content, and then a Footer.  
+  And, We are therefore defining it below 👇
+
+import { FC } from 'react'
+
+import Footer from '../Footer'
+import Navbar from '../Navbar'
+
+const Format: FC = (props) => {  
+ return (
+
+{' '}
+<>
+	<Navbar />
+	<Main>{props.children}</Main>
+	<Footer />
+</>
+); };
+
+export default Format
+
+- In **SEOSetup**, we’re really constructing a common tag with data supplied as props for the meta and title tag fields.  
+  So that we may utilize this **SEOSetup** component each time we need to define SEO-related information on a page rather than creating a **head** tag repeatedly.
+
+import Head from 'next/head'
+
+export interface MetaData {
+	title: string;
+	description: string;
+}
+
+const SEOSetup: FC<MetaData> = (props) => {  
+ const {  
+ title,  
+ description,  
+ } = props;
+
+return (
+
+{' '}
+<Head>
+	<title>{title}</title>
+	<meta name={'title'} content={title} />
+	<meta name={'description'} content={description} />
+</Head>
+); };
+
+export default SEOSetup
+
+- Finally, utilize them on a page. Here we are just wrapping the page with the **Format** component and setting up SEO with our custom **SEOSetup** tag.
+
+import type { NextPage } from 'next'
+
+import Format from '../components/Format'
+import SEOSetup from '../components/SEOSetup'
+
+const Home: NextPage = () => {  
+ return (
+
+{' '}
+<Format>
+	<SEOSetup title='This is title of the Home Page' description='This is description of Home Page' />
+	<div>This is Home Page.</div>
+</Format>) }
+
+export default Home
+
+⭐️ ⭐️ THE END ⭐️️️️️ ⭐️
+
+---
+
+I hope you find this helpful. 🙌  
+Please tell me in the comments. 📪  
+For more of this type of stuff, follow me on Twitter —[ @ShubhInTech](https://twitter.com/ShubhInTech)

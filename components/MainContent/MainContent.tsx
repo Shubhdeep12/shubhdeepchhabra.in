@@ -4,7 +4,7 @@ type MainProps = {
 }
 export default function MainContent({ children }: MainProps) {
 	return (
-		<div
+		<main
 			className='
       animate-page-transition 
       [animation-delay:150ms]
@@ -13,9 +13,11 @@ export default function MainContent({ children }: MainProps) {
       mx-auto
 			pt-[110px]
 			pb-10
+			overflow-x-hidden
+			px-2
   '
 		>
 			{children}
-		</div>
+		</main>
 	)
 }
