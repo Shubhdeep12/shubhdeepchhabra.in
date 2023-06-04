@@ -12,10 +12,12 @@ import Button from '../Button'
 import Text from '../Text'
 import { useIsMounted } from '@/hooks/isMounted'
 import Image from 'next/image'
+import { SCIcon } from '@/assets/Icons'
 
 const Navbar = () => {
 	const pathname = usePathname()
 	const router = useRouter()
+	const isMounted = useIsMounted()
 	const [navbarExpanded, setNavbarExpanded] = useState(false)
 	const { isDark, toggleTheme } = useTheme()
 
@@ -27,7 +29,7 @@ const Navbar = () => {
 			gradient: true,
 			gFrom: 'from-blue-500',
 			gTo: 'to-green-500',
-			active: pathname === '/about',
+			active: pathname?.startsWith('/about'),
 		},
 		{
 			key: 'projects',
@@ -36,16 +38,16 @@ const Navbar = () => {
 			gradient: true,
 			gFrom: 'from-[#c86827]',
 			gTo: 'to-[#c69227]',
-			active: pathname === '/projects',
+			active: pathname?.startsWith('/projects'),
 		},
 		{
-			key: 'blogs',
-			title: 'Blogs',
-			route: '/blogs',
+			key: 'blog',
+			title: 'Blog',
+			route: '/blog',
 			gradient: true,
 			gFrom: 'from-[#bc2f48]',
 			gTo: 'to-[#7a4cbb]',
-			active: pathname === '/blogs',
+			active: pathname?.startsWith('/blog'),
 		},
 	]
 
@@ -72,14 +74,29 @@ const Navbar = () => {
 						focusOutlined
 						className='group rounded overflow-hidden flex items-center'
 					>
-						<Image
-							src={require('../../assets/shubh-avatar-1.png')}
-							height={32}
-							width={32}
-							alt='shubh-avatar'
-							className='group-hocus:opacity-100 group-hocus:scale-100  opacity-0 scale-0 transition transform'
-						/>
-						<Text className='font-semibold text-base p-2'>Shubhdeep</Text>
+						<span className='block relative min-w-[32px] w-[32px] h-[32px] [&>*]:absolute [&>*]:top-1/2 [&>*]:left-0 [&>*]:transform [&>*]:-translate-y-1/2 [&>*]:transition'>
+							<SCIcon
+								width={32}
+								height={32}
+								className='
+							opacity-100 scale-100 visible
+							group-hocus:opacity-0 group-hocus:scale-0 group-hocus:invisible
+							transform transition
+							'
+							/>
+							<Image
+								src={require('../../assets/shubh-avatar-1.png')}
+								height={32}
+								width={32}
+								alt='shubh-avatar'
+								className='
+							group-hocus:opacity-100 group-hocus:scale-100 group-hocus:visible group-hocus:block
+							opacity-0 scale-0 invisible
+							transform transition
+							'
+							/>
+						</span>
+						<Text className='font-extrabold text-xl p-2'>Shubhdeep</Text>
 					</Button>
 				</div>
 
@@ -112,16 +129,18 @@ const Navbar = () => {
 					</ul>
 				</section>
 				<div className='h-full w-[42px]'>
-					<Button
-						height='h-full'
-						width='w-full'
-						variant='normal'
-						focusOutlined
-						className='rounded flex justify-center items-center'
-						onClick={toggleTheme}
-					>
-						{isDark ? <IoSunny size={20} /> : <IoMoon size={20} />}
-					</Button>
+					{isMounted && (
+						<Button
+							height='h-full'
+							width='w-full'
+							variant='normal'
+							focusOutlined
+							className='rounded flex justify-center items-center'
+							onClick={toggleTheme}
+						>
+							{isDark ? <IoSunny size={20} /> : <IoMoon size={20} />}
+						</Button>
+					)}
 				</div>
 
 				<div className='laptop:hidden h-full w-[42px]'>

@@ -5,6 +5,8 @@ import Button from '../Button'
 import cx from 'clsx'
 import { useRouter } from 'next/navigation'
 import SocialButtons from '../SocialButtons'
+import { SCIcon } from '@/assets/Icons'
+import Image from 'next/image'
 
 const Footer = () => {
 	const router = useRouter()
@@ -29,9 +31,9 @@ const Footer = () => {
 			underline: 'hocus:decoration-[#c86827]',
 		},
 		{
-			key: 'blogs',
-			title: 'Blogs',
-			route: '/blogs',
+			key: 'blog',
+			title: 'Blog',
+			route: '/blog',
 			gradient: true,
 			gFrom: 'from-[#bc2f48]',
 			gTo: 'to-[#7a4cbb]',
@@ -43,7 +45,7 @@ const Footer = () => {
 		{
 			key: 'resume',
 			title: 'Resume',
-			route: '/about',
+			route: 'https://drive.google.com/file/d/1aIe1fWQVOSE3OnegyE6yzEp6dhw5vZ9g/view?usp=sharing',
 			gradient: true,
 			gFrom: 'from-blue-500',
 			gTo: 'to-green-500',
@@ -52,7 +54,7 @@ const Footer = () => {
 		{
 			key: 'Source',
 			title: 'Source',
-			route: '/projects',
+			route: 'https://github.com/Shubhdeep12/ShubhdeepChhabra',
 			gradient: true,
 			gFrom: 'from-[#c86827]',
 			gTo: 'to-[#c69227]',
@@ -102,7 +104,7 @@ const Footer = () => {
 									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
-								onClick={() => router.push(item.route)}
+								onClick={() => window.open(item.route, '_blank')}
 							>
 								<Text
 									gradient
@@ -123,9 +125,31 @@ const Footer = () => {
 				<Button
 					focusOutlined
 					hoverable={false}
-					className='rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2'
+					className='group rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2 flex items-center'
 					onClick={() => router.push('/')}
 				>
+					<span className='block relative min-w-[32px] w-[32px] h-[32px] [&>*]:absolute [&>*]:top-1/2 [&>*]:left-0 [&>*]:transform [&>*]:-translate-y-1/2 [&>*]:transition'>
+						<SCIcon
+							width={24}
+							height={24}
+							className='
+							opacity-100 scale-100 visible
+							group-hocus:opacity-0 group-hocus:scale-0 group-hocus:invisible
+							transform transition
+							'
+						/>
+						<Image
+							src={require('../../assets/shubh-avatar-1.png')}
+							height={24}
+							width={24}
+							alt='shubh-avatar'
+							className='
+							group-hocus:opacity-100 group-hocus:scale-100 group-hocus:visible
+							opacity-0 scale-0 invisible
+							transform transition
+							'
+						/>
+					</span>
 					<Text className={cx('font-semibold')}>Shubhdeep</Text>
 				</Button>
 
