@@ -1,26 +1,18 @@
 'use client'
 
-import { useTheme } from '@/providers/theme-provider'
 import Text from '../Text'
 import Image from 'next/image'
 import SocialButtons from '../SocialButtons'
 
 const AboutSection = () => {
-	const { isDark } = useTheme()
 	return (
 		<section id='about-section' className='flex flex-col items-start gap-6'>
-			<Text
-				shadow={!isDark}
-				shadowColor='purple'
-				gradient={isDark}
-				active={isDark}
-				className='font-bold text-3xl text-heading-dark'
-			>
+			<Text shadow shadowColor='purple' className='font-bold text-3xl text-heading-dark'>
 				About
 			</Text>
 			<div className='w-full rounded-lg p-4 flex flex-col gap-2 laptop:flex-row items-center bg-slate-200 dark:bg-slate-700 text-center'>
 				<div className='w-[100px] h-[100px] transition-colors rounded-full bg-sky-50 overflow-hidden'>
-					<Image alt='p1' src={require('../../assets/shubh-avatar-1.png')} className='w-[100px] h-[105px]' />
+					<Image alt='p1' src={require('../../assets/shubh-avatar-1.png')} className='min-w-[100px] h-[105px]' />
 				</div>
 				<Text className='font-bold text-2xl px-2 w-min'>Shubhdeep Chhabra</Text>
 				<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>Software Developer</Text>
@@ -57,7 +49,7 @@ const AboutSection = () => {
 				/>
 			</div>
 
-			<p className='max-w-none text-justify text-base font-medium'>
+			<p className='max-w-none text-left laptop:text-justify text-base font-medium'>
 				👋{"I'm"} <strong>Shubhdeep Chhabra</strong>, a software engineer from <strong>India</strong>, specializing in
 				web development. With a passion for creating things on the web, I <strong>graduated in 2020</strong> and have
 				since dedicated myself to honing my skills. I thrive on challenging projects and enjoy finding innovative

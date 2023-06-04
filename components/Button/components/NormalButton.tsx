@@ -1,3 +1,4 @@
+'use client'
 import cx from 'clsx'
 
 export type NormalButtonProps = {
