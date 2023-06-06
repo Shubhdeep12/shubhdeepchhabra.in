@@ -5,7 +5,13 @@ import Link from 'next/link'
 const NotFound = () => {
 	return (
 		<section className='flex flex-col items-start gap-5 min-h-[500px] font-semibold'>
-			<Text shadow shadowColor='purple' className='font-bold text-3xl text-heading-dark'>
+			<Text
+				variant='shadow'
+				gFrom='dark:from-yellow-300'
+				gTo='dark:to-red-300'
+				shadowColor='purple'
+				className='font-bold text-3xl text-heading-dark'
+			>
 				OOPS! Page not found.
 			</Text>
 			<p className='mt-5'>{"Unfortunately, the page you're looking for doesn't exist."}</p>

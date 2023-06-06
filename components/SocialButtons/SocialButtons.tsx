@@ -1,5 +1,4 @@
 import {
-	BackToTopIcon,
 	EyeIcon,
 	GithubIcon,
 	IconProps,
@@ -11,7 +10,8 @@ import {
 } from '@/assets/Icons'
 import Button from '../Button'
 import cx from 'clsx'
-import { scrollToTop } from '../BackToTop'
+import Link from 'next/link'
+import BackToTopButton from '../BackToTopButton'
 
 type SocialButtonsProps = {
 	socials?: SocialProps[]
@@ -24,7 +24,7 @@ type SocialProps = {
 	key: string
 	icon: keyof typeof SOCIAL_ICONS
 	className: string
-	action?: () => void
+	action?: string
 }
 
 const SOCIAL_ICONS: Record<string, React.FC<IconProps>> = {
@@ -63,29 +63,17 @@ export default function SocialButtons({
 						width='w-[30px]'
 						focusOutlined
 						className='group rounded flex items-center justify-center'
-						onClick={social.action}
+						type={Link}
+						href={social.action}
+						rel='noopener noreferrer'
+						target='_blank'
 					>
 						<SocialIcon width={22} height={22} color='#5f5f5f' className={social.className} />
 					</Button>
 				)
 			})}
 
-			{backToTop && (
-				<Button
-					height='h-[30px]'
-					width='w-[30px]'
-					focusOutlined
-					className='group rounded flex items-center justify-center'
-					onClick={() => scrollToTop()}
-				>
-					<BackToTopIcon
-						width={22}
-						height={22}
-						color='#5f5f5f'
-						className='group-hocus:fill-black dark:group-hocus:fill-slate-200 dark:fill-slate-400'
-					/>
-				</Button>
-			)}
+			{backToTop && <BackToTopButton />}
 		</div>
 	)
 }

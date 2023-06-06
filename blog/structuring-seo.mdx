@@ -33,6 +33,7 @@ const Format: FC = (props) => {
  return (
 
 {' '}
+
 <>
 	<Navbar />
 	<Main>{props.children}</Main>
@@ -61,6 +62,7 @@ const SEOSetup: FC<MetaData> = (props) => {
 return (
 
 {' '}
+
 <Head>
 	<title>{title}</title>
 	<meta name={'title'} content={title} />
@@ -81,10 +83,12 @@ const Home: NextPage = () => {
  return (
 
 {' '}
+
 <Format>
 	<SEOSetup title='This is title of the Home Page' description='This is description of Home Page' />
 	<div>This is Home Page.</div>
-</Format>) }
+</Format>
+) }
 
 export default Home
 

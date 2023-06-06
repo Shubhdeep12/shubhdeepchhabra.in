@@ -17,16 +17,30 @@ const Greeting = () => {
 		<div className='flex flex-col gap-2'>
 			<div className='flex gap-1 items-center text-3xl'>
 				<span className='inline-block motion-safe:animate-wave'>👋</span>
-				<Text shadow className='font-semibold text-heading-dark dark:text-heading-light'>
+				<Text
+					variant='shadow'
+					shadowColor='yellow'
+					className='font-semibold text-heading-dark dark:text-heading-light leading-relaxed'
+				>
 					{greetings[hello]}!
 				</Text>
 			</div>
 			<div className='flex gap-1 items-center text-3xl w-fit'>
-				<Text shadow shadowColor='blue' className='font-semibold text-3xl text-heading-dark dark:text-heading-light'>
+				<Text
+					variant='shadow'
+					shadowColor='blue'
+					className='font-semibold text-3xl text-heading-dark dark:text-heading-light'
+				>
 					{`I'm`}
 				</Text>
 				&nbsp;
-				<Text shadow shadowColor='blue' className='font-semibold text-3xl text-heading-dark'>
+				<Text
+					variant='shadow'
+					gFrom='dark:from-sky-500'
+					gTo='dark:to-blue-500'
+					shadowColor='blue'
+					className='font-semibold text-3xl text-heading-dark dark:text-heading-light'
+				>
 					Shubhdeep Chhabra
 				</Text>
 			</div>
