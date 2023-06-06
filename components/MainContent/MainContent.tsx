@@ -1,4 +1,3 @@
-'use client'
 type MainProps = {
 	children?: React.ReactNode
 }

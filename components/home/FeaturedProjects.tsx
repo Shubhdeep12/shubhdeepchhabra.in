@@ -92,7 +92,13 @@ const FeaturedProjects = () => {
 				id='featured-projects-header'
 				className='flex flex-col gap-6 laptop:flex-row justify-between items-start laptop:items-center'
 			>
-				<Text shadow shadowColor='purple' className='font-bold text-3xl text-heading-dark'>
+				<Text
+					variant='shadow'
+					gFrom='dark:from-pink-500'
+					gTo='dark:to-purple-500'
+					shadowColor='purple'
+					className='font-bold text-3xl text-heading-dark'
+				>
 					Featured Projects
 				</Text>
 

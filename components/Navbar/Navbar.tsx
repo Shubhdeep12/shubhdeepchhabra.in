@@ -26,7 +26,6 @@ const Navbar = () => {
 			key: 'about',
 			title: 'About',
 			route: '/about',
-			gradient: true,
 			gFrom: 'from-blue-500',
 			gTo: 'to-green-500',
 			active: pathname?.startsWith('/about'),
@@ -35,7 +34,6 @@ const Navbar = () => {
 			key: 'projects',
 			title: 'Projects',
 			route: '/projects',
-			gradient: true,
 			gFrom: 'from-[#c86827]',
 			gTo: 'to-[#c69227]',
 			active: pathname?.startsWith('/projects'),
@@ -44,7 +42,6 @@ const Navbar = () => {
 			key: 'blog',
 			title: 'Blog',
 			route: '/blog',
-			gradient: true,
 			gFrom: 'from-[#bc2f48]',
 			gTo: 'to-[#7a4cbb]',
 			active: pathname?.startsWith('/blog'),
@@ -117,7 +114,7 @@ const Navbar = () => {
 										className='font-semibold text-base p-2'
 										gFrom={item.gFrom}
 										gTo={item.gTo}
-										gradient={item.gradient}
+										variant='gradient'
 										active={item.active}
 										hoverable
 									>
@@ -184,7 +181,7 @@ const Navbar = () => {
 									className='font-semibold text-base p-2'
 									gFrom={item.gFrom}
 									gTo={item.gTo}
-									gradient={item.gradient}
+									variant='gradient'
 									active={item.active}
 									hoverable
 								>

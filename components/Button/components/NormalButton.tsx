@@ -12,6 +12,7 @@ export type NormalButtonProps = {
 	onClick?: React.MouseEventHandler
 	active?: boolean
 	hoverable?: boolean
+	[x: string | number | symbol]: unknown
 }
 
 function NormalButton({
