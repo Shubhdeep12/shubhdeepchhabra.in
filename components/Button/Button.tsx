@@ -4,6 +4,7 @@ import TextButton, { TextButtonProps } from './components/TextButton'
 
 type ButtonProps = (NormalButtonProps | TextButtonProps) & {
 	variant?: 'normal' | 'text'
+	[x: string | number | symbol]: unknown
 }
 
 const Button = ({ variant = 'normal', ...props }: ButtonProps) => {

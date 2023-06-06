@@ -1,12 +1,16 @@
-'use client'
-
 import Text from '../Text'
 import Button from '../Button'
 
 const Experience = () => {
 	return (
 		<section id='experience' className='flex flex-col items-start gap-6'>
-			<Text shadow shadowColor='orange' className='font-bold text-3xl text-heading-dark'>
+			<Text
+				variant='shadow'
+				gFrom='dark:from-red-400'
+				gTo='dark:to-blue-400'
+				shadowColor='orange'
+				className='font-bold text-3xl text-heading-dark'
+			>
 				Experience
 			</Text>
 

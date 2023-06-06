@@ -81,7 +81,7 @@ const Footer = () => {
 								onClick={() => router.push(item.route)}
 							>
 								<Text
-									gradient
+									variant='gradient'
 									active={currentFocussed === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
@@ -107,7 +107,7 @@ const Footer = () => {
 								onClick={() => window.open(item.route, '_blank')}
 							>
 								<Text
-									gradient
+									variant='gradient'
 									active={currentFocussed === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
@@ -160,26 +160,26 @@ const Footer = () => {
 							key: 'github',
 							icon: 'github',
 							className: 'group-hocus:fill-black dark:group-hocus:fill-slate-200 dark:fill-slate-400',
-							action: () => window.open('https://github.com/Shubhdeep12', '_blank'),
+							action: 'https://github.com/Shubhdeep12',
 						},
 						{
 							key: 'linkedin',
 							icon: 'linkedin',
 							className: 'group-hocus:fill-blue-600 dark:fill-slate-400',
-							action: () => window.open('https://www.linkedin.com/in/shubhdeepchhabra/', '_blank'),
+							action: 'https://www.linkedin.com/in/shubhdeepchhabra/',
 						},
 						{
 							key: 'twitter',
 							icon: 'twitter',
 							className: 'group-hocus:fill-sky-500 dark:fill-slate-400',
-							action: () => window.open('https://twitter.com/ShubhInTech', '_blank'),
+							action: 'https://twitter.com/ShubhInTech',
 						},
 						{
 							key: 'medium',
 							icon: 'medium',
 							className:
 								'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-slate-200 dark:group-hocus:stroke-slate-200 dark:stroke-slate-400',
-							action: () => window.open('https://shubhdeepchhabra.medium.com/', '_blank'),
+							action: 'https://shubhdeepchhabra.medium.com/',
 						},
 					]}
 				/>
