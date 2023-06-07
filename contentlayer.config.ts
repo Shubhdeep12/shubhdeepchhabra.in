@@ -10,6 +10,7 @@ export const Blog = defineDocumentType(() => ({
 		publishedAt: { type: 'string', required: true },
 		description: { type: 'string', required: true },
 		cover: { type: 'string', required: true },
+		color: { type: 'string', required: true },
 	},
 	computedFields: {
 		readingTime: {
@@ -29,6 +30,7 @@ export const Blog = defineDocumentType(() => ({
 				datePublished: doc.publishedAt,
 				dateModified: doc.publishedAt,
 				description: doc.description,
+				color: doc.color,
 				// image: doc.image ? `https://shubhdeep-chhabra.vercel.app${doc.image}` : `https://shubhdeep-chhabra.vercel.app/api/og?title=${doc.title}`,
 				url: `https://shubhdeep-chhabra.vercel.app/blog/${doc._raw.flattenedPath}`,
 				author: {

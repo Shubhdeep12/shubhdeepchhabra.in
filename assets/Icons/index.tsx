@@ -5,7 +5,7 @@ export type IconProps = {
 	className?: string
 }
 
-export const ProfileIcon = ({ width = 24, height = 24, color = '#FFF', className = '' }: IconProps) => (
+export const ProfileIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' role='presentation' width={width} height={height}>
 		<path
 			d='M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M7.07,18.28C7.5,17.38 10.12,16.5 12,16.5C13.88,16.5 16.5,17.38 16.93,18.28C15.57,19.36 13.86,20 12,20C10.14,20 8.43,19.36 7.07,18.28M18.36,16.83C16.93,15.09 13.46,14.5 12,14.5C10.54,14.5 7.07,15.09 5.64,16.83C4.62,15.5 4,13.82 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,13.82 19.38,15.5 18.36,16.83M12,6C10.06,6 8.5,7.56 8.5,9.5C8.5,11.44 10.06,13 12,13C13.94,13 15.5,11.44 15.5,9.5C15.5,7.56 13.94,6 12,6M12,11A1.5,1.5 0 0,1 10.5,9.5A1.5,1.5 0 0,1 12,8A1.5,1.5 0 0,1 13.5,9.5A1.5,1.5 0 0,1 12,11Z'
@@ -15,7 +15,7 @@ export const ProfileIcon = ({ width = 24, height = 24, color = '#FFF', className
 	</svg>
 )
 
-export const GithubIcon = ({ width = 24, height = 24, color = '#FFF', className = '' }: IconProps) => (
+export const GithubIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation'>
 		<path
 			d='M15.8 22.5c-.6 0-1-.4-1-1V18c0-.7-.2-1.2-.6-1.7-.3-.3-.4-.7-.2-1 .1-.4.5-.6.8-.7 2.6-.3 4.9-1.1 4.9-5.3 0-1-.4-2-1.1-2.7-.3-.3-.3-.7-.2-1 .2-.7.3-1.4.1-2-.4.1-1.2.4-2.3 1.1-.2.2-.5.2-.8.1-1.9-.5-3.9-.5-5.8 0-.1.1-.4.1-.6-.1-1.1-.7-1.9-1-2.3-1.1-.1.7-.1 1.4.1 2 .1.4.1.8-.2 1-.7.8-1.1 1.7-1.1 2.7 0 3.9 2 5 4.9 5.3.4 0 .7.3.8.7.1.4 0 .8-.2 1-.4.4-.6 1-.6 1.6v3.5c0 .6-.4 1-1 1s-1-.4-1-1V20c-2.7.4-3.9-1.1-4.7-2.1-.3-.4-.6-.8-.9-.9-.5-.1-.9-.7-.7-1.2.1-.5.7-.9 1.2-.7.9.2 1.5.9 2 1.6.7.9 1.3 1.7 3.1 1.3 0-.5 0-1.1.2-1.6-2.5-.6-5.2-2.2-5.2-7.1.1-1.3.6-2.6 1.4-3.6-.3-1.2-.2-2.4.3-3.6.1-.3.3-.5.6-.6.3-.1 1.6-.3 4 1.2 2-.5 4-.5 6 0 2.4-1.5 3.7-1.3 4-1.2.3.1.5.3.6.6.5 1.1.6 2.4.3 3.6.8 1 1.2 2.3 1.2 3.6 0 5.1-3.1 6.6-5.2 7.1.2.5.3 1.1.2 1.7v3.4c0 .6-.4 1-1 1z'
@@ -25,7 +25,7 @@ export const GithubIcon = ({ width = 24, height = 24, color = '#FFF', className 
 	</svg>
 )
 
-export const LinkedinIcon = ({ width = 24, height = 24, color = '#FFF', className = '' }: IconProps) => (
+export const LinkedinIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation'>
 		<path
 			d='M21.5 22h-3.8c-.6 0-1-.4-1-1v-6.7c0-.5-.4-.9-.9-.9s-.9.4-.9.9V21c0 .6-.4 1-1 1h-3.8c-.6 0-1-.4-1-1v-6.7a6.7 6.7 0 0 1 13.4 0V21c0 .6-.4 1-1 1zm-2.8-2h1.8v-5.7c0-2.6-2.1-4.7-4.7-4.7s-4.7 2.1-4.7 4.7V20h1.8v-5.7c0-1.6 1.3-2.9 2.9-2.9 1.6 0 2.9 1.3 2.9 2.9V20zM6.3 22H2.5c-.6 0-1-.4-1-1V9.6c0-.6.4-1 1-1h3.8c.6 0 1 .4 1 1V21c0 .6-.4 1-1 1zm-2.8-2h1.8v-9.4H3.5V20zM4.4 7.8c-1.6 0-2.9-1.3-2.9-2.9S2.8 2 4.4 2s2.9 1.3 2.9 2.9S6 7.8 4.4 7.8zm0-3.8c-.5 0-.9.4-.9.9s.4.9.9.9.9-.4.9-.9-.4-.9-.9-.9z'
@@ -35,7 +35,7 @@ export const LinkedinIcon = ({ width = 24, height = 24, color = '#FFF', classNam
 	</svg>
 )
 
-export const TwitterIcon = ({ width = 24, height = 24, color = '#FFF', className = '' }: IconProps) => (
+export const TwitterIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation'>
 		<path
 			d='M8.6 21.1c-2.4 0-4.8-.6-7.1-1.9-.4-.2-.6-.7-.5-1.1.1-.4.6-.8 1-.7 1.5.1 2.9-.2 4.2-.8C3 14.5 2.1 11.5 2 9.3c-.1-2.7.8-4.9.9-5 .2-.3.5-.5.8-.6.4 0 .7.1.9.4C6.1 6.3 8.5 7.6 11 7.8c0-1.4.6-2.8 1.7-3.8 1.9-1.7 4.8-1.6 6.7 0 .7-.3 1.4-.6 2-1.1.3-.2.8-.2 1.1 0 .3.2.5.7.4 1.1-.3 1.3-.9 2.5-1.8 3.4v.4c0 5-2.2 9.2-6.1 11.5-1.9 1.3-4.1 1.8-6.4 1.8zm-2.7-2.3c2.8.6 5.7.3 8.1-1.2 3.2-1.9 5.1-5.5 5.1-9.8 0-.2 0-.4-.1-.6-.1-.3 0-.7.3-.9l.4-.4c-.1 0-.2.1-.3.1-.4.1-.8 0-1-.3-1.1-1.3-3.1-1.4-4.3-.3-.7.8-1.1 1.6-1.1 2.5v.9c0 .5-.4 1-1 1-3 .1-5.7-1.1-7.8-3.1-.5 2.3-.6 6.6 4.5 8.9.3.1.6.5.6.8 0 .4-.1.7-.4.9-.9.7-1.9 1.2-3 1.5z'
@@ -45,7 +45,7 @@ export const TwitterIcon = ({ width = 24, height = 24, color = '#FFF', className
 	</svg>
 )
 
-export const MediumIcon = ({ width = 24, height = 24, color = '#FFF', className = '' }: IconProps) => (
+export const MediumIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg xmlns='http://www.w3.org/2000/svg' width={width} height={height} viewBox='0 0 24 24' fill='none'>
 		<path
 			d='M13.4093 12.2471C13.4093 15.6973 10.6313 18.4944 7.20451 18.4944C3.77768 18.4944 0.999969 15.6982 0.999969 12.2471C0.999969 8.79604 3.77789 6 7.20451 6C10.6311 6 13.4093 8.79688 13.4093 12.2471ZM20.2159 12.2471C20.2159 15.4951 18.8269 18.1278 17.1136 18.1278C15.4003 18.1278 14.0112 15.4942 14.0112 12.2471C14.0112 8.99998 15.4003 6.36639 17.1136 6.36639C18.8269 6.36639 20.2159 8.99998 20.2159 12.2471ZM23 12.2471C23 15.1571 22.5114 17.516 21.9088 17.516C21.3063 17.516 20.8177 15.1563 20.8177 12.2471C20.8177 9.33792 21.3063 6.97822 21.909 6.97822C22.5118 6.97822 23 9.33729 23 12.2471Z'
@@ -67,7 +67,7 @@ export const EmailIcon = ({ width = 24, height = 24, color = 'currentColor', cla
 	</svg>
 )
 
-export const EyeIcon = ({ width = 24, height = 24, color = '#FFF', className = '' }: IconProps) => (
+export const EyeIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation'>
 		<path
 			d='M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z'
@@ -77,7 +77,7 @@ export const EyeIcon = ({ width = 24, height = 24, color = '#FFF', className = '
 	</svg>
 )
 
-export const ResumeIcon = ({ width = 24, height = 24, color = '#FFF', className = '' }: IconProps) => (
+export const ResumeIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation'>
 		<path
 			d='M14 2H6C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H18C19.11 22 20 21.11 20 20V8L14 2M18 20H6V4H13V9H18V20M9.54 15.65L11.63 17.74L10.35 19L7 15.65L10.35 12.3L11.63 13.56L9.54 15.65M17 15.65L13.65 19L12.38 17.74L14.47 15.65L12.38 13.56L13.65 12.3L17 15.65Z'
@@ -87,7 +87,7 @@ export const ResumeIcon = ({ width = 24, height = 24, color = '#FFF', className 
 	</svg>
 )
 
-export const StarIcon = ({ width = 24, height = 24, color = '#FFF', className = '' }: IconProps) => (
+export const StarIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' role='presentation' width={width} height={height}>
 		<path
 			d='M18.2 22c-.2 0-.3 0-.5-.1l-5.7-3-5.7 3c-.3.2-.7.1-1.1-.1-.3-.2-.5-.6-.4-1l1.1-6.4L1.3 10C1 9.7.9 9.3 1 9c.1-.4.4-.6.8-.7l6.4-.9 2.9-5.8c.3-.7 1.5-.7 1.8 0l2.9 5.8 6.4.9c.3 0 .6.3.8.7.1.4 0 .8-.3 1l-4.6 4.5 1.1 6.4c.1.4-.1.8-.4 1-.2.1-.4.1-.6.1zM4.1 10l3.5 3.5c.3.2.4.5.4.8l-.8 4.9 4.4-2.3c.3-.2.6-.2.9 0l4.4 2.3-.9-4.9c-.1-.3.1-.7.3-.9l3.5-3.5-4.9-.7c-.3 0-.6-.3-.8-.5L12 4.3 9.8 8.7c-.1.3-.4.5-.7.5l-5 .8z'
@@ -259,10 +259,44 @@ export const BackToTopIcon = ({ width = 24, height = 24, color = 'currentColor',
 )
 
 export const SCIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
-	<svg viewBox='0 0 198 199' width={width} height={height} role='presentation' fill='none' className={className}>
-		<path
-			d='M60.2667 39.4667L24 60.4V102.667V144.933L60 165.733C79.7333 177.2 96.2667 186.667 96.8 186.667C98.1333 186.667 165.6 148 168.4 145.6C170.133 144 170.667 141.467 170.667 133.067C170.667 127.333 170.133 122.667 169.467 122.667C168.8 122.667 163.067 125.733 156.8 129.467C150.4 133.2 144.4 136 143.467 135.733C142.4 135.467 119.333 122.4 92.1333 106.667L42.6667 78L42.9333 73.6C43.3333 69.2 44.2667 68.5333 69.8667 53.8667C86.4 44.2667 97.2 38.8 98.5333 39.3333C99.7333 39.8667 111.067 46.2667 123.733 53.6C143.867 65.3333 146.4 67.2 144.4 68.6667C143.067 69.4667 135.867 73.7333 128.4 77.8667L114.8 85.6L108 81.7333C104.4 79.7333 101.333 77.6 101.333 77.2C101.333 76.8 103.867 75.0667 107.067 73.3333C118.8 66.9333 118.667 67.6 107.333 60.9333L96.9333 54.9333L82.1333 63.6C74 68.2667 66.8 72.6667 66.2667 73.2C65.7333 73.7333 82.9333 84.5333 104.667 97.0667L144 119.867L155.733 113.2C162.133 109.467 168.133 105.733 169.067 105.067C170.267 104 170.667 98.2667 170.4 82.1333L170 60.6667L134 39.7333C114.267 28.1333 97.7333 18.6667 97.3333 18.6667C96.9333 18.6667 80.2667 28 60.2667 39.4667ZM78 136.133C98.8 148.133 96.1333 147.867 109.733 139.733L114.8 136.667L121.067 140.267C124.4 142.133 127.467 144.267 127.6 144.933C128 146.133 99.2 163.067 96.8 163.067C96 163.067 83.7333 156.267 69.6 148L43.7333 132.933L50.2667 129.2C53.7333 127.067 57.3333 125.333 58 125.333C58.8 125.333 67.7333 130.133 78 136.133Z'
-			fill={color}
-		/>
+	<svg
+		viewBox='0 0 356 461'
+		width={width}
+		height={height}
+		role='presentation'
+		stroke={color}
+		fill={color}
+		className={className}
+	>
+		<path d='M192 1L367 27.1138V131.569H307.318L302.26 82.3545L255.728 71.3064V347.51C287.546 317.709 304.431 300.775 307.318 264.147H367V298.295C326.702 387.558 279.889 415.052 192 460V1Z' />
+		<path d='M1 31L171 1V135H111V75L63 83V170H171V460C46.9049 393.255 9.35807 354.229 1 298V266H63C56.341 298.014 70.8361 316.53 111 350V230H1V31Z' />
+	</svg>
+)
+
+export const CalendarIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
+	<svg
+		viewBox='0 0 24 24'
+		width={width}
+		height={height}
+		role='presentation'
+		stroke={color}
+		fill={color}
+		className={className}
+	>
+		<path d='M8 1a1 1 0 0 1 1 1v1h6V2a1 1 0 1 1 2 0v1h2a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h2V2a1 1 0 0 1 1-1ZM7 5H5a1 1 0 0 0-1 1v3h16V6a1 1 0 0 0-1-1h-2v1a1 1 0 1 1-2 0V5H9v1a1 1 0 0 1-2 0V5Zm13 6H4v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-9Z'></path>
+	</svg>
+)
+
+export const TimeIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
+	<svg
+		viewBox='0 0 24 24'
+		width={width}
+		height={height}
+		role='presentation'
+		stroke={color}
+		fill={color}
+		className={className}
+	>
+		<path d='M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z'></path>
 	</svg>
 )

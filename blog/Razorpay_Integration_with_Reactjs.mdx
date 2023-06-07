@@ -1,8 +1,9 @@
 ---
 title: 'Razorpay Integration with Reactjs and Node.js(Every scenario — Success, Failure, TimedOut, Cancel)'
 publishedAt: 'February 4, 2022'
-description: 'Learn how to integrate Razorpay in React'
+description: 'Learn how to integrate Razorpay in React Learn how to integrate Razorpay in React Learn how to integrate Razorpay in React Learn how to integrate Razorpay in React'
 cover: 'https://cdn-images-1.medium.com/max/1000/1*MhCqLr0IGyVrAKaR_DtaJQ.png'
+color: 'purple'
 ---
 
 Razorpay Integration with Reactjs and Node.js
@@ -108,22 +109,22 @@ if(data && data.order_id){
 
 return (
 
-  <div>  
-    <button   
-      onClick={() => handleCreateOrder(100, 'USD')}  
-    >Place Order  
-    </button>  
-  
-  {displayRazorpay && (  
-  <RenderRazorpay  
-    amount={orderDetails.amount}  
-    currency={orderDetails.currency}  
-    orderId={orderDetails.orderId}  
-    keyId={process.env.REACT_APP_RAZORPAY_KEY_ID}  
-    keySecret={process.env.REACT_APP_RAZORPAY_KEY_SECRET}  
-  />  
-  }  
-  </div>  
+{' '}
+
+<div>
+	<button onClick={() => handleCreateOrder(100, 'USD')}>Place Order</button>
+
+    {displayRazorpay && (
+    	<RenderRazorpay
+    		amount={orderDetails.amount}
+    		currency={orderDetails.currency}
+    		orderId={orderDetails.orderId}
+    		keyId={process.env.REACT_APP_RAZORPAY_KEY_ID}
+    		keySecret={process.env.REACT_APP_RAZORPAY_KEY_SECRET}
+    	/>
+    )}
+
+</div>
 );
 
 Now, the code for rendering Razorpay

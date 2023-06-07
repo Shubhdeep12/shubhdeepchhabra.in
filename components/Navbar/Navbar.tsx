@@ -93,7 +93,7 @@ const Navbar = () => {
 							'
 							/>
 						</span>
-						<Text className='font-extrabold text-xl p-2'>Shubhdeep</Text>
+						<Text className='font-extrabold text-xl py-2 px-1'>Shubhdeep</Text>
 					</Button>
 				</div>
 
