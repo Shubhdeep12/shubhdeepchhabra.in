@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import Button from '../Button'
 import Text from '../Text'
-import { EyeIcon, ResumeIcon, StarIcon } from '@/assets/Icons'
+import { EyeIcon, ResumeIcon, StarIcon } from '@/Icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import cx from 'clsx'
@@ -159,8 +159,10 @@ const FeaturedProjects = () => {
 						)}
 					>
 						<Image
-							alt='p1'
-							src={require('../../assets/blueprint.png')}
+							alt='featured-project'
+							src='/assets/blueprint.png'
+							width={64}
+							height={64}
 							className={cx(
 								'p-1 dark:bg-opacity-[0.07] transition rounded-lg group-hocus:bg-opacity-0 group-hocus:scale-110 min-w-[64px]',
 								project.imageStyles

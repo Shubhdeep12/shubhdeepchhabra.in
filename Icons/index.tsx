@@ -3,6 +3,7 @@ export type IconProps = {
 	height?: number
 	color?: string
 	className?: string
+	filled?: boolean
 }
 
 export const ProfileIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
@@ -274,29 +275,85 @@ export const SCIcon = ({ width = 24, height = 24, color = 'currentColor', classN
 )
 
 export const CalendarIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
-	<svg
-		viewBox='0 0 24 24'
-		width={width}
-		height={height}
-		role='presentation'
-		stroke={color}
-		fill={color}
-		className={className}
-	>
+	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation' fill={color} className={className}>
 		<path d='M8 1a1 1 0 0 1 1 1v1h6V2a1 1 0 1 1 2 0v1h2a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h2V2a1 1 0 0 1 1-1ZM7 5H5a1 1 0 0 0-1 1v3h16V6a1 1 0 0 0-1-1h-2v1a1 1 0 1 1-2 0V5H9v1a1 1 0 0 1-2 0V5Zm13 6H4v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-9Z'></path>
 	</svg>
 )
 
 export const TimeIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
+	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation' fill={color} className={className}>
+		<path d='M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z'></path>
+	</svg>
+)
+
+export const LikeIcon = ({
+	width = 24,
+	height = 24,
+	color = 'currentColor',
+	className = '',
+	filled = false,
+}: IconProps) => (
 	<svg
 		viewBox='0 0 24 24'
 		width={width}
 		height={height}
 		role='presentation'
-		stroke={color}
-		fill={color}
+		className={className}
+		fill={filled ? color : 'transparent'}
+		stroke={!filled ? color : 'transparent'}
+	>
+		<path d='M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z'></path>
+	</svg>
+)
+
+export const LoveIcon = ({
+	width = 24,
+	height = 24,
+	color = 'currentColor',
+	className = '',
+	filled = false,
+}: IconProps) => (
+	<svg
+		viewBox='0 0 24 24'
+		width={width}
+		height={height}
+		role='presentation'
+		className={className}
+		fill={filled ? color : 'transparent'}
+		stroke={!filled ? color : 'transparent'}
+	>
+		<path d='M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z'></path>{' '}
+	</svg>
+)
+
+export const BookmarkIcon = ({
+	width = 24,
+	height = 24,
+	color = 'currentColor',
+	filled = false,
+	className = '',
+}: IconProps) => (
+	<svg
+		viewBox='0 0 24 24'
+		width={width}
+		height={height}
+		role='presentation'
+		fill={filled ? color : 'transparent'}
+		stroke={!filled ? color : 'transparent'}
 		className={className}
 	>
-		<path d='M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z'></path>
+		<path d='M17,3H7A2,2 0 0,0 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z'></path>
+	</svg>
+)
+
+export const EditIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
+	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation' fill={color} className={className}>
+		<path d='M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z'></path>{' '}
+	</svg>
+)
+
+export const ShareIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
+	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation' fill={color} className={className}>
+		<path d='M18 16.08C17.24 16.08 16.56 16.38 16.04 16.85L8.91 12.7C8.96 12.47 9 12.24 9 12S8.96 11.53 8.91 11.3L15.96 7.19C16.5 7.69 17.21 8 18 8C19.66 8 21 6.66 21 5S19.66 2 18 2 15 3.34 15 5C15 5.24 15.04 5.47 15.09 5.7L8.04 9.81C7.5 9.31 6.79 9 6 9C4.34 9 3 10.34 3 12S4.34 15 6 15C6.79 15 7.5 14.69 8.04 14.19L15.16 18.34C15.11 18.55 15.08 18.77 15.08 19C15.08 20.61 16.39 21.91 18 21.91S20.92 20.61 20.92 19C20.92 17.39 19.61 16.08 18 16.08M18 4C18.55 4 19 4.45 19 5S18.55 6 18 6 17 5.55 17 5 17.45 4 18 4M6 13C5.45 13 5 12.55 5 12S5.45 11 6 11 7 11.45 7 12 6.55 13 6 13M18 20C17.45 20 17 19.55 17 19S17.45 18 18 18 19 18.45 19 19 18.55 20 18 20Z'></path>{' '}
 	</svg>
 )

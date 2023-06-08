@@ -1,6 +1,6 @@
 'use client'
 
-import { EmailIcon, TwitterIcon } from '@/assets/Icons'
+import { EmailIcon, TwitterIcon } from '@/Icons'
 import Button from '../Button'
 import Text from '../Text'
 import Image from 'next/image'
@@ -76,9 +76,11 @@ const Contact = () => {
 					</div>
 				</div>
 				<Image
-					className='object-cover object-center aspect-square max-w-[192px] laptop:max-w-[220px] filter drop-shadow-doodle mx-auto'
+					className='object-cover object-center aspect-square w-[192px] laptop:w-[220px] filter drop-shadow-doodle mx-auto'
 					alt='contact'
-					src={require('../../assets/contact.webp')}
+					width={100}
+					height={100}
+					src='/assets/contact.webp'
 				/>
 			</div>
 		</section>
