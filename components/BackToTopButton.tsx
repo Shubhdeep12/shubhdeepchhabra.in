@@ -1,5 +1,5 @@
 'use client'
-import { BackToTopIcon } from '@/assets/Icons'
+import { BackToTopIcon } from '@/Icons'
 import Button from './Button'
 import { scrollToTop } from './BackToTop/BackToTop'
 

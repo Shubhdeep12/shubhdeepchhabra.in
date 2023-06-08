@@ -26,8 +26,8 @@ module.exports = {
 						dark: '#0c121e',
 					},
 					nav: {
-						light: '#c1d8e7',
-						dark: '#121b2ca6',
+						light: '#ddf0fd80',
+						dark: '#1a2b4ba6',
 					},
 					button: {
 						hover: {

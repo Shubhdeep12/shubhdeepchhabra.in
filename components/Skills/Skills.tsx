@@ -17,7 +17,7 @@ import {
 	StyledComponentsIcon,
 	TailwindIcon,
 	TypeScriptIcon,
-} from '@/assets/Icons'
+} from '@/Icons'
 import clsx from 'clsx'
 import Text from '../Text'
 

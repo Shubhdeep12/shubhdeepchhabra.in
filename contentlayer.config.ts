@@ -57,7 +57,14 @@ export default makeSource({
 			rehypeSlug,
 			// rehypeCodeTitles,
 			rehypePrism,
-			rehypeAutolinkHeadings,
+			[
+				rehypeAutolinkHeadings,
+				{
+					properties: {
+						className: ['anchor'],
+					},
+				},
+			],
 			rehypeAccessibleEmojis,
 		],
 	},

@@ -1,13 +1,4 @@
-import {
-	EyeIcon,
-	GithubIcon,
-	IconProps,
-	LinkedinIcon,
-	MediumIcon,
-	ProfileIcon,
-	ResumeIcon,
-	TwitterIcon,
-} from '@/assets/Icons'
+import { EyeIcon, GithubIcon, IconProps, LinkedinIcon, MediumIcon, ProfileIcon, ResumeIcon, TwitterIcon } from '@/Icons'
 import Button from '../Button'
 import cx from 'clsx'
 import Link from 'next/link'

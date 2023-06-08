@@ -1,0 +1,115 @@
+---
+title: 'Why Did Discord Go From MongoDB To Cassandra Then ScyllaDB? Simplified!'
+publishedAt: 'March 15, 2023'
+description: 'Simplified some blogs publisehd by Discord on their challenges and learning while implementing and chaing the database for their product based on the data.'
+cover: '/assets/Why-Did-Discord-Go-From-MongoDB-To-Cassandra-Then-ScyllaDB-Simplified/cover.png'
+color: 'purple'
+---
+
+Hey, How are you?
+
+So the other day I came across a Discord blog titled [HOW DISCORD STORES TRILLIONS OF MESSAGES](https://discord.com/blog/how-discord-stores-trillions-of-messages), and the title piques my interest and gives a sense of wonder that in the world they are accomplishing this and that too with scalability.
+
+So I'm going to summarize the above blog post for you because I had to read it several times to grasp everything.
+
+So let's get started.
+
+First thing First, what exactly are MongoDB, Cassandra, and ScyllaDB? What are the differences between them?
+
+1. **MongoDB**: It's a NoSQL database management system and of type document based. In Mongodb JSON-like documents are created and since it's in the NoSQL family, so it's not ACID compliant. Mongodb has Master - slave model, the data model is unstructured here thus providing support for use cases where Rich Data model is required.
+2. **Cassandra**: it also belongs NoSQL family and its data model is structured and is based on columns, which is why it falls under the wide-column store type NoSQL database. Cassandra provides high availability by having multiple Master nodes in a cluster and thus provides support for use cases where database querying is required based on the primary key and where the system is write-heavy.
+3. **ScyllaDB**: it is also a wide column store-based NoSQL database like Cassandra and is also API compatible with Amazon DynamoDB and Cassandra. The major difference between ScyllaDB and Cassandra is it is written in C++ but Cassandra is written in JAVA, and instead of relying on page-cache, it stores row-cache making it more optimized and fast than Cassandra.
+
+Ok let's do some time travel come with me
+
+**Current time - May 2015**
+
+This month Discord is launched and everything is stored in a single MongoDB replica set.
+
+**Current time - November 2015**
+
+Booom, Discord now has 100 million messages stored in DB, but guess what, the data and the index could no longer able to fit in RAM, and latency becomes unpredictable.
+
+Now what, Discord decided to migrate to a new DB and they need a database that fulfills at least these requirements:
+
+1. Linear Scalability
+2. Automatic failover
+3. Low maintenance
+4. Predictable Performance
+5. Open source
+6. Not a blob-type store
+
+Because now the company knows some common patterns like:
+
+1. The read/write ratio on the platform is 50/50.
+2. They have broadly 3 types of groups - Voice Heavy, Private Groups, and Public Groups and all of them have different behavior for disk cache.
+3. Discord has some features in the pipeline like a pinned message, full-text search, last 30 days mentions, etc.
+
+And they finalized and goes with Cassandra which is suitable for the above points.
+
+Now comes the situation of how should they do data modeling.
+
+In Mongodb they indexed the messages using channel_id and created_at.
+
+But in Cassandra, they go with a composite primary key ((channel_id, bucket), message_id) why?
+
+1. Cassandra is a kind of KKV store where the First K stands for Partition key and the second is Clustering key.
+2. Channel_id was sufficient for the partition key, then why did they choose bucket? And what is Bucket here? See point 6.
+3. But created_at would not be sufficient for clustering, because, in a channel two messages can have the same created_at value.
+4. Since they were creating message_id which is a SnowFlake, and this 64-bit id has a composition of timestamp. Read more about Snowflake here [https://blog.twitter.com/2010/announcing-snowflake](https://blog.twitter.com/2010/announcing-snowflake)
+5. So message_id was self-sufficient for clustering.
+6. Now comes Bucket, So after the team started importing messages in Cassandra, they got some errors because of a partition size of more than 100MB.
+7. Now to make partitions less than 100MB, they need some changes in the Partition key such that the size of the partition is less than 100MB. So after studying the patterns team decided that if they bucket 10 days of messages, the partition size will be less than 100MB. That is the reason for having the Partition key as (channel_id, bucket).
+
+Now comes the time to launch Cassandra.
+
+They did launch Cassandra but made read/write double on both MongoDB and Cassandra, to check how Cassandra is behaving with production data.
+
+But the team got some errors and the reason for that was -
+
+1. Since Cassandra is a type of NoSQL database and provides availability over consistency. So now the problem arises if two users are performing an action on the same message and one user edits the message and the other one deletes it at the same time.
+2. Then, users were getting errors on editing.
+3. As mentioned above Cassandra provides availability over consistency, so to resolve the issue team added a validation that author_id is null(which means the message is deleted), then they create a tombstone. And this tombstone is nothing just the deleted message.
+4. And while reading the database, tombstones were skipped.
+5. And this tombstone has time to live for 10 days which was later moved to 2 days because of issues they faced with one customer after launch.
+
+Hence, Discord launched and successfully make primary DB - Cassandra with a performance of less than 1 ms latency in write and less than 5 ms in read operations.
+
+**Now comes Somewhere in 2022**
+
+Now Discord touches the trillion mark with around 177 nodes of Cassandra but again DB is suffering from various issues and even latency was unpredictable.
+
+Out of various issues, the database was facing two major issues:
+
+1. **Hot Partition**: This is a term discord uses when there is a situation where high traffic comes on a specific partition which results in unbounded concurrency, leading to latency. In simple terms, let's say there are two partitions one is of a small group of friends with less read/write and the other is a widely spread public group with lots of reads/write operations since reads are more expensive than writes in Cassandra, so this hot partition situation comes up when there is a lot of reads and the specific partition falls behind and cause latency spikes in all other operations.
+2. **Garbage Collector issues**: The team also spent a lot of time tuning JVM because that also pauses the operations and causes huge latency.
+
+So how they resolved it?
+
+We know already that they have an option of ScyllaDB(Cassandra alternative but in C++), which will resolve GC issues. But Hot partitions can still happen in ScyllaDB as well.
+
+To resolve this and to reduce huge traffic on the database. Discord added a data service - a layer between the API monolith server and DB Clusters.
+
+This service is written in Rust.
+
+This data service performs two major tasks:
+
+1. **Request Coalescing**: If multiple users are hitting the same read query then only the first query hits the DB and the tasks/query gets stored in the data service and other similar queries return values from the data service itself.
+
+   ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1678818194645/5a767757-fd2f-4fc5-8cca-e2c2ebcdbe9f.png align="center")
+
+2. **Upstream of data services**: Here they implemented hash-based routing which means for each request, the data service provides a routing key. for messages its channel_id, So every query for messages in the same channel hits the same instance of data service which also prevents hot partitions.
+
+   ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1678818216702/93e8d044-585e-4b04-8178-5a7549d7b3d8.png align="center")
+
+And, that's it.
+
+This is how Discord handles trillions of data.
+
+Ok, a small request.
+
+if you found the above stuff helpful or even bad, do let me know as feedback.
+
+You can comment here or reach me at [@ShubhInTech](https://twitter.com/ShubhInTech)
+
+fin.

@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Greeting from '../Greeting'
 import Button from '../Button'
-import { ProfileIcon } from '@/assets/Icons'
+import { ProfileIcon } from '@/Icons'
 import Text from '../Text'
 import SocialButtons from '../SocialButtons'
 import { useRouter } from 'next/navigation'
@@ -16,7 +16,9 @@ const Intro = () => {
 				<div className='rounded-full w-[160px] h-[160px] bg-[#204fa7] bg-opacity-[0.7]'>
 					<Image
 						className='transition rounded-full contrast-75 brightness-150 grayscale mix-blend-hard-light opacity-70 hover:filter-none hover:opacity-100 hover:mix-blend-normal'
-						src={require('../../assets/Shubhdeepchhabra.png')}
+						src='/assets/Shubhdeepchhabra.png'
+						width={160}
+						height={160}
 						alt='shubhdeep Chhabra'
 					/>
 				</div>

@@ -2,7 +2,7 @@
 
 import Text from '../Text'
 import Button from '../Button'
-import { ResumeIcon, StarIcon } from '@/assets/Icons'
+import { ResumeIcon, StarIcon } from '@/Icons'
 import Link from 'next/link'
 import cx from 'clsx'
 import Image from 'next/image'
@@ -140,8 +140,10 @@ const AllProjects = () => {
 						)}
 					>
 						<Image
-							alt='p1'
-							src={require('../../assets/frames.png')}
+							alt='project'
+							src='/assets/frames.png'
+							width={64}
+							height={64}
 							className={cx(
 								'p-1 dark:bg-opacity-[0.07] transition rounded-lg group-hocus:bg-opacity-0 group-hocus:scale-110 min-w-[64px]',
 								project.imageStyles
