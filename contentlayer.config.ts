@@ -1,10 +1,16 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
 import readingTime from 'reading-time'
+import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+// import rehypeCodeTitles from 'rehype-code-titles'
+import rehypePrism from 'rehype-prism-plus'
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 
 export const Blog = defineDocumentType(() => ({
 	name: 'Blog',
 	filePathPattern: '**/*.mdx',
-	bodyType: 'mdx',
+	contentType: 'mdx',
 	fields: {
 		title: { type: 'string', required: true },
 		publishedAt: { type: 'string', required: true },
@@ -46,7 +52,13 @@ export default makeSource({
 	contentDirPath: 'blog',
 	documentTypes: [Blog],
 	mdx: {
-		remarkPlugins: [],
-		rehypePlugins: [],
+		remarkPlugins: [remarkGfm],
+		rehypePlugins: [
+			rehypeSlug,
+			// rehypeCodeTitles,
+			rehypePrism,
+			rehypeAutolinkHeadings,
+			rehypeAccessibleEmojis,
+		],
 	},
 })

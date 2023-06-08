@@ -166,7 +166,7 @@ const FeaturedProjects = () => {
 								project.imageStyles
 							)}
 						/>
-						<div className='flex flex-col justify-around items'>
+						<div className='flex flex-col items-start w-full'>
 							<div className='flex gap-2 items-center'>
 								<Text
 									transitioned={false}
