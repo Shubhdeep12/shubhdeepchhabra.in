@@ -1,6 +1,8 @@
 import { allBlogs } from 'contentlayer/generated'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import { notFound } from 'next/navigation'
+import BlogFooter from '@/components/blog/BlogFooter'
+import Hero from '@/components/blog/Hero'
 
 export async function generateStaticParams() {
 	return allBlogs.map((blog) => ({
@@ -9,19 +11,23 @@ export async function generateStaticParams() {
 }
 
 export default function Page({ params }: { params: { slug: string } }) {
-	// Find the blog for the current page.
 	const blog = allBlogs.find((blog) => blog.slug === params.slug)
 
-	// 404 if the blog does not exist.
 	if (!blog) notFound()
 
-	// Parse the MDX file via the useMDXComponent hook.
 	const MDXContent = useMDXComponent(blog.body.code)
 
 	return (
-		<div>
+		<section className='flex flex-col items-start gap-8'>
+			<script type='application/ld+json' suppressHydrationWarning>
+				{JSON.stringify(blog.structuredData)}
+			</script>
+			<Hero blog={blog} />
+
 			{/* Some code ... */}
 			<MDXContent />
-		</div>
+
+			<BlogFooter blog={blog} />
+		</section>
 	)
 }

@@ -5,7 +5,7 @@ import Button from '../Button'
 import cx from 'clsx'
 import { useRouter } from 'next/navigation'
 import SocialButtons from '../SocialButtons'
-import { SCIcon } from '@/assets/Icons'
+import { SCIcon } from '@/Icons'
 import Image from 'next/image'
 
 const Footer = () => {
@@ -139,7 +139,7 @@ const Footer = () => {
 							'
 						/>
 						<Image
-							src={require('../../assets/shubh-avatar-1.png')}
+							src='/assets/shubh-avatar-1.png'
 							height={24}
 							width={24}
 							alt='shubh-avatar'

@@ -1,7 +1,7 @@
 import { Blog } from '@/.contentlayer/generated'
 
 export const getBlogGroups = (blogs: Array<Blog>) => {
-	const sortedBlogs = blogs.sort((a, b) => Number(new Date(a.publishedAt)) - Number(new Date(b.publishedAt)))
+	const sortedBlogs = blogs.sort((a, b) => Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt)))
 
 	const finalResponse = sortedBlogs.reduce((previous, currentItem) => {
 		const group = new Date(currentItem.publishedAt).getFullYear() || new Date().getFullYear()

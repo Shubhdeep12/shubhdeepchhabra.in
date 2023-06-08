@@ -5,7 +5,7 @@ import { getBlogGroups } from './utils'
 
 export default function Blogs() {
 	return (
-		<div className='h-[1700px] flex gap-10 w-full flex-col items-start'>
+		<div className='flex gap-10 w-full flex-col items-start'>
 			<Text
 				variant='shadow'
 				gFrom='dark:from-purple-500'

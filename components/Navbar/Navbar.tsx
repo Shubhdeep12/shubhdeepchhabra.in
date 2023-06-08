@@ -12,7 +12,8 @@ import Button from '../Button'
 import Text from '../Text'
 import { useIsMounted } from '@/hooks/isMounted'
 import Image from 'next/image'
-import { SCIcon } from '@/assets/Icons'
+import { SCIcon } from '@/Icons'
+import Link from 'next/link'
 
 const Navbar = () => {
 	const pathname = usePathname()
@@ -56,7 +57,7 @@ const Navbar = () => {
 				'transition-all',
 				'rounded-lg',
 				'p-[10px]',
-				'bg-background-nav-light/20 dark:bg-background-nav-dark backdrop-blur-[10px] backdrop-saturate-150',
+				'bg-background-nav-light dark:bg-background-nav-dark backdrop-blur-[10px] backdrop-saturate-150',
 				'hover:shadow-dark',
 				'border border-border-nav-dark dark:border-border-nav-light',
 				'z-10'
@@ -65,7 +66,8 @@ const Navbar = () => {
 			<section className='h-[40px] flex gap-4 justify-between items-center'>
 				<div className='h-full'>
 					<Button
-						onClick={() => router.push('/')}
+						type={Link}
+						href='/'
 						height='h-full'
 						variant='normal'
 						focusOutlined
@@ -82,7 +84,7 @@ const Navbar = () => {
 							'
 							/>
 							<Image
-								src={require('../../assets/shubh-avatar-1.png')}
+								src='/assets/shubh-avatar-1.png'
 								height={32}
 								width={32}
 								alt='shubh-avatar'

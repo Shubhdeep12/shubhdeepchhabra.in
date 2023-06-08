@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronUp } from '@/assets/Icons'
+import { ChevronUp } from '@/Icons'
 import { useIsMounted } from '@/hooks/isMounted'
 import { useState, useEffect, useCallback } from 'react'
 import Button from '../Button'
