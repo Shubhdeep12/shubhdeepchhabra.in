@@ -19,7 +19,7 @@ Note- Just check and confirm that you are in Test Mode.
 
 These steps are the main blocks of payment flow in Razorpay-
 
-![](https://cdn-images-1.medium.com/max/1000/1*Sr1d7aSD7OUI32bd5kpjFA.png align="left")
+<Image alt='aa' src='https://cdn-images-1.medium.com/max/1000/1*Sr1d7aSD7OUI32bd5kpjFA.png' />
 
 1. The customer creates an Order.
 2. Razorpay creates an order id for it, which we use in our integration.
@@ -36,13 +36,13 @@ Note — Please read the comments because I tried to cover every possible de
 
 Initializing Razorpay
 
-```javascript
+```js
 const Razorpay = require('razorpay')
 ```
 
 API route for creating an order
 
-```javascript
+```js
 app.post('/order', async (req, res) => {
 	// initializing razorpay
 	const razorpay = new Razorpay({
@@ -72,7 +72,7 @@ app.post('/order', async (req, res) => {
 
 For accepting and validating payment
 
-```javascript
+```js
 app.post('/payment', async (req, res) => {
 	// Here you can retrieve the transaction id and amount from client.
 })
@@ -83,7 +83,7 @@ app.post('/payment', async (req, res) => {
 
 Basic code for a button with hard-coded values
 
-```javascript
+```js
 const [displayRazorpay, setDisplayRazorpay] = useState(false);
 const [orderDetails, setOrderDetails] = useState({
   orderId: null,
@@ -132,7 +132,7 @@ return (
 
 Now, the code for rendering Razorpay
 
-```javascript
+```js
 import { useEffect, useRef } from 'react';
 import crypto from 'crypto-js';
 import PropTypes from 'prop-types';
@@ -220,7 +220,7 @@ export default RenderRazorpay;
 
 Now, the most important part of the integration
 
-```javascript
+```js
 const options = {
 	key: keyId, // key id from props
 	amount, // Amount in lowest denomination from props
@@ -297,7 +297,7 @@ const options = {
 
 Here’s how it looks
 
-![](https://cdn-images-1.medium.com/max/1000/1*sWY28QE8fkjFXnQDTQ_lMQ.png align="center")
+<Image alt='aa' src='https://cdn-images-1.medium.com/max/1000/1*sWY28QE8fkjFXnQDTQ_lMQ.png' />
 
 Here are some important links which might be helpful for you:
 

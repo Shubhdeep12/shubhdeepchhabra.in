@@ -96,11 +96,17 @@ This data service performs two major tasks:
 
 1. **Request Coalescing**: If multiple users are hitting the same read query then only the first query hits the DB and the tasks/query gets stored in the data service and other similar queries return values from the data service itself.
 
-   ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1678818194645/5a767757-fd2f-4fc5-8cca-e2c2ebcdbe9f.png align="center")
+   <Image
+   	alt='aa'
+   	src='https://cdn.hashnode.com/res/hashnode/image/upload/v1678818194645/5a767757-fd2f-4fc5-8cca-e2c2ebcdbe9f.png'
+   />
 
 2. **Upstream of data services**: Here they implemented hash-based routing which means for each request, the data service provides a routing key. for messages its channel_id, So every query for messages in the same channel hits the same instance of data service which also prevents hot partitions.
 
-   ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1678818216702/93e8d044-585e-4b04-8178-5a7549d7b3d8.png align="center")
+   <Image
+   	alt='aa'
+   	src='https://cdn.hashnode.com/res/hashnode/image/upload/v1678818216702/93e8d044-585e-4b04-8178-5a7549d7b3d8.png'
+   />
 
 And, that's it.
 

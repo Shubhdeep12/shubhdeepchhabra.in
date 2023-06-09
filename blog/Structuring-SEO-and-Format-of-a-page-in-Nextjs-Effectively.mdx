@@ -6,157 +6,85 @@ cover: '/assets/Structuring-SEO-and-Format-of-a-page-in-Nextjs-Effectively/cover
 color: 'pink'
 ---
 
-Have you ever heard of **Design tokens**?
-**Design tokens**, to put it simply, are all the CSS-related values of your product that are kept in one location and utilized as needed.
+Organizing your Next.js application and using components.
 
-Simple? Isn't it?😅
+Imagine you want to use Next.js to build an application and that you want each page to have a distinct SEO strategy as well as the same header, footer, and navbar.
 
-And it is more simple to use and implement also.
+What you can manage to do?
 
-Let's deep dive and learn how to create one 🚀🚀.
+The simple option is to build a shared component that is called repeatedly on each page.
 
-We will be creating a React app with a CSS-in-JS library named **Styled Components**.
+But, You might try this 👇
 
-[Styled Components Basics](https://styled-components.com/docs/basics) would be helpful if you are new to the Styled Components.
+- I hope you have already developed a Next.js app before reading this. If not, visit this page 👉 [https://nextjs.org/docs/getting-started](https://nextjs.org/docs/getting-started)
+- Create two components with the names **Format** and SEOSetup in a new folder called **components** inside the src directory. This component, “Format,” refers to the layout of the page. Here, in this case, the layout of every page will be in this flow **Navbar** then **Main** content, and then a **Footer**. And, We are therefore defining it below 👇
 
-Just want to let you know, we will not learn how to write code instead we will be focusing on the practice to store and create design tokens in an app.
+```js
+import { FC } from 'react'
 
-Let's begin the steps: -
+import Footer from '../Footer'
+import Navbar from '../Navbar'
 
-- Install Styled Components and create a new **React app** using the [Guide to construct a new React App] (https://create-react-app.dev/docs/getting-started/).
-
-  OR
-
-  You may make use of your ongoing project.
-
-- Create a basic component, for now, I am creating a profile card. Make a profile card as seen below without worrying about the design token.
-
-  ![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1667485246960/xWtV-venZ.png align="left")
-
-  If you are creating on your own, otherwise 👇
-
-  Here is the code for that component.
-  [**_Codesandbox link_**](https://codesandbox.io/s/profilecard-without-design-tokens-kkectn)
-
-  There are no design tokens in this.
-
-  ![React_App_-_Google_Chrome_2022-11-03_23-12-08_AdobeExpress.gif](https://cdn.hashnode.com/res/hashnode/image/upload/v1667497571525/wZ0A3I-y-.gif align="left")
-
-- Now there is a task for you -> change the color of the button and all social media links and decrease the size of the text by 2px.
-
-Hope you completed the task, So I want to ask my last question here - don't you feel that you kept changing the same value at different locations?
-If yes, I think you understand the need for design tokens.
-
-Let's create some.
-
-Here is the [**_Codesandbox link_**](https://codesandbox.io/s/profilecard-with-design-tokens-bwbv8x) of the project but with design tokens.
-
-Understanding how we developed the design token is crucial.
-For the sake of the example, we made an object with two keys that represented the theme: light and dark.
-
-```javascript
-export default {
-	light: {
-		fontSize: {
-			text: {
-				small: 20,
-				medium: 23,
-				large: 30,
-			},
-			button: {
-				small: 15,
-				medium: 17,
-				large: 20,
-			},
-		},
-		color: {
-			text: {
-				primary: '#252525',
-				secondary: '#26235C',
-				white1: '#FFFFFF',
-			},
-			background: {
-				primary: '#FFFFFF',
-			},
-			border: {
-				primary: '#26235C',
-			},
-			button: {
-				blue1: '#26235C',
-			},
-			icon: {
-				blue1: '#26235C',
-				yellow1: '#F7DF1E',
-				black1: '#000000',
-			},
-		},
-		fontWeight: {
-			small: 200,
-			medium: 400,
-			large: 700,
-		},
-	},
-	dark: {
-		fontSize: {
-			text: {
-				small: 20,
-				medium: 23,
-				large: 30,
-			},
-			button: {
-				small: 15,
-				medium: 17,
-				large: 20,
-			},
-		},
-		color: {
-			text: {
-				primary: '#FFFFFF',
-				secondary: '#A79AE0',
-				white1: '#FFFFFF',
-			},
-			background: {
-				primary: '#26235C',
-			},
-			border: {
-				primary: '#A79AE0',
-			},
-			button: {
-				blue1: 'rgba(144, 130, 236, 0.65)',
-			},
-			icon: {
-				blue1: '#A79AE0',
-				yellow1: '#F7DF1E',
-				black1: '#000000',
-			},
-		},
-		fontWeight: {
-			small: 200,
-			medium: 400,
-			large: 700,
-		},
-	},
+const Format: FC = (props) => {
+	return (
+		<>
+			<Navbar />
+			<Main>{props.children}</Main>
+			<Footer />
+		</>
+	)
 }
+
+export default Format
 ```
 
-You can see that we assigned values for text size, button color, background color, and all other CSS attributes used in our profile card here.
+- In **SEOSetup**, we’re really constructing a common tag with data supplied as props for the meta and title tag fields. So that we may utilize this **SEOSetup** component each time we need to define SEO-related information on a page rather than creating a head tag repeatedly.
 
-And these are used everywhere instead of hard coding the colors.
+```js
+import Head from 'next/head'
 
-We now have a central location for changing the CSS properties like button color, etc wherever needed.
+export interface MetaData {
+	title: string;
+	description: string;
+}
 
-Isn't that easy?
-And design tokens are exactly this.
+const SEOSetup: FC<MetaData> = (props) => {
+	const { title, description } = props
 
-Although not all aspects, such as having distinct styles for various screen sizes, are covered by this example.
-But understanding is sufficient to begin making your own **Design Tokens**.
+	return (
+		<Head>
+			<title>{title}</title>
+			<meta name={'title'} content={title} />
+			<meta name={'description'} content={description} />
+		</Head>
+	)
+}
 
-Depending on the product, a design token may have a variety of layers.
+export default SEOSetup
+```
 
-That's the end of this blog.
+- Finally, utilize them on a page. Here we are just wrapping the page with the Format component and setting up SEO with our custom **SEOSetup** tag.
+
+```js
+import type { NextPage } from 'next'
+
+import Format from '../components/Format'
+import SEOSetup from '../components/SEOSetup'
+
+const Home: NextPage = () => {
+	return (
+		<Format>
+			<SEOSetup title='This is title of the Home Page' description='This is description of Home Page' />
+			<div>This is Home Page.</div>
+		</Format>
+	)
+}
+
+export default Home
+```
+
+⭐️ ⭐️ THE END ⭐️️️️️ ⭐️
 
 I hope you find this helpful. 🙌 Please tell me in the comments. 📪
-
-Happy reading
 
 For more of this type of stuff, follow me on Twitter — [@ShubhInTech](https://twitter.com/ShubhInTech)
