@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Text from '../Text'
 import { CalendarIcon, EyeIcon, TimeIcon } from '@/Icons'
 import Reactions from './Reactions'
@@ -7,12 +8,19 @@ import { Blog } from '@/.contentlayer/generated'
 import Button from '../Button'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useBlogViews } from '@/hooks/useBlogViews'
 
 type HeroProps = {
 	blog: Blog
 }
 
 const Hero = ({ blog }: HeroProps) => {
+	const { views, isLoading, increment } = useBlogViews(blog.slug)
+
+	useEffect(() => {
+		increment()
+	}, [])
+
 	return (
 		<>
 			<Button
@@ -52,7 +60,7 @@ const Hero = ({ blog }: HeroProps) => {
 				<div className='flex gap-1 items-center bg-opacity-50 bg-slate-200 dark:bg-slate-600 rounded-md text-xs py-1 px-2'>
 					<EyeIcon width={15} height={15} />
 
-					<Text className='text-sm'>252 views</Text>
+					<Text className='text-sm'>{isLoading ? '-' : views} views</Text>
 				</div>
 			</div>
 
