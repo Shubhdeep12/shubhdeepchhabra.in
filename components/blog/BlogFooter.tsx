@@ -59,7 +59,7 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 				</Button>
 			</div>
 
-			<Reactions />
+			<Reactions blog={blog} />
 		</div>
 	)
 }

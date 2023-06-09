@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import Text from '../Text'
 import { CalendarIcon, EyeIcon, TimeIcon } from '@/Icons'
@@ -55,7 +56,7 @@ const Hero = ({ blog }: HeroProps) => {
 				</div>
 			</div>
 
-			<Reactions />
+			<Reactions blog={blog} />
 
 			<Image
 				alt={blog.title}

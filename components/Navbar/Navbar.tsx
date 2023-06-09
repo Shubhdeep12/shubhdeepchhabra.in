@@ -14,6 +14,7 @@ import { useIsMounted } from '@/hooks/isMounted'
 import Image from 'next/image'
 import { SCIcon } from '@/Icons'
 import Link from 'next/link'
+import Loader from '../Loader'
 
 const Navbar = () => {
 	const pathname = usePathname()
@@ -127,8 +128,8 @@ const Navbar = () => {
 						))}
 					</ul>
 				</section>
-				<div className='h-full w-[42px]'>
-					{isMounted && (
+				<div className='h-full w-[42px] flex items-center justify-center'>
+					{isMounted ? (
 						<Button
 							height='h-full'
 							width='w-full'
@@ -139,6 +140,8 @@ const Navbar = () => {
 						>
 							{isDark ? <IoSunny size={20} /> : <IoMoon size={20} />}
 						</Button>
+					) : (
+						<Loader />
 					)}
 				</div>
 
