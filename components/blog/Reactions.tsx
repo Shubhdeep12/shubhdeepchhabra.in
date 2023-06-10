@@ -5,10 +5,11 @@ import Text from '../Text'
 import { BookmarkIcon, IconProps, LikeIcon, LoveIcon } from '@/Icons'
 import { Blog } from '@/.contentlayer/generated'
 import useLocalStoredReactions from '@/hooks/useLocalStoredReactions'
+import { useBlogReactions } from '@/hooks/useBlogReactions'
+import Loader from '../Loader'
 
 type ReactionProp = {
 	id: string
-	count: number
 	fillColor: string
 	strokeColor: string
 	wIcon: number
@@ -24,7 +25,6 @@ const ReactionIcons: Record<string, React.FC<IconProps>> = {
 const REACTIONS: ReactionProp[] = [
 	{
 		id: 'like',
-		count: 1,
 		fillColor: 'fill-[#00c2e6]',
 		strokeColor: 'group-hocus:stroke-[#831ef78f]',
 		wIcon: 15,
@@ -32,7 +32,6 @@ const REACTIONS: ReactionProp[] = [
 	},
 	{
 		id: 'love',
-		count: 2,
 		fillColor: 'fill-[#e6004d]',
 		strokeColor: 'group-hocus:stroke-[#e6004d8f]',
 		wIcon: 15,
@@ -40,7 +39,6 @@ const REACTIONS: ReactionProp[] = [
 	},
 	{
 		id: 'bookmark',
-		count: 3,
 		fillColor: 'fill-[#831ef7]',
 		strokeColor: 'group-hocus:stroke-[#e6004d8f]',
 		wIcon: 15,
@@ -48,6 +46,7 @@ const REACTIONS: ReactionProp[] = [
 	},
 ]
 const Reactions = ({ blog }: { blog: Blog }) => {
+	const { reactions, isError, isLoading, addReaction } = useBlogReactions(blog.slug)
 	const { localReactions, setLocalStoredReactions } = useLocalStoredReactions(blog.slug, {
 		love: false,
 		like: false,
@@ -55,9 +54,11 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 	})
 
 	const handleReaction = (type: string) => {
-		setLocalStoredReactions(type)
+		if (!localReactions[type]) {
+			setLocalStoredReactions(type)
 
-		// TODO: add in DB
+			addReaction(type)
+		}
 	}
 
 	return (
@@ -83,9 +84,13 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 								localReactions && localReactions[reaction?.id] ? reaction.fillColor : reaction.strokeColor
 							)}
 						/>
-						<Text className='text-sm font-bold group-hocus:text-black dark:group-hocus:text-white'>
-							{reaction.count}
-						</Text>
+						{isLoading ? (
+							<Loader />
+						) : (
+							<Text className='text-sm font-bold group-hocus:text-black dark:group-hocus:text-white'>
+								{!isError && reactions ? reactions[reaction?.id] : '-'}
+							</Text>
+						)}
 					</Button>
 				)
 			})}

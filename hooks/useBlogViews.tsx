@@ -31,8 +31,7 @@ export const useBlogViews = (slug: string, config?: SWRConfiguration) => {
 	const views = data?.total
 	const increment = () => {
 		mutate(
-			updateBlogViews(slug).catch((e) => {
-				console.log(e)
+			updateBlogViews(slug).catch(() => {
 				return { total: 0 }
 			})
 		)

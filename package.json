@@ -22,6 +22,7 @@
 		"autoprefixer": "10.4.14",
 		"clsx": "^1.2.1",
 		"contentlayer": "^0.3.3",
+		"crypto": "^1.0.1",
 		"eslint-config-next": "13.4.2",
 		"framer-motion": "^10.12.16",
 		"next": "13.4.2",

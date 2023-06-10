@@ -15,3 +15,19 @@ model Stats {
   slug    String     @id @db.VarChar(128)
   views   Int        @default(0)
 }
+
+model Reactions {
+  slug  String @id @db.VarChar(128)
+  like BigInt @default(0)
+  love BigInt @default(0)
+  bookmark BigInt @default(0)
+
+}
+
+model Session {
+  id        String   @id
+  createdAt DateTime @default(now())
+  isLiked   Boolean      @default(false)
+  isLoved   Boolean      @default(false)
+  isBookmarked   Boolean      @default(false)
+}
