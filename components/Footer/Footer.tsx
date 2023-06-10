@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import SocialButtons from '../SocialButtons'
 import { SCIcon } from '@/Icons'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Footer = () => {
 	const router = useRouter()
@@ -61,6 +62,18 @@ const Footer = () => {
 			underline: 'hocus:decoration-[#c86827]',
 		},
 	]
+
+	const DONATE_SOURCES = [
+		{
+			key: 'coffee',
+			title: 'Coffee',
+			route: 'https://www.buymeacoffee.com/shubhdeep',
+			gradient: true,
+			gFrom: 'from-yellow-500',
+			gTo: 'to-orange-500',
+			underline: 'hocus:decoration-yellow-500',
+		},
+	]
 	return (
 		<footer
 			className='
@@ -68,7 +81,7 @@ const Footer = () => {
 				flex flex-col gap-9 py-9 px-2 border-t bottom-0'
 		>
 			<div className='flex gap-9'>
-				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4'>
+				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
 					{NAVBAR_ITEMS.map((item) => (
 						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
 							<Button
@@ -78,7 +91,8 @@ const Footer = () => {
 									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
-								onClick={() => router.push(item.route)}
+								type={Link}
+								href={item.route}
 							>
 								<Text
 									variant='gradient'
@@ -94,8 +108,34 @@ const Footer = () => {
 					))}
 				</ul>
 
-				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4'>
+				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
 					{EXTRA_FOOTER_ITEMS.map((item) => (
+						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
+							<Button
+								focusOutlined
+								hoverable={false}
+								className={cx(
+									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
+									item.underline
+								)}
+								onClick={() => window.open(item.route, '_blank')}
+							>
+								<Text
+									variant='gradient'
+									active={currentFocussed === item.key}
+									gFrom={item.gFrom}
+									gTo={item.gTo}
+									className={cx('hover:text-transparent font-semibold')}
+								>
+									{item.title}
+								</Text>
+							</Button>
+						</li>
+					))}
+				</ul>
+
+				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
+					{DONATE_SOURCES.map((item) => (
 						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
 							<Button
 								focusOutlined

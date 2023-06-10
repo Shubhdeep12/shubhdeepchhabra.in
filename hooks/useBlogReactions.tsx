@@ -37,6 +37,16 @@ export const useBlogReactions = (slug: string, config?: SWRConfiguration) => {
 	const user = data?.userSession
 
 	const addReaction = (type: string) => {
+		if (!data) {
+			return
+		}
+		mutate({
+			reactions: {
+				...data.reactions,
+				[type]: (Number(data?.reactions[type]) + 1).toString(),
+			},
+			userSession: data.userSession,
+		})
 		mutate(
 			updateBlogReactions(slug, type).catch(() => {
 				return {

@@ -82,47 +82,6 @@ module.exports = {
 				scroll: 'scroll 15s linear infinite',
 				wave: 'wave 2.5s infinite',
 			},
-			typography: (theme) => ({
-				DEFAULT: {
-					css: {
-						color: theme('colors.neutral.700'),
-						'h2,h3,h4': {
-							'scroll-margin-top': '20px',
-						},
-						'blockquote p:first-of-type::before': false,
-						'blockquote p:last-of-type::after': false,
-					},
-				},
-				dark: {
-					css: {
-						color: theme('colors.text.light'),
-						blockquote: {
-							borderLeftColor: theme('colors.gray.700'),
-							color: theme('colors.gray.300'),
-						},
-						'h2,h3,h4': {
-							color: theme('colors.light'),
-							'scroll-margin-top': '20px',
-						},
-						hr: { borderColor: theme('colors.gray.700') },
-						strong: { color: theme('colors.gray.300') },
-						thead: {
-							color: theme('colors.gray.100'),
-						},
-						tbody: {
-							tr: {
-								borderBottomColor: theme('colors.gray.700'),
-							},
-						},
-					},
-				},
-				quoteless: {
-					css: {
-						'blockquote p:first-of-type::before': { content: 'none' },
-						'blockquote p:first-of-type::after': { content: 'none' },
-					},
-				},
-			}),
 		},
 	},
 	plugins: [hocusPlugin, require('@tailwindcss/typography')],

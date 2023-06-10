@@ -1,11 +1,24 @@
 import clsx from 'clsx'
 
-const Loader = ({ className }: { className?: string }) => {
+const Loader = ({
+	className,
+	width = 'w-6',
+	height = 'h-6',
+}: {
+	className?: string
+	height?: string
+	width?: string
+}) => {
 	return (
 		<div role='status'>
 			<svg
 				aria-hidden='true'
-				className={clsx('w-6 h-6 mr-2 text-transparent animate-spin fill-text-dark dark:fill-text-light', className)}
+				className={clsx(
+					'mr-2 text-transparent animate-spin fill-text-dark dark:fill-text-light',
+					className,
+					height,
+					width
+				)}
 				viewBox='0 0 100 101'
 				fill='none'
 				xmlns='http://www.w3.org/2000/svg'

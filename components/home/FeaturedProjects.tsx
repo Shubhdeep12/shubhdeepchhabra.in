@@ -7,6 +7,7 @@ import { EyeIcon, ResumeIcon, StarIcon } from '@/Icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import cx from 'clsx'
+import { useEffect } from 'react'
 
 type ProjectProps = {
 	key: string
@@ -85,6 +86,10 @@ const PROJECTS: ProjectProps[] = [
 
 const FeaturedProjects = () => {
 	const router = useRouter()
+
+	useEffect(() => {
+		fetch(`https://api.github.com/users/Shubhdeep12/repos`).then((response) => console.log(response.json()))
+	}, [])
 
 	return (
 		<section id='featured-projects' className='flex flex-col gap-4'>

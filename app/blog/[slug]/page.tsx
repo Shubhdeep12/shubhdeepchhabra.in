@@ -4,11 +4,31 @@ import { notFound } from 'next/navigation'
 import BlogFooter from '@/components/blog/BlogFooter'
 import Hero from '@/components/blog/Hero'
 import BlogImages from '@/components/blog/BlogImages'
+import { Metadata } from 'next'
+import getMetaData from '@/utils/getMetaData'
 
 export async function generateStaticParams() {
 	return allBlogs.map((blog) => ({
 		slug: blog._raw.flattenedPath,
 	}))
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata | undefined> {
+	const blog = allBlogs.find((blog) => blog.slug === params.slug)
+	if (!blog) {
+		return
+	}
+
+	const { title, description, cover, slug } = blog
+	const ogImage = cover ? `${process.env.DOMAIN}${cover}` : ''
+
+	return getMetaData({
+		title,
+		description,
+		ogImage: ogImage,
+		ogType: 'article',
+		canonical: `${process.env.DOMAIN}/blog/${slug}`,
+	})
 }
 
 const components = {
@@ -28,7 +48,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 			</script>
 			<Hero blog={blog} />
 
-			<article className='prose dark:prose-dark w-full mb-2'>
+			<article className='prose dark:prose-invert w-full mb-2'>
 				<MDXContent components={components} />
 			</article>
 

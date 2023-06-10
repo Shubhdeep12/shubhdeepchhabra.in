@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import cx from 'clsx'
 import { RxHamburgerMenu, RxCross2 } from 'react-icons/rx'
 import { IoMoon, IoSunny } from 'react-icons/io5'
@@ -18,7 +18,6 @@ import Loader from '../Loader'
 
 const Navbar = () => {
 	const pathname = usePathname()
-	const router = useRouter()
 	const isMounted = useIsMounted()
 	const [navbarExpanded, setNavbarExpanded] = useState(false)
 	const { isDark, toggleTheme } = useTheme()
@@ -105,7 +104,8 @@ const Navbar = () => {
 						{NAVBAR_ITEMS.map((item) => (
 							<li key={item.key}>
 								<Button
-									onClick={() => router.push(item.route)}
+									type={Link}
+									href={item.route}
 									height='h-full'
 									width='w-full'
 									variant='normal'
@@ -174,7 +174,8 @@ const Navbar = () => {
 					{NAVBAR_ITEMS.map((item) => (
 						<li key={item.key}>
 							<Button
-								onClick={() => router.push(item.route)}
+								type={Link}
+								href={item.route}
 								height='h-full'
 								width='w-full'
 								variant='normal'

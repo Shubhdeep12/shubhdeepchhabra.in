@@ -85,7 +85,7 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 							)}
 						/>
 						{isLoading ? (
-							<Loader />
+							<Loader width='w-4' height='h-4' />
 						) : (
 							<Text className='text-sm font-bold group-hocus:text-black dark:group-hocus:text-white'>
 								{!isError && reactions ? reactions[reaction?.id] : '-'}
