@@ -1,4 +1,4 @@
-import cx from 'clsx'
+import clsx from 'clsx'
 export type GradientTextProps = {
 	gFrom?: string
 	gTo?: string
@@ -21,7 +21,7 @@ const GradientText = ({
 }: GradientTextProps) => {
 	return (
 		<span
-			className={cx(className, 'flex justify-center items-center', 'rounded', {
+			className={clsx(className, 'flex justify-center items-center', 'rounded', {
 				'transition-colors': transitioned,
 				'hover:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark': hoverable,
 				'hover:text-transparent bg-clip-text': true,

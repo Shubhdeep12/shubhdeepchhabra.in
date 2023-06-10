@@ -1,4 +1,4 @@
-import cx from 'clsx'
+import clsx from 'clsx'
 export type ShadowTextProps = {
 	shadowColor?: string
 	gFrom?: string
@@ -24,7 +24,7 @@ const ShadowText = ({
 }: ShadowTextProps) => {
 	return (
 		<span
-			className={cx(
+			className={clsx(
 				className,
 				'flex justify-center items-center',
 				'rounded',

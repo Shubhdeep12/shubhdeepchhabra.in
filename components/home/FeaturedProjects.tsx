@@ -6,7 +6,7 @@ import Text from '../Text'
 import { EyeIcon, ResumeIcon, StarIcon } from '@/Icons'
 import Link from 'next/link'
 import Image from 'next/image'
-import cx from 'clsx'
+import clsx from 'clsx'
 import { useEffect } from 'react'
 
 type ProjectProps = {
@@ -156,7 +156,7 @@ const FeaturedProjects = () => {
 						href=''
 						key={project.key}
 						id={project.key}
-						className={cx(
+						className={clsx(
 							'cursor-pointer',
 							'flex gap-2 w-full',
 							project.bgColor,
@@ -168,7 +168,7 @@ const FeaturedProjects = () => {
 							src='/assets/blueprint.png'
 							width={64}
 							height={64}
-							className={cx(
+							className={clsx(
 								'p-1 dark:bg-opacity-[0.07] transition rounded-lg group-hocus:bg-opacity-0 group-hocus:scale-110 min-w-[64px]',
 								project.imageStyles
 							)}
@@ -183,7 +183,7 @@ const FeaturedProjects = () => {
 								</Text>
 								{project.github && project.stars && project.stars > 0 && (
 									<div
-										className={cx(
+										className={clsx(
 											'transition-all h-[20px]',
 											'group-hocus:bg-inherit dark:bg-opacity-20',
 											'border border-transparent group-hocus:border-opacity-50',

@@ -1,4 +1,6 @@
 'use client'
+
+import confetti from 'canvas-confetti'
 import clsx from 'clsx'
 import Button from '../Button'
 import Text from '../Text'
@@ -7,6 +9,8 @@ import { Blog } from '@/.contentlayer/generated'
 import useLocalStoredReactions from '@/hooks/useLocalStoredReactions'
 import { useBlogReactions } from '@/hooks/useBlogReactions'
 import Loader from '../Loader'
+import { MouseEvent } from 'react'
+import { useWindowDimensions } from '@/hooks/useWindowDimensions'
 
 type ReactionProp = {
 	id: string
@@ -14,6 +18,17 @@ type ReactionProp = {
 	strokeColor: string
 	wIcon: number
 	hIcon: number
+}
+
+const confettiOptions = {
+	particleCount: 70,
+	spread: 50,
+	colors: ['#6085de'],
+	disableForReducedMotion: true,
+	scalar: 0.5,
+	gravity: 0.85,
+	decay: 0.75,
+	ticks: 100,
 }
 
 const ReactionIcons: Record<string, React.FC<IconProps>> = {
@@ -46,18 +61,46 @@ const REACTIONS: ReactionProp[] = [
 	},
 ]
 const Reactions = ({ blog }: { blog: Blog }) => {
-	const { reactions, isError, isLoading, addReaction } = useBlogReactions(blog.slug)
+	const { reactions, user, isError, isLoading, addReaction } = useBlogReactions(blog.slug)
 	const { localReactions, setLocalStoredReactions } = useLocalStoredReactions(blog.slug, {
 		love: false,
 		like: false,
 		bookmark: false,
 	})
+	const { width: windowWidth, height: windowHeight } = useWindowDimensions()
 
-	const handleReaction = (type: string) => {
-		if (!localReactions[type]) {
+	console.log({ user })
+
+	const handleReaction = (event: MouseEvent<HTMLButtonElement, MouseEvent>, type: string) => {
+		if (localReactions && !localReactions[type]) {
 			setLocalStoredReactions(type)
 
+			const x = event.clientX / windowWidth
+			const y = event.clientY / windowHeight
+			confetti({
+				...confettiOptions,
+				origin: { x, y },
+				colors: getConfettiColor(type),
+			})
+
 			addReaction(type)
+		}
+	}
+
+	const getConfettiColor = (type: string) => {
+		switch (type) {
+			case 'like': {
+				return ['#20BF6B']
+			}
+			case 'love': {
+				return ['#f42241']
+			}
+			case 'bookmark': {
+				return ['#b522f4']
+			}
+			default: {
+				return ['#fb7185']
+			}
 		}
 	}
 
@@ -69,7 +112,7 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 					<Button
 						focusOutlined
 						key={reaction.id}
-						onClick={() => handleReaction(reaction.id)}
+						onClick={(event: MouseEvent<HTMLButtonElement, MouseEvent>) => handleReaction(event, reaction.id)}
 						className={clsx(
 							'group w-auto min-w-[70px] h-auto p-2 rounded-full transition flex items-center justify-center gap-1 hocus:underline-none hocus:transform hocus:scale-[1.015]',
 							'bg-background-primary-light dark:bg-background-primary-dark border border-gray-200 dark:border-gray-600'

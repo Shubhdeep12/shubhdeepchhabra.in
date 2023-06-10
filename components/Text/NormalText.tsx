@@ -1,4 +1,4 @@
-import cx from 'clsx'
+import clsx from 'clsx'
 
 export type NormalTextProps = {
 	children?: React.ReactNode | string
@@ -9,7 +9,7 @@ export type NormalTextProps = {
 const NormalText = ({ className = '', children = '', transitioned = true, ...props }: NormalTextProps) => {
 	return (
 		<span
-			className={cx(className, 'flex justify-center items-center', 'rounded', { 'transition-colors': transitioned })}
+			className={clsx(className, 'flex justify-center items-center', 'rounded', { 'transition-colors': transitioned })}
 			{...props}
 		>
 			{children}

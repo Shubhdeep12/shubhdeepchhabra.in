@@ -4,7 +4,7 @@ import Text from '../Text'
 import Button from '../Button'
 import { ResumeIcon, StarIcon } from '@/Icons'
 import Link from 'next/link'
-import cx from 'clsx'
+import clsx from 'clsx'
 import Image from 'next/image'
 
 type ProjectProps = {
@@ -132,7 +132,7 @@ const AllProjects = () => {
 						href=''
 						key={project.key}
 						id={project.key}
-						className={cx(
+						className={clsx(
 							'cursor-pointer',
 							'flex gap-2 w-full',
 							project.bgColor,
@@ -144,7 +144,7 @@ const AllProjects = () => {
 							src='/assets/frames.png'
 							width={64}
 							height={64}
-							className={cx(
+							className={clsx(
 								'p-1 dark:bg-opacity-[0.07] transition rounded-lg group-hocus:bg-opacity-0 group-hocus:scale-110 min-w-[64px]',
 								project.imageStyles
 							)}
@@ -159,7 +159,7 @@ const AllProjects = () => {
 								</Text>
 								{project.github && project.stars && project.stars > 0 && (
 									<div
-										className={cx(
+										className={clsx(
 											'transition-all h-[20px]',
 											'group-hocus:bg-inherit dark:bg-opacity-20',
 											'border border-transparent group-hocus:border-opacity-50',

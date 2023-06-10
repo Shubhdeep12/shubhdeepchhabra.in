@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import cx from 'clsx'
+import clsx from 'clsx'
 import { RxHamburgerMenu, RxCross2 } from 'react-icons/rx'
 import { IoMoon, IoSunny } from 'react-icons/io5'
 
@@ -51,7 +51,7 @@ const Navbar = () => {
 
 	return (
 		<nav
-			className={cx(
+			className={clsx(
 				'fixed top-2 left-1/2 laptop:top-4 laptop:max-w-laptop w-full mx-auto -translate-x-1/2',
 				'flex flex-col',
 				'transition-all',

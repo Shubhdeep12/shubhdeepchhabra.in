@@ -1,5 +1,5 @@
 'use client'
-import cx from 'clsx'
+import clsx from 'clsx'
 
 export type NormalButtonProps = {
 	type?: string | React.ElementType
@@ -29,7 +29,7 @@ function NormalButton({
 	const Component = type
 	return (
 		<Component
-			className={cx(
+			className={clsx(
 				width,
 				height,
 				'transition-colors',

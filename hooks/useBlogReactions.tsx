@@ -45,7 +45,12 @@ export const useBlogReactions = (slug: string, config?: SWRConfiguration) => {
 				...data.reactions,
 				[type]: (Number(data?.reactions[type]) + 1).toString(),
 			},
-			userSession: data.userSession,
+			userSession: {
+				...data.userSession,
+				...(type === 'like' && { isLiked: true }),
+				...(type === 'love' && { isLoved: true }),
+				...(type === 'bookmark' && { isBookmarked: true }),
+			},
 		})
 		mutate(
 			updateBlogReactions(slug, type).catch(() => {

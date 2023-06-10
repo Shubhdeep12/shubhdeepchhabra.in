@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Text from '../Text'
 import Button from '../Button'
-import cx from 'clsx'
+import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import SocialButtons from '../SocialButtons'
 import { SCIcon } from '@/Icons'
@@ -87,7 +87,7 @@ const Footer = () => {
 							<Button
 								focusOutlined
 								hoverable={false}
-								className={cx(
+								className={clsx(
 									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
@@ -99,7 +99,7 @@ const Footer = () => {
 									active={currentFocussed === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
-									className={cx('hover:text-transparent font-semibold')}
+									className={clsx('hover:text-transparent font-semibold')}
 								>
 									{item.title}
 								</Text>
@@ -114,7 +114,7 @@ const Footer = () => {
 							<Button
 								focusOutlined
 								hoverable={false}
-								className={cx(
+								className={clsx(
 									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
@@ -125,7 +125,7 @@ const Footer = () => {
 									active={currentFocussed === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
-									className={cx('hover:text-transparent font-semibold')}
+									className={clsx('hover:text-transparent font-semibold')}
 								>
 									{item.title}
 								</Text>
@@ -140,7 +140,7 @@ const Footer = () => {
 							<Button
 								focusOutlined
 								hoverable={false}
-								className={cx(
+								className={clsx(
 									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
@@ -151,7 +151,7 @@ const Footer = () => {
 									active={currentFocussed === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
-									className={cx('hover:text-transparent font-semibold')}
+									className={clsx('hover:text-transparent font-semibold')}
 								>
 									{item.title}
 								</Text>
@@ -190,7 +190,7 @@ const Footer = () => {
 							'
 						/>
 					</span>
-					<Text className={cx('font-semibold')}>Shubhdeep</Text>
+					<Text className={clsx('font-semibold')}>Shubhdeep</Text>
 				</Button>
 
 				<SocialButtons

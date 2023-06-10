@@ -1,6 +1,6 @@
 import { EyeIcon, GithubIcon, IconProps, LinkedinIcon, MediumIcon, ProfileIcon, ResumeIcon, TwitterIcon } from '@/Icons'
 import Button from '../Button'
-import cx from 'clsx'
+import clsx from 'clsx'
 import Link from 'next/link'
 import BackToTopButton from '../BackToTopButton'
 
@@ -36,7 +36,7 @@ export default function SocialButtons({
 }: SocialButtonsProps) {
 	return (
 		<div
-			className={cx(
+			className={clsx(
 				'transition-colors',
 				'flex gap-2 items-center',
 				bordered && 'border border-slate-200 hover:border-blue-800 dark:border-slate-800 dark:hover:border-blue-200',
