@@ -5,6 +5,8 @@ export type ShadowTextProps = {
 	gTo?: string
 	children?: React.ReactNode | string
 	className?: string
+	as?: string | React.ElementType
+	[x: string | number | symbol]: unknown
 }
 
 const SHADOW_COLOR: { [key: string]: string } = {
@@ -20,10 +22,12 @@ const ShadowText = ({
 	gTo = '',
 	className = '',
 	children = '',
+	as = 'span',
 	...props
 }: ShadowTextProps) => {
+	const Component = as
 	return (
-		<span
+		<Component
 			className={clsx(
 				className,
 				'flex justify-center items-center',
@@ -39,7 +43,7 @@ const ShadowText = ({
 			{...props}
 		>
 			{children}
-		</span>
+		</Component>
 	)
 }
 

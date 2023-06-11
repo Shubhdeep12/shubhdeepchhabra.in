@@ -4,16 +4,19 @@ export type NormalTextProps = {
 	children?: React.ReactNode | string
 	className?: string
 	transitioned?: boolean
+	as?: string | React.ElementType
+	[x: string | number | symbol]: unknown
 }
 
-const NormalText = ({ className = '', children = '', transitioned = true, ...props }: NormalTextProps) => {
+const NormalText = ({ className = '', children = '', transitioned = true, as = 'span', ...props }: NormalTextProps) => {
+	const Component = as
 	return (
-		<span
+		<Component
 			className={clsx(className, 'flex justify-center items-center', 'rounded', { 'transition-colors': transitioned })}
 			{...props}
 		>
 			{children}
-		</span>
+		</Component>
 	)
 }
 

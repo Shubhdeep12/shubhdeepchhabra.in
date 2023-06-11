@@ -7,6 +7,8 @@ export type GradientTextProps = {
 	active?: boolean
 	hoverable?: boolean
 	transitioned?: boolean
+	as?: string | React.ElementType
+	[x: string | number | symbol]: unknown
 }
 
 const GradientText = ({
@@ -17,10 +19,12 @@ const GradientText = ({
 	hoverable = false,
 	active = false,
 	transitioned = true,
+	as = 'span',
 	...props
 }: GradientTextProps) => {
+	const Component = as
 	return (
-		<span
+		<Component
 			className={clsx(className, 'flex justify-center items-center', 'rounded', {
 				'transition-colors': transitioned,
 				'hover:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark': hoverable,
@@ -32,7 +36,7 @@ const GradientText = ({
 			{...props}
 		>
 			{children}
-		</span>
+		</Component>
 	)
 }
 

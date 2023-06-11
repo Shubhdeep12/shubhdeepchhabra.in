@@ -186,7 +186,7 @@ const Skills = () => {
 			const containerOffsetTop = containerRef?.current?.offsetTop
 			const scrollPosition = window.scrollY + window.innerHeight
 
-			if (containerOffsetTop && scrollPosition >= containerOffsetTop) {
+			if (containerOffsetTop && scrollPosition >= containerOffsetTop - 20) {
 				containerControls.start('visible')
 			}
 		}
@@ -225,7 +225,7 @@ const Skills = () => {
 						<motion.div
 							key={skill.id}
 							variants={skillVariants(skill.position === 'left')}
-							transition={{ duration: 0.5 }}
+							transition={{ duration: 0.35 }}
 							className='skill translateX(100%) relative '
 						>
 							<div
