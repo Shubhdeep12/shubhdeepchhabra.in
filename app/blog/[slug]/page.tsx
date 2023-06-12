@@ -42,7 +42,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 	const MDXContent = useMDXComponent(blog.body.code)
 
 	return (
-		<section className='flex flex-col items-start gap-8 p-2'>
+		<section className='flex flex-col items-start gap-8'>
 			<script type='application/ld+json' suppressHydrationWarning>
 				{JSON.stringify(blog.structuredData)}
 			</script>

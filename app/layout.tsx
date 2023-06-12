@@ -8,7 +8,7 @@ import { BackToTop } from '@/components/BackToTop'
 import { type PropsWithChildren } from 'react'
 import { Metadata } from 'next'
 import getMetaData from '@/utils/getMetaData'
-import RenderGoogleAnalytics from '@/components/RenderGoogleAnalytics'
+import { Analytics } from '@vercel/analytics/react'
 
 const manrope = Manrope({
 	subsets: ['latin'],
@@ -20,7 +20,6 @@ export const metadata: Metadata = getMetaData({})
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en'>
-			<RenderGoogleAnalytics />
 			<body
 				className={`${manrope.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
 			>
@@ -29,6 +28,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 					<MainContent>{children}</MainContent>
 					<Footer />
 					<BackToTop />
+					<Analytics />
 				</Providers>
 			</body>
 		</html>

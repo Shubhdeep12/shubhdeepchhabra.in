@@ -4,12 +4,12 @@ const { withContentlayer } = require('next-contentlayer')
 
 const ContentSecurityPolicy = `
   default-src 'self' vercel.live;
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live;
-  style-src 'self' 'unsafe-inline';
-  img-src * blob: data:;
-  media-src 'none';
-  connect-src *;
-  font-src 'self';
+	script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live;
+	style-src 'self' 'unsafe-inline';
+	img-src * blob: data:;
+	media-src 'none';
+	connect-src *;
+	font-src 'self';
 `.replace(/\n/g, '')
 
 const securityHeaders = [

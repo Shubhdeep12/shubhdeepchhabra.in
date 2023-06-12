@@ -4,7 +4,7 @@ import Experience from '@/components/about/Experience'
 
 export default function About() {
 	return (
-		<section className='flex flex-col gap-16 p-2'>
+		<section className='flex flex-col gap-16'>
 			<AboutSection />
 			<Experience />
 			<Contact />

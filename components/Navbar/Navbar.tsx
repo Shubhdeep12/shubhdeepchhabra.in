@@ -175,6 +175,7 @@ const Navbar = () => {
 						<li key={item.key}>
 							<Button
 								type={Link}
+								onClick={() => setNavbarExpanded(false)}
 								href={item.route}
 								height='h-full'
 								width='w-full'

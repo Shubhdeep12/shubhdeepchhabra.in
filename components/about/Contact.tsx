@@ -58,7 +58,7 @@ const Contact = () => {
 							 hocus:bg-red-100 dark:hocus:bg-red-700 dark:hocus:bg-opacity-10
 							 border border-slate-200 hocus:border-red-800 dark:border-slate-800 dark:hover:border-red-200'
 							hoverable={false}
-							onClick={() => window.open('mailto:chhabrashubhdeep@google.com')}
+							onClick={() => window.open('mailto:chhabrashubhdeep@gmail.com')}
 						>
 							<EmailIcon
 								width={24}
