@@ -2,7 +2,7 @@ const DOMAIN = process.env.DOMAIN
 const DEFAULT_OG_IMAGE = '/assets/Shubhdeepchhabra.png'
 
 export default function getMetaData({
-	title = 'Shubhdeep Chhabra - Software Engineer | Web Development Specialist',
+	title = 'Shubhdeep Chhabra - Software Engineer | Tech Enthusiast',
 	description = 'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
 	siteName = 'Shubhdeep Chhabra',
 	canonical = DOMAIN,
