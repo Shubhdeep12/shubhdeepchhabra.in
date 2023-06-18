@@ -42,6 +42,7 @@ export default function getMetaData({
 			images: [ogImage ?? DEFAULT_OG_IMAGE],
 		},
 		icons: {
+			icon: '/favicon.ico',
 			shortcut: '/favicon.ico',
 		},
 	}
