@@ -5,7 +5,6 @@ import BlogFooter from '@/components/blog/BlogFooter'
 import Hero from '@/components/blog/Hero'
 import BlogImages from '@/components/blog/BlogImages'
 import { Metadata } from 'next'
-import getMetaData from '@/utils/getMetaData'
 
 export async function generateStaticParams() {
 	return allBlogs.map((blog) => ({
@@ -20,15 +19,39 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 	}
 
 	const { title, description, cover, slug } = blog
-	const ogImage = cover ? `${process.env.DOMAIN}${cover}` : ''
-
-	return getMetaData({
+	const ogImage = cover ? `https://shubhdeepchhabra.in/${cover}` : ''
+	return {
 		title,
 		description,
-		ogImage: ogImage,
-		ogType: 'article',
-		canonical: `${process.env.DOMAIN}/blog/${slug}`,
-	})
+		creator: 'Shubhdeep Chhabra',
+		publisher: 'Shubhdeep Chhabra',
+		openGraph: {
+			type: 'article',
+			description,
+			title,
+			locale: 'en_US',
+			siteName: 'Shubhdeep Chhabra Portfolio',
+			url: `https://shubhdeepchhabra.in/blog/${slug}`,
+			images: [
+				{
+					url: ogImage,
+					alt: `${title}`,
+					width: '1200',
+					height: '630',
+				},
+			],
+		},
+		robots: {
+			index: false,
+			follow: true,
+			nocache: true,
+			googleBot: {
+				index: true,
+				follow: false,
+				noimageindex: true,
+			},
+		},
+	}
 }
 
 const components = {
