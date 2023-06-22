@@ -5,7 +5,7 @@ export default function robots() {
 				userAgent: '*',
 			},
 		],
-		sitemap: `${process.env.DOMAIN}/sitemap.xml`,
-		host: process.env.DOMAIN,
+		sitemap: 'https://shubhdeepchhabra.in/sitemap.xml',
+		host: 'https://shubhdeepchhabra.in',
 	}
 }
