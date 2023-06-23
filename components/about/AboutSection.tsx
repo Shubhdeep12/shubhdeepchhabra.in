@@ -15,7 +15,7 @@ const AboutSection = () => {
 			>
 				About
 			</Text>
-			<div className='w-full rounded-lg p-4 flex flex-col gap-2 laptop:flex-row items-center bg-slate-200 dark:bg-slate-700 text-center'>
+			<div className='w-full rounded-lg p-4 flex flex-col gap-2 laptop:gap-5 laptop:p-5 laptop:flex-row items-center bg-slate-200 dark:bg-slate-700 text-center'>
 				<div className='w-[100px] h-[100px] transition-colors rounded-full bg-sky-50 overflow-hidden'>
 					<Image
 						alt='Shubhdeep-avatae'
@@ -25,8 +25,10 @@ const AboutSection = () => {
 						className='min-w-[100px] h-[105px]'
 					/>
 				</div>
-				<Text className='font-bold text-2xl px-2 w-min'>Shubhdeep Chhabra</Text>
-				<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>Software Developer</Text>
+				<div className='px-2 flex flex-col gap-2'>
+					<Text className='font-bold text-2xl px-2'>Shubhdeep Chhabra</Text>
+					<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>Software Developer</Text>
+				</div>
 				<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>India</Text>
 				<SocialButtons
 					className='px-4'

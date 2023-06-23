@@ -109,7 +109,7 @@ const FeaturedProjects = () => {
 								<div className='flex flex-col items-start w-full gap-2'>
 									<Text
 										transitioned={false}
-										className={`transition h-full font-bold p-0 group-hocus:underline decoration-2 underline-offset-2 ${project.titleStyles}`}
+										className={`h-full font-bold p-0 group-hocus:underline decoration-2 underline-offset-2 ${project.titleStyles}`}
 									>
 										{project.title}
 									</Text>
@@ -122,10 +122,11 @@ const FeaturedProjects = () => {
 										{project.stack &&
 											project.stack.length > 0 &&
 											project.stack.map((skill) => (
-												<div
+												<Text
+													as='div'
 													key={skill}
 													className={clsx(
-														'transition-all h-[20px]',
+														'transition-colors h-[20px]',
 														'group-hocus:bg-inherit dark:bg-opacity-20',
 														'border border-transparent group-hocus:border-opacity-50',
 														'group-hocus:text-black dark:text-text-light dark:group-hocus:text-white',
@@ -135,7 +136,7 @@ const FeaturedProjects = () => {
 													)}
 												>
 													{skill}
-												</div>
+												</Text>
 											))}
 									</div>
 								</div>

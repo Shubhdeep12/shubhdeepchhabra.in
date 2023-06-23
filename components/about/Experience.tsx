@@ -1,5 +1,6 @@
 import Text from '../Text'
 import Button from '../Button'
+import Link from 'next/link'
 
 const Experience = () => {
 	return (
@@ -17,7 +18,7 @@ const Experience = () => {
 			<div className='flex flex-col gap-2 items-start'>
 				<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
 					<Text>Software Engineer III @</Text>
-					<Button hoverable={false}>
+					<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
 						<Text className='text-blue-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
 					</Button>
 				</div>
@@ -26,7 +27,7 @@ const Experience = () => {
 				</div>
 				<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
 					<Text>Software Engineer I @</Text>
-					<Button hoverable={false}>
+					<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
 						<Text className='text-blue-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
 					</Button>
 				</div>
@@ -58,7 +59,7 @@ const Experience = () => {
 			<div className='flex flex-col gap-2 items-start'>
 				<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
 					<Text>Associate Software Engineer @</Text>
-					<Button hoverable={false}>
+					<Button hoverable={false} type={Link} href={'https://www.accenture.com'} target='_blank'>
 						<Text className='text-blue-400 underline underline-offset-2 decoration-2 font-semibold'>Accenture</Text>
 					</Button>
 				</div>

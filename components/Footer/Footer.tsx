@@ -88,7 +88,7 @@ const Footer = () => {
 								focusOutlined
 								hoverable={false}
 								className={clsx(
-									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
+									'duration-0 rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
 								type={Link}
@@ -115,7 +115,7 @@ const Footer = () => {
 								focusOutlined
 								hoverable={false}
 								className={clsx(
-									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
+									'duration-0 rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
 								onClick={() => window.open(item.route, '_blank')}
@@ -141,7 +141,7 @@ const Footer = () => {
 								focusOutlined
 								hoverable={false}
 								className={clsx(
-									'rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
+									'duration-0 rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
 								onClick={() => window.open(item.route, '_blank')}
