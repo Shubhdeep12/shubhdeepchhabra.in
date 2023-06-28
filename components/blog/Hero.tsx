@@ -7,8 +7,8 @@ import Reactions from './Reactions'
 import { Blog } from '@/.contentlayer/generated'
 import Button from '../Button'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useBlogViews } from '@/hooks/useBlogViews'
+import AnimatedImage from '../AnimatedImage'
 
 type HeroProps = {
 	blog: Blog
@@ -66,14 +66,14 @@ const Hero = ({ blog }: HeroProps) => {
 
 			<Reactions blog={blog} />
 
-			<Image
+			<AnimatedImage
 				alt={blog.title}
 				decoding='async'
 				src={blog.cover}
 				width={100}
 				height={100}
 				priority
-				className='w-full h-[20rem] rounded-lg object-cover aspect-[2/1] duration-700 ease-in-out scale-100 blur-0 grayscale-0'
+				className='w-full h-[20rem] rounded-lg laptop:object-cover aspect-[2/1] duration-700 ease-in-out scale-100 blur-0 grayscale-0'
 			/>
 		</>
 	)

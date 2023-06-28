@@ -61,15 +61,13 @@ const REACTIONS: ReactionProp[] = [
 	},
 ]
 const Reactions = ({ blog }: { blog: Blog }) => {
-	const { reactions, user, isError, isLoading, addReaction } = useBlogReactions(blog.slug)
+	const { reactions, isError, isLoading, addReaction } = useBlogReactions(blog.slug)
 	const { localReactions, setLocalStoredReactions } = useLocalStoredReactions(blog.slug, {
 		love: false,
 		like: false,
 		bookmark: false,
 	})
 	const { width: windowWidth, height: windowHeight } = useWindowDimensions()
-
-	console.log({ user })
 
 	const handleReaction = (event: MouseEvent<HTMLButtonElement, MouseEvent>, type: string) => {
 		if (localReactions && !localReactions[type]) {

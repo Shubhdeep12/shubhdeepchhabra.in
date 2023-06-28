@@ -2,7 +2,7 @@ import useSWR, { SWRConfiguration } from 'swr'
 
 export type Reactions = {
 	reactions: Record<string, string>
-	userSession: Record<string, unknown>
+	userSession: Record<string, any>
 }
 
 const API_URL = '/api/reactions'
@@ -34,7 +34,7 @@ export const useBlogReactions = (slug: string, config?: SWRConfiguration) => {
 	})
 
 	const reactions = data?.reactions
-	const user = data?.userSession
+	const userSession = data?.userSession
 
 	const addReaction = (type: string) => {
 		if (!data) {
@@ -68,7 +68,7 @@ export const useBlogReactions = (slug: string, config?: SWRConfiguration) => {
 
 	return {
 		reactions,
-		user,
+		userSession,
 		isLoading: !error && !reactions,
 		isError: !!error,
 		addReaction,

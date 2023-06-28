@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import Button from '../Button'
-import Link from 'next/link'
 import { EditIcon, ShareIcon } from '@/Icons'
 import Text from '../Text'
 import Reactions from './Reactions'
@@ -24,8 +23,17 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 					focusOutlined
 					className='p-4 flex gap-1 justify-center items-center rounded-lg bg-blue-700 hover:-translate-y-[1px] hover:shadow-md hover:bg-blue-800  dark:bg-blue-500 dark:hover:bg-blue-400'
 					hoverable={false}
-					type={Link}
-					href={'/projects'}
+					onClick={async () => {
+						try {
+							await navigator.share({
+								title: blog.title,
+								text: `"${blog.title}" by @ShubhInTech`,
+								url: `https://shubhdeepchhabra.in/blog/${blog.slug}`,
+							})
+						} catch (err) {
+							console.log({ err })
+						}
+					}}
 				>
 					<ShareIcon width={24} height={24} color='#fff' className='dark:fill-text-dark transition' />
 					<Text
