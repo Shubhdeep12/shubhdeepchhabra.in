@@ -1,13 +1,14 @@
 import { allBlogs } from 'contentlayer/generated'
+import { MetadataRoute } from 'next'
 
-export default async function sitemap() {
+export default function sitemap(): MetadataRoute.Sitemap {
 	const blogs = allBlogs.map((blog) => ({
-		url: `${process.env.DOMAIN}/blog/${blog.slug}`,
+		url: `https://shubhdeepchhabra.in/blog/${blog.slug}`,
 		lastModified: blog.publishedAt,
 	}))
 
 	const routes = ['', '/about', '/blog', '/projects'].map((route) => ({
-		url: `${process.env.DOMAIN}${route}`,
+		url: `https://shubhdeepchhabra.in${route}`,
 		lastModified: new Date().toISOString().split('T')[0],
 	}))
 
