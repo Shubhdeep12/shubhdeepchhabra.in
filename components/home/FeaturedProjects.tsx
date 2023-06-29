@@ -23,7 +23,8 @@ const FeaturedProjects = () => {
 					gFrom='dark:from-pink-500'
 					gTo='dark:to-purple-500'
 					shadowColor='purple'
-					className='font-bold text-3xl text-heading-dark'
+					className='font-bold text-2xl text-heading-dark'
+					as={'h2'}
 				>
 					Featured Projects
 				</Text>

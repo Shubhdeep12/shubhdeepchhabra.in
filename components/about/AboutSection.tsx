@@ -12,6 +12,7 @@ const AboutSection = () => {
 				gTo='dark:to-purple-500'
 				shadowColor='purple'
 				className='font-bold text-3xl text-heading-dark'
+				as={'h1'}
 			>
 				About
 			</Text>
