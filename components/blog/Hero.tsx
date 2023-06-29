@@ -34,7 +34,12 @@ const Hero = ({ blog }: HeroProps) => {
 				<Text className='text-blue-700 dark:text-blue-300 font-semibold'>Back to Blogs</Text>
 			</Button>
 
-			<Text variant='shadow' shadowColor='yellow' className='font-bold text-4xl text-heading-dark dark:text-purple-300'>
+			<Text
+				variant='shadow'
+				shadowColor='yellow'
+				className='font-bold text-4xl text-heading-dark dark:text-purple-300'
+				as='h1'
+			>
 				{blog.title}
 			</Text>
 

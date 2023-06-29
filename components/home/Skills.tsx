@@ -12,6 +12,7 @@ const SkillsPills = () => {
 				gTo='dark:to-sky-500'
 				shadowColor='blue'
 				className='font-bold text-2xl text-heading-dark'
+				as={'h2'}
 			>
 				Skills
 			</Text>

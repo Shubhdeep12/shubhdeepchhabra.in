@@ -40,6 +40,7 @@ const Greeting = () => {
 					gTo='dark:to-blue-500'
 					shadowColor='blue'
 					className='font-semibold text-3xl text-heading-dark dark:text-heading-light'
+					as='h1'
 				>
 					Shubhdeep Chhabra
 				</Text>
