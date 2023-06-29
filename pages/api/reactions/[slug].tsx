@@ -45,38 +45,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		}
 
 		if (req.method === 'POST') {
-			let userSession
-			try {
-				userSession = await prisma.session.findUniqueOrThrow({
+			const [newOrUpdatedReactions, newOrUpdatedUserSession] = await Promise.all([
+				prisma.reactions.upsert({
+					where: { slug },
+					create: {
+						// @ts-ignore
+						slug,
+					},
+					update: {
+						[reactionType]: {
+							increment: 1,
+						},
+					},
+				}),
+
+				prisma.session.upsert({
 					where: { id: user_session },
-				})
-			} catch (e) {
-				userSession = await prisma.session.create({
-					data: {
+					create: {
 						id: user_session,
+						[isReaction[reactionType]]: true,
 					},
-				})
-			}
-
-			const newOrUpdatedReactions = await prisma.reactions.upsert({
-				where: { slug },
-				create: {
-					// @ts-ignore
-					slug,
-				},
-				update: {
-					[reactionType]: {
-						increment: 1,
+					update: {
+						[isReaction[reactionType]]: true,
 					},
-				},
-			})
-
-			const newOrUpdatedUserSession = await prisma.session.update({
-				where: { id: userSession.id },
-				data: {
-					[isReaction[reactionType]]: true,
-				},
-			})
+				}),
+			])
 
 			res.status(200).json({
 				reactions: {

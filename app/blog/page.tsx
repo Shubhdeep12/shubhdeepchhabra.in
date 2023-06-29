@@ -12,6 +12,7 @@ export default function Blogs() {
 				gTo='dark:to-yellow-500'
 				shadowColor='yellow'
 				className='font-bold text-3xl text-heading-dark'
+				as={'h1'}
 			>
 				Blog
 			</Text>
