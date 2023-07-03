@@ -1,0 +1,340 @@
+---
+title: 'Connect Database with Node.js, Part 1: MongoDB using Mongoose'
+publishedAt: '2023-07-03'
+description: 'A short tutorial on how to connect MongoDB using Mongoose in Node.js. Discussing how to connect and how to create schema and use in in API logic.'
+cover: '/assets/Connect-Database-with-nodejs-Part-1-MongoDB-using-Mongoose/cover.png'
+color: 'cyan'
+---
+
+Hey Everyone,
+
+Last week I was exploring Redis to use it in my project and thought of documenting my knowledge of connecting different databases in Node.js.
+
+I'll be documenting different parts:
+
+1. Part 1: MongoDB using Mongoose.
+2. Part 2: Firebase - Soon
+3. Part 3: Redis - Soon
+4. Part 4: MySQL - Soon
+5. Part 5: MariaDB - Soon
+6. Part 6: SQLite - Soon
+7. Part 7: PostgreSQL - Soon
+
+This is Part 1 where we will know how to use the MongoDB database with Node.js.
+
+### Table of Contents:
+
+1. [Introduction](#introduction)
+2. [How to configure the DB with Node.js](#how-to-configure-the-db-with-nodejs)
+3. [Conclusion](#conclusion)
+
+## Introduction
+
+**What is MongoDB?**
+
+MongoDB is a NoSQL database with high performance. Unlike RDBMS, MongoDB uses a document-based model, allowing us to store data in JSON-like documents with dynamic schemas. It offers flexibility and scalability in storing and retrieving data.  
+For more details, visit - [What is MongoDB?](https://www.mongodb.com/why-use-mongodb)
+
+MongoDB provides a Database as a Service named MongoDB Atlas which runs on public clouds and offers a free tier for personal projects to start with MongoDB.
+
+**How to set up MongoDB Atlas?**
+
+Just login and create a project in the free tier and setup using Node.js. And the URL is like this
+
+```js
+_mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbname}?retryWrites=true&w=majority_
+```
+
+with your username and password which you've set while creating it and then store in your .env file.
+
+## How to configure the DB with Node.js
+
+Let's have some steps for this:
+
+**Step1: Install Dependencies**
+
+**Mongoose** is the most widely used package for connecting Node.js and MongoDB clusters or collections and creating schemas in Node.js.
+
+Let's install it first,  
+in your project directory install Mongoose and Express
+
+```js
+npm install mongoose express --save
+// OR
+yarn add mongoose express
+```
+
+**Step2: Create a Connection with Node.js**
+
+in your server.js file write the following code
+
+```js
+const express = require('express')
+const mongoose = require('mongoose')
+
+// DB instance from the path where models are defined.
+const db = require('./models')
+
+// File where the routes will be present
+const Home = require('./routes/Home.routes')
+
+// Creating an express server.
+const app = express()
+
+app.use(express.json())
+
+// Creating Mongodb local connection with the already stored URL.
+db.mongoose.connect(process.env.MONGODB_URL, {
+	useNewUrlParser: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true,
+})
+
+// Creating connection and Error handling
+const connection = mongoose.connection
+connection.on('error', console.log('connection error'))
+connection.once('open', function () {
+	console.log('Connected successfully')
+})
+
+// Specifying the router
+app.use('/home', Home)
+
+// Setting up PORT number.
+app.listen(3000, () => {
+	console.log('Server is running at port 3000')
+})
+```
+
+Save and Run.
+
+And Wallah! Your Node.js server is connected with your MongoDB client locally.
+
+Now what? now, let's create a schema and make our hands dirty with some REST APIs.
+
+**Step3: Creating a Schema using Mongoose**
+
+Create a folder for defining models with names as _<mark>models</mark>_ and create index.js inside it and paste the following code
+
+```js
+const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
+
+const db = {}
+
+db.mongoose = mongoose
+
+db.user = require('./user.model')
+db.posts = require('./post.model')
+
+module.exports = db
+```
+
+Create <mark>user.model.js</mark>
+
+```js
+const mongoose = require('mongoose')
+
+// Creating a schema from Mongoose
+const schema = mongoose.Schema
+
+// Defining the attributes required in a schema and which will be USED
+// in CRUD operations.
+const userSchema = mongoose.Schema(
+	{
+		name: {
+			type: String,
+			required: true,
+			trim: true,
+			minlength: 3,
+		},
+		email: {
+			type: String,
+			required: true,
+			unique: true,
+			trim: true,
+		},
+		password: {
+			type: String,
+			required: true,
+		},
+		posts: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Post',
+			},
+		],
+	},
+	{
+		timestamps: true,
+	}
+)
+
+// Exporting the schema with a unique name
+const user = mongoose.model('User', userSchema)
+
+module.exports = user
+```
+
+And, similarly create post.model.js
+
+```js
+const mongoose = require('mongoose')
+
+const schema = mongoose.Schema
+
+const postSchema = new mongoose.Schema(
+	{
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+		},
+		title: {
+			type: String,
+			required: true,
+			trim: true,
+		},
+		image: { name: { type: String }, public_id: { type: String } },
+		description: {
+			type: String,
+			trim: true,
+		},
+	},
+	{
+		timestamps: true,
+	}
+)
+
+const Post = mongoose.model('Post', postSchema)
+
+module.exports = Post
+```
+
+**Step 4: Creating the endpoints and reading and writing the data in DB.**
+
+In your routes folder create a file let's say <mark>Home.routes.js</mark>
+
+in that file add the following code to create endpoints
+
+```js
+const express = require('express')
+const router = express.Router()
+
+const app = express()
+const cors = require('cors')
+
+app.use(cors())
+
+// Get all posts
+router.route('/:id').get(async (req, res) => {
+	try {
+		const allPosts = await db.posts.find().sort({ _id: -1 })
+		res.status(200).send(allPosts)
+	} catch (err) {
+		res.status(500).send('Error: ' + err)
+	}
+})
+
+// Adding Post
+router.route('/:id/post').post(async (req, res) => {
+	const postext = req.body.text
+	let imagetext = ''
+	let name = await db.user.findById(mongoose.Types.ObjectId(req.params.id), function (err, user) {
+		if (err) {
+			return 'Guest'
+		}
+		if (user) {
+			return user.name
+		}
+	})
+	name = name.name
+	let img = { name: '', public_id: '' }
+	const newPost = new db.posts({
+		text: postext,
+		image: img,
+		name: name,
+	})
+	try {
+		const result = await newPost.save()
+		db.user.findByIdAndUpdate(
+			mongoose.Types.ObjectId(req.params.id),
+			{ $push: { posts: newPost._id } },
+			{ safe: true, upsert: true },
+			function (err, doc) {
+				if (err) {
+					return res.status(500).send('Error:' + err)
+				} else {
+					res.status(200).send('Post added')
+				}
+			}
+		)
+	} catch (err) {
+		return res.status(500).send('Error:' + err)
+	}
+})
+
+// Signin
+router.route('/signin').post(async (req, res) => {
+	User.findOne({
+		email: req.body.email,
+	}).exec((err, user) => {
+		if (err) {
+			res.status(500).send({ message: 'a' + err })
+			return
+		}
+
+		if (!user) {
+			return res.status(500).send({ message: err })
+		}
+
+		var passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
+
+		if (!passwordIsValid) {
+			return res.status(500).send({
+				accessToken: null,
+				message: 'Invalid Password!',
+			})
+		}
+
+		var token = jwt.sign({ id: user.id }, config.secret, {
+			expiresIn: 86400, // 24 hours
+		})
+
+		const values = {
+			id: user._id,
+			name: user.name,
+			email: user.email,
+		}
+		res
+			.status(200)
+			.cookie('token', token, {
+				httpOnly: true,
+				sameSite: 'None',
+				secure: true,
+			})
+			.send({
+				values: _.pick(values, ['id', 'name']),
+				message: 'signin successfull',
+			})
+	})
+})
+```
+
+Added 3 endpoints above:
+
+1. To get all posts present in DB.
+2. To add a post in DB.
+3. For user sign-in.
+
+## Conclusion
+
+In the blog, we got to know how we can start with connecting MongoDB in Node.js and setting up the schema, and using it in our APIs.
+
+I hope you find this article helpful.
+
+On that note, I’ll take a leave until the next blog.  
+We will learn something new next blog.
+
+If you are reading this blog till here then do follow me on Twitter — [**@ShubhInTech**](https://twitter.com/ShubhInTech)
+
+Bye.
