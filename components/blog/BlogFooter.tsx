@@ -28,7 +28,7 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 							await navigator.share({
 								title: blog.title,
 								text: `"${blog.title}" by @ShubhInTech`,
-								url: `https://shubhdeepchhabra.in/blog/${blog.slug}`,
+								url: `https://www.shubhdeepchhabra.in/blog/${blog.slug}`,
 							})
 						} catch (err) {
 							console.log({ err })

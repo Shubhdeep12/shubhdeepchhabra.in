@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 	description:
 		'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
 	applicationName: 'Shubhdeep Chhabra Portfolio',
-	authors: [{ name: 'Shubhdeep Chhabra Portfolio', url: 'https://shubhdeepchhabra.in' }],
+	authors: [{ name: 'Shubhdeep Chhabra Portfolio', url: 'https://www.shubhdeepchhabra.in' }],
 	keywords: [
 		'next.js',
 		'react',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 		title: 'Shubhdeep Chhabra - Software Engineer | Tech Enthusiast',
 		locale: 'en_US',
 		siteName: 'Shubhdeep Chhabra Portfolio',
-		url: 'https://shubhdeepchhabra.in/',
+		url: 'https://www.shubhdeepchhabra.in/',
 		images: [
 			{
 				url: '/assets/Shubhdeepchhabra.png',
