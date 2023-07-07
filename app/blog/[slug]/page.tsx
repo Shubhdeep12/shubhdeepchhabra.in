@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 	}
 
 	const { title, description, cover, slug } = blog
-	const ogImage = cover ? `https://shubhdeepchhabra.in/${cover}` : ''
+	const ogImage = cover ? `https://www.shubhdeepchhabra.in/${cover}` : ''
 	return {
 		title,
 		description,
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 			title,
 			locale: 'en_US',
 			siteName: 'Shubhdeep Chhabra Portfolio',
-			url: `https://shubhdeepchhabra.in/blog/${slug}`,
+			url: `https://www.shubhdeepchhabra.in/blog/${slug}`,
 			images: [
 				{
 					url: ogImage,

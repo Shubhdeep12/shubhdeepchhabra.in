@@ -5,7 +5,7 @@ export default function robots() {
 				userAgent: '*',
 			},
 		],
-		sitemap: 'https://shubhdeepchhabra.in/sitemap.xml',
-		host: 'https://shubhdeepchhabra.in',
+		sitemap: 'https://www.shubhdeepchhabra.in/sitemap.xml',
+		host: 'https://www.shubhdeepchhabra.in',
 	}
 }
