@@ -41,7 +41,7 @@ const FeaturedProjects = () => {
 						hoverable={false}
 						onClick={() =>
 							window.open(
-								'https://drive.google.com/file/d/1STSGQCdoRVDA8mw5Xx103b3blEhvf8-O/view?usp=sharing',
+								'https://drive.google.com/file/d/1956-t8ZEjslqes9XdKO8A9iYRfO1qXS2/view?usp=sharing',
 								'_blank'
 							)
 						}
