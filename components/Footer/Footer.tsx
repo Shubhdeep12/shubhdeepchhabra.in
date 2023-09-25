@@ -46,7 +46,7 @@ const Footer = () => {
 		{
 			key: 'resume',
 			title: 'Resume',
-			route: 'https://drive.google.com/file/d/1956-t8ZEjslqes9XdKO8A9iYRfO1qXS2/view?usp=sharing',
+			route: 'https://drive.google.com/file/d/1SDPIS1xhiANTTXlZR4gwjUxLsuNaw8kH/view?usp=drivesdk',
 			gradient: true,
 			gFrom: 'from-blue-500',
 			gTo: 'to-green-500',
