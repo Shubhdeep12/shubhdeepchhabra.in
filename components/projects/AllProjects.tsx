@@ -38,7 +38,7 @@ const AllProjects = () => {
 						hoverable={false}
 						onClick={() =>
 							window.open(
-								'https://drive.google.com/file/d/1SDPIS1xhiANTTXlZR4gwjUxLsuNaw8kH/view?usp=drivesdk',
+								'https://drive.google.com/file/d/1CruJsLiv2a3TzpvvzAODU93iMoxhufjk/view?usp=sharing',
 								'_blank'
 							)
 						}
