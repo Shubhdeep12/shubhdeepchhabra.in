@@ -1,8 +1,6 @@
 'use client'
 
-import { usePathname, useSearchParams } from 'next/navigation'
 import Script from 'next/script'
-import { useEffect } from 'react'
 
 // const pageview = (GA_MEASUREMENT_ID: string, url: string) => {
 // 	if (window !== null) {
@@ -21,24 +19,25 @@ const GoogleAnalytics = () => {
 
 	// 	pageview(process.env.GA_MEASUREMENT_ID || '', url)
 	// }, [pathname, searchParams, process.env.GA_MEASUREMENT_ID])
-	console.log({ date: process.env.GA_MEASUREMENT_ID })
 	return (
 		<>
 			<Script
 				async
-				src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_MEASUREMENT_ID}`}
-				strategy='lazyOnload'
-			/>
+				src={`https://www.googletagmanager.com/gtag/js? 
+      id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+			></Script>
 			<Script
-				id='google'
+				id='google-analytics'
 				dangerouslySetInnerHTML={{
-					__html: ` window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-    
-            gtag('config', '${process.env.GA_MEASUREMENT_ID}');`,
+					__html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+        `,
 				}}
-			/>
+			></Script>
 		</>
 	)
 }
