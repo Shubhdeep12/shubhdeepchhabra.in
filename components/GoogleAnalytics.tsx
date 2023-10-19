@@ -21,6 +21,7 @@ const GoogleAnalytics = () => {
 	// }, [pathname, searchParams, process.env.GA_MEASUREMENT_ID])
 	return (
 		<>
+			{console.log(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS)}
 			<Script
 				async
 				src={`https://www.googletagmanager.com/gtag/js? 
