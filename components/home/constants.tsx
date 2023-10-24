@@ -28,7 +28,7 @@ export const PROJECTS: ProjectProps[] = [
 	{
 		key: 'taskez',
 		title: 'Taskez',
-		description: 'A TO-DO App with Authneticantion, CRUD operations and Drag and Drop support.',
+		description: 'A TO-DO App with Authentication, CRUD operations and Drag and Drop support.',
 		stack: ['React', 'Node.js', 'Express', 'MongoDB'],
 		bgColor: 'hocus:bg-sky-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-sky-300',
 		metaDataStyles: 'group-hocus:border-sky-200 dark:bg-sky-900 bg-sky-50',

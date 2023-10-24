@@ -11,7 +11,7 @@ import AnimatedImage from '../AnimatedImage'
 const Intro = () => {
 	const router = useRouter()
 	return (
-		<section className='flex flex-col items-start laptop:flex-row-reverse lpatop:items-center gap-5'>
+		<section className='flex flex-col items-start laptop:flex-row-reverse laptop:items-center gap-5'>
 			<section>
 				<AnimatedImage
 					className='rounded-xl'
