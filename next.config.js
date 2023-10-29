@@ -4,7 +4,7 @@ const { withContentlayer } = require('next-contentlayer')
 
 const ContentSecurityPolicy = `
   default-src 'self' vercel.live;
-	script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live;
+	script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live www.googletagmanager.com/gtag/js;
 	style-src 'self' 'unsafe-inline';
 	img-src * blob: data:;
 	media-src 'none';
