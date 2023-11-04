@@ -8,6 +8,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import clsx from 'clsx'
 import { PROJECTS, ProjectProps } from './constants'
+import { resumeUrl } from '@/lib/constants'
 
 const FeaturedProjects = () => {
 	const router = useRouter()
@@ -39,12 +40,7 @@ const FeaturedProjects = () => {
 							 hocus:bg-slate-100 dark:hocus:bg-slate-800
 							 border border-slate-200 hocus:border-blue-800 dark:border-slate-800 dark:hover:border-blue-200'
 						hoverable={false}
-						onClick={() =>
-							window.open(
-								'https://drive.google.com/file/d/1LvTO1sws-dhrXxMqHxc8b-O6lbLlIJO2/view?usp=sharing',
-								'_blank'
-							)
-						}
+						onClick={() => window.open(resumeUrl, '_blank')}
 					>
 						<ResumeIcon width={24} height={24} color='#fff' className='fill-text-dark dark:fill-white transition' />
 						<Text

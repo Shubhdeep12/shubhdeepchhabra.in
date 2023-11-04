@@ -8,6 +8,7 @@ import SocialButtons from '../SocialButtons'
 import { SCIcon } from '@/Icons'
 import Image from 'next/image'
 import Link from 'next/link'
+import { resumeUrl } from '@/lib/constants'
 
 const Footer = () => {
 	const router = useRouter()
@@ -46,7 +47,7 @@ const Footer = () => {
 		{
 			key: 'resume',
 			title: 'Resume',
-			route: 'https://drive.google.com/file/d/1LvTO1sws-dhrXxMqHxc8b-O6lbLlIJO2/view?usp=sharing',
+			route: resumeUrl,
 			gradient: true,
 			gFrom: 'from-blue-500',
 			gTo: 'to-green-500',
