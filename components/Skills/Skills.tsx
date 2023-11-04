@@ -166,15 +166,6 @@ const SKILLS: SkillProp[] = [
 		hIcon: 19,
 		position: 'left',
 	},
-	{
-		id: 'python',
-		title: 'Python',
-		bgColor: 'hocus:bg-[#0077e61f] dark:hocus:bg-[#0077e62e]',
-		borderColor: 'border hocus:border-[#0077e68f] dark:hocus:border-[#0077e68f]',
-		wIcon: 15,
-		hIcon: 15,
-		position: 'right',
-	},
 ]
 
 const Skills = () => {
