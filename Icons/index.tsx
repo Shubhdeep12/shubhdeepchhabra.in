@@ -37,11 +37,19 @@ export const LinkedinIcon = ({ width = 24, height = 24, color = 'currentColor', 
 )
 
 export const TwitterIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
-	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation'>
+	<svg viewBox='0 0 48 48' width={width} height={height} role='presentation'>
+		<polygon fill={color} className={className} points='41,6 9.929,42 6.215,42 37.287,6'></polygon>
+		<polygon
+			fill='#FFFFFF00'
+			className={className}
+			fill-rule='evenodd'
+			points='31.143,41 7.82,7 16.777,7 40.1,41'
+			clip-rule='evenodd'
+		></polygon>
 		<path
-			d='M8.6 21.1c-2.4 0-4.8-.6-7.1-1.9-.4-.2-.6-.7-.5-1.1.1-.4.6-.8 1-.7 1.5.1 2.9-.2 4.2-.8C3 14.5 2.1 11.5 2 9.3c-.1-2.7.8-4.9.9-5 .2-.3.5-.5.8-.6.4 0 .7.1.9.4C6.1 6.3 8.5 7.6 11 7.8c0-1.4.6-2.8 1.7-3.8 1.9-1.7 4.8-1.6 6.7 0 .7-.3 1.4-.6 2-1.1.3-.2.8-.2 1.1 0 .3.2.5.7.4 1.1-.3 1.3-.9 2.5-1.8 3.4v.4c0 5-2.2 9.2-6.1 11.5-1.9 1.3-4.1 1.8-6.4 1.8zm-2.7-2.3c2.8.6 5.7.3 8.1-1.2 3.2-1.9 5.1-5.5 5.1-9.8 0-.2 0-.4-.1-.6-.1-.3 0-.7.3-.9l.4-.4c-.1 0-.2.1-.3.1-.4.1-.8 0-1-.3-1.1-1.3-3.1-1.4-4.3-.3-.7.8-1.1 1.6-1.1 2.5v.9c0 .5-.4 1-1 1-3 .1-5.7-1.1-7.8-3.1-.5 2.3-.6 6.6 4.5 8.9.3.1.6.5.6.8 0 .4-.1.7-.4.9-.9.7-1.9 1.2-3 1.5z'
 			fill={color}
 			className={className}
+			d='M15.724,9l20.578,30h-4.106L11.618,9H15.724 M17.304,6H5.922l24.694,36h11.382L17.304,6L17.304,6z'
 		></path>
 	</svg>
 )

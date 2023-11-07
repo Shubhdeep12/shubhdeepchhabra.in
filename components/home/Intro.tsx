@@ -64,7 +64,8 @@ const Intro = () => {
 							{
 								key: 'twitter',
 								icon: 'twitter',
-								className: 'group-hocus:fill-sky-500 dark:fill-slate-400',
+								className:
+									'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-slate-200 dark:group-hocus:stroke-slate-200 dark:stroke-slate-400',
 								action: 'https://twitter.com/ShubhInTech',
 							},
 							{

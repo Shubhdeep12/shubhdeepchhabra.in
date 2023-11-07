@@ -40,7 +40,7 @@ const Contact = () => {
 								width={24}
 								height={24}
 								color='#5f5f5f'
-								className='group-hocus:fill-sky-500 dark:fill-slate-400 transition'
+								className='group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-slate-200 dark:group-hocus:stroke-slate-200 dark:stroke-slate-400 transition'
 							/>
 							<Text
 								transitioned={false}

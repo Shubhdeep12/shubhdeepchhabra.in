@@ -36,7 +36,7 @@ const ShadowText = ({
 				[`${SHADOW_COLOR[shadowColor]}`],
 				'dark:[text-shadow:none]',
 				{
-					'dark:bg-gradient-to-r dark:text-transparent dark:bg-clip-text': gFrom.length > 0,
+					'dark:bg-gradient-to-tr dark:text-transparent dark:bg-clip-text': gFrom.length > 0,
 					[`${gFrom} ${gTo}`]: gFrom.length > 0,
 				}
 			)}
