@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createHash } from 'crypto'
 import { prisma } from '@/lib/prisma'
@@ -16,11 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 	try {
 		const userId = createHash('md5')
-			.update(
-				// @ts-ignore
-				ip + process.env.IP_ADDRESS_SALT,
-				'utf-8'
-			)
+			.update(ip + (process.env.IP_ADDRESS_SALT || ''), 'utf-8')
 			.digest('hex')
 
 		const user_session = `${slug}__${userId}`
@@ -49,8 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				prisma.reactions.upsert({
 					where: { slug },
 					create: {
-						// @ts-ignore
-						slug,
+						slug: slug || '',
 					},
 					update: {
 						[reactionType]: {
