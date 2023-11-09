@@ -11,7 +11,6 @@ const GoogleAnalytics = ({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_ID: string }) =
 
 	useEffect(() => {
 		const url = pathname + searchParams.toString()
-		console.log({ url })
 		pageview(GA_MEASUREMENT_ID, url)
 	}, [pathname, searchParams, GA_MEASUREMENT_ID])
 	return (
