@@ -93,9 +93,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			<body
 				className={`${manrope.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
 			>
-				{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
-					<GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
-				) : null}
 				<Providers>
 					<svg
 						className='pointer-events-none fixed isolate z-50 opacity-70 mix-blend-soft-light'
@@ -112,6 +109,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
 					<Footer />
 					<BackToTop />
 					<Analytics />
+					{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+						<GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+					) : null}
 				</Providers>
 			</body>
 		</html>
