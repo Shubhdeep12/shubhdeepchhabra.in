@@ -16,7 +16,7 @@ const manrope = Manrope({
 })
 
 export const metadata: Metadata = {
-	title: 'Shubhdeep Chhabra - Software Engineer | Tech Enthusiast',
+	title: 'Shubhdeep Chhabra',
 	description:
 		'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
 	applicationName: 'Shubhdeep Chhabra Portfolio',
@@ -44,14 +44,14 @@ export const metadata: Metadata = {
 		type: 'website',
 		description:
 			'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
-		title: 'Shubhdeep Chhabra - Software Engineer | Tech Enthusiast',
+		title: 'Shubhdeep Chhabra',
 		locale: 'en_US',
 		siteName: 'Shubhdeep Chhabra Portfolio',
 		url: 'https://www.shubhdeepchhabra.in/',
 		images: [
 			{
 				url: '/assets/Shubhdeepchhabra.png',
-				alt: 'Shubhdeep Chhabra - Software Engineer | Tech Enthusiast',
+				alt: 'Shubhdeep Chhabra',
 				width: '1200',
 				height: '630',
 			},
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
 		card: 'summary_large_image',
 		site: '@ShubhInTech',
 		creator: '@ShubhInTech',
-		title: 'Shubhdeep Chhabra - Software Engineer | Tech Enthusiast',
+		title: 'Shubhdeep Chhabra',
 		description:
 			'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
 		images: ['/assets/Shubhdeepchhabra.png'],
@@ -93,7 +93,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			<body
 				className={`${manrope.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
 			>
-				{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? <GoogleAnalytics /> : null}
+				{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+					<GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+				) : null}
 				<Providers>
 					<svg
 						className='pointer-events-none fixed isolate z-50 opacity-70 mix-blend-soft-light'
