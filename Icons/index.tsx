@@ -42,9 +42,9 @@ export const TwitterIcon = ({ width = 24, height = 24, color = 'currentColor', c
 		<polygon
 			fill='#FFFFFF00'
 			className={className}
-			fill-rule='evenodd'
+			fillRule='evenodd'
 			points='31.143,41 7.82,7 16.777,7 40.1,41'
-			clip-rule='evenodd'
+			clipRule='evenodd'
 		></polygon>
 		<path
 			fill={color}
