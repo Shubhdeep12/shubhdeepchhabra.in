@@ -1,5 +1,5 @@
 'use client'
-import Text from '../Text'
+import Text from '@/ui/Text'
 import Image from 'next/image'
 import SocialButtons from '../SocialButtons'
 
@@ -31,37 +31,7 @@ const AboutSection = () => {
 					<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>Software Developer</Text>
 				</div>
 				<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>India</Text>
-				<SocialButtons
-					className='px-4'
-					socials={[
-						{
-							key: 'github',
-							icon: 'github',
-							className: 'group-hocus:fill-black dark:group-hocus:fill-slate-200 dark:fill-slate-400',
-							action: 'https://github.com/Shubhdeep12',
-						},
-						{
-							key: 'linkedin',
-							icon: 'linkedin',
-							className: 'group-hocus:fill-blue-600 dark:fill-slate-400',
-							action: 'https://www.linkedin.com/in/shubhdeepchhabra/',
-						},
-						{
-							key: 'twitter',
-							icon: 'twitter',
-							className:
-								'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-slate-200 dark:group-hocus:stroke-slate-200 dark:stroke-slate-400',
-							action: 'https://twitter.com/ShubhInTech',
-						},
-						{
-							key: 'medium',
-							icon: 'medium',
-							className:
-								'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-slate-200 dark:group-hocus:stroke-slate-200 dark:stroke-slate-400',
-							action: 'https://shubhdeepchhabra.medium.com/',
-						},
-					]}
-				/>
+				<SocialButtons className='px-4' />
 			</div>
 
 			<p className='max-w-none text-left laptop:text-justify text-base font-medium'>

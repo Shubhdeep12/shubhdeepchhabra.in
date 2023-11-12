@@ -1,8 +1,8 @@
 'use client'
 
 import { EmailIcon, TwitterIcon } from '@/Icons'
-import Button from '../Button'
-import Text from '../Text'
+import Button from '@/ui/Button'
+import Text from '@/ui/Text'
 import Image from 'next/image'
 
 const Contact = () => {
@@ -31,8 +31,8 @@ const Contact = () => {
 							focusOutlined
 							className='group p-4 flex gap-1 justify-center items-center rounded-lg
 							 hocus:-translate-y-[1px] hocus:shadow-md 
-							 hocus:bg-sky-100 dark:hocus:bg-sky-800 dark:hocus:bg-opacity-10
-							 border border-slate-200 hocus:border-sky-800 dark:border-slate-800 dark:hover:border-sky-200'
+							 hocus:bg-gray-100 dark:hocus:bg-gray-800 dark:hocus:bg-opacity-10
+							 border border-slate-200 hocus:border-gray-800 dark:border-slate-800 dark:hover:border-gray-200'
 							hoverable={false}
 							onClick={() => window.open('https://twitter.com/ShubhInTech', '_blank')}
 						>
@@ -46,7 +46,7 @@ const Contact = () => {
 								transitioned={false}
 								className='h-full dark:text-white text-text-dark font-extrabold dark:font-bold p-0'
 							>
-								Twitter
+								X
 							</Text>
 						</Button>
 						<Button

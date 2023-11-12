@@ -1,10 +1,4 @@
-export type IconProps = {
-	width?: number
-	height?: number
-	color?: string
-	className?: string
-	filled?: boolean
-}
+import { IconProps } from '@/utils/types'
 
 export const ProfileIcon = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' role='presentation' width={width} height={height}>

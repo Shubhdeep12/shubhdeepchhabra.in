@@ -1,22 +1,10 @@
-import { EyeIcon, GithubIcon, IconProps, LinkedinIcon, MediumIcon, ProfileIcon, ResumeIcon, TwitterIcon } from '@/Icons'
-import Button from '../Button'
+import { EyeIcon, GithubIcon, LinkedinIcon, MediumIcon, ProfileIcon, ResumeIcon, TwitterIcon } from '@/Icons'
+import Button from '@/ui/Button'
 import clsx from 'clsx'
 import Link from 'next/link'
-import BackToTopButton from '../BackToTopButton'
-
-type SocialButtonsProps = {
-	socials?: SocialProps[]
-	bordered?: boolean
-	backToTop?: boolean
-	className?: string
-}
-
-type SocialProps = {
-	key: string
-	icon: keyof typeof SOCIAL_ICONS
-	className: string
-	action?: string
-}
+import BackToTopButton from './BackToTopButton'
+import { IconProps, SocialProps } from '@/utils/types'
+import { SOCIALS } from '@/utils/constants'
 
 const SOCIAL_ICONS: Record<string, React.FC<IconProps>> = {
 	github: GithubIcon,
@@ -28,12 +16,13 @@ const SOCIAL_ICONS: Record<string, React.FC<IconProps>> = {
 	eye: EyeIcon,
 }
 
-export default function SocialButtons({
-	socials = [],
-	bordered = false,
-	backToTop = false,
-	className = '',
-}: SocialButtonsProps) {
+type SocialButtonsProps = {
+	bordered?: boolean
+	backToTop?: boolean
+	className?: string
+}
+
+export default function SocialButtons({ bordered = false, backToTop = false, className = '' }: SocialButtonsProps) {
 	return (
 		<div
 			className={clsx(
@@ -45,7 +34,7 @@ export default function SocialButtons({
 				className
 			)}
 		>
-			{socials.map((social: SocialProps) => {
+			{SOCIALS.map((social: SocialProps) => {
 				const SocialIcon = SOCIAL_ICONS[social.icon]
 				return (
 					<Button

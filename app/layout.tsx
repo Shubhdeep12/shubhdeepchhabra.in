@@ -1,4 +1,4 @@
-import Navbar from '@/components/Navbar/Navbar'
+import Navbar from '@/components/Navbar'
 import { Manrope } from 'next/font/google'
 import MainContent from '@/components/MainContent'
 import './globals.css'

@@ -1,7 +1,7 @@
 import { getRecentBlogs } from '@/app/blog/utils'
-import BlogList from '../blog/BlogList'
+import BlogList from './blog/BlogList'
 import { allBlogs } from '@/.contentlayer/generated'
-import Text from '../Text'
+import Text from '@/ui/Text'
 
 const RecentBlogs = () => {
 	return (

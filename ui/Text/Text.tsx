@@ -1,3 +1,4 @@
+'use client'
 import GradientText, { GradientTextProps } from './GradientText'
 import NormalText, { NormalTextProps } from './NormalText'
 import ShadowText, { ShadowTextProps } from './ShadowText'

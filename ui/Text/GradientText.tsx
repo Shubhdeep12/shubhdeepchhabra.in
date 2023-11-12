@@ -29,9 +29,9 @@ const GradientText = ({
 				'transition-colors': transitioned,
 				'hover:bg-background-button-hover-light dark:hover:bg-background-button-hover-dark': hoverable,
 				'hover:text-transparent bg-clip-text': true,
-				'hover:bg-gradient-to-r': true,
+				'hover:bg-gradient-to-tr': true,
 				[`${gFrom} ${gTo}`]: true,
-				'bg-gradient-to-r text-transparent': true && active,
+				'bg-gradient-to-tr text-transparent': true && active,
 			})}
 			{...props}
 		>

@@ -1,80 +1,19 @@
 'use client'
 import { useState } from 'react'
-import Text from '../Text'
-import Button from '../Button'
+import Text from '@/ui/Text'
+import Button from '@/ui/Button'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
-import SocialButtons from '../SocialButtons'
+import SocialButtons from './SocialButtons'
 import { SCIcon } from '@/Icons'
 import Image from 'next/image'
+import { DONATE_SOURCES, FOOTER_NAVBAR_ITEMS, SOURCE_FOOTER_ITEMS } from '@/utils/constants'
 import Link from 'next/link'
-import { resumeUrl } from '@/lib/constants'
 
 const Footer = () => {
 	const router = useRouter()
 	const [currentFocussed, setCurrentFocussed] = useState<string>('')
-	const NAVBAR_ITEMS = [
-		{
-			key: 'about',
-			title: 'About',
-			route: '/about',
-			gradient: true,
-			gFrom: 'from-blue-500',
-			gTo: 'to-green-500',
-			underline: 'hocus:decoration-blue-500',
-		},
-		{
-			key: 'projects',
-			title: 'Projects',
-			route: '/projects',
-			gradient: true,
-			gFrom: 'from-[#c86827]',
-			gTo: 'to-[#c69227]',
-			underline: 'hocus:decoration-[#c86827]',
-		},
-		{
-			key: 'blog',
-			title: 'Blog',
-			route: '/blog',
-			gradient: true,
-			gFrom: 'from-[#bc2f48]',
-			gTo: 'to-[#7a4cbb]',
-			underline: 'hocus:decoration-[#bc2f48]',
-		},
-	]
 
-	const EXTRA_FOOTER_ITEMS = [
-		{
-			key: 'resume',
-			title: 'Resume',
-			route: resumeUrl,
-			gradient: true,
-			gFrom: 'from-blue-500',
-			gTo: 'to-green-500',
-			underline: 'hocus:decoration-blue-500',
-		},
-		{
-			key: 'Source',
-			title: 'Source',
-			route: 'https://github.com/Shubhdeep12/ShubhdeepChhabra',
-			gradient: true,
-			gFrom: 'from-[#c86827]',
-			gTo: 'to-[#c69227]',
-			underline: 'hocus:decoration-[#c86827]',
-		},
-	]
-
-	const DONATE_SOURCES = [
-		{
-			key: 'coffee',
-			title: 'Coffee',
-			route: 'https://www.buymeacoffee.com/shubhdeep',
-			gradient: true,
-			gFrom: 'from-yellow-500',
-			gTo: 'to-orange-500',
-			underline: 'hocus:decoration-yellow-500',
-		},
-	]
 	return (
 		<footer
 			className='
@@ -83,7 +22,7 @@ const Footer = () => {
 		>
 			<div className='flex gap-9'>
 				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
-					{NAVBAR_ITEMS.map((item) => (
+					{FOOTER_NAVBAR_ITEMS.map((item: any) => (
 						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
 							<Button
 								focusOutlined
@@ -94,6 +33,7 @@ const Footer = () => {
 								)}
 								type={Link}
 								href={item.route}
+								target={item.target}
 							>
 								<Text
 									variant='gradient'
@@ -108,9 +48,8 @@ const Footer = () => {
 						</li>
 					))}
 				</ul>
-
 				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
-					{EXTRA_FOOTER_ITEMS.map((item) => (
+					{SOURCE_FOOTER_ITEMS.map((item: any) => (
 						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
 							<Button
 								focusOutlined
@@ -119,7 +58,9 @@ const Footer = () => {
 									'duration-0 rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
-								onClick={() => window.open(item.route, '_blank')}
+								type={Link}
+								href={item.route}
+								target={item.target}
 							>
 								<Text
 									variant='gradient'
@@ -134,9 +75,8 @@ const Footer = () => {
 						</li>
 					))}
 				</ul>
-
 				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
-					{DONATE_SOURCES.map((item) => (
+					{DONATE_SOURCES.map((item: any) => (
 						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
 							<Button
 								focusOutlined
@@ -145,7 +85,9 @@ const Footer = () => {
 									'duration-0 rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2	hocus:text-transparent',
 									item.underline
 								)}
-								onClick={() => window.open(item.route, '_blank')}
+								type={Link}
+								href={item.route}
+								target={item.target}
 							>
 								<Text
 									variant='gradient'
@@ -194,37 +136,7 @@ const Footer = () => {
 					<Text className={clsx('font-semibold')}>Shubhdeep</Text>
 				</Button>
 
-				<SocialButtons
-					backToTop
-					socials={[
-						{
-							key: 'github',
-							icon: 'github',
-							className: 'group-hocus:fill-black dark:group-hocus:fill-slate-200 dark:fill-slate-400',
-							action: 'https://github.com/Shubhdeep12',
-						},
-						{
-							key: 'linkedin',
-							icon: 'linkedin',
-							className: 'group-hocus:fill-blue-600 dark:fill-slate-400',
-							action: 'https://www.linkedin.com/in/shubhdeepchhabra/',
-						},
-						{
-							key: 'twitter',
-							icon: 'twitter',
-							className:
-								'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-slate-200 dark:group-hocus:stroke-slate-200 dark:stroke-slate-400',
-							action: 'https://twitter.com/ShubhInTech',
-						},
-						{
-							key: 'medium',
-							icon: 'medium',
-							className:
-								'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-slate-200 dark:group-hocus:stroke-slate-200 dark:stroke-slate-400',
-							action: 'https://shubhdeepchhabra.medium.com/',
-						},
-					]}
-				/>
+				<SocialButtons backToTop />
 			</div>
 		</footer>
 	)

@@ -1,14 +1,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import Button from '../Button'
-import Text from '../Text'
+import Button from '@/ui/Button'
+import Text from '@/ui/Text'
 import { EyeIcon, ResumeIcon } from '@/Icons'
 import Link from 'next/link'
 import Image from 'next/image'
 import clsx from 'clsx'
-import { PROJECTS, ProjectProps } from './constants'
-import { resumeUrl } from '@/lib/constants'
+import { PROJECTS, resumeUrl } from '@/utils/constants'
+import { ProjectProps } from '@/utils/types'
 
 const FeaturedProjects = () => {
 	const router = useRouter()

@@ -8,13 +8,14 @@ import { IoMoon, IoSunny } from 'react-icons/io5'
 
 import { useTheme } from '@/providers/theme-provider'
 
-import Button from '../Button'
-import Text from '../Text'
+import Button from '@/ui/Button'
+import Text from '@/ui/Text'
 import { useIsMounted } from '@/hooks/isMounted'
 import Image from 'next/image'
 import { SCIcon } from '@/Icons'
 import Link from 'next/link'
-import Loader from '../Loader'
+import Loader from './Loader'
+import { NAVIGATIONBAR_ITEMS } from '@/utils/constants'
 
 const Navbar = () => {
 	const pathname = usePathname()
@@ -24,30 +25,51 @@ const Navbar = () => {
 
 	const NAVBAR_ITEMS = [
 		{
-			key: 'about',
-			title: 'About',
-			route: '/about',
-			gFrom: 'from-blue-500',
-			gTo: 'to-green-500',
+			...NAVIGATIONBAR_ITEMS.about,
 			active: pathname?.startsWith('/about'),
 		},
 		{
-			key: 'projects',
-			title: 'Projects',
-			route: '/projects',
-			gFrom: 'from-[#c86827]',
-			gTo: 'to-[#c69227]',
+			...NAVIGATIONBAR_ITEMS.projects,
 			active: pathname?.startsWith('/projects'),
 		},
 		{
-			key: 'blog',
-			title: 'Blog',
-			route: '/blog',
-			gFrom: 'from-[#bc2f48]',
-			gTo: 'to-[#7a4cbb]',
+			...NAVIGATIONBAR_ITEMS.blog,
 			active: pathname?.startsWith('/blog'),
 		},
 	]
+
+	console.log({ NAVBAR_ITEMS })
+
+	const NavList = ({ className }: { className: string }) => (
+		<ul className={className}>
+			{NAVBAR_ITEMS.map((item) => (
+				<li key={item.key}>
+					<Button
+						type={Link}
+						onClick={() => setNavbarExpanded(false)}
+						href={item.route}
+						height='h-full'
+						width='w-full'
+						variant='normal'
+						focusOutlined
+						className='rounded flex justify-center'
+						active={item.active}
+					>
+						<Text
+							className='font-semibold text-base p-2'
+							gFrom={item.gFrom}
+							gTo={item.gTo}
+							variant='gradient'
+							active={item.active}
+							hoverable
+						>
+							{item.title}
+						</Text>
+					</Button>
+				</li>
+			))}
+		</ul>
+	)
 
 	return (
 		<nav
@@ -100,7 +122,8 @@ const Navbar = () => {
 				</div>
 
 				<section className='flex grow justify-end h-full'>
-					<ul className='hidden laptop:flex gap-6'>
+					<NavList className={'hidden laptop:flex gap-6'} />
+					{/* <ul >
 						{NAVBAR_ITEMS.map((item) => (
 							<li key={item.key}>
 								<Button
@@ -126,7 +149,7 @@ const Navbar = () => {
 								</Button>
 							</li>
 						))}
-					</ul>
+					</ul> */}
 				</section>
 				<div className='h-full w-[42px] flex items-center justify-center'>
 					{isMounted ? (
@@ -170,34 +193,9 @@ const Navbar = () => {
 					navbarExpanded ? 'h-[calc(100vh-75px)]' : 'h-0'
 				} transition-all w-full flex items-center laptop:hidden`}
 			>
-				<ul className={navbarExpanded ? 'laptop:hidden flex align-middle w-full h-[42px] flex-col gap-6' : 'hidden'}>
-					{NAVBAR_ITEMS.map((item) => (
-						<li key={item.key}>
-							<Button
-								type={Link}
-								onClick={() => setNavbarExpanded(false)}
-								href={item.route}
-								height='h-full'
-								width='w-full'
-								variant='normal'
-								focusOutlined
-								className='rounded flex justify-center'
-								active={item.active}
-							>
-								<Text
-									className='font-semibold text-base p-2'
-									gFrom={item.gFrom}
-									gTo={item.gTo}
-									variant='gradient'
-									active={item.active}
-									hoverable
-								>
-									{item.title}
-								</Text>
-							</Button>
-						</li>
-					))}
-				</ul>
+				<NavList
+					className={navbarExpanded ? 'laptop:hidden flex align-middle w-full h-[42px] flex-col gap-6' : 'hidden'}
+				/>
 			</section>
 		</nav>
 	)

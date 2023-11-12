@@ -1,4 +1,4 @@
-import Text from '@/components/Text'
+import Text from '@/ui/Text'
 import BlogList from '@/components/blog/BlogList'
 import { allBlogs, Blog } from 'contentlayer/generated'
 import { getBlogGroups } from './utils'

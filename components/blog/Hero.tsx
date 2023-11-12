@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import React, { useEffect } from 'react'
-import Text from '../Text'
+import Text from '@/ui/Text'
 import { CalendarIcon, EyeIcon, TimeIcon } from '@/Icons'
 import Reactions from './Reactions'
 import { Blog } from '@/.contentlayer/generated'
-import Button from '../Button'
+import Button from '@/ui/Button'
 import Link from 'next/link'
 import { useBlogViews } from '@/hooks/useBlogViews'
 import AnimatedImage from '../AnimatedImage'

@@ -3,8 +3,8 @@
 import { ChevronUp } from '@/Icons'
 import { useIsMounted } from '@/hooks/isMounted'
 import { useState, useEffect, useCallback } from 'react'
-import Button from '../Button'
-import Text from '../Text'
+import Button from '@/ui/Button'
+import Text from '@/ui/Text'
 import clsx from 'clsx'
 import { useTheme } from '@/providers/theme-provider'
 

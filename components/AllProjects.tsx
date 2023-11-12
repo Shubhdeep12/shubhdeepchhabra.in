@@ -1,13 +1,13 @@
 'use client'
 
-import Text from '../Text'
-import Button from '../Button'
+import Text from '@/ui/Text'
+import Button from '@/ui/Button'
 import { ResumeIcon } from '@/Icons'
 import Link from 'next/link'
 import clsx from 'clsx'
 import Image from 'next/image'
-import { PROJECTS, ProjectProps } from '../home/constants'
-import { resumeUrl } from '@/lib/constants'
+import { PROJECTS, resumeUrl } from '@/utils/constants'
+import { ProjectProps } from '@/utils/types'
 
 const AllProjects = () => {
 	return (

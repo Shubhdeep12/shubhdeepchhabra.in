@@ -2,8 +2,8 @@
 
 import confetti from 'canvas-confetti'
 import clsx from 'clsx'
-import Button from '../Button'
-import Text from '../Text'
+import Button from '@/ui/Button'
+import Text from '@/ui/Text'
 import { BookmarkIcon, IconProps, LikeIcon, LoveIcon } from '@/Icons'
 import { Blog } from '@/.contentlayer/generated'
 import useLocalStoredReactions from '@/hooks/useLocalStoredReactions'

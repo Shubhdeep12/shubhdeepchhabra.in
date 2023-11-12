@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Text from '../Text'
+import Text from '@/ui/Text'
 
 const greetings = ['Hello, world', 'हैलो, वर्ल्ड']
 

@@ -1,7 +1,7 @@
 'use client'
 
 import Skills from '../Skills'
-import Text from '../Text'
+import Text from '@/ui/Text'
 
 const SkillsPills = () => {
 	return (

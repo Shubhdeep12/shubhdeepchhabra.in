@@ -1,6 +1,6 @@
 'use client'
 import { Blog } from '@/.contentlayer/generated'
-import Text from '../Text'
+import Text from '@/ui/Text'
 import BlogCard from './BlogCard'
 
 type BlogListProps = {

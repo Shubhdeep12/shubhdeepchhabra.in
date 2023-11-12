@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createHash } from 'crypto'
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/utils/prisma'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const ip = req.headers['x-forwarded-for'] || '0.0.0'

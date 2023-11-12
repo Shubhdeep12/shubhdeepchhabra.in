@@ -1,5 +1,5 @@
-import Text from '../Text'
-import Button from '../Button'
+import Text from '@/ui/Text'
+import Button from '@/ui/Button'
 import Link from 'next/link'
 
 const Experience = () => {

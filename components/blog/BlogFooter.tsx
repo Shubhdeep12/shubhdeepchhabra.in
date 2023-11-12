@@ -1,8 +1,8 @@
 'use client'
 import React from 'react'
-import Button from '../Button'
+import Button from '@/ui/Button'
 import { EditIcon, ShareIcon } from '@/Icons'
-import Text from '../Text'
+import Text from '@/ui/Text'
 import Reactions from './Reactions'
 import { Blog } from '@/.contentlayer/generated'
 

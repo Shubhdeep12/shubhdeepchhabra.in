@@ -2,7 +2,7 @@
 import { Blog } from '@/.contentlayer/generated'
 import clsx from 'clsx'
 import Link from 'next/link'
-import Text from '../Text'
+import Text from '@/ui/Text'
 import { CalendarIcon, EyeIcon, TimeIcon } from '@/Icons'
 import { useBlogViews } from '@/hooks/useBlogViews'
 
