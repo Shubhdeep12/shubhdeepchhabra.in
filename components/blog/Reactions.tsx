@@ -4,13 +4,14 @@ import confetti from 'canvas-confetti'
 import clsx from 'clsx'
 import Button from '@/ui/Button'
 import Text from '@/ui/Text'
-import { BookmarkIcon, IconProps, LikeIcon, LoveIcon } from '@/Icons'
+import { BookmarkIcon, LikeIcon, LoveIcon } from '@/Icons'
 import { Blog } from '@/.contentlayer/generated'
 import useLocalStoredReactions from '@/hooks/useLocalStoredReactions'
 import { useBlogReactions } from '@/hooks/useBlogReactions'
 import Loader from '../Loader'
 import { MouseEvent } from 'react'
 import { useWindowDimensions } from '@/hooks/useWindowDimensions'
+import { IconProps } from '@/utils/types'
 
 type ReactionProp = {
 	id: string

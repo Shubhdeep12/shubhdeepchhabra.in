@@ -38,8 +38,6 @@ const Navbar = () => {
 		},
 	]
 
-	console.log({ NAVBAR_ITEMS })
-
 	const NavList = ({ className }: { className: string }) => (
 		<ul className={className}>
 			{NAVBAR_ITEMS.map((item) => (
