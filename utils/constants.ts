@@ -1,6 +1,6 @@
 import { ProjectProps, SkillProp } from './types'
 
-export const resumeUrl = 'https://drive.google.com/file/d/1kijwbCWqGO7L5nolAHJwG5blF00865En/view?usp=sharing'
+export const resumeUrl = 'https://drive.google.com/file/d/1FTMeo9mh7Mg7YPZ3W8DQhm-MzHYYGzDB/view?usp=sharing'
 
 export const SKILLS: SkillProp[] = [
 	{
@@ -271,10 +271,10 @@ export const PROJECTS: ProjectProps[] = [
 		title: 'QueDoor - Core',
 		description: 'A social media app specially curated for students preparing for exams.',
 		stack: ['Node.js', 'Express', 'MongoDB', 'PostgresSQL', 'Neo4j', 'Redis'],
-		bgColor: 'hocus:bg-purple-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-purple-300',
-		metaDataStyles: 'group-hocus:border-purple-200 dark:bg-purple-900 bg-purple-50',
-		imageStyles: 'bg-purple-50 dark:bg-opacity-[0.14] dark:bg-purple-300',
-		titleStyles: 'dark:group-hocus:text-purple-400 group-hocus:text-purple-800',
+		bgColor: 'hocus:bg-indigo-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-indigo-300',
+		metaDataStyles: 'group-hocus:border-indigo-200 dark:bg-indigo-900 bg-indigo-50',
+		imageStyles: 'bg-indigo-50 dark:bg-opacity-[0.14] dark:bg-indigo-300',
+		titleStyles: 'dark:group-hocus:text-indigo-400 group-hocus:text-indigo-800',
 		href: 'https://github.com/Shubhdeep12/Quedoor_core',
 		src: '/assets/projects/Quedoor.png',
 		featured: true,
