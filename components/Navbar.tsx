@@ -121,33 +121,6 @@ const Navbar = () => {
 
 				<section className='flex grow justify-end h-full'>
 					<NavList className={'hidden laptop:flex gap-6'} />
-					{/* <ul >
-						{NAVBAR_ITEMS.map((item) => (
-							<li key={item.key}>
-								<Button
-									type={Link}
-									href={item.route}
-									height='h-full'
-									width='w-full'
-									variant='normal'
-									focusOutlined
-									className='rounded flex justify-center'
-									active={item.active}
-								>
-									<Text
-										className='font-semibold text-base p-2'
-										gFrom={item.gFrom}
-										gTo={item.gTo}
-										variant='gradient'
-										active={item.active}
-										hoverable
-									>
-										{item.title}
-									</Text>
-								</Button>
-							</li>
-						))}
-					</ul> */}
 				</section>
 				<div className='h-full w-[42px] flex items-center justify-center'>
 					{isMounted ? (

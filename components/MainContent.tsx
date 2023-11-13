@@ -12,8 +12,9 @@ export default function MainContent({ children }: MainProps) {
       mx-auto
 			pt-[110px]
 			pb-10
-			overflow-x-hidden
+			overflow-hidden
 			px-2
+
   '
 		>
 			{children}
