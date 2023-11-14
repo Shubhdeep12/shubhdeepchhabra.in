@@ -16,11 +16,8 @@ const Home = () => {
 			>
 				<section className='flex flex-col gap-16 overflow-hidden'>
 					<Intro />
-
 					<FeaturedProjects />
-
 					<SkillsPills />
-
 					<RecentBlogs />
 				</section>
 			</motion.div>
