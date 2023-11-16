@@ -17,10 +17,11 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^5.4.2",
+		"@sentry/nextjs": "^7.80.1",
+		"@types/gtag.js": "^0.0.18",
 		"@types/node": "20.8.7",
 		"@types/react": "18.2.29",
 		"@types/react-dom": "18.2.14",
-		"@types/gtag.js": "^0.0.18",
 		"@vercel/analytics": "^1.1.1",
 		"autoprefixer": "10.4.16",
 		"canvas-confetti": "^1.9.0",
