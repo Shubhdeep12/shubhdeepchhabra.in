@@ -1,4 +1,5 @@
 import useSWR, { SWRConfiguration } from 'swr'
+import * as Sentry from '@sentry/nextjs'
 
 export type Reactions = {
 	reactions: Record<string, string>
@@ -16,6 +17,13 @@ async function getBlogReactions(slug: string): Promise<Reactions> {
 }
 
 async function updateBlogReactions(slug: string, type: string): Promise<Reactions> {
+	const transaction = Sentry.startTransaction({
+		name: 'Blog Reaction',
+	})
+
+	Sentry.configureScope((scope) => {
+		scope.setSpan(transaction)
+	})
 	const res = await fetch(`${API_URL}/${slug}`, {
 		method: 'POST',
 		body: JSON.stringify({ type }),
@@ -24,6 +32,7 @@ async function updateBlogReactions(slug: string, type: string): Promise<Reaction
 	if (!res.ok) {
 		throw new Error('An error occured while updating reactions')
 	}
+	transaction.finish()
 	return res.json()
 }
 
