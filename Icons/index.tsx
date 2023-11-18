@@ -245,6 +245,34 @@ export const PythonIcon = ({ width = 24, height = 24, color = 'currentColor', cl
 	</svg>
 )
 
+export const ShadcnUI = ({ width = 24, height = 24 }: IconProps) => (
+	<svg viewBox='0 0 256 256' width={width} height={height} role='presentation'>
+		<rect width='256' height='256' fill='none'></rect>
+		<line
+			x1='208'
+			y1='128'
+			x2='128'
+			y2='208'
+			fill='none'
+			stroke='currentColor'
+			stroke-linecap='round'
+			stroke-linejoin='round'
+			stroke-width='16'
+		></line>
+		<line
+			x1='192'
+			y1='40'
+			x2='40'
+			y2='192'
+			fill='none'
+			stroke='currentColor'
+			stroke-linecap='round'
+			stroke-linejoin='round'
+			stroke-width='16'
+		></line>
+	</svg>
+)
+
 export const ChevronUp = ({ width = 24, height = 24, color = 'currentColor', className = '' }: IconProps) => (
 	<svg viewBox='0 0 24 24' width={width} height={height} role='presentation' className={className}>
 		<path d='M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z' fill={color} />

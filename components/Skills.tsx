@@ -13,6 +13,7 @@ import {
 	PythonIcon,
 	ReactIcon,
 	SemanticUIIcon,
+	ShadcnUI,
 	StyledComponentsIcon,
 	TailwindIcon,
 	TypeScriptIcon,
@@ -23,20 +24,21 @@ import { SKILLS } from '@/utils/constants'
 import { IconProps, SkillProp } from '@/utils/types'
 
 const SKILL_ICONS: Record<string, React.FC<IconProps>> = {
-	react: ReactIcon,
-	nextjs: NextjsIcon,
 	javascript: JavaScriptIcon,
 	typescript: TypeScriptIcon,
+	react: ReactIcon,
+	nextjs: NextjsIcon,
+	tailwind: TailwindIcon,
 	styledcomponents: StyledComponentsIcon,
+	semanticui: SemanticUIIcon,
 	html: HTMLIcon,
 	css: CSSIcon,
-	tailwind: TailwindIcon,
-	semanticui: SemanticUIIcon,
 	nodejs: NodejsIcon,
 	express: ExpressjsIcon,
 	mongodb: MongoDBIcon,
 	git: GitIcon,
 	python: PythonIcon,
+	shadcnui: ShadcnUI,
 }
 
 const Skills = () => {
