@@ -72,7 +72,7 @@ const Navbar = () => {
 	return (
 		<nav
 			className={clsx(
-				'fixed top-2 left-1/2 laptop:top-4 laptop:max-w-laptop w-full mx-auto -translate-x-1/2',
+				'fixed top-2 left-1/2 laptop:top-3 laptop:max-w-laptop w-full mx-auto -translate-x-1/2',
 				'flex flex-col',
 				'transition-all',
 				'rounded-lg',
