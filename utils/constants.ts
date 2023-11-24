@@ -1,6 +1,6 @@
 import { ProjectProps, SkillProp } from './types'
 
-export const resumeUrl = 'https://drive.google.com/file/d/1FTMeo9mh7Mg7YPZ3W8DQhm-MzHYYGzDB/view?usp=sharing'
+export const resumeUrl = 'https://drive.google.com/file/d/1le6TvIqCost3l8ZJ3xSJAsKSN-lh6mQ8/view?usp=sharing'
 
 export const SKILLS: SkillProp[] = [
 	{
