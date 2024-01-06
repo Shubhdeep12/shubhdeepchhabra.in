@@ -1,7 +1,7 @@
 'use client'
 import { BackToTopIcon } from '@/Icons'
 import Button from '@/ui/Button'
-// import { scrollToTop } from './BackToTop'
+import { scrollToTop } from './BackToTop'
 
 const BackToTopButton = () => {
 	return (
@@ -10,9 +10,7 @@ const BackToTopButton = () => {
 			width='w-[30px]'
 			focusOutlined
 			className='group rounded flex items-center justify-center'
-			onClick={() => {
-				throw new Error('oh you find it')
-			}}
+			onClick={() => scrollToTop()}
 		>
 			<BackToTopIcon
 				width={22}
