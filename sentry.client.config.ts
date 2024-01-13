@@ -3,6 +3,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs'
+import { init as Spotlightinit } from '@spotlightjs/spotlight'
 
 Sentry.init({
 	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
@@ -11,7 +12,7 @@ Sentry.init({
 	tracesSampleRate: 1,
 
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
-	debug: process.env.NODE_ENV === 'development',
+	debug: false,
 
 	replaysOnErrorSampleRate: 1.0,
 
@@ -19,12 +20,25 @@ Sentry.init({
 	// in development and sample at a lower rate in production
 	replaysSessionSampleRate: 0.1,
 
+	// tracePropagationTargets: [/^\/api\//],
+
 	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
-	integrations: [
-		new Sentry.Replay({
-			// Additional Replay configuration goes in here, for example:
-			maskAllText: true,
-			blockAllMedia: true,
-		}),
-	],
+	integrations: [new Sentry.BrowserTracing(), new Sentry.Replay({ maskAllText: false, blockAllMedia: false })],
 })
+
+// const client = getCurrentHub().getClient()
+// if (client && client.on) {
+// 	client.on('beforeSendEvent', (event: Event) => {
+// 		if (event.exception && event.exception.values && event.exception.values[0].mechanism?.handled === false) {
+// 			Spotlight.trigger('sentry:showError', { eventId: event.event_id, event })
+// 		}
+// 	})
+// }
+
+// only load Spotlight in dev
+if (process.env.NODE_ENV !== 'production') {
+	Spotlightinit({
+		sidecarUrl: 'http://localhost:8969/stream',
+		debug: true,
+	})
+}

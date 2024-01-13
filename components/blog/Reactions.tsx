@@ -71,19 +71,17 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 	const { width: windowWidth, height: windowHeight } = useWindowDimensions()
 
 	const handleReaction = (event: MouseEvent<HTMLButtonElement, MouseEvent>, type: string) => {
-		if (localReactions && !localReactions[type]) {
-			setLocalStoredReactions(type)
+		setLocalStoredReactions(type)
 
-			const x = event.clientX / windowWidth
-			const y = event.clientY / windowHeight
-			confetti({
-				...confettiOptions,
-				origin: { x, y },
-				colors: getConfettiColor(type),
-			})
+		const x = event.clientX / windowWidth
+		const y = event.clientY / windowHeight
+		confetti({
+			...confettiOptions,
+			origin: { x, y },
+			colors: getConfettiColor(type),
+		})
 
-			addReaction(type)
-		}
+		addReaction(type)
 	}
 
 	const getConfettiColor = (type: string) => {

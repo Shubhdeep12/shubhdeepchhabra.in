@@ -53,6 +53,7 @@ const Navbar = () => {
 						className='rounded flex justify-center'
 						active={item.active}
 					>
+						<div hidden></div>
 						<Text
 							className='font-semibold text-base p-2'
 							gFrom={item.gFrom}
@@ -68,6 +69,11 @@ const Navbar = () => {
 			))}
 		</ul>
 	)
+
+	function foo() {
+		const rejections = [new Error('Message 1'), new Error('Message 2'), new Error('Message 3')]
+		throw new AggregateError(rejections, 'wat')
+	}
 
 	return (
 		<nav
@@ -122,6 +128,48 @@ const Navbar = () => {
 				<section className='flex grow justify-end h-full'>
 					<NavList className={'hidden laptop:flex gap-6'} />
 				</section>
+
+				<Button
+					onClick={() => {
+						// try {
+						// 	throw new Error('aaa')
+						// } catch (error) {
+						// 	// Sentry.addBreadcrumb({
+						// 	// 	category: "auth",
+						// 	// 	message: "Authenticated user ",
+						// 	// 	level: "info",
+						// 	// });
+						// 	// Sentry.captureException(error)
+
+						// 	// 				Sentry.captureEvent({
+						// 	//   event_id: 'aa3ff046696b4bc6b609ce6d28fde9e2',
+						// 	//   message: 'someMessage',
+						// 	//   transaction: 'wat',
+						// 	//   type: 'replay_event',
+						// 	// });
+						// 	// Sentry.captureUserFeedback({
+						// 	// 	event_id: 'test_event_id',
+						// 	// 	email: 'test_email',
+						// 	// 	comments: 'test_comments',
+						// 	// 	name: 'test_name',
+						// 	// });
+						// 	// Sentry.captureMessage('hitting API navbar')
+						// 	// await fetch(`/api/reactions/connect-mongodb-with-nodejs`, {
+						// 	// 	method: 'POST',
+						// 	// 	body: JSON.stringify({ type: 'like' }),
+						// 	// 	headers: { 'Content-Type': 'application/json' },
+						// 	// })
+						// }
+
+						try {
+							foo()
+						} catch (e) {
+							Sentry.captureException(e)
+						}
+					}}
+				>
+					Throw
+				</Button>
 				<div className='h-full w-[42px] flex items-center justify-center'>
 					{isMounted ? (
 						<Button
