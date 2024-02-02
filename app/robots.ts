@@ -3,9 +3,9 @@ export default function robots() {
 		rules: [
 			{
 				userAgent: '*',
+				Allow: "/"
 			},
 		],
 		sitemap: 'https://www.shubhdeepchhabra.in/sitemap.xml',
-		host: 'https://www.shubhdeepchhabra.in',
 	}
 }
