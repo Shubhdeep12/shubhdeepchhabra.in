@@ -5,7 +5,6 @@ import BlogFooter from '@/components/blog/BlogFooter'
 import Hero from '@/components/blog/Hero'
 import BlogImages from '@/components/blog/BlogImages'
 import { Metadata } from 'next'
-import Script from 'next/script'
 
 export async function generateStaticParams() {
 	return allBlogs.map((blog) => ({
@@ -67,9 +66,6 @@ export default function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<section className='flex flex-col items-start gap-8'>
-			<Script id={blog.slug} type='application/ld+json'>
-				{JSON.stringify(blog.structuredData)}
-			</Script>
 			<Hero blog={blog} />
 
 			<article className='prose dark:prose-invert w-full mb-2'>
