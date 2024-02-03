@@ -69,9 +69,10 @@ const FeaturedProjects = () => {
 				</div>
 			</div>
 			<div id='featured-projects-content' className='w-full flex flex-col gap-4'>
-				{PROJECTS.map(
-					(project: ProjectProps) =>
-						project.featured && (
+				{PROJECTS.map((project: ProjectProps) => {
+					const ProjectIcon = project.src
+					if (project.featured) {
+						return (
 							<Link
 								href={project.href}
 								target='_blank'
@@ -90,13 +91,17 @@ const FeaturedProjects = () => {
 										'dark:bg-opacity-[0.2] rounded-lg group-hocus:bg-opacity-0 h-[64px] w-[64px] flex items-center'
 									)}
 								>
-									<Image
-										alt='featured-project'
-										src={project.src}
-										width={64}
-										height={64}
-										className={clsx('p-1 transition group-hocus:scale-110 min-w-[64px]')}
-									/>
+									{typeof project.src === 'string' ? (
+										<Image
+											alt='featured-project'
+											src={project.src}
+											width={64}
+											height={64}
+											className={clsx('p-1 transition group-hocus:scale-110 min-w-[64px]')}
+										/>
+									) : (
+										<ProjectIcon width={52} height={40} className='p-1 transition group-hocus:scale-110' />
+									)}
 								</div>
 								<div className='flex flex-col items-start w-full gap-2'>
 									<Text
@@ -134,7 +139,9 @@ const FeaturedProjects = () => {
 								</div>
 							</Link>
 						)
-				)}
+					}
+					return false
+				})}
 			</div>
 		</section>
 	)

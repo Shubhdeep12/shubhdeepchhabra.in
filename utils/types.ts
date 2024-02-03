@@ -34,5 +34,5 @@ export type ProjectProps = {
 	titleStyles?: string
 	href: string
 	featured: boolean
-	src: string
+	src: string | React.ElementType
 }
