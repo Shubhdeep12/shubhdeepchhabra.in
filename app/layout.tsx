@@ -8,7 +8,8 @@ import { BackToTop } from '@/components/BackToTop'
 import { type PropsWithChildren } from 'react'
 import { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
+// import GoogleAnalytics from '@/components/GoogleAnalytics'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const manrope = Manrope({
 	subsets: ['latin'],
@@ -110,9 +111,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 					<BackToTop />
 					<Analytics />
 					{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS ? (
-						<GoogleAnalytics
-							GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS || ''}
-						/>
+						<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS || ''} />
 					) : null}
 				</Providers>
 			</body>
