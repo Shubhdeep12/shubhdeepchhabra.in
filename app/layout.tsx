@@ -1,5 +1,5 @@
 import Navbar from '@/components/Navbar'
-import { Manrope } from 'next/font/google'
+import { Raleway } from 'next/font/google'
 import MainContent from '@/components/MainContent'
 import './globals.css'
 import { Providers } from '@/providers'
@@ -11,7 +11,7 @@ import { Analytics } from '@vercel/analytics/react'
 // import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { GoogleAnalytics } from '@next/third-parties/google'
 
-const manrope = Manrope({
+const raleway = Raleway({
 	subsets: ['latin'],
 	variable: '--font-man',
 })
@@ -93,7 +93,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en'>
 			<body
-				className={`${manrope.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
+				className={`${raleway.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
 			>
 				<Providers>
 					<svg
