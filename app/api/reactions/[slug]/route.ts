@@ -31,9 +31,9 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
     ])
     return Response.json({
       reactions: {
-        like: (reactions?.like || false).toString(),
-        love: (reactions?.love || false).toString(),
-        bookmark: (reactions?.bookmark || false).toString(),
+        like: (reactions?.like || 0).toString(),
+        love: (reactions?.love || 0).toString(),
+        bookmark: (reactions?.bookmark || 0).toString(),
       },
       userSession,
     })
@@ -84,9 +84,9 @@ export async function POST(req: Request, { params }: { params: { slug: string } 
 
     return Response.json({
       reactions: {
-        like: (newOrUpdatedReactions?.like || false).toString(),
-        love: (newOrUpdatedReactions?.love || false).toString(),
-        bookmark: (newOrUpdatedReactions?.bookmark || false).toString(),
+        like: (newOrUpdatedReactions?.like || 0).toString(),
+        love: (newOrUpdatedReactions?.love || 0).toString(),
+        bookmark: (newOrUpdatedReactions?.bookmark || 0).toString(),
       },
       userSession: newOrUpdatedUserSession,
     })
