@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Text from '@/ui/Text'
 import { CalendarIcon, EyeIcon, TimeIcon } from '@/Icons'
 import Reactions from './Reactions'
@@ -15,10 +15,14 @@ type HeroProps = {
 }
 
 const Hero = ({ blog }: HeroProps) => {
+	const componentMounted = useRef(false)
 	const { views, isLoading, increment } = useBlogViews(blog.slug)
 
 	useEffect(() => {
-		increment()
+		if (componentMounted.current) {
+			increment()
+		}
+		componentMounted.current = true
 	}, [])
 
 	return (

@@ -2,7 +2,7 @@
 import Text from '@/ui/Text'
 import BlogList from '@/components/blog/BlogList'
 import { allBlogs, Blog } from 'contentlayer/generated'
-import { getBlogGroups } from './utils'
+import { getBlogGroups } from '../../utils/blog'
 import { AnimatePresence, motion } from 'framer-motion'
 import Button from '@/ui/Button'
 import { FaRss } from 'react-icons/fa'

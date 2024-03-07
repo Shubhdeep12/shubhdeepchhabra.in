@@ -1,4 +1,4 @@
-import { getRecentBlogs } from '@/app/blog/utils'
+import { getRecentBlogs } from '@/utils/blog'
 import BlogList from '../blog/BlogList'
 import { allBlogs } from '@/.contentlayer/generated'
 import Text from '@/ui/Text'
