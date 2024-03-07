@@ -16,7 +16,7 @@ const RecentBlogs = () => {
 			>
 				Recent Blogs
 			</Text>
-			<BlogList blogList={{ blogs: getRecentBlogs(allBlogs) }} />
+			<BlogList className='px-1' blogList={{ blogs: getRecentBlogs(allBlogs) }} />
 		</section>
 	)
 }

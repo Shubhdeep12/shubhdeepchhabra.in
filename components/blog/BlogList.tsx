@@ -2,14 +2,16 @@
 import { Blog } from '@/.contentlayer/generated'
 import Text from '@/ui/Text'
 import BlogCard from './BlogCard'
+import clsx from 'clsx'
 
 type BlogListProps = {
 	blogList: { year?: number; blogs: Blog[] }
+	className?: string
 }
 
-const BlogList = ({ blogList }: BlogListProps) => {
+const BlogList = ({ blogList, className = '' }: BlogListProps) => {
 	return (
-		<div className='flex flex-col gap-6 w-full'>
+		<div className={clsx('flex flex-col gap-6 w-full', className)}>
 			{blogList.year && (
 				<div className='w-full flex gap-2'>
 					<Text className='text-black dark:text-white font-bold text-xl justify-start'>{blogList.year}</Text>
