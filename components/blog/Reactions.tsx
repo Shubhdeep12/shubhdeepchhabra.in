@@ -71,6 +71,7 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 	const { width: windowWidth, height: windowHeight } = useWindowDimensions()
 
 	const handleReaction = (event: MouseEvent<HTMLButtonElement, MouseEvent>, type: string) => {
+		event.preventDefault()
 		if (localReactions && !localReactions[type]) {
 			setLocalStoredReactions(type)
 

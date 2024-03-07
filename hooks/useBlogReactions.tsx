@@ -38,7 +38,6 @@ async function updateBlogReactions(slug: string, type: string): Promise<Reaction
 
 export const useBlogReactions = (slug: string, config?: SWRConfiguration) => {
 	const { data, error, mutate } = useSWR<Reactions>(`${API_URL}/${slug}`, () => getBlogReactions(slug), {
-		dedupingInterval: 600000,
 		...config,
 	})
 
@@ -65,9 +64,9 @@ export const useBlogReactions = (slug: string, config?: SWRConfiguration) => {
 			updateBlogReactions(slug, type).catch(() => {
 				return {
 					reactions: {
-						like: '0',
-						love: '0',
-						bookmark: '0',
+						like: 'false',
+						love: 'false',
+						bookmark: 'false',
 					},
 					userSession: {},
 				}
