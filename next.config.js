@@ -13,22 +13,51 @@ const ContentSecurityPolicy = `
 `.replace(/\n/g, '')
 
 const securityHeaders = [
-	{ key: 'Content-Security-Policy', value: ContentSecurityPolicy },
-	{ key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
-	{ key: 'X-Frame-Options', value: 'DENY' },
-	{ key: 'X-Content-Type-Options', value: 'nosniff' },
-	{ key: 'X-DNS-Prefetch-Control', value: 'on' },
-	{ key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
-	{ key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+  { key: 'Content-Security-Policy', value: ContentSecurityPolicy },
+  { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
+  { key: 'X-Frame-Options', value: 'DENY' },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'X-DNS-Prefetch-Control', value: 'on' },
+  { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
 ]
 
 const nextConfig = {
-	images: {
-		unoptimized: true,
-	},
-	headers() {
-		return [{ source: '/(.*)', headers: securityHeaders }]
-	},
+  images: {
+    unoptimized: true,
+  },
+  async redirects() {
+    return [
+      {
+        source: '/blog/Razorpay-Integration-with-Reactjs-and-Node',
+        destination: '/blog/razorpay-integration-in-reactjs',
+        permanent: true,
+      },
+      {
+        source: '/blog/What-are-Design-Tokens-How-to-Create-Design-tokens-in-React',
+        destination: '/blog/design-tokens-nextjs',
+        permanent: true,
+      },
+      {
+        source: '/blog/Structuring-SEO-and-Format-of-a-page-in-Nextjs-Effectively',
+        destination: '/blog/seo-format-nextjs',
+        permanent: true,
+      },
+      {
+        source: '/blog/Connect-Database-with-nodejs-Part-1-MongoDB-using-Mongoose',
+        destination: '/blog/connect-mongodb-with-nodejs',
+        permanent: true,
+      },
+      {
+        source: '/blog/Why-Did-Discord-Go-From-MongoDB-To-Cassandra-Then-ScyllaDB-Simplified',
+        destination: '/blog/discord-mongodb-cassandra-scylladb',
+        permanent: true,
+      },
+    ]
+  },
+  headers() {
+    return [{ source: '/(.*)', headers: securityHeaders }]
+  },
 }
 
 module.exports = withContentlayer(nextConfig)

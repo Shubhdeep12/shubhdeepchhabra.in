@@ -24,7 +24,6 @@ async function updateBlogViews(slug: string): Promise<Views> {
 
 export const useBlogViews = (slug: string, config?: SWRConfiguration) => {
 	const { data, error, mutate } = useSWR<Views>(`${API_URL}/${slug}`, () => getBlogViews(slug), {
-		dedupingInterval: 600000,
 		...config,
 	})
 

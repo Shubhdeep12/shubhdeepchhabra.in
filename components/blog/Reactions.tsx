@@ -71,7 +71,9 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 	const { width: windowWidth, height: windowHeight } = useWindowDimensions()
 
 	const handleReaction = (event: MouseEvent<HTMLButtonElement, MouseEvent>, type: string) => {
-		setLocalStoredReactions(type)
+		event.preventDefault()
+		if (localReactions && !localReactions[type]) {
+			setLocalStoredReactions(type)
 
 		const x = event.clientX / windowWidth
 		const y = event.clientY / windowHeight

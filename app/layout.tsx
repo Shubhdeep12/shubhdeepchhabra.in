@@ -1,5 +1,5 @@
 import Navbar from '@/components/Navbar'
-import { Manrope } from 'next/font/google'
+import { Raleway } from 'next/font/google'
 import MainContent from '@/components/MainContent'
 import './globals.css'
 import { Providers } from '@/providers'
@@ -8,9 +8,10 @@ import { BackToTop } from '@/components/BackToTop'
 import { type PropsWithChildren } from 'react'
 import { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
+// import GoogleAnalytics from '@/components/GoogleAnalytics'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
-const manrope = Manrope({
+const raleway = Raleway({
 	subsets: ['latin'],
 	variable: '--font-man',
 })
@@ -58,13 +59,14 @@ export const metadata: Metadata = {
 		],
 	},
 	robots: {
-		index: false,
+		index: true,
 		follow: true,
-		nocache: true,
 		googleBot: {
 			index: true,
-			follow: false,
-			noimageindex: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1,
 		},
 	},
 	twitter: {
@@ -91,7 +93,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en'>
 			<body
-				className={`${manrope.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
+				className={`${raleway.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
 			>
 				<Providers>
 					<svg
@@ -110,9 +112,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 					<BackToTop />
 					<Analytics />
 					{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS ? (
-						<GoogleAnalytics
-							GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS || ''}
-						/>
+						<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS || ''} />
 					) : null}
 				</Providers>
 			</body>

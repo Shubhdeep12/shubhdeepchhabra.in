@@ -1,3 +1,4 @@
+import { AuzmorLogo } from '@/Icons'
 import { ProjectProps, SkillProp } from './types'
 
 export const resumeUrl = 'https://drive.google.com/file/d/1le6TvIqCost3l8ZJ3xSJAsKSN-lh6mQ8/view?usp=sharing'
@@ -259,7 +260,7 @@ export const PROJECTS: ProjectProps[] = [
 		imageStyles: 'bg-orange-50 dark:bg-opacity-[0.14] dark:bg-orange-300',
 		titleStyles: 'dark:group-hocus:text-orange-400 group-hocus:text-orange-800',
 		href: 'https://www.auzmor.com',
-		src: 'https://auzmormain.wpenginepowered.com/wp-content/uploads/2022/11/logoblack.svg',
+		src: AuzmorLogo,
 		featured: true,
 	},
 	{

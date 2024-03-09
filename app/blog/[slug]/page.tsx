@@ -42,13 +42,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 			],
 		},
 		robots: {
-			index: false,
+			index: true,
 			follow: true,
-			nocache: true,
 			googleBot: {
 				index: true,
-				follow: false,
-				noimageindex: true,
+				follow: true,
+				'max-video-preview': -1,
+				'max-image-preview': 'large',
+				'max-snippet': -1,
 			},
 		},
 	}
@@ -66,9 +67,6 @@ export default function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<section className='flex flex-col items-start gap-8'>
-			<script type='application/ld+json' suppressHydrationWarning>
-				{JSON.stringify(blog.structuredData)}
-			</script>
 			<Hero blog={blog} />
 
 			<article className='prose dark:prose-invert w-full mb-2'>
