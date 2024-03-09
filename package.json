@@ -13,12 +13,15 @@
 		"check-format": "prettier --write .",
 		"test-all": "npm run check-format && npm run check-lint && npm run check-types",
 		"prepare": "husky install",
-		"postinstall": "prisma generate"
+		"postinstall": "prisma generate",
+		"try": "node ./mainscript.js"
 	},
 	"dependencies": {
 		"@next/third-parties": "^14.1.0",
 		"@prisma/client": "^5.4.2",
-		"@sentry/nextjs": "^7.83.0",
+		"@sentry/bundler-plugin-core": "^2.14.2",
+		"@sentry/nextjs": "^7.100.0",
+		"@sentry/webpack-plugin": "^2.14.2",
 		"@types/gtag.js": "^0.0.18",
 		"@types/node": "20.8.7",
 		"@types/react": "18.2.29",

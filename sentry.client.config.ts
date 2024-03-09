@@ -4,13 +4,13 @@
 
 import * as Sentry from '@sentry/nextjs'
 import { init as Spotlightinit } from '@spotlightjs/spotlight'
+import * as SentryBrowser from "@sentry/browser";
 
 Sentry.init({
 	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
-
 	// Adjust this value in production, or use tracesSampler for greater control
 	tracesSampleRate: 1,
-
+	attachStacktrace: true,
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: false,
 
@@ -23,7 +23,18 @@ Sentry.init({
 	// tracePropagationTargets: [/^\/api\//],
 
 	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
-	integrations: [new Sentry.BrowserTracing(), new Sentry.Replay({ maskAllText: false, blockAllMedia: false })],
+	integrations: [Sentry.browserTracingIntegration(), SentryBrowser.moduleMetadataIntegration()],
+
+	beforeSend(event, hint) {
+		console.log({ clientEvent: event, hint })
+
+		return event
+	},
+
+	beforeSendTransaction(event, hint) {
+		console.log({ clientTrn: event, hint })
+		return event;
+	},
 })
 
 // const client = getCurrentHub().getClient()
