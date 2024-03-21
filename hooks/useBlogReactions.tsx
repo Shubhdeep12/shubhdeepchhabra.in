@@ -64,9 +64,9 @@ export const useBlogReactions = (slug: string, config?: SWRConfiguration) => {
 			updateBlogReactions(slug, type).catch(() => {
 				return {
 					reactions: {
-						like: 'false',
-						love: 'false',
-						bookmark: 'false',
+						like: '0',
+						love: '0',
+						bookmark: '0',
 					},
 					userSession: {},
 				}
