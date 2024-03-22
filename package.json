@@ -16,7 +16,6 @@
 		"postinstall": "prisma generate"
 	},
 	"dependencies": {
-		"@codecov/webpack-plugin": "^0.0.1-beta.5",
 		"@next/third-parties": "^14.1.0",
 		"@prisma/client": "^5.4.2",
 		"@sentry/nextjs": "^7.80.1",
@@ -54,6 +53,7 @@
 		"typescript": "5.2.2"
 	},
 	"devDependencies": {
+		"@codecov/webpack-plugin": "^0.0.1-beta.5",
 		"@tailwindcss/typography": "^0.5.10",
 		"@types/canvas-confetti": "^1.6.2",
 		"@types/gtag.js": "^0.0.18",
