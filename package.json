@@ -16,6 +16,7 @@
 		"postinstall": "prisma generate"
 	},
 	"dependencies": {
+		"@codecov/webpack-plugin": "^0.0.1-beta.5",
 		"@next/third-parties": "^14.1.0",
 		"@prisma/client": "^5.4.2",
 		"@sentry/nextjs": "^7.80.1",

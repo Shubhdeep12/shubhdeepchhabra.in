@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('next').NextConfig} */
 const { withContentlayer } = require('next-contentlayer')
+const { codecovWebpackPlugin } = require('@codecov/webpack-plugin');
 
 const ContentSecurityPolicy = `
   default-src 'self' vercel.live;
@@ -58,6 +59,17 @@ const nextConfig = {
   headers() {
     return [{ source: '/(.*)', headers: securityHeaders }]
   },
+  webpack: (config) => {
+    config.plugins.push(
+      codecovWebpackPlugin({
+        enableBundleAnalysis: typeof process.env.CODECOV_TOKEN === 'string',
+        bundleName: 'sentry-docs',
+        uploadToken: process.env.CODECOV_TOKEN,
+      })
+    );
+
+    return config;
+  }
 }
 
 module.exports = withContentlayer(nextConfig)
