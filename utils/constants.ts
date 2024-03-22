@@ -34,8 +34,8 @@ export const SKILLS: SkillProp[] = [
 	{
 		id: 'nextjs',
 		title: 'Next.js',
-		bgColor: 'hocus:bg-[#00c2e61f] dark:hocus:bg-[#0070f32e]',
-		borderColor: 'border hocus:border-[#0070f38f] dark:hocus:border-[#0070f38f]',
+		bgColor: 'hocus:bg-[#8888881f] dark:hocus:bg-[#8888881f]',
+		borderColor: 'border hocus:border-[#8888888f] dark:hocus:border-[#8888888f]',
 		wIcon: 19,
 		hIcon: 19,
 		position: 'right',
