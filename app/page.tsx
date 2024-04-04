@@ -10,11 +10,11 @@ const Home = () => {
 		<AnimatePresence>
 			<motion.div
 				key={'1'}
-				initial={{ y: 100, opacity: 0.4 }}
+				initial={{ y: 100, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ type: 'spring', damping: 10, stiffness: 100 }}
 			>
-				<section className='flex flex-col gap-16 overflow-hidden'>
+				<section className='flex flex-col gap-16 overflow-hidden px-2'>
 					<Intro />
 					<SkillsPills />
 					<FeaturedProjects />

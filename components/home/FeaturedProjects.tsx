@@ -68,7 +68,7 @@ const FeaturedProjects = () => {
 					</Button>
 				</div>
 			</div>
-			<div id='featured-projects-content' className='w-full flex flex-col gap-4 px-1'>
+			<div id='featured-projects-content' className='w-full flex flex-col gap-4'>
 				{PROJECTS.map((project: ProjectProps) => {
 					const ProjectIcon = project.src
 					if (project.featured) {
