@@ -5,7 +5,7 @@ Sentry.init({
 
 	tracesSampleRate: 1, // To trace every event in production.
 
-	debug: process.env.NODE_ENV === 'development', // To have logs but in development environments.
+	debug: false, // To have logs but in development environments.
 
 	replaysOnErrorSampleRate: 1.0, // To trace every session with error.
 
