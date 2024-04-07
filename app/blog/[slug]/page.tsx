@@ -52,6 +52,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 				'max-snippet': -1,
 			},
 		},
+		twitter: {
+			card: 'summary_large_image',
+			site: '@ShubhInTech',
+			creator: '@ShubhInTech',
+			title,
+			description,
+			images: [ogImage],
+		},
 	}
 }
 
