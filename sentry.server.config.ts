@@ -1,15 +1,12 @@
-// This file configures the initialization of Sentry on the server.
-// The config you add here will be used whenever the server handles a request.
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/
-
 import * as Sentry from '@sentry/nextjs'
+import { prisma } from './utils/prisma'
 
 Sentry.init({
-	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
+	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN, // same reason mentioned in client config.
 
-	// Adjust this value in production, or use tracesSampler for greater control
-	tracesSampleRate: 1,
+	tracesSampleRate: 1, // same reason to track every event in server side.
 
-	// Setting this option to true will print useful information to the console while you're setting up Sentry.
-	debug: process.env.NODE_ENV === 'development',
+	debug: process.env.NODE_ENV === 'development', // logs only for development env.
+
+	integrations: [new Sentry.Integrations.Prisma({ client: prisma })], // Added integration for prisma to track every db query done by prisma.
 })

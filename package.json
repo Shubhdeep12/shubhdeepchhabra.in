@@ -18,7 +18,7 @@
 	"dependencies": {
 		"@next/third-parties": "^14.1.0",
 		"@prisma/client": "^5.4.2",
-		"@sentry/nextjs": "^7.80.1",
+		"@sentry/nextjs": "^7.109.0",
 		"@types/gtag.js": "^0.0.18",
 		"@types/node": "20.8.7",
 		"@types/react": "18.2.29",
