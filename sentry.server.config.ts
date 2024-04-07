@@ -6,7 +6,7 @@ Sentry.init({
 
 	tracesSampleRate: 1, // same reason to track every event in server side.
 
-	debug: process.env.NODE_ENV === 'development', // logs only for development env.
+	debug: false, // logs only for development env.
 
 	integrations: [new Sentry.Integrations.Prisma({ client: prisma })], // Added integration for prisma to track every db query done by prisma.
 })
