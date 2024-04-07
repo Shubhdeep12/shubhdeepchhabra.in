@@ -1,28 +1,19 @@
-// This file configures the initialization of Sentry on the client.
-// The config you add here will be used whenever a users loads a page in their browser.
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/
-
 import * as Sentry from '@sentry/nextjs'
 
 Sentry.init({
-	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
+	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN, // To store dsn value in env variables and it is stored in 2 variables as on client side Nextjs needs env with prefix NEXT_PUBLIC
 
-	// Adjust this value in production, or use tracesSampler for greater control
-	tracesSampleRate: 1,
+	tracesSampleRate: 1, // To trace every event in production.
 
-	// Setting this option to true will print useful information to the console while you're setting up Sentry.
-	debug: process.env.NODE_ENV === 'development',
+	debug: process.env.NODE_ENV === 'development', // To have logs but in development environments.
 
-	replaysOnErrorSampleRate: 1.0,
+	replaysOnErrorSampleRate: 1.0, // To trace every session with error.
 
-	// This sets the sample rate to be 10%. You may want this to be 100% while
-	// in development and sample at a lower rate in production
-	replaysSessionSampleRate: 0.1,
+	replaysSessionSampleRate: 0.1, // To trace 10% of sessions(without any error).
 
-	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
 	integrations: [
-		new Sentry.Replay({
-			// Additional Replay configuration goes in here, for example:
+		// Sentry repaly integration configs to mask all text and block media in replays captured.
+		Sentry.replayIntegration({
 			maskAllText: true,
 			blockAllMedia: true,
 		}),
