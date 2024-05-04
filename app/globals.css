@@ -62,6 +62,7 @@ table {
 	@apply grid min-w-full break-words rounded-none border-0 p-0 text-sm text-black;
 	counter-reset: line;
 	box-decoration-break: clone;
+	overflow: auto;
 }
 [data-rehype-pretty-code-fragment] .line {
 	@apply py-1;
