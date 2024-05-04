@@ -54,6 +54,7 @@
 	},
 	"devDependencies": {
 		"@codecov/webpack-plugin": "^0.0.1-beta.5",
+		"@spotlightjs/spotlight": "^1.2.17",
 		"@tailwindcss/typography": "^0.5.10",
 		"@types/canvas-confetti": "^1.6.2",
 		"@types/gtag.js": "^0.0.18",

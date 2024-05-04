@@ -9,4 +9,6 @@ Sentry.init({
 	debug: false, // logs only for development env.
 
 	integrations: [new Sentry.Integrations.Prisma({ client: prisma })], // Added integration for prisma to track every db query done by prisma.
+
+	spotlight: process.env.NODE_ENV === 'development',
 })
