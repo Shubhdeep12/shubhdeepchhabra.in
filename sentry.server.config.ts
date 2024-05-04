@@ -10,5 +10,5 @@ Sentry.init({
 
 	integrations: [new Sentry.Integrations.Prisma({ client: prisma })], // Added integration for prisma to track every db query done by prisma.
 
-	spotlight: process.env.NODE_ENV === 'development',
+	spotlight: process.env.NODE_ENV === 'development', // Sentry will send the event evelopes from server side to spotlight.
 })
