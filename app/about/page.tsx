@@ -1,24 +1,21 @@
-'use client'
+import AnimatePage from '@/components/AnimatePage'
 import AboutSection from '@/components/about/AboutSection'
 import Contact from '@/components/about/Contact'
 import Experience from '@/components/about/Experience'
-import { AnimatePresence, motion } from 'framer-motion'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'About - Shubhdeep Chhabra',
+}
 
 export default function About() {
 	return (
-		<AnimatePresence>
-			<motion.div
-				key={'1'}
-				initial={{ y: 100, opacity: 0 }}
-				animate={{ y: 0, opacity: 1 }}
-				transition={{ type: 'spring', damping: 10, stiffness: 100 }}
-			>
-				<section className='flex flex-col gap-16'>
-					<AboutSection />
-					<Experience />
-					<Contact />
-				</section>
-			</motion.div>
-		</AnimatePresence>
+		<AnimatePage>
+			<section className='flex flex-col gap-16'>
+				<AboutSection />
+				<Experience />
+				<Contact />
+			</section>
+		</AnimatePage>
 	)
 }
