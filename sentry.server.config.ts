@@ -4,6 +4,7 @@
 
 import * as Sentry from '@sentry/nextjs'
 import { prisma } from './utils/prisma'
+import { setupSidecar } from '@spotlightjs/sidecar'
 
 Sentry.init({
 	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
@@ -22,4 +23,5 @@ Sentry.init({
 		console.log({ serverTransaction: event, hint })
 		return event
 	},
+	spotlight: true,
 })

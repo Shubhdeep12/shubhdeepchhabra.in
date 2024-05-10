@@ -75,15 +75,16 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 		if (localReactions && !localReactions[type]) {
 			setLocalStoredReactions(type)
 
-		const x = event.clientX / windowWidth
-		const y = event.clientY / windowHeight
-		confetti({
-			...confettiOptions,
-			origin: { x, y },
-			colors: getConfettiColor(type),
-		})
+			const x = event.clientX / windowWidth
+			const y = event.clientY / windowHeight
+			confetti({
+				...confettiOptions,
+				origin: { x, y },
+				colors: getConfettiColor(type),
+			})
 
-		addReaction(type)
+			addReaction(type)
+		}
 	}
 
 	const getConfettiColor = (type: string) => {
@@ -102,7 +103,6 @@ const Reactions = ({ blog }: { blog: Blog }) => {
 			}
 		}
 	}
-
 	return (
 		<div id='reactions' className='flex gap-4'>
 			{REACTIONS.map((reaction) => {

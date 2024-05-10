@@ -4,7 +4,6 @@
 
 import * as Sentry from '@sentry/nextjs'
 import { init as Spotlightinit } from '@spotlightjs/spotlight'
-import * as SentryBrowser from "@sentry/browser";
 
 Sentry.init({
 	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
@@ -23,7 +22,7 @@ Sentry.init({
 	// tracePropagationTargets: [/^\/api\//],
 
 	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
-	integrations: [Sentry.browserTracingIntegration(), SentryBrowser.moduleMetadataIntegration()],
+	integrations: [Sentry.browserTracingIntegration()],
 
 	beforeSend(event, hint) {
 		console.log({ clientEvent: event, hint })
@@ -33,7 +32,7 @@ Sentry.init({
 
 	beforeSendTransaction(event, hint) {
 		console.log({ clientTrn: event, hint })
-		return event;
+		return event
 	},
 })
 

@@ -20,7 +20,7 @@
 		"@next/third-parties": "^14.1.0",
 		"@prisma/client": "^5.4.2",
 		"@sentry/bundler-plugin-core": "^2.14.2",
-		"@sentry/nextjs": "^7.100.0",
+		"@sentry/nextjs": "^8.0.0-alpha.7",
 		"@sentry/webpack-plugin": "^2.14.2",
 		"@types/gtag.js": "^0.0.18",
 		"@types/node": "20.8.7",
@@ -57,6 +57,7 @@
 	},
 	"devDependencies": {
 		"@spotlightjs/spotlight": "file:../spotlight/packages/spotlight",
+		"@spotlightjs/sidecar": "file:../spotlight/packages/sidecar",
 		"@tailwindcss/typography": "^0.5.10",
 		"@types/canvas-confetti": "^1.6.2",
 		"@types/gtag.js": "^0.0.18",
