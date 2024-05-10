@@ -7,7 +7,7 @@ Sentry.init({
 
 	debug: false, // To have logs but in development environments.
 
-	replaysOnErrorSampleRate: 1.0, // To trace every session with error.
+	replaysOnErrorSampleRate: 0.1, // To trace every session with error.
 
 	replaysSessionSampleRate: 0.1, // To trace 10% of sessions(without any error).
 

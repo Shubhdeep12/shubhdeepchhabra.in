@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Text from '@/ui/Text'
+import Image from 'next/image'
 
 const greetings = ['Hello, world', 'हैलो, वर्ल्ड']
 
@@ -16,7 +17,7 @@ const Greeting = () => {
 	return (
 		<div className='flex flex-col gap-2'>
 			<div className='flex gap-1 items-center text-3xl'>
-				<span className='inline-block motion-safe:animate-wave'>👋</span>
+				<Image src='/assets/waving-hand.gif' alt='waving hand' width={30} height={30} />
 				<Text
 					variant='shadow'
 					shadowColor='yellow'
