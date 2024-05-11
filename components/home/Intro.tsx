@@ -6,13 +6,13 @@ import { ProfileIcon } from '@/Icons'
 import Text from '@/ui/Text'
 import SocialButtons from '../SocialButtons'
 import { useRouter } from 'next/navigation'
-import AnimatedImage from '../AnimatedImage'
+// import AnimatedImage from '../AnimatedImage'
 
 const Intro = () => {
 	const router = useRouter()
 	return (
 		<section className='flex flex-col items-start laptop:flex-row-reverse laptop:items-center gap-5'>
-			<section>
+			{/* <section>
 				<AnimatedImage
 					className='rounded-xl'
 					src='/assets/Shubhdeepchhabra.png'
@@ -20,7 +20,7 @@ const Intro = () => {
 					height={200}
 					alt='shubhdeep Chhabra'
 				/>
-			</section>
+			</section> */}
 			<section className='flex flex-col gap-5 w-full'>
 				<Greeting />
 
