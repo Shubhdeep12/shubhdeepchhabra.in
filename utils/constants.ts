@@ -308,7 +308,7 @@ export const PROJECTS: ProjectProps[] = [
 		metaDataStyles: 'group-hocus:border-yellow-200 dark:bg-yellow-900 bg-yellow-50',
 		imageStyles: 'bg-yellow-50 dark:bg-opacity-[0.14] dark:bg-yellow-300',
 		titleStyles: 'dark:group-hocus:text-yellow-400 group-hocus:text-yellow-800',
-		href: 'https://shubhdeep12.github.io/eslint-config-generator/',
+		href: 'https://eslint-config-generator.shubhdeepchhabra.in/',
 		src: '/assets/projects/eslint-config-generator.png',
 		featured: true,
 	},
