@@ -3,11 +3,11 @@ import GradientText, { GradientTextProps } from './GradientText'
 import NormalText, { NormalTextProps } from './NormalText'
 import ShadowText, { ShadowTextProps } from './ShadowText'
 
-type ButtonProps = (ShadowTextProps | NormalTextProps | GradientTextProps) & {
+type TextProps = (ShadowTextProps | NormalTextProps | GradientTextProps) & {
 	variant?: 'normal' | 'shadow' | 'gradient'
 }
 
-const Button = ({ variant = 'normal', ...props }: ButtonProps) => {
+const Text = ({ variant = 'normal', ...props }: TextProps) => {
 	switch (variant) {
 		case 'normal':
 			return <NormalText {...props} />
@@ -20,4 +20,4 @@ const Button = ({ variant = 'normal', ...props }: ButtonProps) => {
 	}
 }
 
-export default Button
+export default Text
