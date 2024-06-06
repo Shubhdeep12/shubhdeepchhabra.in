@@ -13,6 +13,10 @@ body {
 	scroll-behavior: smooth;
 }
 
+:root:has(.no-scroll) {
+	overflow: hidden;
+}
+
 ::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
