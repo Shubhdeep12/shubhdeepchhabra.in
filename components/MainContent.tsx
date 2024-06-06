@@ -1,6 +1,6 @@
 type MainProps = {
-	children?: React.ReactNode
-}
+	children?: React.ReactNode;
+};
 export default function MainContent({ children }: MainProps) {
 	return (
 		<main
@@ -10,12 +10,12 @@ export default function MainContent({ children }: MainProps) {
       mx-auto
 			pt-[110px]
 			pb-10
-			overflow-hidden
+			overflow-x-visible
 			px-2
 
   '
 		>
 			{children}
 		</main>
-	)
+	);
 }
