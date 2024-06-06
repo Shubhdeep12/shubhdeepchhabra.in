@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('tailwindcss').Config} */
 const hocusPlugin = require('tailwindcss-hocus')
+import colors from 'tailwindcss/colors';
 
 module.exports = {
 	content: [
@@ -14,6 +15,7 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				primary: colors.blue,
 				text: {
 					light: '#EBF0FED9',
 					dark: '#091122d9',
@@ -66,27 +68,8 @@ module.exports = {
 			fontFamily: {
 				sans: ['var(--font-man)'],
 			},
-			keyframes: {
-				'page-transition': {
-					'0%': { transform: 'scale(0.975)', opacity: '0' },
-					'100%': { transform: 'scale(1)', opacity: '1' },
-				},
-				scroll: {
-					'0%': { transform: 'translateX(1.5rem)' },
-					'100%': { transform: 'translateX(-100%)' },
-				},
-				wave: {
-					'from, 50%, to': { transform: 'rotate(0deg)' },
-					'10%, 30%': { transform: 'rotate(-10deg)' },
-					'20%': { transform: 'rotate(12deg)' },
-					'40%': { transform: 'rotate(9deg)' },
-				},
-			},
-			animation: {
-				'page-transition': 'page-transition 300ms ease-in-out backwards',
-				scroll: 'scroll 15s linear infinite',
-				wave: 'wave 2.5s infinite',
-			},
+			keyframes: {},
+			animation: {},
 		},
 	},
 	plugins: [hocusPlugin, require('@tailwindcss/typography')],

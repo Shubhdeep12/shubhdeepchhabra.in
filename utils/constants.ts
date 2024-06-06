@@ -137,7 +137,7 @@ export const NAVIGATIONBAR_ITEMS = {
 		key: 'about',
 		title: 'About',
 		route: '/about',
-		gFrom: 'from-blue-500',
+		gFrom: 'from-primary-500',
 		gTo: 'to-green-500',
 	},
 	projects: {
@@ -159,7 +159,7 @@ export const NAVIGATIONBAR_ITEMS = {
 export const FOOTER_NAVBAR_ITEMS = [
 	{
 		...NAVIGATIONBAR_ITEMS.about,
-		underline: 'hocus:decoration-blue-500',
+		underline: 'hocus:decoration-primary-500',
 		target: '_self',
 	},
 	{
@@ -180,9 +180,9 @@ export const SOURCE_FOOTER_ITEMS = [
 		title: 'Resume',
 		route: resumeUrl,
 		gradient: true,
-		gFrom: 'from-blue-500',
+		gFrom: 'from-primary-500',
 		gTo: 'to-green-500',
-		underline: 'hocus:decoration-blue-500',
+		underline: 'hocus:decoration-primary-500',
 		target: '_blank',
 	},
 	{
@@ -214,7 +214,7 @@ export const DONATE_SOURCES = [
 		route: 'https://paypal.me/shubhdeepchhabra',
 		gradient: true,
 		gFrom: 'from-indigo-500',
-		gTo: 'to-blue-500',
+		gTo: 'to-primary-500',
 		underline: 'hocus:decoration-yellow-500',
 		target: '_blank',
 	},
@@ -240,7 +240,7 @@ export const SOCIALS = [
 	{
 		key: 'linkedin',
 		icon: 'linkedin',
-		className: 'group-hocus:fill-blue-600 dark:fill-slate-400',
+		className: 'group-hocus:fill-primary-600 dark:fill-slate-400',
 		action: 'https://www.linkedin.com/in/shubhdeepchhabra/',
 	},
 	{

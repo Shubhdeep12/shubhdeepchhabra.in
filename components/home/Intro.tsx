@@ -33,7 +33,7 @@ const Intro = () => {
 						height='h-[42px]'
 						width='w-fit'
 						focusOutlined
-						className='p-4 flex gap-1 justify-center items-center rounded-lg bg-blue-700 hover:-translate-y-[1px] hover:bg-blue-800 hover:shadow-md dark:bg-blue-500 dark:hover:bg-blue-400'
+						className='p-4 flex gap-1 justify-center items-center rounded-lg bg-primary-700 hover:-translate-y-[1px] hover:bg-primary-800 hover:shadow-md dark:bg-primary-500 dark:hover:bg-primary-400'
 						hoverable={false}
 						onClick={() => router.push('/about')}
 					>

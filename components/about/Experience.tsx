@@ -8,7 +8,7 @@ const Experience = () => {
 			<Text
 				variant='shadow'
 				gFrom='dark:from-red-400'
-				gTo='dark:to-blue-400'
+				gTo='dark:to-primary-400'
 				shadowColor='orange'
 				className='font-bold text-3xl text-heading-dark'
 			>
@@ -19,7 +19,7 @@ const Experience = () => {
 				<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
 					<Text>Software Engineer III @</Text>
 					<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
-						<Text className='text-blue-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
+						<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
 					</Button>
 				</div>
 				<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
@@ -28,7 +28,7 @@ const Experience = () => {
 				<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
 					<Text>Software Engineer I @</Text>
 					<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
-						<Text className='text-blue-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
+						<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
 					</Button>
 				</div>
 				<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
@@ -60,7 +60,7 @@ const Experience = () => {
 				<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
 					<Text>Associate Software Engineer @</Text>
 					<Button hoverable={false} type={Link} href={'https://www.accenture.com'} target='_blank'>
-						<Text className='text-blue-400 underline underline-offset-2 decoration-2 font-semibold'>Accenture</Text>
+						<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Accenture</Text>
 					</Button>
 				</div>
 

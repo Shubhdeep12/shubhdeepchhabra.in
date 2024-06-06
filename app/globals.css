@@ -31,7 +31,7 @@ body {
 	@apply font-medium;
 }
 .prose a {
-	@apply transition-all text-blue-400 font-bold hocus:underline underline-offset-2 hocus:decoration-2 decoration-blue-400;
+	@apply transition-all text-primary-400 font-bold hocus:underline underline-offset-2 hocus:decoration-2 decoration-primary-400;
 }
 
 .prose *:hover > .anchor {

@@ -38,7 +38,7 @@ const Greeting = () => {
 				<Text
 					variant='shadow'
 					gFrom='dark:from-sky-500'
-					gTo='dark:to-blue-500'
+					gTo='dark:to-primary-500'
 					shadowColor='blue'
 					className='font-semibold text-3xl text-heading-dark dark:text-heading-light'
 					as='h1'

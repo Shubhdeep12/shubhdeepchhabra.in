@@ -35,7 +35,7 @@ const AllProjects = () => {
 						className='group p-4 flex gap-1 justify-center items-center rounded-lg
 							 hocus:-translate-y-[1px] hocus:shadow-md 
 							 hocus:bg-slate-100 dark:hocus:bg-slate-800
-							 border border-slate-200 hocus:border-blue-800 dark:border-slate-800 dark:hover:border-blue-200'
+							 border border-slate-200 hocus:border-primary-800 dark:border-slate-800 dark:hover:border-primary-200'
 						hoverable={false}
 						onClick={() => window.open(resumeUrl, '_blank')}
 					>

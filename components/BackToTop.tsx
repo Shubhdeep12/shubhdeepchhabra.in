@@ -55,7 +55,7 @@ export const BackToTop = () => {
 			focusOutlined
 			hoverable={false}
 			className={clsx(
-				'g-blue-700 hover:-translate-y-[1px] bg-blue-800 hover:shadow-md dark:bg-blue-500 dark:hover:bg-blue-400',
+				'g-primary-700 hover:-translate-y-[1px] bg-primary-800 hover:shadow-md dark:bg-primary-500 dark:hover:bg-primary-400',
 				'flex z-[2] fixed right-0 bottom-0 m-16 p-4 rounded-full h-[50] w-[50] gap-0',
 				`${showButton ? 'visible' : 'invisible'}`,
 				`${showButton ? 'pointer-events-auto' : 'pointer-events-none'}`,

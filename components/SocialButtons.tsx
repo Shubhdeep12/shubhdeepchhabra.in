@@ -28,7 +28,8 @@ export default function SocialButtons({ bordered = false, backToTop = false, cla
 			className={clsx(
 				'transition-colors',
 				'flex gap-2 items-center',
-				bordered && 'border border-slate-200 hover:border-blue-800 dark:border-slate-800 dark:hover:border-blue-200',
+				bordered &&
+					'border border-slate-200 hover:border-primary-800 dark:border-slate-800 dark:hover:border-primary-200',
 				'rounded-lg w-fit h-[42px] ',
 				'px-[6px]',
 				className

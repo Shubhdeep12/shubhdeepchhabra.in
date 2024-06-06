@@ -21,7 +21,7 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 					height='h-[42px]'
 					width='w-fit'
 					focusOutlined
-					className='p-4 flex gap-1 justify-center items-center rounded-lg bg-blue-700 hover:-translate-y-[1px] hover:shadow-md hover:bg-blue-800  dark:bg-blue-500 dark:hover:bg-blue-400'
+					className='p-4 flex gap-1 justify-center items-center rounded-lg bg-primary-700 hover:-translate-y-[1px] hover:shadow-md hover:bg-primary-800  dark:bg-primary-500 dark:hover:bg-primary-400'
 					hoverable={false}
 					onClick={async () => {
 						try {
@@ -51,7 +51,7 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 					className='group p-4 flex gap-1 justify-center items-center rounded-lg
 							 hocus:-translate-y-[1px] hocus:shadow-md 
 							 hocus:bg-slate-100 dark:hocus:bg-slate-800
-							 border border-slate-200 hocus:border-blue-800 dark:border-slate-800 dark:hover:border-blue-200'
+							 border border-slate-200 hocus:border-primary-800 dark:border-slate-800 dark:hover:border-primary-200'
 					hoverable={false}
 					onClick={() =>
 						window.open(`https://github.com/Shubhdeep12/ShubhdeepChhabra/tree/master/blog/${blog.slug}.mdx`, '_blank')

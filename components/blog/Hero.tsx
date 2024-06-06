@@ -26,12 +26,12 @@ const Hero = ({ blog }: HeroProps) => {
 			<Button
 				focusOutlined
 				hoverable={false}
-				className='group rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2 flex items-center gap-2 hocus:decoration-blue-500'
+				className='group rounded-sm hocus:underline	hocus:underline-offset-2 hocus:decoration-2 flex items-center gap-2 hocus:decoration-primary-500'
 				type={Link}
 				href={'/blog'}
 			>
-				<Text className='text-blue-700 dark:text-blue-300 font-semibold'>{'<-'}</Text>
-				<Text className='text-blue-700 dark:text-blue-300 font-semibold'>Back to Blogs</Text>
+				<Text className='text-primary-700 dark:text-primary-300 font-semibold'>{'<-'}</Text>
+				<Text className='text-primary-700 dark:text-primary-300 font-semibold'>Back to Blogs</Text>
 			</Button>
 
 			<Text

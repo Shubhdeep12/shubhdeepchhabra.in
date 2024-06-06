@@ -12,7 +12,7 @@ export type GradientTextProps = {
 }
 
 const GradientText = ({
-	gFrom = 'from-blue-500',
+	gFrom = 'from-primary-500',
 	gTo = 'to-green-500',
 	className = '',
 	children = '',

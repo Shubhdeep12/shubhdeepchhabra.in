@@ -24,8 +24,8 @@ const COLOR_STYLES: Record<string, Record<string, string>> = {
 		title: 'group-hocus:text-cyan-500 group-hocus:dark:text-cyan-500',
 	},
 	blue: {
-		bg: 'hocus:bg-blue-100 hocus:dark:bg-blue-600',
-		title: 'group-hocus:text-blue-500 group-hocus:dark:text-blue-500',
+		bg: 'hocus:bg-primary-100 hocus:dark:bg-primary-600',
+		title: 'group-hocus:text-primary-500 group-hocus:dark:text-primary-500',
 	},
 	pink: {
 		bg: 'hocus:bg-pink-100 hocus:dark:bg-pink-600',

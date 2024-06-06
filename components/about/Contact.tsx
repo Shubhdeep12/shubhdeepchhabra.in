@@ -10,7 +10,7 @@ const Contact = () => {
 		<section id='contact' className='flex flex-col items-start gap-6'>
 			<Text
 				variant='shadow'
-				gFrom='dark:from-blue-500'
+				gFrom='dark:from-primary-500'
 				gTo='dark:to-purple-500'
 				shadowColor='blue'
 				className='font-bold text-3xl text-heading-dark'
