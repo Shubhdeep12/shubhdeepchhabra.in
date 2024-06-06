@@ -92,20 +92,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en'>
-			<body
-				className={`${raleway.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
-			>
+			<body className={`${raleway.variable} font-sans bg-body-gradient dark:bg-body-gradient-inverted min-h-screen`}>
 				<Providers>
-					<svg
-						className='pointer-events-none fixed isolate z-50 opacity-70 mix-blend-soft-light'
-						width='100%'
-						height='100%'
-					>
-						<filter id='pedroduarteisalegend'>
-							<feTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'></feTurbulence>
-						</filter>
-						<rect width='100%' height='100%' filter='url(#pedroduarteisalegend)'></rect>
-					</svg>
 					<Navbar />
 					<MainContent>{children}</MainContent>
 					<Footer />
