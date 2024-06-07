@@ -43,7 +43,7 @@ const BlogImages = ({ alt, src }: BlogImagesProps) => {
 						src={src}
 						width={100}
 						height={100}
-						className='w-auto h-auto max-w-4xl m-0 shadow-xl rounded-lg'
+						className='w-auto h-auto laptop:max-w-4xl max-w-full m-0 shadow-xl rounded-lg'
 						onClick={(e) => e.stopPropagation()}
 					/>
 
