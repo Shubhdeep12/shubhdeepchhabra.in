@@ -17,6 +17,8 @@ import Link from 'next/link'
 import Loader from './Loader'
 import { NAVIGATIONBAR_ITEMS } from '@/utils/constants'
 
+import * as Sentry from "@sentry/nextjs"
+
 const Navbar = () => {
 	const pathname = usePathname()
 	const isMounted = useIsMounted()
@@ -160,6 +162,9 @@ const Navbar = () => {
 						// 	// 	headers: { 'Content-Type': 'application/json' },
 						// 	// })
 						// }
+
+						Sentry.setTag("aaa", "aaaaaa");
+
 
 						try {
 							foo()

@@ -3,10 +3,10 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs'
-import { init as Spotlightinit } from '@spotlightjs/spotlight'
+import { init as Spotlightinit, sentry } from '@spotlightjs/spotlight'
 
 Sentry.init({
-	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
+	dsn: 'process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN',
 	// Adjust this value in production, or use tracesSampler for greater control
 	tracesSampleRate: 1,
 	attachStacktrace: true,
@@ -24,16 +24,6 @@ Sentry.init({
 	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
 	integrations: [Sentry.browserTracingIntegration()],
 
-	beforeSend(event, hint) {
-		console.log({ clientEvent: event, hint })
-
-		return event
-	},
-
-	beforeSendTransaction(event, hint) {
-		console.log({ clientTrn: event, hint })
-		return event
-	},
 })
 
 // const client = getCurrentHub().getClient()
@@ -46,9 +36,13 @@ Sentry.init({
 // }
 
 // only load Spotlight in dev
+
 if (process.env.NODE_ENV !== 'production') {
 	Spotlightinit({
 		sidecarUrl: 'http://localhost:8969/stream',
 		debug: true,
 	})
 }
+
+
+Sentry.setTag("page_locale", "de-at");
