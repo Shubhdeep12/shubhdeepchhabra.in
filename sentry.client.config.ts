@@ -11,19 +11,19 @@ Sentry.init({
 	replaysSessionSampleRate: 0.1, // To trace 10% of sessions(without any error).
 
 	integrations: [
-		Sentry.browserTracingIntegration(),
-		// Sentry replay integration configs to mask all text and block media in replays captured.
-		Sentry.replayIntegration({
-			maskAllText: true,
-			blockAllMedia: true,
-		}),
+		// new Sentry.browserTracingIntegration(),
+		// // Sentry replay integration configs to mask all text and block media in replays captured.
+		// new Sentry.replayIntegration({
+		// 	maskAllText: true,
+		// 	blockAllMedia: true,
+		// }),
 	],
 });
 
 if (process.env.NODE_ENV === 'development') {
-	import('@spotlightjs/spotlight').then(Spotlight => {
+	import('@spotlightjs/spotlight').then((Spotlight) => {
 		Spotlight.init({
 			debug: true,
 		});
-	})
+	});
 }
