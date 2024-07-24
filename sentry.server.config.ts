@@ -7,7 +7,7 @@ Sentry.init({
 
 	debug: false, // logs only for development env.
 
-	integrations: [Sentry.prismaIntegration()], // Added integration for prisma to track every db query done by prisma.
+	// integrations: [new Sentry.prismaIntegration()], // Added integration for prisma to track every db query done by prisma.
 
 	spotlight: process.env.NODE_ENV === 'development', // Sentry will send the event evelopes from server side to spotlight.
 });
