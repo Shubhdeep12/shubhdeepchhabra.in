@@ -126,7 +126,7 @@ const Skills = () => {
 			>
 				{Array.from(SKILLS.keys()).map((key) => (
 					<div key={key} className='flex flex-wrap gap-2'>
-						<Text className='font-bold text-base text-heading-dark' as={'h4'}>
+						<Text className='font-bold text-base' as={'h4'}>
 							{key}&nbsp;:&nbsp;
 						</Text>
 						{SKILLS.get(key)?.map((skill) => <Pill key={skill.id} skill={skill} />)}
