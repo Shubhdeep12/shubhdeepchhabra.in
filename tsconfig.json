@@ -27,16 +27,12 @@
 		],
 		"paths": {
 			"@/*": ["./*"],
-			"contentlayer/generated": ["./.contentlayer/generated"]
+			"@/components*": ["./src/components*"],
+			"@/ui*": ["./src/ui*"],
+			"@/utils*": ["./src/utils*"],
+			"@/lib*": ["./src/lib*"]
 		}
 	},
-	"include": [
-		"next-env.d.ts",
-		"**/*.ts",
-		"**/*.tsx",
-		".next/types/**/*.ts",
-		".contentlayer/generated",
-		"contentlayer.config.js"
-	],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
 	"exclude": ["node_modules"]
 }

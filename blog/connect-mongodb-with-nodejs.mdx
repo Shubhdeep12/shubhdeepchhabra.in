@@ -69,41 +69,41 @@ yarn add mongoose express
 in your server.js file write the following code
 
 ```js
-const express = require('express')
-const mongoose = require('mongoose')
+const express = require('express');
+const mongoose = require('mongoose');
 
 // DB instance from the path where models are defined.
-const db = require('./models')
+const db = require('./models');
 
 // File where the routes will be present
-const Home = require('./routes/Home.routes')
+const Home = require('./routes/Home.routes');
 
 // Creating an express server.
-const app = express()
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 // Creating Mongodb local connection with the already stored URL.
 db.mongoose.connect(process.env.MONGODB_URL, {
 	useNewUrlParser: true,
 	useFindAndModify: false,
 	useUnifiedTopology: true,
-})
+});
 
 // Creating connection and Error handling
-const connection = mongoose.connection
-connection.on('error', console.log('connection error'))
+const connection = mongoose.connection;
+connection.on('error', console.log('connection error'));
 connection.once('open', function () {
-	console.log('Connected successfully')
-})
+	console.log('Connected successfully');
+});
 
 // Specifying the router
-app.use('/home', Home)
+app.use('/home', Home);
 
 // Setting up PORT number.
 app.listen(3000, () => {
-	console.log('Server is running at port 3000')
-})
+	console.log('Server is running at port 3000');
+});
 ```
 
 Save and Run.
@@ -117,26 +117,26 @@ Now what? now, let's create a schema and make our hands dirty with some REST API
 Create a folder for defining models with names as _<mark>models</mark>_ and create index.js inside it and paste the following code
 
 ```js
-const mongoose = require('mongoose')
-mongoose.Promise = global.Promise
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
-const db = {}
+const db = {};
 
-db.mongoose = mongoose
+db.mongoose = mongoose;
 
-db.user = require('./user.model')
-db.posts = require('./post.model')
+db.user = require('./user.model');
+db.posts = require('./post.model');
 
-module.exports = db
+module.exports = db;
 ```
 
 Create <mark>user.model.js</mark>
 
 ```js
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 // Creating a schema from Mongoose
-const schema = mongoose.Schema
+const schema = mongoose.Schema;
 
 // Defining the attributes required in a schema and which will be USED
 // in CRUD operations.
@@ -168,20 +168,20 @@ const userSchema = mongoose.Schema(
 	{
 		timestamps: true,
 	}
-)
+);
 
 // Exporting the schema with a unique name
-const user = mongoose.model('User', userSchema)
+const user = mongoose.model('User', userSchema);
 
-module.exports = user
+module.exports = user;
 ```
 
 And, similarly create post.model.js
 
 ```js
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const schema = mongoose.Schema
+const schema = mongoose.Schema;
 
 const postSchema = new mongoose.Schema(
 	{
@@ -203,11 +203,11 @@ const postSchema = new mongoose.Schema(
 	{
 		timestamps: true,
 	}
-)
+);
 
-const Post = mongoose.model('Post', postSchema)
+const Post = mongoose.model('Post', postSchema);
 
-module.exports = Post
+module.exports = Post;
 ```
 
 **Step 4: Creating the endpoints and reading and writing the data in DB.**
@@ -217,61 +217,61 @@ In your routes folder create a file let's say <mark>Home.routes.js</mark>
 in that file add the following code to create endpoints
 
 ```js
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const app = express()
-const cors = require('cors')
+const app = express();
+const cors = require('cors');
 
-app.use(cors())
+app.use(cors());
 
 // Get all posts
 router.route('/:id').get(async (req, res) => {
 	try {
-		const allPosts = await db.posts.find().sort({ _id: -1 })
-		res.status(200).send(allPosts)
+		const allPosts = await db.posts.find().sort({ _id: -1 });
+		res.status(200).send(allPosts);
 	} catch (err) {
-		res.status(500).send('Error: ' + err)
+		res.status(500).send('Error: ' + err);
 	}
-})
+});
 
 // Adding Post
 router.route('/:id/post').post(async (req, res) => {
-	const postext = req.body.text
-	let imagetext = ''
+	const postext = req.body.text;
+	let imagetext = '';
 	let name = await db.user.findById(mongoose.Types.ObjectId(req.params.id), function (err, user) {
 		if (err) {
-			return 'Guest'
+			return 'Guest';
 		}
 		if (user) {
-			return user.name
+			return user.name;
 		}
-	})
-	name = name.name
-	let img = { name: '', public_id: '' }
+	});
+	name = name.name;
+	let img = { name: '', public_id: '' };
 	const newPost = new db.posts({
 		text: postext,
 		image: img,
 		name: name,
-	})
+	});
 	try {
-		const result = await newPost.save()
+		const result = await newPost.save();
 		db.user.findByIdAndUpdate(
 			mongoose.Types.ObjectId(req.params.id),
 			{ $push: { posts: newPost._id } },
 			{ safe: true, upsert: true },
 			function (err, doc) {
 				if (err) {
-					return res.status(500).send('Error:' + err)
+					return res.status(500).send('Error:' + err);
 				} else {
-					res.status(200).send('Post added')
+					res.status(200).send('Post added');
 				}
 			}
-		)
+		);
 	} catch (err) {
-		return res.status(500).send('Error:' + err)
+		return res.status(500).send('Error:' + err);
 	}
-})
+});
 
 // Signin
 router.route('/signin').post(async (req, res) => {
@@ -279,32 +279,32 @@ router.route('/signin').post(async (req, res) => {
 		email: req.body.email,
 	}).exec((err, user) => {
 		if (err) {
-			res.status(500).send({ message: 'a' + err })
-			return
+			res.status(500).send({ message: 'a' + err });
+			return;
 		}
 
 		if (!user) {
-			return res.status(500).send({ message: err })
+			return res.status(500).send({ message: err });
 		}
 
-		var passwordIsValid = bcrypt.compareSync(req.body.password, user.password)
+		var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
 		if (!passwordIsValid) {
 			return res.status(500).send({
 				accessToken: null,
 				message: 'Invalid Password!',
-			})
+			});
 		}
 
 		var token = jwt.sign({ id: user.id }, config.secret, {
 			expiresIn: 86400, // 24 hours
-		})
+		});
 
 		const values = {
 			id: user._id,
 			name: user.name,
 			email: user.email,
-		}
+		};
 		res
 			.status(200)
 			.cookie('token', token, {
@@ -315,9 +315,9 @@ router.route('/signin').post(async (req, res) => {
 			.send({
 				values: _.pick(values, ['id', 'name']),
 				message: 'signin successfull',
-			})
-	})
-})
+			});
+	});
+});
 ```
 
 Added 3 endpoints above:

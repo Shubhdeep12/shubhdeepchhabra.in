@@ -1,10 +1,10 @@
-import Navbar from '@/components/Navbar';
+import Navbar from '@/src/components/Navbar';
 import { Raleway } from 'next/font/google';
-import MainContent from '@/components/MainContent';
+import MainContent from '@/src/components/MainContent';
 import './globals.css';
-import { Providers } from '@/providers';
-import Footer from '@/components/Footer';
-import { BackToTop } from '@/components/BackToTop';
+import { Providers } from '@/src/providers';
+import Footer from '@/src/components/Footer';
+import { BackToTop } from '@/src/components/BackToTop';
 import { type PropsWithChildren } from 'react';
 import { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';

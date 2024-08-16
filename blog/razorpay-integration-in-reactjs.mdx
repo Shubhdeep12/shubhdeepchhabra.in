@@ -37,7 +37,7 @@ Note — Please read the comments because I tried to cover every possible de
 Initializing Razorpay
 
 ```js
-const Razorpay = require('razorpay')
+const Razorpay = require('razorpay');
 ```
 
 API route for creating an order
@@ -48,7 +48,7 @@ app.post('/order', async (req, res) => {
 	const razorpay = new Razorpay({
 		key_id: req.body.keyId,
 		key_secret: req.body.keySecret,
-	})
+	});
 
 	// setting up options for razorpay order.
 	const options = {
@@ -56,18 +56,18 @@ app.post('/order', async (req, res) => {
 		currency: req.body.currency,
 		receipt: 'any unique id for every order',
 		payment_capture: 1,
-	}
+	};
 	try {
-		const response = await razorpay.orders.create(options)
+		const response = await razorpay.orders.create(options);
 		res.json({
 			order_id: response.id,
 			currency: response.currency,
 			amount: response.amount,
-		})
+		});
 	} catch (err) {
-		res.status(400).send('Not able to create order. Please try again!')
+		res.status(400).send('Not able to create order. Please try again!');
 	}
-})
+});
 ```
 
 For accepting and validating payment
@@ -75,7 +75,7 @@ For accepting and validating payment
 ```js
 app.post('/payment', async (req, res) => {
 	// Here you can retrieve the transaction id and amount from client.
-})
+});
 ```
 
 **Step 4:**  
@@ -230,14 +230,14 @@ const options = {
 	order_id: orderId, // order id from props
 	// This handler menthod is always executed in case of succeeded payment
 	handler: (response) => {
-		console.log('succeeded')
-		console.log(response)
-		paymentId.current = response.razorpay_payment_id
+		console.log('succeeded');
+		console.log(response);
+		paymentId.current = response.razorpay_payment_id;
 
 		// Most important step to capture and authorize the payment. This can be done of Backend server.
 		const succeeded =
 			crypto.HmacSHA256(`${orderId}|${response.razorpay_payment_id}`, keySecret).toString() ===
-			response.razorpay_signature
+			response.razorpay_signature;
 
 		// If successfully authorized. Then we can consider the payment as successful.
 		if (succeeded) {
@@ -245,12 +245,12 @@ const options = {
 				orderId,
 				paymentId,
 				signature: response.razorpay_signature,
-			})
+			});
 		} else {
 			handlePayment('failed', {
 				orderId,
 				paymentId: response.razorpay_payment_id,
-			})
+			});
 		}
 	},
 	modal: {
@@ -258,26 +258,26 @@ const options = {
 		// This function is executed when checkout modal is closed
 		// There can be 3 reasons when this modal is closed.
 		ondismiss: async (reason) => {
-			const { reason: paymentReason, field, step, code } = reason && reason.error ? reason.error : {}
+			const { reason: paymentReason, field, step, code } = reason && reason.error ? reason.error : {};
 			// Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly.
 			if (reason === undefined) {
-				console.log('cancelled')
-				handlePayment('Cancelled')
+				console.log('cancelled');
+				handlePayment('Cancelled');
 			}
 			// Reason 2 - When modal is auto closed because of time out
 			else if (reason === 'timeout') {
-				console.log('timedout')
-				handlePayment('timedout')
+				console.log('timedout');
+				handlePayment('timedout');
 			}
 			// Reason 3 - When payment gets failed.
 			else {
-				console.log('failed')
+				console.log('failed');
 				handlePayment('failed', {
 					paymentReason,
 					field,
 					step,
 					code,
-				})
+				});
 			}
 		},
 	},
@@ -290,7 +290,7 @@ const options = {
 	theme: {
 		color: 'green', // Custom color for your checkout modal.
 	},
-}
+};
 ```
 
 **Step 5:** Now let’s pay.

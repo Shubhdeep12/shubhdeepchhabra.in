@@ -1,16 +1,18 @@
-import { allBlogs } from 'contentlayer/generated'
-import { MetadataRoute } from 'next'
+import { getAllPosts } from '../src/lib/mdx';
+import { MetadataRoute } from 'next';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-	const blogs = allBlogs.map((blog) => ({
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	const blogs = await getAllPosts();
+
+	const blogEntries = blogs.map((blog) => ({
 		url: `https://www.shubhdeepchhabra.in/blog/${blog.slug}`,
-		lastModified: blog.publishedAt,
-	}))
+		lastModified: blog.frontMatter.publishedAt,
+	}));
 
 	const routes = ['', '/about', '/blog', '/projects'].map((route) => ({
 		url: `https://www.shubhdeepchhabra.in${route}`,
 		lastModified: new Date().toISOString().split('T')[0],
-	}))
+	}));
 
-	return [...routes, ...blogs]
+	return [...routes, ...blogEntries];
 }

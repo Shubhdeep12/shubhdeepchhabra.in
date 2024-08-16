@@ -1,18 +1,20 @@
-import Text from '@/ui/Text'
-import BlogList from '@/components/blog/BlogList'
-import { allBlogs, Blog } from 'contentlayer/generated'
-import { getBlogGroups } from '../../utils/blog'
-import Button from '@/ui/Button'
-import { FaRss } from 'react-icons/fa'
-import { Metadata } from 'next'
-import AnimatePage from '@/components/AnimatePage'
+import Text from '@/src/ui/Text';
+import BlogList from '@/src/components/blog/BlogList';
+import { getBlogGroups } from '../../src/utils/blog';
+import Button from '@/src/ui/Button';
+import { FaRss } from 'react-icons/fa';
+import { Metadata } from 'next';
+import AnimatePage from '@/src/components/AnimatePage';
+import { Blog } from '@/utils/types';
 
 export const metadata: Metadata = {
 	title: 'Blogs - Shubhdeep Chhabra',
 	description: 'Articles on software development through eyes of Shubhdeep',
-}
+};
 
-export default function Blogs() {
+export default async function Blogs() {
+	const allBlogs = await getBlogGroups();
+
 	return (
 		<AnimatePage>
 			<div className='flex gap-10 w-full flex-col items-start'>
@@ -46,10 +48,8 @@ export default function Blogs() {
 						</Text>
 					</Button>
 				</div>
-				{getBlogGroups(allBlogs).map((group: { year: number; blogs: Blog[] }) => (
-					<BlogList key={group.year} blogList={group} />
-				))}
+				{allBlogs?.map((group: { year: number; blogs: Blog[] }) => <BlogList key={group.year} blogList={group} />)}
 			</div>
 		</AnimatePage>
-	)
+	);
 }

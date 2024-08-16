@@ -1,12 +1,12 @@
-import AnimatePage from '@/components/AnimatePage'
-import AboutSection from '@/components/about/AboutSection'
-import Contact from '@/components/about/Contact'
-import Experience from '@/components/about/Experience'
-import { Metadata } from 'next'
+import AnimatePage from '@/src/components/AnimatePage';
+import AboutSection from '@/src/components/about/AboutSection';
+import Contact from '@/src/components/about/Contact';
+import Experience from '@/src/components/about/Experience';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'About - Shubhdeep Chhabra',
-}
+};
 
 export default function About() {
 	return (
@@ -17,5 +17,5 @@ export default function About() {
 				<Contact />
 			</section>
 		</AnimatePage>
-	)
+	);
 }

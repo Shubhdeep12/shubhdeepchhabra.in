@@ -1,6 +1,6 @@
-import Button from '@/ui/Button'
-import Text from '@/ui/Text'
-import Link from 'next/link'
+import Button from '@/src/ui/Button';
+import Text from '@/src/ui/Text';
+import Link from 'next/link';
 
 const NotFound = () => {
 	return (
@@ -30,7 +30,7 @@ const NotFound = () => {
 				</Text>
 			</Button>
 		</section>
-	)
-}
+	);
+};
 
-export default NotFound
+export default NotFound;
