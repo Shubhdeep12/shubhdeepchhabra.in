@@ -44,7 +44,7 @@ const Hero = ({ blog }: HeroProps) => {
 			</Text>
 
 			<div id='dataPills' className='flex items-center gap-2'>
-				<div className='flex gap-1 items-center bg-opacity-50 bg-slate-200 dark:bg-slate-600 rounded-md text-xs py-1 px-2'>
+				<div className='flex gap-1 items-center bg-opacity-50 bg-zinc-200 dark:bg-zinc-600 rounded-md text-xs py-1 px-2'>
 					<CalendarIcon width={15} height={15} />
 
 					<Text className='text-sm'>
@@ -56,13 +56,13 @@ const Hero = ({ blog }: HeroProps) => {
 					</Text>
 				</div>
 
-				<div className='flex gap-1 items-center bg-opacity-50 bg-slate-200 dark:bg-slate-600 rounded-md text-xs py-1 px-2'>
+				<div className='flex gap-1 items-center bg-opacity-50 bg-zinc-200 dark:bg-zinc-600 rounded-md text-xs py-1 px-2'>
 					<TimeIcon width={15} height={15} className='text-text-dark dark:text-text-light' />
 
 					<Text className='text-sm'>{blog.readingTime.text}</Text>
 				</div>
 
-				<div className='flex gap-1 items-center bg-opacity-50 bg-slate-200 dark:bg-slate-600 rounded-md text-xs py-1 px-2'>
+				<div className='flex gap-1 items-center bg-opacity-50 bg-zinc-200 dark:bg-zinc-600 rounded-md text-xs py-1 px-2'>
 					<EyeIcon width={15} height={15} />
 
 					<Text className='text-sm'>{isLoading ? '-' : views} views</Text>

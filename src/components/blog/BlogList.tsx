@@ -15,7 +15,7 @@ const BlogList = ({ blogList, className = '' }: BlogListProps) => {
 			{blogList.year && (
 				<div className='w-full flex gap-2'>
 					<Text className='text-black dark:text-white font-bold text-xl justify-start'>{blogList.year}</Text>
-					<span className='flex-grow border-b dark:border-slate-600 h-6' />
+					<span className='flex-grow border-b dark:border-zinc-600 h-6' />
 				</div>
 			)}
 

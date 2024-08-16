@@ -15,6 +15,7 @@ const GoogleAnalytics = ({ GA_MEASUREMENT_ID }: { GA_MEASUREMENT_ID: string }) =
 	}, [pathname, searchParams, GA_MEASUREMENT_ID]);
 	return (
 		<>
+			<Script src='https://cdn.userway.org/widget.js' data-account='Zi7exwpKWH' />
 			<Script strategy='afterInteractive' src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
 			<Script
 				id='google-analytics'

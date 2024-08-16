@@ -6,7 +6,7 @@ import { ProfileIcon } from '@/src/Icons';
 import Text from '@/src/ui/Text';
 import SocialButtons from '../SocialButtons';
 import { useRouter } from 'next/navigation';
-// import AnimatedImage from '../AnimatedImage'
+// import AnimatedImage from '../AnimatedImage';
 
 const Intro = () => {
 	const router = useRouter();

@@ -29,7 +29,7 @@ export default function SocialButtons({ bordered = false, backToTop = false, cla
 				'transition-colors',
 				'flex gap-2 items-center',
 				bordered &&
-					'border border-slate-200 hover:border-primary-800 dark:border-slate-800 dark:hover:border-primary-200',
+					'border border-zinc-200 hover:border-primary-800 dark:border-zinc-800 dark:hover:border-primary-200',
 				'rounded-lg w-fit h-[42px] ',
 				'px-[6px]',
 				className

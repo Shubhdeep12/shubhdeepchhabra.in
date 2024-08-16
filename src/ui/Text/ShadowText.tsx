@@ -9,7 +9,7 @@ export type ShadowTextProps = {
 	[x: string | number | symbol]: unknown;
 };
 
-const SHADOW_COLOR: { [key: string]: string } = {
+export const SHADOW_COLOR: { [key: string]: string } = {
 	orange: '[text-shadow:0.125rem_0.125rem_0_#fca893]',
 	purple: '[text-shadow:0.125rem_0.125rem_0_#bf9cec]',
 	yellow: '[text-shadow:0.125rem_0.125rem_0_#fce1a8]',

@@ -16,7 +16,7 @@ const AboutSection = () => {
 			>
 				About
 			</Text>
-			<div className='w-full rounded-lg p-4 flex flex-col gap-2 laptop:gap-5 laptop:p-5 laptop:flex-row items-center bg-slate-200 dark:bg-slate-700 text-center'>
+			<div className='w-full rounded-lg p-4 flex flex-col gap-2 laptop:gap-5 laptop:p-5 laptop:flex-row items-center bg-zinc-200 dark:bg-zinc-700 text-center'>
 				<div className='w-[100px] h-[100px] transition-colors rounded-full bg-sky-50 overflow-hidden'>
 					<Image
 						alt='Shubhdeep-avatar'

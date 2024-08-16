@@ -32,7 +32,7 @@ const Contact = () => {
 							className='group p-4 flex gap-1 justify-center items-center rounded-lg
 							 hocus:-translate-y-[1px] hocus:shadow-md 
 							 hocus:bg-gray-100 dark:hocus:bg-gray-800 dark:hocus:bg-opacity-10
-							 border border-slate-200 hocus:border-gray-800 dark:border-slate-800 dark:hover:border-gray-200'
+							 border border-zinc-200 hocus:border-gray-800 dark:border-zinc-800 dark:hover:border-gray-200'
 							hoverable={false}
 							onClick={() => window.open('https://twitter.com/ShubhInTech', '_blank')}
 						>
@@ -40,7 +40,7 @@ const Contact = () => {
 								width={24}
 								height={24}
 								color='#5f5f5f'
-								className='group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-slate-200 dark:group-hocus:stroke-slate-200 dark:stroke-slate-400 transition'
+								className='group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-zinc-200 dark:group-hocus:stroke-zinc-200 dark:stroke-zinc-400 transition'
 							/>
 							<Text
 								transitioned={false}
@@ -56,7 +56,7 @@ const Contact = () => {
 							className='group p-4 flex gap-1 justify-center items-center rounded-lg
 							 hocus:-translate-y-[1px] hocus:shadow-md 
 							 hocus:bg-red-100 dark:hocus:bg-red-700 dark:hocus:bg-opacity-10
-							 border border-slate-200 hocus:border-red-800 dark:border-slate-800 dark:hover:border-red-200'
+							 border border-zinc-200 hocus:border-red-800 dark:border-zinc-800 dark:hover:border-red-200'
 							hoverable={false}
 							onClick={() => window.open('mailto:chhabrashubhdeep@gmail.com')}
 						>
@@ -64,7 +64,7 @@ const Contact = () => {
 								width={24}
 								height={24}
 								color='#5f5f5f'
-								className='group-hocus:fill-red-500 dark:fill-slate-400 transition'
+								className='group-hocus:fill-red-500 dark:fill-zinc-400 transition'
 							/>
 							<Text
 								transitioned={false}

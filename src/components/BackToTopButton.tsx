@@ -16,7 +16,7 @@ const BackToTopButton = () => {
 				width={22}
 				height={22}
 				color='#5f5f5f'
-				className='group-hocus:fill-black dark:group-hocus:fill-slate-200 dark:fill-slate-400'
+				className='group-hocus:fill-black dark:group-hocus:fill-zinc-200 dark:fill-zinc-400'
 			/>
 		</Button>
 	);

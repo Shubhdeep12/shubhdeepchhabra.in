@@ -23,7 +23,7 @@ const AnimatedImage = ({ className, src, width, height, alt, ...props }: Animate
 				alt={alt}
 				priority
 				quality={95}
-				onLoadingComplete={() => setIsLoading(false)}
+				onLoad={() => setIsLoading(false)}
 				{...props}
 			/>
 		</div>

@@ -3,20 +3,25 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import {
 	CSSIcon,
+	ESlintIcon,
 	ExpressjsIcon,
 	GitIcon,
 	HTMLIcon,
 	JavaScriptIcon,
+	JestIcon,
 	MongoDBIcon,
 	NextjsIcon,
 	NodejsIcon,
 	PythonIcon,
 	ReactIcon,
+	ReduxIcon,
 	SemanticUIIcon,
 	ShadcnUI,
 	StyledComponentsIcon,
 	TailwindIcon,
 	TypeScriptIcon,
+	ViteIcon,
+	WebpackIcon,
 } from '@/src/Icons';
 import clsx from 'clsx';
 import Text from '@/src/ui/Text';
@@ -39,6 +44,11 @@ const SKILL_ICONS: Record<string, React.FC<IconProps>> = {
 	git: GitIcon,
 	python: PythonIcon,
 	shadcnui: ShadcnUI,
+	vite: ViteIcon,
+	redux: ReduxIcon,
+	jest: JestIcon,
+	eslint: ESlintIcon,
+	webpack: WebpackIcon,
 };
 
 const Skills = () => {
@@ -75,43 +85,53 @@ const Skills = () => {
 		visible: { x: 0, opacity: 1 },
 	});
 
+	function Pill({ skill }: { skill: SkillProp }) {
+		const CurrentIcon: React.FC<IconProps> = SKILL_ICONS[skill.id] || null;
+
+		return (
+			<motion.div
+				key={skill.id}
+				variants={skillVariants(skill.position === 'left')}
+				transition={{ duration: 0.35 }}
+				className='skill translateX(100%) relative '
+			>
+				<div
+					className={clsx(
+						'group w-auto h-auto p-2 rounded-full transition flex items-center gap-1 hocus:underline-none hocus:transform hocus:scale-[1.015]',
+						'bg-background-primary-light dark:bg-background-primary-dark border border-gray-200 dark:border-gray-600',
+						skill.bgColor,
+						skill.borderColor
+					)}
+				>
+					{CurrentIcon && (
+						<CurrentIcon
+							width={skill.wIcon}
+							height={skill.hIcon}
+							className='group-hocus:fill-black dark:group-hocus:fill-white transition'
+						/>
+					)}
+					<Text className='text-sm font-bold group-hocus:text-black dark:group-hocus:text-white'>{skill.title}</Text>
+				</div>
+			</motion.div>
+		);
+	}
+
 	return (
 		<div ref={containerRef}>
 			<motion.div
 				initial='hidden'
 				animate={containerControls}
 				variants={containerVariants}
-				className='flex flex-wrap gap-2 justify-start'
+				className='flex flex-wrap gap-4 items-start flex-col'
 			>
-				{SKILLS.map((skill: SkillProp) => {
-					const CurrentIcon: React.FC<IconProps> = SKILL_ICONS[skill.id];
-					return (
-						<motion.div
-							key={skill.id}
-							variants={skillVariants(skill.position === 'left')}
-							transition={{ duration: 0.35 }}
-							className='skill translateX(100%) relative '
-						>
-							<div
-								className={clsx(
-									'group w-auto h-auto p-2 rounded-full transition flex items-center gap-1 hocus:underline-none hocus:transform hocus:scale-[1.015]',
-									'bg-background-primary-light dark:bg-background-primary-dark border border-gray-200 dark:border-gray-600',
-									skill.bgColor,
-									skill.borderColor
-								)}
-							>
-								<CurrentIcon
-									width={skill.wIcon}
-									height={skill.hIcon}
-									className='group-hocus:fill-black dark:group-hocus:fill-white transition'
-								/>
-								<Text className='text-sm font-bold group-hocus:text-black dark:group-hocus:text-white'>
-									{skill.title}
-								</Text>
-							</div>
-						</motion.div>
-					);
-				})}
+				{Array.from(SKILLS.keys()).map((key) => (
+					<div key={key} className='flex flex-wrap gap-2'>
+						<Text className='font-bold text-base text-heading-dark' as={'h4'}>
+							{key}&nbsp;:&nbsp;
+						</Text>
+						{SKILLS.get(key)?.map((skill) => <Pill key={skill.id} skill={skill} />)}
+					</div>
+				))}
 			</motion.div>
 		</div>
 	);
