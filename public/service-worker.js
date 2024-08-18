@@ -14,24 +14,20 @@ const addResourcesToCache = async (resources) => {
 };
 
 self.addEventListener('install', event => {
-  event.waitUntil(
-    addResourcesToCache([
-      '/',
-      '/about',
-      '/projects',
-      '/blog',
-      '/assets',
-      '/_next/static/css/app/layout.css', // Tailwind or other CSS files
-      '/_next/static/js/main.js',     // Main JS bundle
-      '/_next/static/runtime/main.js', // Runtime JS (if exists)
-      '/_next/static/chunks/',         // Cache all chunks
-    ])
-  );
+  try {
+    event.waitUntil(
+      addResourcesToCache([
+        '/',
+      ])
+    );
+
+  } catch (error) {
+    console.log({ error })
+  }
 });
 
 const putInCache = async (request, response) => {
   const cache = await caches.open(CACHE_NAME);
-  console.log({ request, response })
   await cache.put(request, response);
 };
 
@@ -49,7 +45,9 @@ const fetchFromCache = async (request) => {
 
 self.addEventListener('fetch', event => {
   const { request } = event;
-
+  if (event.request.method !== 'GET') {
+    return;
+  }
   if (EXCLUDE_API.test(new URL(request.url).pathname)) {
     return;
   }
