@@ -40,11 +40,11 @@ Here user input (userId) is directly interpolated into the SQL query,
 leaving the application vulnerable to SQL injection.
 */
 
-const userId = req.params.id
-const query = `SELECT * FROM users WHERE id = ${userId}`
+const userId = req.params.id;
+const query = `SELECT * FROM users WHERE id = ${userId}`;
 db.query(query, (err, result) => {
 	// Process the query result
-})
+});
 ```
 
 **Good Example** of secure coding practice
@@ -55,11 +55,11 @@ Here parameterized queries are used, which ensures proper handling of
 user input, preventing SQL injection attacks.
 */
 
-const userId = req.params.id
-const query = 'SELECT * FROM users WHERE id = ?'
+const userId = req.params.id;
+const query = 'SELECT * FROM users WHERE id = ?';
 db.query(query, [userId], (err, result) => {
 	// Process the query result
-})
+});
 ```
 
 ## Cross-Site Scripting (XSS)
@@ -72,20 +72,20 @@ db.query(query, [userId], (err, result) => {
     **Bad Example** of not following secure coding practice
 
 ```javascript
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const Component = () => {
-	const [inputText, setInputText] = useState('')
-	const [htmlString, setHtmlString] = useState('')
+	const [inputText, setInputText] = useState('');
+	const [htmlString, setHtmlString] = useState('');
 
 	const handleInputChange = (e) => {
-		setInputText(e.target.value)
-	}
+		setInputText(e.target.value);
+	};
 
 	const handleHtmlStringSubmit = () => {
 		// inputText is used directly.
-		setHtmlString(`<div>${inputText}</div>`)
-	}
+		setHtmlString(`<div>${inputText}</div>`);
+	};
 
 	return (
 		<div>
@@ -96,28 +96,28 @@ const Component = () => {
 				<div dangerouslySetInnerHTML={{ __html: htmlString }} />
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default Component
+export default Component;
 ```
 
 **Good Example** following secure code practice
 
 ```javascript
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const Component = () => {
-	const [inputText, setInputText] = useState('')
-	const [htmlString, setHtmlString] = useState('')
+	const [inputText, setInputText] = useState('');
+	const [htmlString, setHtmlString] = useState('');
 
 	const handleInputChange = (e) => {
-		setInputText(e.target.value)
-	}
+		setInputText(e.target.value);
+	};
 
 	const handleHtmlStringSubmit = () => {
-		setHtmlString(`<div>${inputText}</div>`)
-	}
+		setHtmlString(`<div>${inputText}</div>`);
+	};
 
 	return (
 		<div>
@@ -129,10 +129,10 @@ const Component = () => {
 				<div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlString) }} />
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default Component
+export default Component;
 ```
 
 ## Testing Security with Selenium
@@ -192,27 +192,27 @@ export default Component
 
 ```javascript
 app.post('/register', (req, res) => {
-	const username = req.body.username
-	const password = req.body.password
+	const username = req.body.username;
+	const password = req.body.password;
 
 	// Store the user in the database with the password as-is
-})
+});
 ```
 
 **Good example** where the password is encrypted and stored in DB.
 
 ```javascript
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 app.post('/register', async (req, res) => {
-	const username = req.body.username
-	const password = req.body.password
+	const username = req.body.username;
+	const password = req.body.password;
 
-	const saltRounds = 10
-	const hashedPassword = await bcrypt.hash(password, saltRounds)
+	const saltRounds = 10;
+	const hashedPassword = await bcrypt.hash(password, saltRounds);
 
 	// Store the user in the database with the hashedPassword
-})
+});
 ```
 
 ## Cross-Site Request Forgery (CSRF) Protection
@@ -226,17 +226,17 @@ app.post('/register', async (req, res) => {
     **Bad Example** where a form is created for changing passwords without the support of a CSRF token.
 
 ```javascript
-import { useState } from 'react'
+import { useState } from 'react';
 
 const PasswordChangeForm = () => {
-	const [newPassword, setNewPassword] = useState('')
+	const [newPassword, setNewPassword] = useState('');
 
 	const handleChange = (event) => {
-		setNewPassword(event.target.value)
-	}
+		setNewPassword(event.target.value);
+	};
 
 	const handleSubmit = (event) => {
-		event.preventDefault()
+		event.preventDefault();
 
 		// Send the password change request without CSRF token
 		fetch('/change_password', {
@@ -248,14 +248,14 @@ const PasswordChangeForm = () => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data)
+				console.log(data);
 				// Handle response data
 			})
 			.catch((error) => {
-				console.error('Error:', error)
+				console.error('Error:', error);
 				// Handle error
-			})
-	}
+			});
+	};
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -263,26 +263,26 @@ const PasswordChangeForm = () => {
 			<input type='password' id='newPassword' name='newPassword' value={newPassword} onChange={handleChange} />
 			<button type='submit'>Change Password</button>
 		</form>
-	)
-}
+	);
+};
 
-export default PasswordChangeForm
+export default PasswordChangeForm;
 ```
 
 **Good Example** where the support of CSRF token is provided for better security.
 
 ```javascript
-import { useState } from 'react'
+import { useState } from 'react';
 
 const PasswordChangeForm = ({ csrfToken }) => {
-	const [newPassword, setNewPassword] = useState('')
+	const [newPassword, setNewPassword] = useState('');
 
 	const handleChange = (event) => {
-		setNewPassword(event.target.value)
-	}
+		setNewPassword(event.target.value);
+	};
 
 	const handleSubmit = (event) => {
-		event.preventDefault()
+		event.preventDefault();
 
 		// Send the password change request with CSRF token
 		fetch('/change_password', {
@@ -295,14 +295,14 @@ const PasswordChangeForm = ({ csrfToken }) => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data)
+				console.log(data);
 				// Handle response data
 			})
 			.catch((error) => {
-				console.error('Error:', error)
+				console.error('Error:', error);
 				// Handle error
-			})
-	}
+			});
+	};
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -310,44 +310,44 @@ const PasswordChangeForm = ({ csrfToken }) => {
 			<input type='password' id='newPassword' name='newPassword' value={newPassword} onChange={handleChange} />
 			<button type='submit'>Change Password</button>
 		</form>
-	)
-}
+	);
+};
 
-export default PasswordChangeForm
+export default PasswordChangeForm;
 ```
 
 ```javascript
-const express = require('express')
-const bodyParser = require('body-parser')
-const csurf = require('csurf')
+const express = require('express');
+const bodyParser = require('body-parser');
+const csurf = require('csurf');
 
-const app = express()
-app.use(bodyParser.json())
+const app = express();
+app.use(bodyParser.json());
 
 // Generate and include CSRF token for all responses
-app.use(csurf())
+app.use(csurf());
 
 // Middleware to expose CSRF token to the frontend
 app.use((req, res, next) => {
-	res.cookie('XSRF-TOKEN', req.csrfToken())
-	next()
-})
+	res.cookie('XSRF-TOKEN', req.csrfToken());
+	next();
+});
 
 app.post('/change_password', (req, res) => {
 	// Validate CSRF token before processing the request
 	if (req.headers['csrf-token'] !== req.csrfToken()) {
-		return res.status(403).json({ error: 'Invalid CSRF token.' })
+		return res.status(403).json({ error: 'Invalid CSRF token.' });
 	}
 
-	const newPassword = req.body.newPassword
+	const newPassword = req.body.newPassword;
 	// Process password change logic
 	// ...
-	res.json({ message: 'Password changed successfully.' })
-})
+	res.json({ message: 'Password changed successfully.' });
+});
 
 app.listen(3000, () => {
-	console.log('Server started on port 3000.')
-})
+	console.log('Server started on port 3000.');
+});
 ```
 
 ## Secure Session Management
@@ -361,17 +361,17 @@ app.listen(3000, () => {
 ```javascript
 // Insecure session management using just plain HTTP cookies
 app.get('/dashboard', (req, res) => {
-	const user = findUserById(req.cookies.userId)
+	const user = findUserById(req.cookies.userId);
 	// Display user dashboard
-})
+});
 ```
 
 **Good Example** where Redis is used for session management making the system more secure.
 
 ```javascript
 // Secure session management
-const session = require('express-session')
-const RedisStore = require('connect-redis')(session)
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 
 const sessionConfig = {
 	store: new RedisStore({ url: 'redis://localhost:6379' }),
@@ -383,14 +383,14 @@ const sessionConfig = {
 		httpOnly: true,
 		maxAge: 3600000,
 	},
-}
+};
 
-app.use(session(sessionConfig))
+app.use(session(sessionConfig));
 
 app.get('/dashboard', (req, res) => {
-	const user = findUserById(req.session.userId)
+	const user = findUserById(req.session.userId);
 	// Display user dashboard
-})
+});
 ```
 
 ## Content Security Policy (CSP) Implementation
@@ -409,10 +409,10 @@ const ExampleApp = () => {
 			<p>This is a vulnerable React application.</p>
 			<script src='https://evil.com/malicious.js'></script>
 		</div>
-	)
-}
+	);
+};
 
-export default ExampleApp
+export default ExampleApp;
 ```
 
 **Good Example** where the server includes a CSP middleware that sets the "Content-Security-Policy" header in the HTTP response. The CSP is configured to only allow script sources from the same origin ('self'), the trusted CDN domain ('[**https://trusted-cdn.com**](https://trusted-cdn.com)'), and scripts with the matching nonce value ('nonce-randomly_generated_nonce').
@@ -425,31 +425,31 @@ const ExampleApp = () => {
 			<p>This is a secure React application with CSP.</p>
 			<script src='https://trusted-cdn.com/app.js' nonce='randomly_generated_nonce'></script>
 		</div>
-	)
-}
+	);
+};
 
-export default ExampleApp
+export default ExampleApp;
 ```
 
 ```javascript
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 // CSP middleware to set the Content-Security-Policy header
 app.use((req, res, next) => {
 	res.setHeader(
 		'Content-Security-Policy',
 		"script-src 'self' 'nonce-randomly_generated_nonce' https://trusted-cdn.com; default-src 'self'"
-	)
-	next()
-})
+	);
+	next();
+});
 
 // Serve the React application
-app.use(express.static('build'))
+app.use(express.static('build'));
 
 app.listen(3000, () => {
-	console.log('Server started on port 3000.')
-})
+	console.log('Server started on port 3000.');
+});
 ```
 
 ## Handling Error Messages Securely
@@ -460,26 +460,26 @@ app.listen(3000, () => {
 
 ```javascript
 app.get('/user/:id', (req, res) => {
-	const userId = req.params.id
-	const user = getUserById(userId)
+	const userId = req.params.id;
+	const user = getUserById(userId);
 	if (!user) {
-		return res.status(404).json({ error: 'User not found' })
+		return res.status(404).json({ error: 'User not found' });
 	}
-	res.json(user)
-})
+	res.json(user);
+});
 ```
 
 Good Example where only necessary details are sent in exposed.
 
 ```javascript
 app.get('/user/:id', (req, res) => {
-	const userId = req.params.id
-	const user = getUserById(userId)
+	const userId = req.params.id;
+	const user = getUserById(userId);
 	if (!user) {
-		return res.status(404).json({ error: 'User not found' })
+		return res.status(404).json({ error: 'User not found' });
 	}
-	res.json({ username: user.username, email: user.email })
-})
+	res.json({ username: user.username, email: user.email });
+});
 ```
 
 ## Secure File Uploads
@@ -493,77 +493,77 @@ app.get('/user/:id', (req, res) => {
     Here is the **Bad Example** where the application allows users to upload files without proper validation and handling. The uploaded files are stored in the "uploads" directory, making them publicly accessible, which is a security risk. Additionally, the application does not check the file type or perform any security checks, leaving it vulnerable to malicious file uploads that may contain harmful scripts or malware.
 
 ```javascript
-const express = require('express')
-const app = express()
-const multer = require('multer')
+const express = require('express');
+const app = express();
+const multer = require('multer');
 
-app.use(express.static('uploads')) // Exposing the uploads directory
+app.use(express.static('uploads')); // Exposing the uploads directory
 
 // Insecure file upload handling
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, 'uploads/') // Uploading files to the "uploads" directory
+		cb(null, 'uploads/'); // Uploading files to the "uploads" directory
 	},
 	filename: (req, file, cb) => {
-		cb(null, file.originalname) // Using the original filename
+		cb(null, file.originalname); // Using the original filename
 	},
-})
+});
 
-const upload = multer({ storage })
+const upload = multer({ storage });
 
 app.post('/upload', upload.single('file'), (req, res) => {
 	// File processing logic (e.g., saving to the database)
 	// ...
-	res.send('File uploaded successfully.')
-})
+	res.send('File uploaded successfully.');
+});
 
 app.listen(3000, () => {
-	console.log('Server started on port 3000.')
-})
+	console.log('Server started on port 3000.');
+});
 ```
 
 Good Example where the application implements secure file upload practices, including proper validation, file type checking, and storing files in a protected directory.
 
 ```javascript
-const express = require('express')
-const app = express()
-const multer = require('multer')
-const path = require('path')
-const crypto = require('crypto')
+const express = require('express');
+const app = express();
+const multer = require('multer');
+const path = require('path');
+const crypto = require('crypto');
 
 // Secure file upload handling
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, 'uploads/') // Uploading files to the "uploads" directory
+		cb(null, 'uploads/'); // Uploading files to the "uploads" directory
 	},
 	filename: (req, file, cb) => {
 		// Generate a unique filename to prevent overwriting
-		const uniqueFilename = crypto.randomBytes(16).toString('hex')
-		const fileExtension = path.extname(file.originalname)
-		cb(null, uniqueFilename + fileExtension)
+		const uniqueFilename = crypto.randomBytes(16).toString('hex');
+		const fileExtension = path.extname(file.originalname);
+		cb(null, uniqueFilename + fileExtension);
 	},
-})
+});
 
 const fileFilter = (req, file, cb) => {
 	// Allow only specific file types (e.g., images)
 	if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/gif') {
-		cb(null, true)
+		cb(null, true);
 	} else {
-		cb(new Error('Invalid file type. Only images (jpeg, png, gif) are allowed.'))
+		cb(new Error('Invalid file type. Only images (jpeg, png, gif) are allowed.'));
 	}
-}
+};
 
-const upload = multer({ storage, fileFilter })
+const upload = multer({ storage, fileFilter });
 
 app.post('/upload', upload.single('file'), (req, res) => {
 	// File processing logic (e.g., saving to the database)
 	// ...
-	res.send('File uploaded successfully.')
-})
+	res.send('File uploaded successfully.');
+});
 
 app.listen(3000, () => {
-	console.log('Server started on port 3000.')
-})
+	console.log('Server started on port 3000.');
+});
 ```
 
 ## Logging and Auditing for Security Monitoring
@@ -577,26 +577,26 @@ app.listen(3000, () => {
 ```javascript
 // Inadequate logging and auditing mechanisms
 app.post('/data', (req, res) => {
-	const sensitiveData = req.body.data
+	const sensitiveData = req.body.data;
 	// Process data without logging relevant events
-})
+});
 ```
 
 **Good Example** where there is appropriate logging of sensitive actions and events, facilitating security monitoring and incident response.
 
 ```javascript
-const fs = require('fs')
+const fs = require('fs');
 
 // Logging sensitive actions and events
 app.post('/data', (req, res) => {
-	const sensitiveData = req.body.data
+	const sensitiveData = req.body.data;
 	// Process data and log relevant events
 	fs.appendFile('security.log', `Data processed: ${sensitiveData}\n`, (err) => {
 		if (err) {
-			console.error('Error writing to log file:', err)
+			console.error('Error writing to log file:', err);
 		}
-	})
-})
+	});
+});
 ```
 
 And, that's it.

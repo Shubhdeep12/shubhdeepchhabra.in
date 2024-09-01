@@ -1,25 +1,33 @@
-import { allBlogs } from 'contentlayer/generated'
-import { useMDXComponent } from 'next-contentlayer/hooks'
-import { notFound } from 'next/navigation'
-import BlogFooter from '@/components/blog/BlogFooter'
-import Hero from '@/components/blog/Hero'
-import BlogImages from '@/components/blog/BlogImages'
-import { Metadata } from 'next'
+import { getAllPosts, getPostBySlug } from '@/lib/mdx';
+import Hero from '@/src/components/blog/Hero';
+import BlogFooter from '@/src/components/blog/BlogFooter';
+import BlogImages from '@/src/components/blog/BlogImages';
+import { Metadata } from 'next';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import { Fragment, Suspense } from 'react';
+import { notFound } from 'next/navigation';
 
-export async function generateStaticParams() {
-	return allBlogs.map((blog) => ({
-		slug: blog._raw.flattenedPath,
-	}))
+interface BlogProps {
+	params: { slug: string };
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata | undefined> {
-	const blog = allBlogs.find((blog) => blog.slug === params.slug)
+export async function generateStaticParams() {
+	const posts = await getAllPosts();
+	return posts.map((blog) => ({
+		slug: blog.slug,
+	}));
+}
+
+export async function generateMetadata({ params }: BlogProps): Promise<Metadata | undefined> {
+	const blog = await getPostBySlug(params.slug);
+
 	if (!blog) {
-		return
+		return;
 	}
 
-	const { title, description, cover, slug } = blog
-	const ogImage = cover ? `https://www.shubhdeepchhabra.in/${cover}` : ''
+	const { title, description, cover } = blog.frontMatter;
+	const ogImage = cover ? `https://www.shubhdeepchhabra.in/${cover}` : '';
+
 	return {
 		title,
 		description,
@@ -31,13 +39,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 			title,
 			locale: 'en_US',
 			siteName: 'Shubhdeep Chhabra Portfolio',
-			url: `https://www.shubhdeepchhabra.in/blog/${slug}`,
+			url: `https://www.shubhdeepchhabra.in/blog/${params.slug}`,
 			images: [
 				{
 					url: ogImage,
 					alt: `${title}`,
-					width: '1200',
-					height: '630',
+					width: 1200,
+					height: 630,
 				},
 			],
 		},
@@ -52,28 +60,36 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 				'max-snippet': -1,
 			},
 		},
+		twitter: {
+			card: 'summary_large_image',
+			site: '@ShubhInTech',
+			creator: '@ShubhInTech',
+			title,
+			description,
+			images: [ogImage],
+		},
+	};
+}
+
+export default async function BlogPage({ params }: BlogProps) {
+	const blog = await getPostBySlug(params.slug);
+
+	if (!blog) {
+		return notFound();
 	}
-}
 
-const components = {
-	Image: BlogImages,
-}
-export default function Page({ params }: { params: { slug: string } }) {
-	const blog = allBlogs.find((blog) => blog.slug === params.slug)
-
-	if (!blog) notFound()
-
-	const MDXContent = useMDXComponent(blog.body.code)
-
+	const { mdxSource } = blog;
 	return (
 		<section className='flex flex-col items-start gap-8'>
 			<Hero blog={blog} />
 
 			<article className='prose dark:prose-invert w-full mb-2'>
-				<MDXContent components={components} />
+				<Suspense fallback={<Fragment>Loading...</Fragment>}>
+					<MDXRemote source={mdxSource} components={{ Image: BlogImages }} />
+				</Suspense>
 			</article>
 
 			<BlogFooter blog={blog} />
 		</section>
-	)
+	);
 }

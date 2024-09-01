@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/nextjs';
 
 export async function register() {
 	if (process.env.NEXT_RUNTIME === 'nodejs') {
@@ -12,6 +12,6 @@ export async function register() {
 			debug: false,
 			integrations: [Sentry.prismaIntegration()],
 			spotlight: true,
-		})
+		});
 	}
 }

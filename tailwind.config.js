@@ -1,19 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('tailwindcss').Config} */
-const hocusPlugin = require('tailwindcss-hocus')
+const hocusPlugin = require('tailwindcss-hocus');
+import colors from 'tailwindcss/colors';
 
 module.exports = {
-	content: [
-		'./components/**/*.{js,ts,jsx,tsx,mdx}',
-		'./utils/**/*.{js,ts,jsx,tsx,mdx}',
-		'./ui/**/*.{js,ts,jsx,tsx,mdx}',
-		'./app/**/*.{js,ts,jsx,tsx,mdx}',
-		'./blog/**/*.mdx',
-	],
+	content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}', './blog/**/*.mdx'],
 	darkMode: 'class',
 	theme: {
 		extend: {
 			colors: {
+				primary: colors.blue,
 				text: {
 					light: '#EBF0FED9',
 					dark: '#091122d9',
@@ -50,6 +46,12 @@ module.exports = {
 				light: '',
 				dark: '0px 0px 8px 2px rgba(56, 103, 214, 0.16)',
 			},
+			backgroundImage: {
+				'body-gradient':
+					'linear-gradient(to right bottom, #ffedf650, #fcecf850, #f8ecfb50, #f3ecfd50, #edecfe50, #e8efff, #e4f2ff, #e2f4fd, #e6f8fa, #eefbf7, #f7fdf8, #fefffb)',
+				'body-gradient-inverted':
+					'linear-gradient(to right bottom, #091122, #091120, #0a101d, #0a101b, #0a0f19, #0a0f18, #0b0f17, #0b0f16, #0c1016, #0d1115, #0f1115, #101214)',
+			},
 			dropShadow: {
 				doodle: ['-4px -4px 2px #c0b4f0', '4px 4px 2px #c0b4f0', '4px -4px 2px #c0b4f0', '-4px 4px 2px #c0b4f0'],
 			},
@@ -62,28 +64,9 @@ module.exports = {
 			fontFamily: {
 				sans: ['var(--font-man)'],
 			},
-			keyframes: {
-				'page-transition': {
-					'0%': { transform: 'scale(0.975)', opacity: '0' },
-					'100%': { transform: 'scale(1)', opacity: '1' },
-				},
-				scroll: {
-					'0%': { transform: 'translateX(1.5rem)' },
-					'100%': { transform: 'translateX(-100%)' },
-				},
-				wave: {
-					'from, 50%, to': { transform: 'rotate(0deg)' },
-					'10%, 30%': { transform: 'rotate(-10deg)' },
-					'20%': { transform: 'rotate(12deg)' },
-					'40%': { transform: 'rotate(9deg)' },
-				},
-			},
-			animation: {
-				'page-transition': 'page-transition 300ms ease-in-out backwards',
-				scroll: 'scroll 15s linear infinite',
-				wave: 'wave 2.5s infinite',
-			},
+			keyframes: {},
+			animation: {},
 		},
 	},
 	plugins: [hocusPlugin, require('@tailwindcss/typography')],
-}
+};

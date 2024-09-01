@@ -6,5 +6,5 @@ export default function robots() {
 			},
 		],
 		sitemap: 'https://www.shubhdeepchhabra.in/sitemap.xml',
-	}
+	};
 }

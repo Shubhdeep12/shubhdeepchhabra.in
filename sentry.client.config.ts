@@ -2,8 +2,8 @@
 // The config you add here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from '@sentry/nextjs'
-import { init as Spotlightinit, sentry } from '@spotlightjs/spotlight'
+import * as Sentry from '@sentry/nextjs';
+import { init as Spotlightinit } from '@spotlightjs/spotlight';
 
 Sentry.init({
 	dsn: 'process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN',
@@ -13,18 +13,15 @@ Sentry.init({
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: false,
 
-	replaysOnErrorSampleRate: 1.0,
+	replaysOnErrorSampleRate: 0.1, // To trace every session with error.
 
-	// This sets the sample rate to be 10%. You may want this to be 100% while
-	// in development and sample at a lower rate in production
-	replaysSessionSampleRate: 0.1,
+	replaysSessionSampleRate: 0.1, // To trace 10% of sessions(without any error).
 
 	// tracePropagationTargets: [/^\/api\//],
 
 	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
 	integrations: [Sentry.browserTracingIntegration()],
-
-})
+});
 
 // const client = getCurrentHub().getClient()
 // if (client && client.on) {
@@ -41,8 +38,7 @@ if (process.env.NODE_ENV !== 'production') {
 	Spotlightinit({
 		sidecarUrl: 'http://localhost:8969/stream',
 		debug: true,
-	})
+	});
 }
 
-
-Sentry.setTag("page_locale", "de-at");
+Sentry.setTag('page_locale', 'de-at');

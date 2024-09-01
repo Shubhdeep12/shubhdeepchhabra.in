@@ -1,20 +1,20 @@
-import Navbar from '@/components/Navbar'
-import { Raleway } from 'next/font/google'
-import MainContent from '@/components/MainContent'
-import './globals.css'
-import { Providers } from '@/providers'
-import Footer from '@/components/Footer'
-import { BackToTop } from '@/components/BackToTop'
-import { type PropsWithChildren } from 'react'
-import { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/react'
+import Navbar from '@/src/components/Navbar';
+import { Raleway } from 'next/font/google';
+import MainContent from '@/src/components/MainContent';
+import './globals.css';
+import { Providers } from '@/src/providers';
+import Footer from '@/src/components/Footer';
+import { BackToTop } from '@/src/components/BackToTop';
+import { type PropsWithChildren } from 'react';
+import { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
 // import GoogleAnalytics from '@/components/GoogleAnalytics'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const raleway = Raleway({
 	subsets: ['latin'],
 	variable: '--font-man',
-})
+});
 
 export const metadata: Metadata = {
 	title: 'Shubhdeep Chhabra',
@@ -51,10 +51,10 @@ export const metadata: Metadata = {
 		url: 'https://www.shubhdeepchhabra.in/',
 		images: [
 			{
-				url: '/assets/Shubhdeepchhabra.png',
+				url: '/assets/shubhdeep-og.png',
 				alt: 'Shubhdeep Chhabra',
 				width: '1200',
-				height: '630',
+				height: '474',
 			},
 		],
 	},
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
 		title: 'Shubhdeep Chhabra',
 		description:
 			'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
-		images: ['/assets/Shubhdeepchhabra.png'],
+		images: ['/assets/shubhdeep-og.png'],
 	},
 	icons: {
 		icon: '/favicon.ico',
@@ -87,25 +87,13 @@ export const metadata: Metadata = {
 			url: '/apple-touch-icon.png',
 		},
 	},
-}
+};
 
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en'>
-			<body
-				className={`${raleway.variable} font-sans bg-background-primary-light dark:bg-background-primary-dark min-h-screen`}
-			>
+			<body className={`${raleway.variable} font-sans bg-body-gradient dark:bg-body-gradient-inverted min-h-screen`}>
 				<Providers>
-					<svg
-						className='pointer-events-none fixed isolate z-50 opacity-70 mix-blend-soft-light'
-						width='100%'
-						height='100%'
-					>
-						<filter id='pedroduarteisalegend'>
-							<feTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'></feTurbulence>
-						</filter>
-						<rect width='100%' height='100%' filter='url(#pedroduarteisalegend)'></rect>
-					</svg>
 					<Navbar />
 					<MainContent>{children}</MainContent>
 					<Footer />
@@ -117,5 +105,5 @@ export default function RootLayout({ children }: PropsWithChildren) {
 				</Providers>
 			</body>
 		</html>
-	)
+	);
 }
