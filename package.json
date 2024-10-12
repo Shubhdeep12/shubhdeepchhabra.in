@@ -14,6 +14,7 @@
 		"check-format": "prettier --write .",
 		"test-all": "npm run check-format && npm run check-lint && npm run check-types",
 		"migrate": "prisma migrate dev --name init",
+		"postinstall": "npm run db:setup",
 		"generate": "prisma generate",
 		"db:setup": "npm run migrate && npm run generate"
 	},
