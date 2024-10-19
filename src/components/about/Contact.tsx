@@ -34,7 +34,7 @@ const Contact = () => {
 							 hocus:bg-gray-100 dark:hocus:bg-gray-800 dark:hocus:bg-opacity-10
 							 border border-zinc-200 hocus:border-gray-800 dark:border-zinc-800 dark:hover:border-gray-200'
 							hoverable={false}
-							onClick={() => window.open('https://twitter.com/ShubhInTech', '_blank')}
+							onClick={() => window.open('https://twitter.com/okshubhh', '_blank')}
 						>
 							<TwitterIcon
 								width={24}

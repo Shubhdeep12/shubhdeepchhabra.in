@@ -396,7 +396,7 @@ export const SOCIALS = [
 		icon: 'twitter',
 		className:
 			'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-zinc-200 dark:group-hocus:stroke-zinc-200 dark:stroke-zinc-400',
-		action: 'https://twitter.com/ShubhInTech',
+		action: 'https://twitter.com/okshubhh',
 	},
 	{
 		key: 'medium',

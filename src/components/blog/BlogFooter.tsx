@@ -27,7 +27,7 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 						try {
 							await navigator.share({
 								title: blog.frontMatter.title,
-								text: `"${blog.frontMatter.title}" by @ShubhInTech`,
+								text: `"${blog.frontMatter.title}" by @okshubhh`,
 								url: `https://www.shubhdeepchhabra.in/blog/${blog.slug}`,
 							});
 						} catch (err) {

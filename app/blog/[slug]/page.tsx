@@ -62,8 +62,8 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata 
 		},
 		twitter: {
 			card: 'summary_large_image',
-			site: '@ShubhInTech',
-			creator: '@ShubhInTech',
+			site: '@okshubhh',
+			creator: '@okshubhh',
 			title,
 			description,
 			images: [ogImage],

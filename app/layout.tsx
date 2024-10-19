@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 		'javascript',
 		'typescript',
 		'semanticui',
-		'shubhintech',
+		'okshubhh',
 	],
 	referrer: 'origin',
 	creator: 'Shubhdeep Chhabra',
@@ -71,8 +71,8 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		site: '@ShubhInTech',
-		creator: '@ShubhInTech',
+		site: '@okshubhh',
+		creator: '@okshubhh',
 		title: 'Shubhdeep Chhabra',
 		description:
 			'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
