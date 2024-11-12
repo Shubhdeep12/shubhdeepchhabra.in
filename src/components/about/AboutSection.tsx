@@ -20,7 +20,7 @@ const AboutSection = () => {
 				<div className='w-[100px] h-[100px] transition-colors rounded-full bg-sky-50 overflow-hidden'>
 					<Image
 						alt='Shubhdeep-avatar'
-						src='/assets/Shubhdeepchhabra.png'
+						src='/assets/shubhdeepchhabra.png'
 						width={100}
 						height={105}
 						className='min-w-[100px] h-[105px]'
