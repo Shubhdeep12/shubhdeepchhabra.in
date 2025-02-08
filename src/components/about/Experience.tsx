@@ -15,28 +15,46 @@ const Experience = () => {
 				Experience
 			</Text>
 
-			<div className='flex flex-col gap-2 items-start'>
-				<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
-					<Text>Software Engineer III @</Text>
-					<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
-						<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
-					</Button>
+			<div className='flex flex-col gap-4 items-start'>
+				<div className='flex flex-col gap-2'>
+					<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
+						<Text>Senior Software Engineer I @</Text>
+						<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
+							<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
+						</Button>
+					</div>
+					<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
+						<Text className='text-sm font-semibold text-gray-600'>Jan 2025 - Today</Text>
+					</div>
 				</div>
-				<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
-					<Text className='text-sm font-semibold text-gray-600'>`Jan 2023 - Today`</Text>
+
+				<div className='flex flex-col gap-2'>
+					<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
+						<Text>Software Engineer III @</Text>
+						<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
+							<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
+						</Button>
+					</div>
+					<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
+						<Text className='text-sm font-semibold text-gray-600'>Jan 2023 - Dec 2024</Text>
+					</div>
 				</div>
-				<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
-					<Text>Software Engineer I @</Text>
-					<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
-						<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
-					</Button>
+
+				<div className='flex flex-col gap-2'>
+					<div className='flex gap-2 items-center text-base laptop:text-lg font-extrabold'>
+						<Text>Software Engineer I @</Text>
+						<Button hoverable={false} type={Link} href={'https://www.auzmor.com/learn'} target='_blank'>
+							<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
+						</Button>
+					</div>
+					<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
+						<Text className='text-sm font-semibold text-gray-600'>Dec 2021 - Dec 2022</Text>
+					</div>
 				</div>
-				<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
-					<Text className='text-sm font-semibold text-gray-600'>`Dec 2021 - Dec 2022`</Text>
-				</div>
+
 				<ol className='list-disc pl-5'>
 					<li>
-						<p className=' max-w-none text-left laptop:text-justify pt-4 font-medium'>
+						<p className='max-w-none text-left laptop:text-justify pt-4 font-medium'>
 							As of now, I am actively working as a software engineer, continuously honing my skills and contributing to
 							the success of my current organization. With a focus on web development, I am involved in various projects
 							aimed at creating innovative solutions for our clients. Leveraging my expertise in technologies such as{' '}
@@ -65,7 +83,7 @@ const Experience = () => {
 				</div>
 
 				<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
-					<Text className='text-sm font-semibold text-gray-600'>`Jan 2021 - Dec 2021`</Text>
+					<Text className='text-sm font-semibold text-gray-600'>Jan 2021 - Dec 2021</Text>
 				</div>
 
 				<ol className='list-disc pl-5'>

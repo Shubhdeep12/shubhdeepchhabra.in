@@ -35,13 +35,13 @@ const AboutSection = () => {
 			</div>
 
 			<p className='max-w-none text-left laptop:text-justify text-base font-medium'>
-				👋{"I'm"} <strong>Shubhdeep Chhabra</strong>, a software engineer from <strong>India</strong>, specializing in
-				web development. With a passion for creating things on the web, I <strong>graduated in 2020</strong> and have
-				since dedicated myself to honing my skills. I thrive on challenging projects and enjoy finding innovative
-				solutions to complex problems. Alongside my work, I actively contribute to <strong>Open Source Projects</strong>
-				, embracing the collaborative nature of the tech community. With strong{' '}
-				<strong>problem-solving abilities</strong> and attention to detail, I strive to deliver high-quality,
-				user-friendly solutions.
+				👋 Hello! {"I'm"} <strong>Shubhdeep Chhabra</strong>, a passionate <strong>Software Engineer</strong> based in{' '}
+				<strong>India</strong>, specializing in <strong>web development</strong>. Since{' '}
+				<strong>graduating in 2020</strong>, I have been dedicated to enhancing my skills and tackling challenging
+				projects. I excel in finding innovative solutions to complex problems and actively contribute to{' '}
+				<strong>Open Source Projects</strong>, embracing the collaborative spirit of the tech community. With strong{' '}
+				<strong>problem-solving abilities</strong> and meticulous attention to detail, I aim to deliver high-quality,
+				user-friendly web solutions.
 			</p>
 		</section>
 	);
