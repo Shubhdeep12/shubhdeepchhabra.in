@@ -1,4 +1,4 @@
-name: Auto PR from Staging to Main
+name: Auto PR from Staging to Master
 
 on:
   # Run this action every Sunday at 12:01 AM UTC
@@ -20,11 +20,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check if staging is ahead of main
+      - name: Check if staging is ahead of master
         id: check-branches
         run: |
-          git fetch origin main staging
-          AHEAD_COUNT=$(git rev-list --count main..staging)
+          git fetch origin master staging
+          AHEAD_COUNT=$(git rev-list --count master..staging)
           echo "::set-output name=ahead_count::$AHEAD_COUNT"
 
       - name: Check existing PRs
@@ -37,7 +37,7 @@ jobs:
               repo: context.repo.repo,
               state: 'open',
               head: '${{ github.repository_owner }}:staging',
-              base: 'main'
+              base: 'master'
             });
             return prs.data.length === 0;
 
@@ -50,8 +50,8 @@ jobs:
             await github.rest.pulls.create({
               owner,
               repo,
-              title: '🔄 Sync: Staging to Main',
-              body: 'Automatically generated PR to sync changes from staging to main branch.',
+              title: '🔄 Sync: Staging to Master',
+              body: 'Automatically generated PR to sync changes from staging to master branch.',
               head: 'staging',
-              base: 'main'
+              base: 'master'
             });
