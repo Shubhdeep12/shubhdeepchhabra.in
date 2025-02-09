@@ -1,9 +1,9 @@
 name: Auto PR from Develop to Master
 
 on:
-  # Run this action every Sunday at 12:01 AM UTC
+  # Run this action every Monday at 12:01 AM IST
   schedule:
-    - cron: '1 0 * * 0'
+    - cron: '31 18 * * 0'
   # Also allow manual trigger
   workflow_dispatch:
 
