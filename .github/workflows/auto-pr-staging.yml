@@ -1,0 +1,57 @@
+name: Auto PR from Staging to Main
+
+on:
+  # Run this action every Sunday at 12:01 AM UTC
+  schedule:
+    - cron: '1 0 * * 0'
+  # Also allow manual trigger
+  workflow_dispatch:
+  # Run when staging branch is updated
+  push:
+    branches:
+      - staging
+
+jobs:
+  check-and-create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if staging is ahead of main
+        id: check-branches
+        run: |
+          git fetch origin main staging
+          AHEAD_COUNT=$(git rev-list --count main..staging)
+          echo "::set-output name=ahead_count::$AHEAD_COUNT"
+
+      - name: Check existing PRs
+        id: check-prs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prs = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: '${{ github.repository_owner }}:staging',
+              base: 'main'
+            });
+            return prs.data.length === 0;
+
+      - name: Create Pull Request
+        if: steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == '1'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            await github.rest.pulls.create({
+              owner,
+              repo,
+              title: '🔄 Sync: Staging to Main',
+              body: 'Automatically generated PR to sync changes from staging to main branch.',
+              head: 'staging',
+              base: 'main'
+            });
