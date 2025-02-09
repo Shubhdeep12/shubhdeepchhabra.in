@@ -1,4 +1,4 @@
-name: Auto PR from Staging to Master
+name: Auto PR from Develop to Master
 
 on:
   # Run this action every Sunday at 12:01 AM UTC
@@ -6,10 +6,10 @@ on:
     - cron: '1 0 * * 0'
   # Also allow manual trigger
   workflow_dispatch:
-  # Run when staging branch is updated
+  # Run when develop branch is updated
   push:
     branches:
-      - staging
+      - develop
 
 jobs:
   check-and-create-pr:
@@ -20,11 +20,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check if staging is ahead of master
+      - name: Check if develop is ahead of master
         id: check-branches
         run: |
-          git fetch origin master staging
-          AHEAD_COUNT=$(git rev-list --count master..staging)
+          git fetch origin master develop
+          AHEAD_COUNT=$(git rev-list --count master..develop)
           echo "::set-output name=ahead_count::$AHEAD_COUNT"
 
       - name: Check existing PRs
@@ -36,7 +36,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
-              head: '${{ github.repository_owner }}:staging',
+              head: '${{ github.repository_owner }}:develop',
               base: 'master'
             });
             return prs.data.length === 0;
@@ -50,8 +50,8 @@ jobs:
             await github.rest.pulls.create({
               owner,
               repo,
-              title: '🔄 Sync: Staging to Master',
-              body: 'Automatically generated PR to sync changes from staging to master branch.',
-              head: 'staging',
+              title: '🔄 Sync: Develop to Master',
+              body: 'Automatically generated PR to sync changes from develop to master branch.',
+              head: 'develop',
               base: 'master'
             });
