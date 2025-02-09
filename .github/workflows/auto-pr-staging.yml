@@ -6,10 +6,6 @@ on:
     - cron: '1 0 * * 0'
   # Also allow manual trigger
   workflow_dispatch:
-  # Run when develop branch is updated
-  push:
-    branches:
-      - develop
 
 jobs:
   check-and-create-pr:
@@ -25,7 +21,7 @@ jobs:
         run: |
           git fetch origin master develop
           AHEAD_COUNT=$(git rev-list --count master..develop)
-          echo "::set-output name=ahead_count::$AHEAD_COUNT"
+          echo "ahead_count=$AHEAD_COUNT" >> $GITHUB_ENV
 
       - name: Check existing PRs
         id: check-prs
