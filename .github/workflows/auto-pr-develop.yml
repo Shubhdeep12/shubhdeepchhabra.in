@@ -20,7 +20,7 @@ jobs:
         id: check-branches
         run: |
           git fetch origin
-          AHEAD_COUNT=$(git rev-list --count origin/master..origin/develop || echo "0")
+          AHEAD_COUNT=$(git rev-list --count refs/remotes/origin/master..refs/remotes/origin/develop || echo "0")
           echo "ahead_count=$AHEAD_COUNT" >> $GITHUB_OUTPUT
 
       - name: Check existing PRs
