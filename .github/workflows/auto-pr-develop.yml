@@ -62,6 +62,6 @@ jobs:
               title: '🔄 Sync: Develop to Master',
               body: 'Automatically generated PR to sync changes from develop to master branch.',
               head: 'develop',
-              base: 'master'
-              reviewers: Shubhdeep12
+              base: 'master',
+              reviewers: ['Shubhdeep12']
             });
