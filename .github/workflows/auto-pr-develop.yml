@@ -3,7 +3,7 @@ name: Auto PR from Develop to Master
 on:
   # Run this action every Monday at 12:01 AM IST
   schedule:
-    - cron: '31 18 * * 0'
+    - cron: '31 18 * * 1'
   # Also allow manual trigger
   workflow_dispatch:
 
@@ -19,8 +19,13 @@ jobs:
       - name: Check if develop is ahead of master
         id: check-branches
         run: |
-          git fetch origin master develop
-          AHEAD_COUNT=$(git rev-list --count master..develop)
+          git fetch origin
+          # Ensure both branches exist locally
+          git branch -f master origin/master || git checkout -b master
+          git branch -f develop origin/develop || git checkout -b develop
+
+          # Now check if develop is ahead
+          AHEAD_COUNT=$(git rev-list --count origin/master..origin/develop || echo "0")
           echo "ahead_count=$AHEAD_COUNT" >> $GITHUB_ENV
 
       - name: Check existing PRs
@@ -36,6 +41,10 @@ jobs:
               base: 'master'
             });
             return prs.data.length === 0;
+          result-encoding: string
+        outputs:
+          result: ${{ steps.check-prs.outputs.result }}
+        if: "steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == '1'"
 
       - name: Create Pull Request
         if: steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == '1'
