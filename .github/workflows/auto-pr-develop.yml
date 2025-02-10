@@ -20,8 +20,8 @@ jobs:
         id: check-branches
         run: |
           git fetch origin
-          git branch -f master origin/master || git checkout -b master
-          git branch -f develop origin/develop || git checkout -b develop
+          git branch -f master origin/master
+          git branch -f develop origin/develop
           AHEAD_COUNT=$(git rev-list --count origin/master..origin/develop || echo "0")
           echo "ahead_count=$AHEAD_COUNT" >> $GITHUB_OUTPUT
 
