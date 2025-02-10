@@ -8,7 +8,6 @@ import { BackToTop } from '@/src/components/BackToTop';
 import { type PropsWithChildren } from 'react';
 import { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
-// import GoogleAnalytics from '@/components/GoogleAnalytics'
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 const raleway = Raleway({
@@ -19,15 +18,18 @@ const raleway = Raleway({
 export const metadata: Metadata = {
 	title: 'Shubhdeep Chhabra',
 	description:
-		'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
+		'Shubhdeep Chhabra is a Software Engineer from India specializing in web development. Explore my portfolio to see innovative solutions for complex problems.',
 	applicationName: 'Shubhdeep Chhabra Portfolio',
-	authors: [{ name: 'Shubhdeep Chhabra Portfolio', url: 'https://www.shubhdeepchhabra.in' }],
+	authors: [{ name: 'Shubhdeep Chhabra', url: 'https://www.shubhdeepchhabra.in' }],
 	keywords: [
 		'next.js',
 		'react',
 		'shubhdeep chhabra',
 		'shubhdeep',
 		'shubh',
+		'web development',
+		'software engineer',
+		'portfolio',
 		'styled-components',
 		'tailwindcss',
 		'tailwind',
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		description:
-			'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
+			'Shubhdeep Chhabra is a Software Engineer from India specializing in web development. Explore my portfolio to see innovative solutions for complex problems.',
 		title: 'Shubhdeep Chhabra',
 		locale: 'en_US',
 		siteName: 'Shubhdeep Chhabra Portfolio',
@@ -75,7 +77,7 @@ export const metadata: Metadata = {
 		creator: '@okshubhh',
 		title: 'Shubhdeep Chhabra',
 		description:
-			'Software Engineer from India specializing in web development. Passionate about creating innovative solutions for complex problems. Explore my portfolio now!',
+			'Shubhdeep Chhabra is a Software Engineer from India specializing in web development. Explore my portfolio to see innovative solutions for complex problems.',
 		images: ['/assets/shubhdeep-og.png'],
 	},
 	icons: {
