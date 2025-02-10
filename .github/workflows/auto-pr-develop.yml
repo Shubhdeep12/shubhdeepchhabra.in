@@ -1,10 +1,8 @@
 name: Auto PR from Develop to Master
 
 on:
-  # Run this action every Monday at 12:01 AM IST
   schedule:
     - cron: '31 18 * * 1'
-  # Also allow manual trigger
   workflow_dispatch:
 
 jobs:
@@ -22,6 +20,7 @@ jobs:
           git fetch origin
           AHEAD_COUNT=$(git rev-list --count origin/master..origin/develop || echo "0")
           echo "ahead_count=$AHEAD_COUNT" >> $GITHUB_OUTPUT
+          echo "Ahead count is: $AHEAD_COUNT"
 
       - name: Check existing PRs
         id: check-prs
@@ -32,10 +31,19 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
-              head: '${context.repo.owner}:develop',
+              head: `${context.repo.owner}:develop`,
               base: 'master'
             });
-            core.setOutput('result', prs.data.length === 0);
+            const noPRs = prs.data.length === 0;
+            console.log('Number of existing PRs:', prs.data.length);
+            console.log('No existing PRs (true/false):', noPRs);
+            core.setOutput('result', noPRs);
+
+      - name: Debug conditions
+        run: |
+          echo "Ahead count: ${{ steps.check-branches.outputs.ahead_count }}"
+          echo "No existing PRs: ${{ steps.check-prs.outputs.result }}"
+          echo "Combined condition: ${{ steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == 'true' }}"
 
       - name: Create Pull Request
         if: steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == 'true'
