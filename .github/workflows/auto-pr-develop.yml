@@ -20,11 +20,8 @@ jobs:
         id: check-branches
         run: |
           git fetch origin
-          # Ensure both branches exist locally
           git branch -f master origin/master || git checkout -b master
           git branch -f develop origin/develop || git checkout -b develop
-
-          # Now check if develop is ahead
           AHEAD_COUNT=$(git rev-list --count origin/master..origin/develop || echo "0")
           echo "ahead_count=$AHEAD_COUNT" >> $GITHUB_ENV
 
@@ -41,7 +38,6 @@ jobs:
               base: 'master'
             });
             return prs.data.length === 0;
-          result-encoding: string
         outputs:
           result: ${{ steps.check-prs.outputs.result }}
         if: "steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == '1'"
