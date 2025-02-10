@@ -20,7 +20,9 @@ jobs:
         id: check-branches
         run: |
           git fetch origin
-          AHEAD_COUNT=$(git rev-list --count refs/remotes/origin/master..refs/remotes/origin/develop || echo "0")
+          git branch -f master origin/master
+          git branch -f develop origin/develop
+          AHEAD_COUNT=$(git rev-list --count origin/master..origin/develop || echo "0")
           echo "ahead_count=$AHEAD_COUNT" >> $GITHUB_OUTPUT
 
       - name: Check existing PRs
@@ -32,13 +34,13 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
-              head: '${{ github.repository_owner }}:develop',
+              head: '${context.repo.owner}:develop',
               base: 'master'
             });
             core.setOutput('result', prs.data.length === 0);
 
       - name: Create Pull Request
-        if: env.ahead_count > 0 && steps.check-prs.outputs.result == 'true'
+        if: steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == 'true'
         uses: actions/github-script@v7
         with:
           script: |
