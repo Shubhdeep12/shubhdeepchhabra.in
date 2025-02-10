@@ -37,16 +37,21 @@ jobs:
             const noPRs = prs.data.length === 0;
             console.log('Number of existing PRs:', prs.data.length);
             console.log('No existing PRs (true/false):', noPRs);
-            core.setOutput('result', noPRs);
+            return noPRs;
+          result-encoding: string
 
       - name: Debug conditions
         run: |
           echo "Ahead count: ${{ steps.check-branches.outputs.ahead_count }}"
           echo "No existing PRs: ${{ steps.check-prs.outputs.result }}"
-          echo "Combined condition: ${{ steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == 'true' }}"
+          if [[ "${{ steps.check-branches.outputs.ahead_count }}" -gt "0" ]] && [[ "${{ steps.check-prs.outputs.result }}" == "true" ]]; then
+            echo "Conditions met for PR creation"
+          else
+            echo "Conditions not met for PR creation"
+          fi
 
       - name: Create Pull Request
-        if: steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == 'true'
+        if: ${{ steps.check-branches.outputs.ahead_count > 0 && steps.check-prs.outputs.result == 'true' }}
         uses: actions/github-script@v7
         with:
           script: |
