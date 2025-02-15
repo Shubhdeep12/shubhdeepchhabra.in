@@ -409,6 +409,20 @@ export const SOCIALS = [
 
 export const PROJECTS: ProjectProps[] = [
 	{
+		key: 'assessment-agent',
+		title: 'Assessment Agent',
+		description:
+			'An AI agent that processes lessons and data in any format to generate contextually relevant assessment questions.',
+		stack: ['Python', 'Streamlit', 'Transformers', 'LanceDB', 'Pydantic'],
+		bgColor: 'hocus:bg-green-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-green-300',
+		metaDataStyles: 'group-hocus:border-green-200 dark:bg-green-900 bg-green-50',
+		imageStyles: 'bg-green-50 dark:bg-opacity-[0.14] dark:bg-green-300',
+		titleStyles: 'dark:group-hocus:text-green-400 group-hocus:text-green-800',
+		href: 'https://github.com/Shubhdeep12/assessment_agent',
+		src: '/assets/projects/AssessmentAgent.svg',
+		featured: true,
+	},
+	{
 		key: 'auzmor',
 		title: 'Auzmor Learn',
 		description: 'LMS with support of features like E-Sign, Feedbacks, Social Learning, etc.',
@@ -419,7 +433,7 @@ export const PROJECTS: ProjectProps[] = [
 		titleStyles: 'dark:group-hocus:text-orange-400 group-hocus:text-orange-800',
 		href: 'https://www.auzmor.com',
 		src: AuzmorLogo,
-		featured: true,
+		featured: false,
 	},
 	{
 		key: 'quedoor-client',
@@ -458,6 +472,20 @@ export const PROJECTS: ProjectProps[] = [
 		titleStyles: 'dark:group-hocus:text-yellow-400 group-hocus:text-yellow-800',
 		href: 'https://eslint-config-generator.shubhdeepchhabra.in/',
 		src: '/assets/projects/eslint-config-generator.png',
+		featured: true,
+	},
+	{
+		key: 'performantrics-sdk',
+		title: 'Performance Metrics SDK',
+		description:
+			'A lightweight, extensible JavaScript library for collecting and analyzing web performance metrics with minimal setup.',
+		stack: ['TypeScript', 'JavaScript', 'Web Performance'],
+		bgColor: 'hocus:bg-blue-100 dark:hocus:bg-opacity-[0.18] dark:hocus:bg-blue-400',
+		metaDataStyles: 'group-hocus:border-blue-300 dark:bg-blue-950 bg-blue-100',
+		imageStyles: 'bg-blue-100 dark:bg-opacity-[0.18] dark:bg-blue-400',
+		titleStyles: 'dark:group-hocus:text-blue-500 group-hocus:text-blue-900',
+		href: 'https://www.npmjs.com/package/performantrics',
+		src: '/assets/projects/performantrics-logo.svg',
 		featured: true,
 	},
 ];
