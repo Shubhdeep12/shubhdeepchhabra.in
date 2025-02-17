@@ -71,7 +71,7 @@ const FeaturedProjects = () => {
 					if (project.featured) {
 						return <ProjectCard key={project.key} project={project} />;
 					} else {
-						return false;
+						return null;
 					}
 				})}
 			</div>
