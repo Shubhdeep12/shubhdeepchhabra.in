@@ -15,6 +15,8 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 		<div
 			id='share'
 			className='border-t mt-10 pt-10 w-full flex flex-col-reverse laptop:flex-row gap-6 justify-between items-start laptop:items-center'
+			role='contentinfo'
+			aria-label='Blog post footer'
 		>
 			<div id='actions' className='flex gap-3'>
 				<Button
@@ -34,8 +36,15 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 							console.log({ err });
 						}
 					}}
+					aria-label='Share blog post'
 				>
-					<ShareIcon width={24} height={24} color='#fff' className='dark:fill-text-dark transition' />
+					<ShareIcon
+						width={24}
+						height={24}
+						color='#fff'
+						className='dark:fill-text-dark transition'
+						aria-hidden='true'
+					/>
 					<Text
 						transitioned={false}
 						className='h-full text-white dark:text-text-dark font-extrabold dark:font-bold p-0'
@@ -56,8 +65,15 @@ const BlogFooter = ({ blog }: BlogFooterProps) => {
 					onClick={() =>
 						window.open(`https://github.com/Shubhdeep12/ShubhdeepChhabra/tree/master/blog/${blog.slug}.mdx`, '_blank')
 					}
+					aria-label='Edit on GitHub'
 				>
-					<EditIcon width={24} height={24} color='#fff' className='fill-text-dark dark:fill-white transition' />
+					<EditIcon
+						width={24}
+						height={24}
+						color='#fff'
+						className='fill-text-dark dark:fill-white transition'
+						aria-hidden='true'
+					/>
 					<Text
 						transitioned={false}
 						className='h-full dark:text-white text-text-dark font-extrabold dark:font-bold p-0'

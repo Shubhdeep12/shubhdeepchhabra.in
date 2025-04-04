@@ -80,16 +80,16 @@ export default async function BlogPage({ params }: BlogProps) {
 
 	const { mdxSource } = blog;
 	return (
-		<section className='flex flex-col items-start gap-8'>
+		<main className='flex flex-col items-start gap-8' role='main'>
 			<Hero blog={blog} />
 
-			<article className='prose dark:prose-invert w-full mb-2'>
+			<article className='prose dark:prose-invert w-full mb-2' role='article' aria-label={blog.frontMatter.title}>
 				<Suspense fallback={<Fragment>Loading...</Fragment>}>
 					<MDXRemote source={mdxSource} components={{ Image: BlogImages }} />
 				</Suspense>
 			</article>
 
 			<BlogFooter blog={blog} />
-		</section>
+		</main>
 	);
 }

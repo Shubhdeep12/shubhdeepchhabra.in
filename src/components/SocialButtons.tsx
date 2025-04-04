@@ -34,6 +34,8 @@ export default function SocialButtons({ bordered = false, backToTop = false, cla
 				'px-[6px]',
 				className
 			)}
+			role='group'
+			aria-label='Social media links'
 		>
 			{SOCIALS.map((social: SocialProps) => {
 				const SocialIcon = SOCIAL_ICONS[social.icon];
@@ -48,8 +50,9 @@ export default function SocialButtons({ bordered = false, backToTop = false, cla
 						href={social.action}
 						rel='noopener noreferrer'
 						target='_blank'
+						aria-label={`Visit my ${social.icon} profile`}
 					>
-						<SocialIcon width={22} height={22} color='#5f5f5f' className={social.className} />
+						<SocialIcon width={22} height={22} color='#5f5f5f' className={social.className} aria-hidden='true' />
 					</Button>
 				);
 			})}
