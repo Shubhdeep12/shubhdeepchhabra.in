@@ -11,12 +11,14 @@ const BackToTopButton = () => {
 			focusOutlined
 			className='group rounded flex items-center justify-center'
 			onClick={() => scrollToTop()}
+			aria-label='Scroll to top'
 		>
 			<BackToTopIcon
 				width={22}
 				height={22}
 				color='#5f5f5f'
 				className='group-hocus:fill-black dark:group-hocus:fill-zinc-200 dark:fill-zinc-400'
+				aria-hidden='true'
 			/>
 		</Button>
 	);

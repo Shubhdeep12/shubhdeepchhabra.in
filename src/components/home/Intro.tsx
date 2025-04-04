@@ -11,7 +11,7 @@ import AnimatedImage from '../AnimatedImage';
 const Intro = () => {
 	const router = useRouter();
 	return (
-		<section className='flex flex-col items-start gap-5'>
+		<section className='flex flex-col items-start gap-5' role='region' aria-label='Introduction'>
 			<div className='flex flex-col items-start gap-5 laptop:flex-row-reverse laptop:items-center'>
 				<section>
 					<AnimatedImage
@@ -19,7 +19,8 @@ const Intro = () => {
 						src='/assets/shubhdeepchhabra.png'
 						width={200}
 						height={200}
-						alt='shubhdeep Chhabra'
+						alt='Shubhdeep Chhabra'
+						aria-label='Profile picture of Shubhdeep Chhabra'
 					/>
 				</section>
 				<section className='flex flex-col gap-5 w-full'>
@@ -39,8 +40,15 @@ const Intro = () => {
 					className='p-4 flex gap-1 justify-center items-center rounded-lg bg-primary-700 hover:-translate-y-[1px] hover:bg-primary-800 hover:shadow-md dark:bg-primary-500 dark:hover:bg-primary-400'
 					hoverable={false}
 					onClick={() => router.push('/about')}
+					aria-label='Learn more about me'
 				>
-					<ProfileIcon width={24} height={24} color='#fff' className='dark:fill-text-dark transition' />
+					<ProfileIcon
+						width={24}
+						height={24}
+						color='#fff'
+						className='dark:fill-text-dark transition'
+						aria-hidden='true'
+					/>
 					<Text
 						transitioned={false}
 						className='h-full text-white dark:text-text-dark font-extrabold dark:font-bold p-0'

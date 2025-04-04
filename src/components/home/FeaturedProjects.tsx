@@ -12,7 +12,7 @@ const FeaturedProjects = () => {
 	const router = useRouter();
 
 	return (
-		<section id='featured-projects' className='flex flex-col gap-4'>
+		<section id='featured-projects' className='flex flex-col gap-4' role='region' aria-label='Featured projects'>
 			<div
 				id='featured-projects-header'
 				className='flex flex-col gap-6 laptop:flex-row justify-between items-start laptop:items-center'
@@ -39,8 +39,15 @@ const FeaturedProjects = () => {
 							 border border-zinc-200 hocus:border-primary-800 dark:border-zinc-800 dark:hover:border-primary-200'
 						hoverable={false}
 						onClick={() => window.open(resumeUrl, '_blank')}
+						aria-label='View my resume'
 					>
-						<ResumeIcon width={24} height={24} color='#fff' className='fill-text-dark dark:fill-white transition' />
+						<ResumeIcon
+							width={24}
+							height={24}
+							color='#fff'
+							className='fill-text-dark dark:fill-white transition'
+							aria-hidden='true'
+						/>
 						<Text
 							transitioned={false}
 							className='h-full dark:text-white text-text-dark font-extrabold dark:font-bold p-0'
@@ -55,8 +62,15 @@ const FeaturedProjects = () => {
 						className='p-4 flex gap-1 justify-center items-center rounded-lg bg-primary-700 hover:-translate-y-[1px] hover:shadow-md hover:bg-primary-800  dark:bg-primary-500 dark:hover:bg-primary-400'
 						hoverable={false}
 						onClick={() => router.push('/projects')}
+						aria-label='View all projects'
 					>
-						<EyeIcon width={24} height={24} color='#fff' className='dark:fill-text-dark transition' />
+						<EyeIcon
+							width={24}
+							height={24}
+							color='#fff'
+							className='dark:fill-text-dark transition'
+							aria-hidden='true'
+						/>
 						<Text
 							transitioned={false}
 							className='h-full text-white dark:text-text-dark font-extrabold dark:font-bold p-0'
@@ -66,7 +80,12 @@ const FeaturedProjects = () => {
 					</Button>
 				</div>
 			</div>
-			<div id='featured-projects-content' className='w-full flex flex-col gap-4'>
+			<div
+				id='featured-projects-content'
+				className='w-full flex flex-col gap-4'
+				role='list'
+				aria-label='Featured projects list'
+			>
 				{PROJECTS.map((project: ProjectProps) => {
 					if (project.featured) {
 						return <ProjectCard key={project.key} project={project} />;

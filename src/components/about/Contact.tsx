@@ -7,13 +7,14 @@ import Image from 'next/image';
 
 const Contact = () => {
 	return (
-		<section id='contact' className='flex flex-col items-start gap-6'>
+		<section id='contact' className='flex flex-col items-start gap-6' role='region' aria-label='Contact information'>
 			<Text
 				variant='shadow'
 				gFrom='dark:from-primary-500'
 				gTo='dark:to-purple-500'
 				shadowColor='blue'
 				className='font-bold text-3xl text-heading-dark'
+				as='h2'
 			>
 				Contact
 			</Text>
@@ -35,12 +36,14 @@ const Contact = () => {
 							 border border-zinc-200 hocus:border-gray-800 dark:border-zinc-800 dark:hover:border-gray-200'
 							hoverable={false}
 							onClick={() => window.open('https://twitter.com/okshubhh', '_blank')}
+							aria-label='Follow on Twitter'
 						>
 							<TwitterIcon
 								width={24}
 								height={24}
 								color='#5f5f5f'
 								className='group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-zinc-200 dark:group-hocus:stroke-zinc-200 dark:stroke-zinc-400 transition'
+								aria-hidden='true'
 							/>
 							<Text
 								transitioned={false}
@@ -59,12 +62,14 @@ const Contact = () => {
 							 border border-zinc-200 hocus:border-red-800 dark:border-zinc-800 dark:hover:border-red-200'
 							hoverable={false}
 							onClick={() => window.open('mailto:chhabrashubhdeep@gmail.com')}
+							aria-label='Send email'
 						>
 							<EmailIcon
 								width={24}
 								height={24}
 								color='#5f5f5f'
 								className='group-hocus:fill-red-500 dark:fill-zinc-400 transition'
+								aria-hidden='true'
 							/>
 							<Text
 								transitioned={false}

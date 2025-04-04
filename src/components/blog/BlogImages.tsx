@@ -4,12 +4,15 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 
-type BlogImagesProps = {
+interface BlogImagesProps {
 	src: string;
 	alt: string;
-};
+	width?: number;
+	height?: number;
+	className?: string;
+}
 
-const BlogImages = ({ alt, src }: BlogImagesProps) => {
+const BlogImages = ({ src, alt, width, height, className }: BlogImagesProps) => {
 	const [expandImage, setExpandImage] = useState(false);
 
 	return (
@@ -17,9 +20,10 @@ const BlogImages = ({ alt, src }: BlogImagesProps) => {
 			<Image
 				alt={alt}
 				src={src}
-				width={100}
-				height={100}
-				className='rounded-lg w-full h-auto cursor-zoom-in transition-transform duration-300 transform hover:scale-105'
+				width={width || 800}
+				height={height || 400}
+				className={clsx('rounded-lg', className)}
+				priority
 				onClick={() => setExpandImage(true)}
 			/>
 
