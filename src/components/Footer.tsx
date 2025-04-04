@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import Text from '@/src/ui/Text';
 import Button from '@/src/ui/Button';
 import clsx from 'clsx';
@@ -9,10 +8,11 @@ import { SCIcon } from '@/src/Icons';
 import Image from 'next/image';
 import { DONATE_SOURCES, FOOTER_NAVBAR_ITEMS, SOURCE_FOOTER_ITEMS } from '@/src/utils/constants';
 import Link from 'next/link';
+import { useUIStore } from '@/src/stores/ui-store';
 
 const Footer = () => {
 	const router = useRouter();
-	const [currentFocussed, setCurrentFocussed] = useState<string>('');
+	const { currentFocusedItem, setCurrentFocusedItem } = useUIStore();
 
 	return (
 		<footer
@@ -23,7 +23,7 @@ const Footer = () => {
 			<div className='flex gap-9'>
 				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
 					{FOOTER_NAVBAR_ITEMS.map((item: any) => (
-						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
+						<li key={item.key} onFocus={() => setCurrentFocusedItem(item.key)} onBlur={() => setCurrentFocusedItem('')}>
 							<Button
 								focusOutlined
 								hoverable={false}
@@ -37,7 +37,7 @@ const Footer = () => {
 							>
 								<Text
 									variant='gradient'
-									active={currentFocussed === item.key}
+									active={currentFocusedItem === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
 									className={clsx('hover:text-transparent font-semibold')}
@@ -50,7 +50,7 @@ const Footer = () => {
 				</ul>
 				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
 					{SOURCE_FOOTER_ITEMS.map((item: any) => (
-						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
+						<li key={item.key} onFocus={() => setCurrentFocusedItem(item.key)} onBlur={() => setCurrentFocusedItem('')}>
 							<Button
 								focusOutlined
 								hoverable={false}
@@ -64,7 +64,7 @@ const Footer = () => {
 							>
 								<Text
 									variant='gradient'
-									active={currentFocussed === item.key}
+									active={currentFocusedItem === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
 									className={clsx('hover:text-transparent font-semibold')}
@@ -77,7 +77,7 @@ const Footer = () => {
 				</ul>
 				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
 					{DONATE_SOURCES.map((item: any) => (
-						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
+						<li key={item.key} onFocus={() => setCurrentFocusedItem(item.key)} onBlur={() => setCurrentFocusedItem('')}>
 							<Button
 								focusOutlined
 								hoverable={false}
@@ -91,7 +91,7 @@ const Footer = () => {
 							>
 								<Text
 									variant='gradient'
-									active={currentFocussed === item.key}
+									active={currentFocusedItem === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
 									className={clsx('hover:text-transparent font-semibold')}

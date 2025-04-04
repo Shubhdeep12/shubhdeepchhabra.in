@@ -9,6 +9,7 @@ import { type PropsWithChildren } from 'react';
 import { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { ThemeProvider } from 'next-themes';
 
 const raleway = Raleway({
 	subsets: ['latin'],
@@ -93,18 +94,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
-		<html lang='en'>
+		<html lang='en' suppressHydrationWarning>
 			<body className={`${raleway.variable} font-sans bg-body-gradient dark:bg-body-gradient-inverted min-h-screen`}>
-				<Providers>
-					<Navbar />
-					<MainContent>{children}</MainContent>
-					<Footer />
-					<BackToTop />
-					<Analytics />
-					{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS ? (
-						<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS || ''} />
-					) : null}
-				</Providers>
+				<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+					<Providers>
+						<Navbar />
+						<MainContent>{children}</MainContent>
+						<Footer />
+						<BackToTop />
+						<Analytics />
+						{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS ? (
+							<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS || ''} />
+						) : null}
+					</Providers>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
