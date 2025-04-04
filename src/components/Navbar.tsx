@@ -1,13 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { RxHamburgerMenu, RxCross2 } from 'react-icons/rx';
 import { IoMoon, IoSunny } from 'react-icons/io5';
-
-import { useTheme } from '@/src/providers/theme-provider';
-
 import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
 import { useIsMounted } from '@/src/hooks/isMounted';
@@ -16,12 +12,14 @@ import { SCIcon } from '@/src/Icons';
 import Link from 'next/link';
 import Loader from './Loader';
 import { NAVIGATIONBAR_ITEMS } from '@/src/utils/constants';
+import { useThemeStore } from '@/src/stores/theme-store';
+import { useUIStore } from '@/src/stores/ui-store';
 
 const Navbar = () => {
 	const pathname = usePathname();
 	const isMounted = useIsMounted();
-	const [navbarExpanded, setNavbarExpanded] = useState(false);
-	const { isDark, toggleTheme } = useTheme();
+	const { isNavbarExpanded, setNavbarExpanded } = useUIStore();
+	const { isDark, toggleTheme } = useThemeStore();
 
 	const NAVBAR_ITEMS = [
 		{
@@ -146,10 +144,10 @@ const Navbar = () => {
 						variant='normal'
 						focusOutlined
 						className='rounded flex justify-center items-center'
-						onClick={() => setNavbarExpanded(!navbarExpanded)}
+						onClick={() => setNavbarExpanded(!isNavbarExpanded)}
 					>
-						<div className={`transition-all ${navbarExpanded ? 'rotate-45' : '-rotate-45'}`}>
-							{navbarExpanded ? (
+						<div className={`transition-all ${isNavbarExpanded ? 'rotate-45' : '-rotate-45'}`}>
+							{isNavbarExpanded ? (
 								<RxCross2 className='-rotate-45' size={20} />
 							) : (
 								<RxHamburgerMenu size={20} className='rotate-45' />
@@ -161,11 +159,11 @@ const Navbar = () => {
 
 			<section
 				className={`${
-					navbarExpanded ? 'h-[calc(100vh-75px)]' : 'h-0'
+					isNavbarExpanded ? 'h-[calc(100vh-75px)]' : 'h-0'
 				} transition-all w-full flex items-center laptop:hidden`}
 			>
 				<NavList
-					className={navbarExpanded ? 'laptop:hidden flex align-middle w-full h-[42px] flex-col gap-6' : 'hidden'}
+					className={isNavbarExpanded ? 'laptop:hidden flex align-middle w-full h-[42px] flex-col gap-6' : 'hidden'}
 				/>
 			</section>
 		</nav>
