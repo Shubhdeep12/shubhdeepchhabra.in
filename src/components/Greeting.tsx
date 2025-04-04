@@ -15,13 +15,14 @@ const Greeting = () => {
 	}, []);
 
 	return (
-		<div className='flex flex-col gap-2'>
+		<div className='flex flex-col gap-2' role='region' aria-label='Greeting'>
 			<div className='flex gap-1 items-center text-3xl'>
-				<Image src='/assets/waving-hand.gif' alt='waving hand' width={30} height={30} />
+				<Image src='/assets/waving-hand.gif' alt='Waving hand emoji' width={30} height={30} aria-hidden='true' />
 				<Text
 					variant='shadow'
 					shadowColor='yellow'
 					className='font-semibold text-heading-dark dark:text-heading-light leading-relaxed'
+					as='h2'
 				>
 					{greetings[hello]}!
 				</Text>
@@ -31,6 +32,7 @@ const Greeting = () => {
 					variant='shadow'
 					shadowColor='blue'
 					className='font-semibold text-3xl text-heading-dark dark:text-heading-light'
+					as='h2'
 				>
 					{`I'm`}
 				</Text>

@@ -20,16 +20,20 @@ export default function ProjectCard({ project }: { project: ProjectProps }) {
 				project.bgColor,
 				'group p-2 transition-all duration-200 rounded-lg focus:outline-dashed focus:outline-2 focus:outline-offset-0 items-center'
 			)}
+			role='article'
+			aria-label={`Project: ${project.title}`}
 		>
 			<div
 				className={clsx(
 					project.imageStyles,
 					'dark:bg-opacity-[0.2] rounded-lg group-hocus:bg-opacity-0 h-[64px] w-[64px] flex items-center'
 				)}
+				role='img'
+				aria-label={`${project.title} logo`}
 			>
 				{typeof project.src === 'string' ? (
 					<Image
-						alt='featured-project'
+						alt={`${project.title} project logo`}
 						src={project.src}
 						width={64}
 						height={64}
@@ -43,15 +47,16 @@ export default function ProjectCard({ project }: { project: ProjectProps }) {
 				<Text
 					transitioned={false}
 					className={`h-full font-bold p-0 group-hocus:underline decoration-2 underline-offset-2 ${project.titleStyles}`}
+					as='h3'
 				>
 					{project.title}
 				</Text>
 
-				<Text transitioned={false} className='h-full font-semibold text-sm p-0 '>
+				<Text transitioned={false} className='h-full font-semibold text-sm p-0'>
 					{project.description}
 				</Text>
 
-				<div className='flex gap-2 flex-wrap items-center'>
+				<div className='flex gap-2 flex-wrap items-center' role='list' aria-label='Project technologies'>
 					{project.stack &&
 						project.stack.length > 0 &&
 						project.stack.map((skill) => (
@@ -67,6 +72,7 @@ export default function ProjectCard({ project }: { project: ProjectProps }) {
 									'text-xs font-medium items-center flex gap-1',
 									project.metaDataStyles
 								)}
+								role='listitem'
 							>
 								{skill}
 							</Text>

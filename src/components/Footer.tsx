@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import Text from '@/src/ui/Text';
 import Button from '@/src/ui/Button';
 import clsx from 'clsx';
@@ -12,18 +11,23 @@ import Link from 'next/link';
 
 const Footer = () => {
 	const router = useRouter();
-	const [currentFocussed, setCurrentFocussed] = useState<string>('');
 
 	return (
 		<footer
 			className='
 				w-full max-w-laptop mx-auto
 				flex flex-col gap-9 py-9 px-2 border-t bottom-0'
+			role='contentinfo'
+			aria-label='Site footer'
 		>
 			<div className='flex gap-9'>
-				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
+				<ul
+					className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'
+					role='menu'
+					aria-label='Navigation links'
+				>
 					{FOOTER_NAVBAR_ITEMS.map((item: any) => (
-						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
+						<li key={item.key} role='none'>
 							<Button
 								focusOutlined
 								hoverable={false}
@@ -34,10 +38,11 @@ const Footer = () => {
 								type={Link}
 								href={item.route}
 								target={item.target}
+								role='menuitem'
+								aria-label={item.title}
 							>
 								<Text
 									variant='gradient'
-									active={currentFocussed === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
 									className={clsx('hover:text-transparent font-semibold')}
@@ -48,9 +53,13 @@ const Footer = () => {
 						</li>
 					))}
 				</ul>
-				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
+				<ul
+					className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'
+					role='menu'
+					aria-label='Source links'
+				>
 					{SOURCE_FOOTER_ITEMS.map((item: any) => (
-						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
+						<li key={item.key} role='none'>
 							<Button
 								focusOutlined
 								hoverable={false}
@@ -61,10 +70,11 @@ const Footer = () => {
 								type={Link}
 								href={item.route}
 								target={item.target}
+								role='menuitem'
+								aria-label={item.title}
 							>
 								<Text
 									variant='gradient'
-									active={currentFocussed === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
 									className={clsx('hover:text-transparent font-semibold')}
@@ -75,9 +85,13 @@ const Footer = () => {
 						</li>
 					))}
 				</ul>
-				<ul className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'>
+				<ul
+					className='flex flex-col min-w-[100px] laptop:min-w-[140px] gap-4 items-start'
+					role='menu'
+					aria-label='Donation links'
+				>
 					{DONATE_SOURCES.map((item: any) => (
-						<li key={item.key} onFocus={() => setCurrentFocussed(item.key)} onBlur={() => setCurrentFocussed('')}>
+						<li key={item.key} role='none'>
 							<Button
 								focusOutlined
 								hoverable={false}
@@ -88,10 +102,11 @@ const Footer = () => {
 								type={Link}
 								href={item.route}
 								target={item.target}
+								role='menuitem'
+								aria-label={item.title}
 							>
 								<Text
 									variant='gradient'
-									active={currentFocussed === item.key}
 									gFrom={item.gFrom}
 									gTo={item.gTo}
 									className={clsx('hover:text-transparent font-semibold')}
