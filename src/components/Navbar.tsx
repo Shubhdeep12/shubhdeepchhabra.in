@@ -11,7 +11,7 @@ import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
 import { useIsMounted } from '@/src/hooks/isMounted';
 import Image from 'next/image';
-import { SCIcon } from '@/src/Icons';
+import { BentoGridIcon, SCIcon } from '@/src/Icons';
 import Link from 'next/link';
 import Loader from './Loader';
 import { NAVIGATIONBAR_ITEMS } from '@/src/utils/constants';
@@ -20,7 +20,7 @@ import { useTheme } from 'next-themes';
 const Navbar = () => {
 	const pathname = usePathname();
 	const isMounted = useIsMounted();
-	const { isNavbarExpanded, setNavbarExpanded } = useUIStore();
+	const { isNavbarExpanded, setNavbarExpanded, isBentoLayout, setBentoLayout } = useUIStore();
 	const { isDark, toggleTheme } = useThemeStore();
 	const { setTheme } = useTheme();
 	const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -42,33 +42,14 @@ const Navbar = () => {
 		},
 	];
 
-	// Handle keyboard navigation
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (!isNavbarExpanded) return;
-
-			let currentIndex: number;
-			let nextIndex: number;
-			let prevIndex: number;
-			let newIndex: number;
 
 			switch (e.key) {
 				case 'Escape':
 					setNavbarExpanded(false);
 					menuButtonRef.current?.focus();
-					break;
-				case 'ArrowDown':
-					e.preventDefault();
-					currentIndex = menuItemsRef.current.findIndex((item) => item === document.activeElement);
-					nextIndex = (currentIndex + 1) % menuItemsRef.current.length;
-					menuItemsRef.current[nextIndex]?.focus();
-					break;
-				case 'ArrowUp':
-					e.preventDefault();
-					currentIndex = menuItemsRef.current.findIndex((item) => item === document.activeElement);
-					prevIndex = currentIndex - 1;
-					newIndex = prevIndex < 0 ? menuItemsRef.current.length - 1 : prevIndex;
-					menuItemsRef.current[newIndex]?.focus();
 					break;
 			}
 		};
@@ -177,6 +158,21 @@ const Navbar = () => {
 				<section className='flex grow justify-end h-full'>
 					<NavList className={'hidden laptop:flex gap-6'} />
 				</section>
+
+				<div className='h-full w-[42px] flex items-center justify-center'>
+					<Button
+						height='h-full'
+						width='w-full'
+						variant='normal'
+						focusOutlined
+						className='rounded flex justify-center items-center'
+						onClick={() => setBentoLayout(!isBentoLayout)}
+						aria-label={`Switch to ${isBentoLayout ? 'normal' : 'bento'} layout`}
+					>
+						<BentoGridIcon width={20} height={20} aria-hidden='true' />
+					</Button>
+				</div>
+
 				<div className='h-full w-[42px] flex items-center justify-center'>
 					{isMounted ? (
 						<Button
