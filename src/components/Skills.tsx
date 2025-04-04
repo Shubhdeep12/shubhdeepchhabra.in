@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
 	CSSIcon,
@@ -56,7 +56,7 @@ const skillVariants = (isLeft: boolean) => ({
 	visible: { x: 0, opacity: 1 },
 });
 
-function Pill({ skill }: { skill: SkillProp }) {
+const Pill = React.memo(function Pill({ skill }: { skill: SkillProp }) {
 	const CurrentIcon: React.FC<IconProps> = SKILL_ICONS[skill.id] || null;
 
 	return (
@@ -64,7 +64,7 @@ function Pill({ skill }: { skill: SkillProp }) {
 			key={skill.id}
 			variants={skillVariants(skill.position === 'left')}
 			transition={{ duration: 0.2 }}
-			className='skill translateX(100%) relative'
+			className='skill translateX(100%) relative will-change-transform'
 			role='listitem'
 			aria-label={`Skill: ${skill.title}`}
 		>
@@ -88,7 +88,7 @@ function Pill({ skill }: { skill: SkillProp }) {
 			</div>
 		</motion.div>
 	);
-}
+});
 
 const Skills = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -104,31 +104,36 @@ const Skills = () => {
 			}
 		};
 		handleScroll();
-		window.addEventListener('scroll', handleScroll);
+		window.addEventListener('scroll', handleScroll, { passive: true });
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, []);
 
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			transition: {
-				duration: 0.2,
-				when: 'beforeChildren',
-				staggerChildren: 0.02,
+	const containerVariants = useMemo(
+		() => ({
+			hidden: { opacity: 0 },
+			visible: {
+				opacity: 1,
+				transition: {
+					duration: 0.2,
+					when: 'beforeChildren',
+					staggerChildren: 0.02,
+				},
 			},
-		},
-	};
+		}),
+		[]
+	);
+
+	const categories = useMemo(() => Array.from(SKILLS.entries()), []);
 
 	return (
-		<div ref={containerRef} role='region' aria-label='Skills section'>
+		<div ref={containerRef} role='region' aria-label='Skills section' className='will-change-transform'>
 			<motion.div
 				initial='hidden'
 				animate={isVisible ? 'visible' : 'hidden'}
 				variants={containerVariants}
 				className='flex flex-wrap gap-4 items-start flex-col'
 			>
-				{Array.from(SKILLS.entries()).map(([category, skills]) => (
+				{categories.map(([category, skills]) => (
 					<motion.div
 						key={category}
 						className='flex flex-wrap gap-2'
