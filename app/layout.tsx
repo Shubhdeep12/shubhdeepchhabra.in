@@ -14,6 +14,9 @@ import { ThemeProvider } from 'next-themes';
 const raleway = Raleway({
 	subsets: ['latin'],
 	variable: '--font-man',
+	display: 'swap',
+	preload: true,
+	fallback: ['system-ui', 'arial'],
 });
 
 export const metadata: Metadata = {
