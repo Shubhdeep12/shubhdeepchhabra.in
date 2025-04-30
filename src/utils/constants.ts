@@ -1,7 +1,7 @@
 import { AuzmorLogo } from '@/src/Icons';
 import { ProjectProps } from './types';
 
-export const resumeUrl = 'https://drive.google.com/file/d/1le6TvIqCost3l8ZJ3xSJAsKSN-lh6mQ8/view?usp=sharing';
+export const resumeUrl = 'https://drive.google.com/file/d/18eSBaG2ysqclknHI2BxtQjwXSmu_LTpd/view?usp=sharing';
 
 export const SKILLS = new Map([
 	[
