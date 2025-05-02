@@ -6,21 +6,22 @@ import * as Sentry from '@sentry/nextjs';
 import * as Spotlight from '@spotlightjs/spotlight';
 
 Sentry.init({
-	dsn: 'process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN',
+	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
 	// Adjust this value in production, or use tracesSampler for greater control
 	tracesSampleRate: 1,
 	attachStacktrace: true,
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: false,
 
-	replaysOnErrorSampleRate: 0.1, // To trace every session with error.
-
-	replaysSessionSampleRate: 0.1, // To trace 10% of sessions(without any error).
+	replaysOnErrorSampleRate: 0, // To trace every session with error.
+	profilesSampleRate: 0,
+	replaysSessionSampleRate: 0, // To trace 10% of sessions(without any error).
 
 	// tracePropagationTargets: [/^\/api\//],
+	tracePropagationTargets: ['localhost', /^\/api\//],
 
 	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
-	integrations: [Sentry.browserTracingIntegration()],
+	integrations: [Sentry.browserTracingIntegration(), Sentry.browserProfilingIntegration()],
 });
 
 // const client = getCurrentHub().getClient()

@@ -92,8 +92,23 @@ const nextConfig = {
 			},
 		];
 	},
-	headers() {
-		return [{ source: '/(.*)', headers: securityHeaders }];
+	async headers() {
+		return [
+			{
+				// Sentry Profiling
+				// @see https://docs.sentry.io/platforms/javascript/profiling/#step-2-add-document-policy-js-profiling-header
+				source: '/(.*)',
+				headers: [
+					{
+						key: 'Document-Policy',
+						value: 'js-profiling'
+					},
+					...securityHeaders
+				]
+			}
+			// { source: '/(.*)', headers: securityHeaders },
+
+		];
 	},
 	pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };
@@ -104,8 +119,7 @@ const config = withSentryConfig(
 		silent: true,
 		org: 'shubhdeep-chhabra',
 		project: 'shubhdeepchhabra',
-	},
-	{
+
 		widenClientFileUpload: true,
 		transpileClientSDK: true,
 		tunnelRoute: '/monitoring',

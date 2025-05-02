@@ -2,6 +2,9 @@
 	"name": "shubhdeep-portfolio",
 	"version": "0.1.0",
 	"private": true,
+	"volta": {
+		"node": "20.11.0"
+	},
 	"scripts": {
 		"dev": "concurrently \"npm run setup-sidecar\" \"next dev -p 8080\"",
 		"setup-sidecar": "npx @spotlightjs/spotlight",
@@ -23,7 +26,8 @@
 		"@next/mdx": "^14.2.5",
 		"@next/third-parties": "^14.2.5",
 		"@prisma/client": "^5.18.0",
-		"@sentry/nextjs": "file:../sentry-javascript/packages/nextjs",
+		"@sentry/nextjs": "9.13.0",
+		"@sentry/profiling-node": "^9.13.0",
 		"@tailwindcss/typography": "^0.5.14",
 		"@types/node": "22.3.0",
 		"@types/react": "18.3.3",
