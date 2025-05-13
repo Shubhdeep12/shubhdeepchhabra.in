@@ -21,9 +21,9 @@
 	"dependencies": {
 		"@mdx-js/loader": "^3.0.1",
 		"@next/mdx": "^14.2.5",
-		"@next/third-parties": "^14.2.5",
+		"@next/third-parties": "15.3.2",
 		"@prisma/client": "^5.18.0",
-		"@sentry/nextjs": "^8.35.0",
+		"@sentry/nextjs": "9.17.0",
 		"@tailwindcss/typography": "^0.5.14",
 		"@types/node": "22.3.0",
 		"@types/react": "18.3.3",
@@ -36,7 +36,7 @@
 		"eslint-config-next": "14.2.5",
 		"framer-motion": "^11.3.28",
 		"gray-matter": "^4.0.3",
-		"next": "^14.2.10",
+		"next": "^15.3.2",
 		"next-mdx-remote": "^5.0.0",
 		"next-themes": "^0.3.0",
 		"postcss": "8.4.41",
@@ -60,7 +60,7 @@
 		"zustand": "^5.0.3"
 	},
 	"devDependencies": {
-		"@spotlightjs/spotlight": "^2.3.1",
+		"@spotlightjs/spotlight": "^2.13.3",
 		"@types/canvas-confetti": "^1.6.4",
 		"@types/gtag.js": "^0.0.20",
 		"@types/rss": "^0.0.32",

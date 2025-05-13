@@ -6,8 +6,6 @@ export default function MainContent({ children }: MainProps) {
 		<main
 			className='
       w-full
-      max-w-laptop
-      mx-auto
 			pt-[110px]
 			pb-10
 			overflow-x-visible

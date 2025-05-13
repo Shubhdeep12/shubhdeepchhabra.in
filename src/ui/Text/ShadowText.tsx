@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 export type ShadowTextProps = {
-	shadowColor?: string;
+	shadowColor?: 'orange' | 'purple' | 'yellow' | 'blue' | 'green';
 	gFrom?: string;
 	gTo?: string;
 	children?: React.ReactNode | string;
@@ -14,6 +14,7 @@ export const SHADOW_COLOR: { [key: string]: string } = {
 	purple: '[text-shadow:0.125rem_0.125rem_0_#bf9cec]',
 	yellow: '[text-shadow:0.125rem_0.125rem_0_#fce1a8]',
 	blue: '[text-shadow:0.125rem_0.125rem_0_#a7d4f0]',
+	green: '[text-shadow:0.125rem_0.125rem_0_#a7f0cf]',
 };
 
 const ShadowText = ({

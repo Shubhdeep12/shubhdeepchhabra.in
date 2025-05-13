@@ -12,7 +12,7 @@ export async function GET() {
 		feed_url: 'https://www.shubhdeepchhabra.in/feed.xml',
 		language: 'en-US',
 		pubDate: new Date().toUTCString(),
-		image_url: 'https://www.shubhdeepchhabra.in/assets/shubhdeepchhabra.png',
+		image_url: 'https://www.shubhdeepchhabra.in/assets/shubhdeepchhabra.webp',
 		categories: ['Shubhdeep Chhabra', 'Blogs', 'portfolio', 'react', 'next.js', 'javascript', 'typescript'],
 	});
 

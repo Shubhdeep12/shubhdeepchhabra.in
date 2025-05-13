@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import SocialButtons from './SocialButtons';
 import { SCIcon } from '@/src/Icons';
-import Image from 'next/image';
 import { DONATE_SOURCES, FOOTER_NAVBAR_ITEMS, SOURCE_FOOTER_ITEMS } from '@/src/utils/constants';
 import Link from 'next/link';
 
@@ -132,18 +131,6 @@ const Footer = () => {
 							height={24}
 							className='
 							opacity-100 scale-100 visible
-							group-hocus:opacity-0 group-hocus:scale-0 group-hocus:invisible
-							transform transition
-							'
-						/>
-						<Image
-							src='/assets/shubh-avatar-1.png'
-							height={24}
-							width={24}
-							alt='shubh-avatar'
-							className='
-							group-hocus:opacity-100 group-hocus:scale-100 group-hocus:visible
-							opacity-0 scale-0 invisible
 							transform transition
 							'
 						/>

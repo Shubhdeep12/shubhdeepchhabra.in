@@ -8,14 +8,11 @@ type ButtonProps = (NormalButtonProps | TextButtonProps) & {
 };
 
 const Button = ({ variant = 'normal', ...props }: ButtonProps) => {
-	switch (variant) {
-		case 'normal':
-			return <NormalButton {...props} />;
-		case 'text':
-			return <TextButton {...props} />;
-		default:
-			return <NormalButton {...props} />;
+	if (variant === 'text') {
+		return <TextButton {...props} />;
 	}
+
+	return <NormalButton {...props} />;
 };
 
 export default Button;

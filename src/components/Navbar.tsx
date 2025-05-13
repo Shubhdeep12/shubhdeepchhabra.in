@@ -10,7 +10,6 @@ import { useUIStore } from '@/src/stores/ui-store';
 import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
 import { useIsMounted } from '@/src/hooks/isMounted';
-import Image from 'next/image';
 import { SCIcon } from '@/src/Icons';
 import Link from 'next/link';
 import Loader from './Loader';
@@ -152,22 +151,10 @@ const Navbar = () => {
 								width={32}
 								height={32}
 								className='
-                opacity-100 scale-100 visible
-                group-hocus:opacity-0 group-hocus:scale-0 group-hocus:invisible
-                transform transition
+                scale-75 group-hocus:scale-90
+                transform transition ease-in-out
                 '
 								aria-hidden='true'
-							/>
-							<Image
-								src='/assets/shubh-avatar-1.png'
-								height={32}
-								width={32}
-								alt='Shubhdeep Chhabra'
-								className='
-                group-hocus:opacity-100 group-hocus:scale-100 group-hocus:visible group-hocus:block
-                opacity-0 scale-0 invisible
-                transform transition
-                '
 							/>
 						</span>
 						<Text className='font-extrabold text-xl py-2 px-1'>Shubhdeep</Text>

@@ -16,7 +16,7 @@ const Intro = () => {
 				<section>
 					<AnimatedImage
 						className='rounded-2xl'
-						src='/assets/shubhdeepchhabra.png'
+						src='/assets/shubhdeepchhabra.webp'
 						width={200}
 						height={200}
 						alt='Shubhdeep Chhabra'

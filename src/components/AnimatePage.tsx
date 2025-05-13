@@ -10,6 +10,7 @@ function AnimatePage({ children }: { children: ReactNode }) {
 				initial={{ y: 100, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ type: 'spring', damping: 10, stiffness: 100 }}
+				className='max-w-laptop mx-auto' //TODO: to remove this
 			>
 				{children}
 			</motion.div>
