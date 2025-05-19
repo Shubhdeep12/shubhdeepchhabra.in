@@ -4,7 +4,7 @@ import { getBlogGroups } from '../../src/utils/blog';
 import Button from '@/src/ui/Button';
 import { FaRss } from 'react-icons/fa';
 import { Metadata } from 'next';
-import AnimatePage from '@/src/components/AnimatePage';
+import AnimatePage from '@/src/components/shared/animations/AnimatePage';
 import { Blog } from '@/utils/types';
 
 export const metadata: Metadata = {

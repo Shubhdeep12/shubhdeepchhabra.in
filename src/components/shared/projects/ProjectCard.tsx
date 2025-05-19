@@ -1,9 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { ProjectProps } from '../utils/types';
+import { ProjectProps } from '../../../utils/types';
 import clsx from 'clsx';
 import Image from 'next/image';
-import Text from '../ui/Text';
+import Text from '../../../ui/Text';
 
 export default function ProjectCard({ project }: { project: ProjectProps }) {
 	const ProjectIcon = project.src;

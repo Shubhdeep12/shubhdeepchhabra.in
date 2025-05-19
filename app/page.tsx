@@ -2,7 +2,7 @@ import RecentBlogs from '@/src/components/home/RecentBlogs';
 import FeaturedProjects from '@/src/components/home/FeaturedProjects';
 import Intro from '@/src/components/home/Intro';
 import SkillsPills from '@/src/components/home/Skills';
-import AnimatePage from '@/src/components/AnimatePage';
+import AnimatePage from '@/src/components/shared/animations/AnimatePage';
 
 const Home = () => {
 	return (

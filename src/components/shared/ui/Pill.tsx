@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useMemo } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
 	CSSIcon,
@@ -25,8 +25,12 @@ import {
 } from '@/src/Icons';
 import clsx from 'clsx';
 import Text from '@/src/ui/Text';
-import { SKILLS } from '@/src/utils/constants';
 import { IconProps, SkillProp } from '@/utils/types';
+
+const skillVariants = (isLeft: boolean) => ({
+	hidden: { x: `${isLeft ? '-100%' : '100%'}`, opacity: 0 },
+	visible: { x: 0, opacity: 1 },
+});
 
 const SKILL_ICONS: Record<string, React.FC<IconProps>> = {
 	javascript: JavaScriptIcon,
@@ -50,11 +54,6 @@ const SKILL_ICONS: Record<string, React.FC<IconProps>> = {
 	eslint: ESlintIcon,
 	webpack: WebpackIcon,
 };
-
-const skillVariants = (isLeft: boolean) => ({
-	hidden: { x: `${isLeft ? '-100%' : '100%'}`, opacity: 0 },
-	visible: { x: 0, opacity: 1 },
-});
 
 const Pill = React.memo(function Pill({ skill }: { skill: SkillProp }) {
 	const CurrentIcon: React.FC<IconProps> = SKILL_ICONS[skill.id] || null;
@@ -90,71 +89,4 @@ const Pill = React.memo(function Pill({ skill }: { skill: SkillProp }) {
 	);
 });
 
-const Skills = () => {
-	const containerRef = useRef<HTMLDivElement>(null);
-	const [isVisible, setIsVisible] = React.useState(false);
-
-	useEffect(() => {
-		const handleScroll = () => {
-			const containerOffsetTop = containerRef?.current?.offsetTop;
-			const scrollPosition = window.scrollY + window.innerHeight;
-
-			if (containerOffsetTop && scrollPosition >= containerOffsetTop - 20) {
-				setIsVisible(true);
-			}
-		};
-		handleScroll();
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		return () => window.removeEventListener('scroll', handleScroll);
-	}, []);
-
-	const containerVariants = useMemo(
-		() => ({
-			hidden: { opacity: 0 },
-			visible: {
-				opacity: 1,
-				transition: {
-					duration: 0.2,
-					when: 'beforeChildren',
-					staggerChildren: 0.02,
-				},
-			},
-		}),
-		[]
-	);
-
-	const categories = useMemo(() => Array.from(SKILLS.entries()), []);
-
-	return (
-		<div ref={containerRef} role='region' aria-label='Skills section' className='will-change-transform'>
-			<motion.div
-				initial='hidden'
-				animate={isVisible ? 'visible' : 'hidden'}
-				variants={containerVariants}
-				className='flex flex-wrap gap-4 items-start flex-col'
-			>
-				{categories.map(([category, skills]) => (
-					<motion.div
-						key={category}
-						className='flex flex-wrap gap-2'
-						variants={{
-							hidden: { opacity: 0 },
-							visible: { opacity: 1 },
-						}}
-					>
-						<Text className='font-bold text-base' as={'h3'}>
-							{category}&nbsp;:&nbsp;
-						</Text>
-						<div role='list' aria-label={`${category} skills`} className='flex flex-wrap gap-2'>
-							{skills.map((skill) => (
-								<Pill key={skill.id} skill={skill} />
-							))}
-						</div>
-					</motion.div>
-				))}
-			</motion.div>
-		</div>
-	);
-};
-
-export default Skills;
+export default Pill;

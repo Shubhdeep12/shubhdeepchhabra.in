@@ -1,7 +1,7 @@
 'use client';
 import Text from '@/src/ui/Text';
 import Image from 'next/image';
-import SocialButtons from '../SocialButtons';
+import SocialButtons from '../shared/ui/SocialButtons';
 
 const AboutSection = () => {
 	return (

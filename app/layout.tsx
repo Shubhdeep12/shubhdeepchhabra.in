@@ -1,15 +1,15 @@
-import Navbar from '@/src/components/Navbar';
 import { Raleway } from 'next/font/google';
-import MainContent from '@/src/components/MainContent';
+import MainContent from '@/src/components/shared/layout/MainContent';
 import './globals.css';
 import { Providers } from '@/src/providers';
-import Footer from '@/src/components/Footer';
-import { BackToTop } from '@/src/components/BackToTop';
+import { BackToTop } from '@/src/components/shared/navigation/BackToTop';
 import { type PropsWithChildren } from 'react';
 import { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { ThemeProvider } from 'next-themes';
+import Navbar from '@/src/components/shared/layout/Navbar';
+import Footer from '@/src/components/shared/layout/Footer';
 
 const raleway = Raleway({
 	subsets: ['latin'],

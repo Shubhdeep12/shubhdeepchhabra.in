@@ -12,7 +12,7 @@ import Text from '@/src/ui/Text';
 import { useIsMounted } from '@/src/hooks/isMounted';
 import { SCIcon } from '@/src/Icons';
 import Link from 'next/link';
-import Loader from './Loader';
+import Loader from '../ui/Loader';
 import { NAVIGATIONBAR_ITEMS } from '@/src/utils/constants';
 import { useTheme } from 'next-themes';
 

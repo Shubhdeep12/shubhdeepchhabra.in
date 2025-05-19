@@ -6,7 +6,7 @@ import Text from '@/src/ui/Text';
 import { EyeIcon } from '@/src/Icons';
 import { PROJECTS } from '@/src/utils/constants';
 import { ProjectProps } from '@/utils/types';
-import ProjectCard from '../ProjectCard';
+import ProjectCard from '../shared/projects/ProjectCard';
 
 const FeaturedProjects = () => {
 	const router = useRouter();

@@ -7,7 +7,7 @@ import Text from '@/src/ui/Text';
 import { BookmarkIcon, LikeIcon, LoveIcon } from '@/src/Icons';
 import useLocalStoredReactions from '@/src/hooks/useLocalStoredReactions';
 import { useBlogReactions } from '@/src/hooks/useBlogReactions';
-import Loader from '../Loader';
+import Loader from '../shared/ui/Loader';
 import { MouseEvent } from 'react';
 import { useWindowDimensions } from '@/src/hooks/useWindowDimensions';
 import { IconProps, Blog } from '@/utils/types';

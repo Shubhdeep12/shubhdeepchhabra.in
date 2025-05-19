@@ -3,7 +3,7 @@ import Text from '@/src/ui/Text';
 import Button from '@/src/ui/Button';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import SocialButtons from './SocialButtons';
+import SocialButtons from '../ui/SocialButtons';
 import { SCIcon } from '@/src/Icons';
 import { DONATE_SOURCES, FOOTER_NAVBAR_ITEMS, SOURCE_FOOTER_ITEMS } from '@/src/utils/constants';
 import Link from 'next/link';

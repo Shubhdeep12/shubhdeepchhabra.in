@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/src/ui/Button';
-import Skills from '../Skills';
+import SkillsList from '../shared/skills/SkillsList';
 import Text from '@/src/ui/Text';
 import { ResumeIcon } from '@/src/Icons';
 import { useRouter } from 'next/navigation';
@@ -54,7 +54,7 @@ const SkillsPills = () => {
 				</Button>
 			</div>
 
-			<Skills />
+			<SkillsList />
 		</section>
 	);
 };

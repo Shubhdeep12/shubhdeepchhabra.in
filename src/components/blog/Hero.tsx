@@ -7,7 +7,7 @@ import Reactions from './Reactions';
 import Button from '@/src/ui/Button';
 import Link from 'next/link';
 import { useBlogViews } from '@/src/hooks/useBlogViews';
-import AnimatedImage from '../AnimatedImage';
+import AnimatedImage from '../shared/animations/AnimatedImage';
 import { Blog } from '@/utils/types';
 
 type HeroProps = {

@@ -1,4 +1,4 @@
-import AnimatePage from '@/src/components/AnimatePage';
+import AnimatePage from '@/src/components/shared/animations/AnimatePage';
 import AboutSection from '@/src/components/about/AboutSection';
 import Contact from '@/src/components/about/Contact';
 import Experience from '@/src/components/about/Experience';

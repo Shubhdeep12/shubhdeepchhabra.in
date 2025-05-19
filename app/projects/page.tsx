@@ -1,5 +1,5 @@
-import AllProjects from '@/src/components/AllProjects';
-import AnimatePage from '@/src/components/AnimatePage';
+import AllProjects from '@/src/components/shared/projects/AllProjects';
+import AnimatePage from '@/src/components/shared/animations/AnimatePage';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

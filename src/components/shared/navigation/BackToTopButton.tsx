@@ -1,7 +1,7 @@
 'use client';
 import { BackToTopIcon } from '@/src/Icons';
 import Button from '@/src/ui/Button';
-import { scrollToTop } from './BackToTop';
+import { scrollToTop } from '../navigation/BackToTop';
 
 const BackToTopButton = () => {
 	return (
