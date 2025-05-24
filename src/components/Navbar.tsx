@@ -20,11 +20,28 @@ import { NAVIGATIONBAR_ITEMS } from '@/src/utils/constants';
 import * as Sentry from '@sentry/nextjs';
 
 const Navbar = () => {
+	const { logger } = Sentry;
 	const pathname = usePathname();
 	const isMounted = useIsMounted();
 	const [navbarExpanded, setNavbarExpanded] = useState(false);
 	const { isDark, toggleTheme } = useTheme();
 
+	logger.error(logger.fmt`Uh on, something broke, here's the error: `);
+	logger.trace('Starting database connection', { database: 'users' });
+	logger.debug('Cache miss for user', { userId: 123 });
+	logger.info('Updated profile', { profileId: 345 });
+	logger.warn('Rate limit reached for endpoint', {
+		endpoint: '/api/results/',
+		isEnterprise: false,
+	});
+	logger.error('Failed to process payment', {
+		orderId: 'order_123',
+		amount: 99.99,
+	});
+	logger.fatal('Database connection pool exhausted', {
+		database: 'users',
+		activeConnections: 100,
+	});
 	const NAVBAR_ITEMS = [
 		{
 			...NAVIGATIONBAR_ITEMS.about,
@@ -173,6 +190,29 @@ const Navbar = () => {
 					}}
 				>
 					Throw
+				</Button>
+
+				<Button
+					onClick={() => {
+						logger.error(logger.fmt`Uh on, something broke, here's the error: `);
+						logger.trace('Starting database connection', { database: 'users' });
+						logger.debug('Cache miss for user', { userId: 123 });
+						logger.info('Updated profile', { profileId: 345 });
+						logger.warn('Rate limit reached for endpoint', {
+							endpoint: '/api/results/',
+							isEnterprise: false,
+						});
+						logger.error('Failed to process payment', {
+							orderId: 'order_123',
+							amount: 99.99,
+						});
+						logger.fatal('Database connection pool exhausted', {
+							database: 'users',
+							activeConnections: 100,
+						});
+					}}
+				>
+					Logs
 				</Button>
 				<div className='h-full w-[42px] flex items-center justify-center'>
 					{isMounted ? (

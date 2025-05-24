@@ -4,6 +4,7 @@ import Image from 'next/image';
 import SocialButtons from '../SocialButtons';
 
 const AboutSection = () => {
+	console.log('in about page');
 	return (
 		<section id='about-section' className='flex flex-col items-start gap-6'>
 			<Text

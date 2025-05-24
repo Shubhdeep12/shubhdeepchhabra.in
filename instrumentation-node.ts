@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/nextjs';
-import { nodeProfilingIntegration } from '@sentry/profiling-node';
 Sentry.init({
 	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
 	attachStacktrace: true,
@@ -8,8 +7,12 @@ Sentry.init({
 
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: false,
-	integrations: [Sentry.prismaIntegration(), nodeProfilingIntegration()],
+	integrations: [Sentry.prismaIntegration(),
+	],
 	profileSessionSampleRate: 1,
 	profileLifecycle: 'trace',
 	spotlight: true,
+	_experiments: {
+		enableLogs: true
+	},
 });

@@ -21,7 +21,12 @@ Sentry.init({
 	tracePropagationTargets: ['localhost', /^\/api\//],
 
 	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
-	integrations: [Sentry.browserTracingIntegration(), Sentry.browserProfilingIntegration()],
+	integrations: [Sentry.browserTracingIntegration(), Sentry.browserProfilingIntegration()
+	],
+	_experiments: {
+		enableLogs: true,
+	},
+
 });
 
 // const client = getCurrentHub().getClient()
