@@ -210,6 +210,7 @@ const Navbar = () => {
 							database: 'users',
 							activeConnections: 100,
 						});
+						console.log('logsssss');
 					}}
 				>
 					Logs

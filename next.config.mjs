@@ -60,6 +60,10 @@ const withMDX = createMDX({
 });
 
 const nextConfig = {
+	env: {
+		NEXT_PUBLIC_WORKING_DIRECTORY: process.cwd(),
+		WORKING_DIRECTORY: process.cwd(),
+	},
 	images: {
 		unoptimized: true,
 	},

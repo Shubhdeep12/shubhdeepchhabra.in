@@ -5,6 +5,64 @@
 import * as Sentry from '@sentry/nextjs';
 import * as Spotlight from '@spotlightjs/spotlight';
 
+// // ✅ Function to add it to each event
+// const getWorkingDirectory = () => {
+// 	try {
+// 		// For client-side, we can't access process.cwd() directly
+// 		// So we'll use a different approach or set it at build time
+// 		return process.env.NEXT_PUBLIC_WORKING_DIRECTORY || 'client-runtime';
+// 	} catch {
+// 		return 'client-runtime';
+// 	}
+// };
+
+// const customTransport = (options) => {
+// 	const transport = Sentry.makeNodeTransport(options);
+
+// 	return {
+// 		...transport,
+// 		send: async (envelope) => {
+// 			// Modify envelope items to add working directory
+// 			const [envelopeHeaders, ...items] = envelope;
+
+// 			const modifiedItems = items.map(([itemHeaders, itemPayload]) => {
+// 				// Add working directory to all item types
+// 				if (itemPayload && typeof itemPayload === 'object') {
+// 					// For events, transactions, profiles, etc.
+// 					if (itemPayload.tags) {
+// 						itemPayload.tags = {
+// 							...itemPayload.tags,
+// 							workingDirectory: getWorkingDirectory(),
+// 						};
+// 					} else if (typeof itemPayload === 'object') {
+// 						itemPayload.tags = {
+// 							workingDirectory: getWorkingDirectory(),
+// 						};
+// 					}
+
+// 					// Add to extra data
+// 					if (itemPayload.extra) {
+// 						itemPayload.extra = {
+// 							...itemPayload.extra,
+// 							workingDirectoryPath: getWorkingDirectory(),
+// 							absolutePath: path.resolve(getWorkingDirectory()),
+// 						};
+// 					} else if (typeof itemPayload === 'object') {
+// 						itemPayload.extra = {
+// 							workingDirectoryPath: getWorkingDirectory(),
+// 							absolutePath: path.resolve(getWorkingDirectory()),
+// 						};
+// 					}
+// 				}
+
+// 				return [itemHeaders, itemPayload];
+// 			});
+
+// 			const modifiedEnvelope = [envelopeHeaders, ...modifiedItems];
+// 			return transport.send(modifiedEnvelope);
+// 		}
+// 	};
+// };
 Sentry.init({
 	dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
 	// Adjust this value in production, or use tracesSampler for greater control
@@ -12,7 +70,24 @@ Sentry.init({
 	attachStacktrace: true,
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: false,
+	// transport: customTransport,
+	beforeSend(event) {
+		event.extra = {
+			...event.extra,
+			workingDirectoryPath: "Users/Shubhdeep/projects/shubhdeepchhabra.in/client"
+		};
 
+		return event;
+	},
+
+	beforeSendTransaction(event) {
+		event.extra = {
+			...event.extra,
+			workingDirectoryPath: "Users/Shubhdeep/projects/shubhdeepchhabra.in/client"
+		};
+
+		return event;
+	},
 	replaysOnErrorSampleRate: 0, // To trace every session with error.
 	profilesSampleRate: 0,
 	replaysSessionSampleRate: 0, // To trace 10% of sessions(without any error).
@@ -23,9 +98,7 @@ Sentry.init({
 	// You can remove this option if you're not planning to use the Sentry Session Replay feature:
 	integrations: [Sentry.browserTracingIntegration(), Sentry.browserProfilingIntegration()
 	],
-	_experiments: {
-		enableLogs: true,
-	},
+	enableLogs: false
 
 });
 
