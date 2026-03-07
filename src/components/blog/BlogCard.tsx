@@ -1,9 +1,9 @@
 'use client';
 import clsx from 'clsx';
 import Link from 'next/link';
-import Text from '@/src/ui/Text';
-import { CalendarIcon, EyeIcon, TimeIcon } from '@/src/Icons';
 import { useBlogViews } from '@/src/hooks/useBlogViews';
+import { CalendarIcon, EyeIcon, TimeIcon } from '@/src/Icons';
+import Text from '@/src/ui/Text';
 import { Blog } from '@/utils/types';
 
 type BlogCardProps = {

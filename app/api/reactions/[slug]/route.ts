@@ -1,6 +1,6 @@
 import { createHash } from 'crypto';
-import { prisma } from '@/src/utils/prisma';
 import { headers } from 'next/headers';
+import { prisma } from '@/src/utils/prisma';
 
 const isReaction: Record<string, string> = {
 	like: 'isLiked',

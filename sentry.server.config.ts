@@ -10,10 +10,4 @@ Sentry.init({
 	integrations: [Sentry.prismaIntegration(), Sentry.httpIntegration()],
 
 	spotlight: process.env.NODE_ENV === 'development', // Sentry will send the event evelopes from server side to spotlight.
-
-	// Enable performance monitoring
-	enableTracing: true,
-
-	// Enable automatic instrumentation
-	autoSessionTracking: true,
 });

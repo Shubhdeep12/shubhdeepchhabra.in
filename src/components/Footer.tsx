@@ -1,13 +1,13 @@
 'use client';
-import Text from '@/src/ui/Text';
-import Button from '@/src/ui/Button';
 import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import SocialButtons from './SocialButtons';
-import { SCIcon } from '@/src/Icons';
 import Image from 'next/image';
-import { DONATE_SOURCES, FOOTER_NAVBAR_ITEMS, SOURCE_FOOTER_ITEMS } from '@/src/utils/constants';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { SCIcon } from '@/src/Icons';
+import Button from '@/src/ui/Button';
+import Text from '@/src/ui/Text';
+import { DONATE_SOURCES, FOOTER_NAVBAR_ITEMS, SOURCE_FOOTER_ITEMS } from '@/src/utils/constants';
+import SocialButtons from './SocialButtons';
 
 const Footer = () => {
 	const router = useRouter();

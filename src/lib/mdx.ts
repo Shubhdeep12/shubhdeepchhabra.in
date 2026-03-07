@@ -1,8 +1,8 @@
 import fs from 'fs';
-import path from 'path';
 import matter from 'gray-matter';
+import path from 'path';
 import readingTime from 'reading-time';
-import { FrontMatter, Blog } from '@/utils/types';
+import { Blog, FrontMatter } from '@/utils/types';
 
 const blogDirectory = path.join(process.cwd(), 'blog');
 

@@ -6,16 +6,14 @@
 		"dev": "next dev -p 8080",
 		"build": "next build",
 		"start": "next start",
-		"prettier": "prettier --check .",
-		"lint": "next lint",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
 		"check-types": "tsc --pretty --noEmit",
-		"check-lint": "eslint . --ext ts --ext tsx --ext js",
-		"check-format": "prettier --write .",
-		"test-all": "npm run check-format && npm run check-lint && npm run check-types",
+		"test-all": "pnpm run lint && pnpm run check-types",
 		"migrate": "prisma migrate dev --name init",
 		"postinstall": "prisma generate",
 		"generate": "prisma generate",
-		"db:setup": "npm run migrate && npm run generate"
+		"db:setup": "pnpm run migrate && pnpm run generate"
 	},
 	"dependencies": {
 		"@mdx-js/loader": "^3.0.1",
@@ -32,7 +30,6 @@
 		"canvas-confetti": "^1.9.3",
 		"clsx": "^2.1.1",
 		"crypto": "^1.0.1",
-		"eslint-config-next": "16.0.10",
 		"framer-motion": "^11.3.28",
 		"gray-matter": "^4.0.3",
 		"next": "15.5.9",
@@ -59,17 +56,12 @@
 		"zustand": "^5.0.3"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "2.4.6",
 		"@types/canvas-confetti": "^1.6.4",
 		"@types/gtag.js": "^0.0.20",
+		"@types/mdx": "^2.0.13",
 		"@types/rss": "^0.0.32",
-		"@typescript-eslint/eslint-plugin": "^7.18.0",
-		"@typescript-eslint/parser": "^7.18.0",
-		"concurrently": "^8.2.2",
-		"eslint": "^8.57.0",
-		"eslint-config-next": "15.5.2",
-		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-react": "^7.37.2",
-		"prettier": "3.0.3"
+		"concurrently": "^8.2.2"
 	},
 	"volta": {
 		"node": "20.11.0"

@@ -1,8 +1,8 @@
+import { Metadata } from 'next';
 import AnimatePage from '@/src/components/AnimatePage';
 import AboutSection from '@/src/components/about/AboutSection';
 import Contact from '@/src/components/about/Contact';
 import Experience from '@/src/components/about/Experience';
-import { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'About - Shubhdeep Chhabra',

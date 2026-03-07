@@ -1,9 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import { EmailIcon, TwitterIcon } from '@/src/Icons';
 import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
-import Image from 'next/image';
 
 const Contact = () => {
 	return (

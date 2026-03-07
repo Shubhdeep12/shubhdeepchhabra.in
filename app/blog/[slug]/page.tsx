@@ -1,11 +1,11 @@
-import { getAllPosts, getPostBySlug } from '@/lib/mdx';
-import Hero from '@/src/components/blog/Hero';
-import BlogFooter from '@/src/components/blog/BlogFooter';
-import BlogImages from '@/src/components/blog/BlogImages';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Fragment, Suspense } from 'react';
-import { notFound } from 'next/navigation';
+import { getAllPosts, getPostBySlug } from '@/lib/mdx';
+import BlogFooter from '@/src/components/blog/BlogFooter';
+import BlogImages from '@/src/components/blog/BlogImages';
+import Hero from '@/src/components/blog/Hero';
 
 interface BlogProps {
 	params: Promise<{ slug: string }>;

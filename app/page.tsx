@@ -1,8 +1,8 @@
-import RecentBlogs from '@/src/components/home/RecentBlogs';
+import AnimatePage from '@/src/components/AnimatePage';
 import FeaturedProjects from '@/src/components/home/FeaturedProjects';
 import Intro from '@/src/components/home/Intro';
+import RecentBlogs from '@/src/components/home/RecentBlogs';
 import SkillsPills from '@/src/components/home/Skills';
-import AnimatePage from '@/src/components/AnimatePage';
 
 const Home = () => {
 	return (

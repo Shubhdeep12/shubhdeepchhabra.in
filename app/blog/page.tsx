@@ -1,11 +1,11 @@
-import Text from '@/src/ui/Text';
-import BlogList from '@/src/components/blog/BlogList';
-import { getBlogGroups } from '../../src/utils/blog';
-import Button from '@/src/ui/Button';
-import { FaRss } from 'react-icons/fa';
 import { Metadata } from 'next';
+import { FaRss } from 'react-icons/fa';
 import AnimatePage from '@/src/components/AnimatePage';
+import BlogList from '@/src/components/blog/BlogList';
+import Button from '@/src/ui/Button';
+import Text from '@/src/ui/Text';
 import { Blog } from '@/utils/types';
+import { getBlogGroups } from '../../src/utils/blog';
 
 export const metadata: Metadata = {
 	title: 'Blogs - Shubhdeep Chhabra',
@@ -48,7 +48,9 @@ export default async function Blogs() {
 						</Text>
 					</Button>
 				</div>
-				{allBlogs?.map((group: { year: number; blogs: Blog[] }) => <BlogList key={group.year} blogList={group} />)}
+				{allBlogs?.map((group: { year: number; blogs: Blog[] }) => (
+					<BlogList key={group.year} blogList={group} />
+				))}
 			</div>
 		</AnimatePage>
 	);

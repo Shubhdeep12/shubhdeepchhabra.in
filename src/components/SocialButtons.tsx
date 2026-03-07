@@ -1,10 +1,10 @@
-import { EyeIcon, GithubIcon, LinkedinIcon, MediumIcon, ProfileIcon, ResumeIcon, TwitterIcon } from '@/src/Icons';
-import Button from '@/src/ui/Button';
 import clsx from 'clsx';
 import Link from 'next/link';
-import BackToTopButton from './BackToTopButton';
-import { IconProps, SocialProps } from '@/utils/types';
+import { EyeIcon, GithubIcon, LinkedinIcon, MediumIcon, ProfileIcon, ResumeIcon, TwitterIcon } from '@/src/Icons';
+import Button from '@/src/ui/Button';
 import { SOCIALS } from '@/src/utils/constants';
+import { IconProps, SocialProps } from '@/utils/types';
+import BackToTopButton from './BackToTopButton';
 
 const SOCIAL_ICONS: Record<string, React.FC<IconProps>> = {
 	github: GithubIcon,

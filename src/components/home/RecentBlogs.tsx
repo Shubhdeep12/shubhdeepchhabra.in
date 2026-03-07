@@ -1,6 +1,6 @@
+import Text from '@/src/ui/Text';
 import { getRecentBlogs } from '@/src/utils/blog';
 import BlogList from '../blog/BlogList';
-import Text from '@/src/ui/Text';
 
 const RecentBlogs = async () => {
 	const blogs = await getRecentBlogs();

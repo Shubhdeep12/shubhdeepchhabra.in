@@ -1,6 +1,6 @@
-import Text from '@/src/ui/Text';
-import Button from '@/src/ui/Button';
 import Link from 'next/link';
+import Button from '@/src/ui/Button';
+import Text from '@/src/ui/Text';
 
 const Experience = () => {
 	return (

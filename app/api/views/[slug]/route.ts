@@ -1,9 +1,6 @@
 import { prisma } from '@/src/utils/prisma';
 
-export async function GET(
-	req: Request,
-	{ params }: { params: Promise<{ slug: string }> }
-) {
+export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
 	try {
 		const { slug } = await params;
 		const _slug = slug?.toString() || '';
@@ -26,10 +23,7 @@ export async function GET(
 	}
 }
 
-export async function POST(
-	req: Request,
-	{ params }: { params: Promise<{ slug: string }> }
-) {
+export async function POST(req: Request, { params }: { params: Promise<{ slug: string }> }) {
 	try {
 		const { slug } = await params;
 		const _slug = slug?.toString() || '';

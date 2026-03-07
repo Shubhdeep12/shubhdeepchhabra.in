@@ -1,6 +1,6 @@
+import Link from 'next/link';
 import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
-import Link from 'next/link';
 
 const NotFound = () => {
 	return (

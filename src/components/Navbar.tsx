@@ -1,21 +1,21 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { RxHamburgerMenu, RxCross2 } from 'react-icons/rx';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import { useEffect, useRef } from 'react';
 import { IoMoon, IoSunny } from 'react-icons/io5';
+import { RxCross2, RxHamburgerMenu } from 'react-icons/rx';
+import { useIsMounted } from '@/src/hooks/isMounted';
+import { SCIcon } from '@/src/Icons';
 import { useThemeStore } from '@/src/stores/theme-store';
 import { useUIStore } from '@/src/stores/ui-store';
 import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
-import { useIsMounted } from '@/src/hooks/isMounted';
-import Image from 'next/image';
-import { SCIcon } from '@/src/Icons';
-import Link from 'next/link';
-import Loader from './Loader';
 import { NAVIGATIONBAR_ITEMS } from '@/src/utils/constants';
-import { useTheme } from 'next-themes';
+import Loader from './Loader';
 
 const Navbar = () => {
 	const pathname = usePathname();

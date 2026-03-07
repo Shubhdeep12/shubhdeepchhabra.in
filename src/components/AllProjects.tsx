@@ -1,8 +1,8 @@
 'use client';
 
-import Text from '@/src/ui/Text';
-import Button from '@/src/ui/Button';
 import { ResumeIcon } from '@/src/Icons';
+import Button from '@/src/ui/Button';
+import Text from '@/src/ui/Text';
 import { PROJECTS, resumeUrl } from '@/src/utils/constants';
 import { ProjectProps } from '@/utils/types';
 import ProjectCard from './ProjectCard';

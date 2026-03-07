@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import React, { useEffect } from 'react';
-import Text from '@/src/ui/Text';
-import { CalendarIcon, EyeIcon, TimeIcon } from '@/src/Icons';
-import Reactions from './Reactions';
-import Button from '@/src/ui/Button';
 import Link from 'next/link';
+import React, { useEffect } from 'react';
 import { useBlogViews } from '@/src/hooks/useBlogViews';
-import AnimatedImage from '../AnimatedImage';
+import { CalendarIcon, EyeIcon, TimeIcon } from '@/src/Icons';
+import Button from '@/src/ui/Button';
+import Text from '@/src/ui/Text';
 import { Blog } from '@/utils/types';
+import AnimatedImage from '../AnimatedImage';
+import Reactions from './Reactions';
 
 type HeroProps = {
 	blog: Blog;

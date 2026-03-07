@@ -1,9 +1,9 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { EyeIcon, ResumeIcon } from '@/src/Icons';
 import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
-import { EyeIcon, ResumeIcon } from '@/src/Icons';
 import { PROJECTS, resumeUrl } from '@/src/utils/constants';
 import { ProjectProps } from '@/utils/types';
 import ProjectCard from '../ProjectCard';

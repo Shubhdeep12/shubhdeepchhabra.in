@@ -1,8 +1,8 @@
 'use client';
-import Text from '@/src/ui/Text';
-import BlogCard from './BlogCard';
 import clsx from 'clsx';
+import Text from '@/src/ui/Text';
 import { Blog } from '@/utils/types';
+import BlogCard from './BlogCard';
 
 type BlogListProps = {
 	blogList: { year?: number; blogs: Blog[] };
@@ -19,7 +19,9 @@ const BlogList = ({ blogList, className = '' }: BlogListProps) => {
 				</div>
 			)}
 
-			{blogList?.blogs?.map((item: Blog) => <BlogCard key={item.frontMatter.title} blog={item} />)}
+			{blogList?.blogs?.map((item: Blog) => (
+				<BlogCard key={item.frontMatter.title} blog={item} />
+			))}
 		</div>
 	);
 };

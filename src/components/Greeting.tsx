@@ -1,7 +1,7 @@
 'use client';
-import { useState, useEffect } from 'react';
-import Text from '@/src/ui/Text';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Text from '@/src/ui/Text';
 
 const greetings = ['Hello, world', 'हैलो, वर्ल्ड'];
 

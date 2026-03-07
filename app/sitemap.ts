@@ -1,5 +1,5 @@
-import { getAllPosts } from '../src/lib/mdx';
 import { MetadataRoute } from 'next';
+import { getAllPosts } from '../src/lib/mdx';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const blogs = await getAllPosts();

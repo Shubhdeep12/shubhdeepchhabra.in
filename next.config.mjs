@@ -1,11 +1,12 @@
 import createMDX from '@next/mdx';
 import { withSentryConfig } from '@sentry/nextjs';
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
-import rehypeSlug from 'rehype-slug';
-import rehypePrettyCode from 'rehype-pretty-code';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+
 /** @type {import('next').NextConfig} */
 
 const ContentSecurityPolicy = `

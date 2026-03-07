@@ -1,12 +1,12 @@
 'use client';
 
-import Greeting from '../Greeting';
-import Button from '@/src/ui/Button';
-import { ProfileIcon } from '@/src/Icons';
-import Text from '@/src/ui/Text';
-import SocialButtons from '../SocialButtons';
 import { useRouter } from 'next/navigation';
+import { ProfileIcon } from '@/src/Icons';
+import Button from '@/src/ui/Button';
+import Text from '@/src/ui/Text';
 import AnimatedImage from '../AnimatedImage';
+import Greeting from '../Greeting';
+import SocialButtons from '../SocialButtons';
 
 const Intro = () => {
 	const router = useRouter();

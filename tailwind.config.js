@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('tailwindcss').Config} */
 const hocusPlugin = require('tailwindcss-hocus');
+
 import colors from 'tailwindcss/colors';
 
 module.exports = {

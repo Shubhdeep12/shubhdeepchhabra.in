@@ -1,7 +1,7 @@
 'use client';
 
-import Skills from '../Skills';
 import Text from '@/src/ui/Text';
+import Skills from '../Skills';
 
 const SkillsPills = () => {
 	return (

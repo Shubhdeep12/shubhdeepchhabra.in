@@ -1,6 +1,7 @@
 'use client';
-import React, { useEffect, useRef, useMemo } from 'react';
+import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import React, { useEffect, useMemo, useRef } from 'react';
 import {
 	CSSIcon,
 	ESlintIcon,
@@ -23,7 +24,6 @@ import {
 	ViteIcon,
 	WebpackIcon,
 } from '@/src/Icons';
-import clsx from 'clsx';
 import Text from '@/src/ui/Text';
 import { SKILLS } from '@/src/utils/constants';
 import { IconProps, SkillProp } from '@/utils/types';

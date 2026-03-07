@@ -1,6 +1,6 @@
 'use client';
 import { useTheme as useNextTheme } from 'next-themes';
-import { type PropsWithChildren, createContext, useContext, useMemo } from 'react';
+import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
 
 interface ThemeContextValue {
 	isDark: boolean;

@@ -1,12 +1,12 @@
 'use client';
 
-import { ChevronUp } from '@/src/Icons';
+import clsx from 'clsx';
+import { useCallback, useEffect, useState } from 'react';
 import { useIsMounted } from '@/src/hooks/isMounted';
-import { useState, useEffect, useCallback } from 'react';
+import { ChevronUp } from '@/src/Icons';
+import { useTheme } from '@/src/providers/theme-provider';
 import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
-import clsx from 'clsx';
-import { useTheme } from '@/src/providers/theme-provider';
 
 export const scrollToTop = () => {
 	try {
@@ -15,7 +15,7 @@ export const scrollToTop = () => {
 			left: 0,
 			behavior: 'smooth',
 		});
-	} catch (error) {
+	} catch (_error) {
 		window.scrollTo(0, 0);
 	}
 };
@@ -34,7 +34,7 @@ export const BackToTop = () => {
 			setShowButton(
 				scrolledDistance / screenHeight > 0.25 && scrolledDistance < screenHeight - Math.ceil(SCROLL_OFFSET / 2.5)
 			);
-		} catch (e) {
+		} catch (_e) {
 			/* empty */
 		}
 	}, [isMounted]);

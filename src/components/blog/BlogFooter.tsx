@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
-import Button from '@/src/ui/Button';
 import { EditIcon, ShareIcon } from '@/src/Icons';
+import Button from '@/src/ui/Button';
 import Text from '@/src/ui/Text';
-import Reactions from './Reactions';
 import { Blog } from '@/utils/types';
+import Reactions from './Reactions';
 
 type BlogFooterProps = {
 	blog: Blog;

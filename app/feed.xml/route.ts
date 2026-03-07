@@ -1,5 +1,5 @@
-import { getAllPosts } from '@/lib/mdx';
 import RSS from 'rss';
+import { getAllPosts } from '@/lib/mdx';
 
 export async function GET() {
 	const allBlogs = await getAllPosts();
