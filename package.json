@@ -33,7 +33,7 @@
 		"framer-motion": "^11.3.28",
 		"gray-matter": "^4.0.3",
 		"next": "15.5.9",
-		"next-mdx-remote": "^5.0.0",
+		"next-mdx-remote": "^6.0.0",
 		"next-themes": "^0.3.0",
 		"postcss": "8.4.41",
 		"prisma": "^5.18.0",
