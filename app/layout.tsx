@@ -95,7 +95,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en' suppressHydrationWarning>
-			<body className={`${raleway.variable} font-sans bg-body-gradient dark:bg-body-gradient-inverted min-h-screen`}>
+			<body
+				className={`${raleway.variable} font-sans bg-body-gradient dark:bg-body-gradient-inverted min-h-screen`}
+				suppressHydrationWarning
+			>
 				<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 					<Providers>
 						<Navbar />

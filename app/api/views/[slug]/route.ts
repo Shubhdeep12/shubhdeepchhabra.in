@@ -1,8 +1,12 @@
 import { prisma } from '@/src/utils/prisma';
 
-export async function GET(req: Request, { params }: { params: { slug: string } }) {
+export async function GET(
+	req: Request,
+	{ params }: { params: Promise<{ slug: string }> }
+) {
 	try {
-		const _slug = params.slug?.toString() || '';
+		const { slug } = await params;
+		const _slug = slug?.toString() || '';
 		if (_slug?.length === 0) {
 			throw new Error('slug is required');
 		}
@@ -22,9 +26,13 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
 	}
 }
 
-export async function POST(req: Request, { params }: { params: { slug: string } }) {
+export async function POST(
+	req: Request,
+	{ params }: { params: Promise<{ slug: string }> }
+) {
 	try {
-		const _slug = params.slug?.toString() || '';
+		const { slug } = await params;
+		const _slug = slug?.toString() || '';
 		if (_slug?.length === 0) {
 			throw new Error('slug is required');
 		}

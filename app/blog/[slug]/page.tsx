@@ -8,7 +8,7 @@ import { Fragment, Suspense } from 'react';
 import { notFound } from 'next/navigation';
 
 interface BlogProps {
-	params: { slug: string };
+	params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -19,7 +19,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogProps): Promise<Metadata | undefined> {
-	const blog = await getPostBySlug(params.slug);
+	const { slug } = await params;
+	const blog = await getPostBySlug(slug);
 
 	if (!blog) {
 		return;
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata 
 			title,
 			locale: 'en_US',
 			siteName: 'Shubhdeep Chhabra Portfolio',
-			url: `https://www.shubhdeepchhabra.in/blog/${params.slug}`,
+			url: `https://www.shubhdeepchhabra.in/blog/${slug}`,
 			images: [
 				{
 					url: ogImage,
@@ -72,7 +73,8 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata 
 }
 
 export default async function BlogPage({ params }: BlogProps) {
-	const blog = await getPostBySlug(params.slug);
+	const { slug } = await params;
+	const blog = await getPostBySlug(slug);
 
 	if (!blog) {
 		return notFound();

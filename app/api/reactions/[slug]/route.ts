@@ -8,9 +8,10 @@ const isReaction: Record<string, string> = {
 	bookmark: 'isBookmarked',
 };
 
-export async function GET(req: Request, { params }: { params: { slug: string } }) {
-	const ip = headers().get('x-forwarded-for') || '0.0.0';
-	const _slug = params.slug?.toString();
+export async function GET(req: Request, { params }: { params: Promise<{ slug: string }> }) {
+	const ip = (await headers()).get('x-forwarded-for') || '0.0.0';
+	const { slug } = await params;
+	const _slug = slug?.toString();
 	try {
 		const userId = createHash('md5')
 			.update(ip + (process.env.IP_ADDRESS_SALT || ''), 'utf-8')
@@ -44,9 +45,10 @@ export async function GET(req: Request, { params }: { params: { slug: string } }
 	}
 }
 
-export async function POST(req: Request, { params }: { params: { slug: string } }) {
-	const ip = headers().get('x-forwarded-for') || '0.0.0';
-	const _slug = params.slug?.toString();
+export async function POST(req: Request, { params }: { params: Promise<{ slug: string }> }) {
+	const ip = (await headers()).get('x-forwarded-for') || '0.0.0';
+	const { slug } = await params;
+	const _slug = slug?.toString();
 	const body = await req.json();
 	const reactionType = body.type;
 	try {

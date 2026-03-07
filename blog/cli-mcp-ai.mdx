@@ -1,0 +1,214 @@
+---
+title: 'CLI vs MCP, or CLI + MCP: Competitor or Partner in the Race of AI?'
+publishedAt: '2026-03-06'
+description: 'The current discourse and research point one way: CLIs are better than MCP for agents. Here’s how I see CLI vs MCP, when to use each, and why I think 2026 is the year of CLIs and Skills.'
+color: 'indigo'
+---
+
+The conversation right now, and the research, is pointing somewhere clear: **CLIs are better than MCP for agents.** Not the other way around. And with Skills taking off, 2026 is shaping up as the year of **CLIs and Skills.**
+
+This week a post titled [**"You need to rewrite your CLI for AI agents"**](https://news.ycombinator.com/item?id=47252459) hit the top of Hacker News. Lots of points and comments, and honestly a great read. It’s by Justin Poehnelt, a Senior DevRel Engineer at Google who built the Google Workspace CLI (`gws`) agent-first from day one. Not "built a CLI and later noticed agents were using it," but actually designed around AI agents being the primary consumers of every command and every byte of output.
+
+That post is what pushed me to write this. I wanted to put down how I think about CLI vs MCP, when I reach for each, and why I’m betting on 2026 as the year of CLIs and Skills.
+
+---
+
+## First: Terminal, Shell, CLI. Quick alignment
+
+Before we get into agents and protocols, worth being on the same page.
+
+When you open iTerm2, VS Code terminal, or Windows Terminal, you’re opening a **terminal emulator**. It mimics the old physical terminals. Inside it runs a **shell** (bash, zsh, fish); that’s what interprets and runs your commands. The **CLI** is the interface a specific tool exposes so you can talk to it through that shell. `git`, `docker`, `kubectl`, `vercel`: all CLIs.
+
+So when you type `npm install`, the terminal shows it, the shell runs it, and npm’s CLI handles it. Three different layers.
+
+I’m keeping this brief on purpose. Ahmad Awais wrote what is honestly the most thorough breakdown of this stack I’ve seen: terminals, shells, TTYs, PTYs, POSIX, ANSI escapes, raw vs canonical mode, all of it. If you want to go deep, [block out an hour and read it](https://ahmadawais.com/the-full-stack-of-terminals-explained-terminal-shell-tty-console-posix-ansi-escapes-ptys/). Worth it.
+
+For here: **terminal = environment, shell = brain, CLI = interface.**
+
+---
+
+## What’s MCP?
+
+MCP: **Model Context Protocol**. Anthropic open-sourced it and it went from internal experiment to something like an industry standard pretty fast.
+
+The way I think about it: it’s like USB-C for AI integrations. Before MCP, every AI tool had its own way of connecting to external services. You wanted Claude to talk to your DB? Custom integration. Slack? Another one. GitHub? Another. Nothing was standardized, and it was messy to maintain.
+
+MCP fixes that with a clear client–server model:
+
+- **MCP Servers** expose tools, resources, and prompts
+- **MCP Clients** (your AI agent) connect to those servers and discover what’s available
+- Everything speaks the same protocol, so you build once and it works across agents
+
+A basic MCP tool definition looks like this:
+
+```json
+{
+	"name": "get_weather",
+	"description": "Get current weather for a location",
+	"inputSchema": {
+		"type": "object",
+		"properties": {
+			"location": { "type": "string" }
+		}
+	}
+}
+```
+
+The agent reads this, knows what it does, and calls it when needed. No custom glue, no guessing.
+
+One thing I’d call out: Cloudflare’s **Code Mode** pattern for MCP. The naive problem is that if you expose every API endpoint as a separate tool, the agent’s context window blows up and costs go up. Cloudflare’s approach was to let the agent write TypeScript against a typed SDK and run it in a sandboxed Worker. They went from potentially millions of tokens to something like ~1,000 for 2,500+ API endpoints. A different way to think about it. [Their MCP docs](https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/) are a good starting point if you want to explore building something like this.
+
+---
+
+## How CLI and MCP both run with AI agents
+
+At a high level, CLI and MCP are doing the same job: **they’re both ways for an agent to take action in the world.** Different interfaces, same idea.
+
+A **CLI-based agent** runs shell commands. When you use Claude Code and ask it to push a commit, it’s doing something like:
+
+```bash
+git add .
+git commit -m "feat: add auth flow"
+git push origin main
+```
+
+It has shell access, reads stdout, handles errors, and moves on. That’s powerful because CLIs are everywhere: git, npm, docker, kubectl, your custom deploy scripts. The agent can use any tool that ships a CLI, with no extra setup.
+
+An **MCP-based agent** makes structured tool calls. Instead of parsing raw terminal output, it gets clean JSON back. Instead of guessing flags, it reads a typed schema:
+
+```
+agent → mcp_tool("create_branch", { name: "feat/auth-flow" })
+server → { success: true, branch: "feat/auth-flow", sha: "abc123" }
+```
+
+Structured, predictable, auditable.
+
+Both work. The useful part is knowing which one to use when.
+
+---
+
+## How we got here: REST → SDK → CLI → MCP
+
+It helps to see how we got to MCP. It’s the latest step in a pattern that’s been going on for years.
+
+**REST APIs**: company ships a product, exposes HTTP endpoints, developers figure out auth and error handling. Maximum flexibility, maximum friction.
+
+**SDKs**: companies shipped `npm install @stripe/stripe-node`. Typed methods, auto-retry, better errors. DX got much better.
+
+**CLIs**: developers wanted to do things from the terminal: deploy, manage infra, debug. So we got `vercel deploy`, `gh pr create`, `aws s3 cp`. CLI became the power-user interface.
+
+**MCP Servers**: now the _agent_ is the one integrating with your product. Agents don’t read docs; they need typed, discoverable interfaces. So we’re seeing MCP servers: the SDK layer for the agentic era.
+
+What I keep noticing: the best companies aren’t _replacing_ these layers, they’re _stacking_ them. Cloudflare has REST APIs, an SDK, a CLI (`wrangler`), and now an MCP server. Stripe has all of these. MCP didn’t kill CLIs any more than SDKs killed REST. Each layer serves a different user in a different context.
+
+---
+
+## When I use CLI, when I use MCP, when I use both
+
+Here’s where it gets practical.
+
+### CLI is the right call when...
+
+**The agent has shell access and the work is sequential.** Claude Code is the clearest example: it lives in your terminal, and most dev workflows are chains of shell commands. Ask it to scaffold a Next.js project with Tailwind and push to GitHub. It runs `npx create-next-app`, installs Tailwind, does `git init`, adds the remote, pushes. Pure CLI, no extra overhead.
+
+**The tool predates MCP.** ffmpeg, imagemagick, terraform, kubectl: tons of powerful tools don’t have MCP servers yet. Shell access means the agent can use them today without waiting for anyone to build one.
+
+**You want the agent to be exploratory.** CLIs are self-documenting: `--help`, `man`, tab completion. An agent can run `git --help` and figure out what’s available at runtime.
+
+There’s a nuance from that HN post that I think is underappreciated: **agents and humans want different things from a CLI.** A human-friendly CLI might use named flags like `--title "My Doc"` for ergonomics. An agent-first CLI can prefer raw JSON payloads because they map straight to the API schema with no translation:
+
+```bash
+# human-first
+gws sheets create --title "Q1 Budget" --locale "en_US" --timezone "America/Denver"
+
+# agent-first
+gws sheets create --json '{"properties":{"title":"Q1 Budget","locale":"en_US","timeZone":"America/Denver"}}'
+```
+
+The JSON version is trivial for an LLM to generate. No flag memorization, no guessing. That’s why I think "agent DX" is becoming a first-class concern when designing CLIs, not just human DX.
+
+### MCP is the right call when...
+
+**You need persistent, stateful connections.** Databases are the obvious case. You don’t want an agent opening and closing a Postgres connection on every query; you want a connection pool that stays warm. Deep codebase analysis with 20+ queries, joins, correlating data: that’s a job for a Postgres MCP server, not 20 fresh connection attempts.
+
+**Auth and security matter.** MCP has proper OAuth support built in. When your agent connects to GitHub’s MCP server, the auth flow is standardized and token scopes are explicit. You’re not handing the agent a raw API key and hoping it uses it correctly.
+
+**You’re building something other agents will integrate with.** If you’re building something like Linear, Notion, or Sentry and you want AI agents to use it, you ship an MCP server. The agent doesn’t need to learn your CLI syntax or reverse-engineer your REST API. It sees tool definitions and knows what it can do.
+
+### Where both work together
+
+In practice, this is the most common case once you’re building something real.
+
+A deployment agent: MCP server for cloud infrastructure API calls (structured, authenticated, stateful). CLI for running the test suite, build scripts, and local file operations. Neither alone is enough.
+
+A code review agent: `git` CLI to check out the branch and read the diff, Sentry MCP server to pull related error traces from prod, GitHub MCP server to post the review comments. CLI, then MCP, then MCP: all in one flow.
+
+### Where only MCP works: CLI can’t help
+
+When there’s no terminal. That’s the line.
+
+Agent running in a browser, a serverless function, or a Cloudflare Worker: there’s no shell. You can’t run `git` in a browser tab.
+
+A customer-facing AI assistant that helps users manage DNS settings. No terminal, no shell. It connects to Cloudflare’s MCP server via OAuth and makes structured calls. That’s the only path, and it works.
+
+MCP is also strictly better when you need audit trails. Every tool call is structured JSON: you log exactly what the agent did, when, and with what parameters. With raw shell commands you’re parsing strings and hoping nothing weird slipped through.
+
+---
+
+## Skills: the part I think people are sleeping on
+
+So we have CLIs (agent does things) and MCP servers (agent connects to things). There’s a third layer that’s having a moment: **Skills**.
+
+On January 20, 2026, Vercel launched [skills.sh](https://skills.sh): a directory and leaderboard for AI agent skill packages. Within six hours of the announcement, the top skill had over 20,000 installs. Stripe shipped their own skills the same day. The `find-skills` utility alone has 235,000+ weekly installs. That’s the ecosystem filling a real gap.
+
+The gap is this. MCP tells your agent _how to connect_ to GitHub. CLI tells it _how to run_ git. But who tells it _your team’s way_ of doing a pull request? The title format, the label to add, the reviewer to tag for auth-related changes: none of that lives in MCP or CLI.
+
+That’s what skills do.
+
+A skill is a reusable, portable package of instructions and context for an agent. A playbook. For example:
+
+```yaml
+---
+name: create-pull-request
+description: Create a PR following our team conventions
+---
+
+When creating a pull request:
+1. Run `git diff main --stat` to understand what changed
+2. Use `gh pr create` to open the PR
+3. Title must follow Conventional Commits: feat:, fix:, chore:
+4. Always add the label "needs-review"
+5. Tag @shubhdeep as reviewer on anything touching auth
+```
+
+Now the agent doesn’t just know _how_ to create a PR; it knows _your_ way of creating one. That’s a different level of usefulness.
+
+The concept started with Anthropic in late 2025 when Claude Code introduced SKILL.md files. Within weeks, OpenAI adopted the same format for Codex CLI. By January 2026, Google had integrated it into Gemini CLI, and Vercel launched skills.sh as the ecosystem’s first dedicated package manager and registry. One of those moments where you watch a standard crystallize in real time.
+
+You install skills the same way you’d install a package:
+
+```bash
+npx skills add vercel-labs/agent-skills
+```
+
+Works across Claude Code, Cursor, GitHub Copilot, Codex, Gemini CLI, Goose, Windsurf: 30+ agents. One skill, everywhere.
+
+The line I keep seeing on X: _"MCP solved ‘how do agents talk to tools.’ Skills solve ‘how do devs share and discover agent capabilities.’"_ That’s how I see it too. They’re not competing; they’re filling different gaps in the same stack.
+
+---
+
+## 2026 is the year of CLIs and Skills
+
+The "CLI vs MCP" framing is a trap, and it gets the story backwards. The trend is clear: **CLIs are better than MCP for agents** in the contexts where agents actually run, which is the terminal. Every time we get a new abstraction, people declare the previous layer dead. SDKs didn't kill REST. CLIs didn't kill SDKs. MCP isn't killing CLIs.
+
+What I'm seeing in 2026 is the CLI _winning_: not over MCP, but as the main interface where AI agents live and work. Claude Code, Gemini CLI, Codex CLI, Aider, OpenCode: the most capable agentic coding tools are terminal-first. IDE-based tools are built for _suggestion_. CLI agents are built for _delegation_. That's a different thing. And the numbers back it up: the explosion of CLI coding agents in 2025–2026 reflects a real shift. The terminal isn't just where you run commands anymore; it's where you hand off work to an agent that understands your codebase, your git history, and your intent.
+
+MCP is still essential, just for different jobs. 2025 was the year of MCP: it went from Anthropic internal project to de facto standard in under a year. Every major developer tool shipped an MCP server. But 2026 is different. The CLI is back as the natural place for agentic AI, and Skills are turning individual workflows into something shareable, composable, and community-driven. The fact that skills.sh hit 85,000+ total installs and is still growing says something about where developer attention is going.
+
+**MCP gives agents the power. CLI gives agents the reach. Skills give agents the wisdom.** Different layers; use them together. If you're _building_ a CLI in 2026, it's worth thinking about agent DX alongside human DX. I think we're just getting started.
+
+---
+
+I hope you find this helpful. If you’re building something with agents (CLI-heavy, MCP-heavy, or a mix), I’d love to hear about it. If you need help building an MCP server, SDK, CLI, or anything in this space, find me on [X (@okshubhh)](https://x.com/okshubhh) or connect there.
+
+One more thing: I’m building a CLI for [Resend](https://resend.com) so you can send emails from the terminal. If that’s useful to you, check out [@shubhdeep12/resend-cli](https://www.npmjs.com/package/@shubhdeep12/resend-cli) on npm.

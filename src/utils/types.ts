@@ -43,7 +43,7 @@ export interface FrontMatter {
 	title: string;
 	publishedAt: string;
 	description: string;
-	cover: string;
+	cover?: string;
 	color: string;
 }
 

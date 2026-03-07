@@ -81,17 +81,19 @@ const Hero = ({ blog }: HeroProps) => {
 
 			<Reactions blog={blog} />
 
-			<AnimatedImage
-				alt={blog.frontMatter.title}
-				decoding='async'
-				src={blog.frontMatter.cover}
-				width={800}
-				height={400}
-				priority
-				quality={85}
-				sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px'
-				className='w-full h-[20rem] rounded-lg laptop:object-cover aspect-[2/1] duration-700 ease-in-out scale-100 blur-0 grayscale-0 will-change-transform'
-			/>
+			{blog.frontMatter.cover ? (
+				<AnimatedImage
+					alt={blog.frontMatter.title}
+					decoding='async'
+					src={blog.frontMatter.cover}
+					width={800}
+					height={400}
+					priority
+					quality={85}
+					sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px'
+					className='w-full h-[20rem] rounded-lg laptop:object-cover aspect-[2/1] duration-700 ease-in-out scale-100 blur-0 grayscale-0 will-change-transform'
+				/>
+			) : null}
 		</>
 	);
 };

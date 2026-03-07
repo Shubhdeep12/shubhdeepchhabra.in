@@ -39,7 +39,7 @@ export default async function Blogs() {
 						href='https://www.shubhdeepchhabra.in/feed.xml'
 						target='_blank'
 					>
-						<FaRss width={24} height={24} color='#fff' className='dark:fill-text-dark transition' />
+						<FaRss width={24} height={24} color='#fff' className='dark:fill-text-dark transition' aria-hidden />
 						<Text
 							transitioned={false}
 							className='h-full text-white dark:text-text-dark font-extrabold dark:font-bold p-0'
