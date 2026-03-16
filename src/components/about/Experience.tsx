@@ -23,8 +23,13 @@ const Experience = () => {
 							<Text className='text-primary-400 underline underline-offset-2 decoration-2 font-semibold'>Auzmor</Text>
 						</Button>
 					</div>
-					<div className='py-[2px] px-1 bg-gray-200 w-fit rounded-md'>
-						<Text className='text-sm font-semibold text-gray-600'>Jan 2025 - Today</Text>
+					<div className='flex flex-wrap gap-2 items-center'>
+						<div className='py-[2px] px-1 bg-gray-200 dark:bg-gray-600 w-fit rounded-md'>
+							<Text className='text-sm font-semibold text-gray-600 dark:text-gray-300'>Jan 2025 - Today</Text>
+						</div>
+						<Text className='text-sm font-medium text-gray-600 dark:text-gray-400'>
+							Payroll: American Technology Consulting (since Mar 2026)
+						</Text>
 					</div>
 				</div>
 

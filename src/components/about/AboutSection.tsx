@@ -28,20 +28,19 @@ const AboutSection = () => {
 				</div>
 				<div className='px-2 flex flex-col gap-2'>
 					<Text className='font-bold text-2xl px-2'>Shubhdeep Chhabra</Text>
-					<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>Software Engineer</Text>
+					<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>Product Engineer</Text>
 				</div>
 				<Text className='font-medium text-lg text-gray-600 dark:text-gray-300'>India</Text>
 				<SocialButtons className='px-4' />
 			</div>
 
 			<p className='max-w-none text-left laptop:text-justify text-base font-medium'>
-				👋 Hello! {"I'm"} <strong>Shubhdeep Chhabra</strong>, a passionate <strong>Software Engineer</strong> based in{' '}
-				<strong>India</strong>, specializing in <strong>web development</strong>. Since{' '}
-				<strong>graduating in 2020</strong>, I have been dedicated to enhancing my skills and tackling challenging
-				projects. I excel in finding innovative solutions to complex problems and actively contribute to{' '}
-				<strong>Open Source Projects</strong>, embracing the collaborative spirit of the tech community. With strong{' '}
-				<strong>problem-solving abilities</strong> and meticulous attention to detail, I aim to deliver high-quality,
-				user-friendly web solutions.
+				👋 Hello! {"I'm"} <strong>Shubhdeep Chhabra</strong>, a <strong>Product Engineer</strong> with{' '}
+				<strong>4+ years</strong> of experience building and scaling <strong>B2B SaaS</strong> platforms. I have led
+				architecture migrations, performance optimization, and accessibility compliance across multi-tenant systems
+				serving <strong>150K+ users</strong>. I am experienced in AI-integrated product features and contribute to large{' '}
+				<strong>open-source</strong> codebases. Based in <strong>India</strong>, I focus on web development, innovative
+				solutions to complex problems, and high-quality, user-friendly products.
 			</p>
 		</section>
 	);
