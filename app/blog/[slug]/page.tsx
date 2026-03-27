@@ -1,11 +1,15 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Fragment, Suspense } from 'react';
 import { getAllPosts, getPostBySlug } from '@/lib/mdx';
 import BlogFooter from '@/src/components/blog/BlogFooter';
 import BlogImages from '@/src/components/blog/BlogImages';
+import Footer from '@/src/components/Footer';
 import Hero from '@/src/components/blog/Hero';
+import ReadingContainer from '@/src/components/editorial/ReadingContainer';
+import { getCategories, getPrimaryCategory, sortBlogsByDate } from '@/src/utils/blog-shared';
 
 interface BlogProps {
 	params: Promise<{ slug: string }>;
@@ -75,23 +79,43 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata 
 export default async function BlogPage({ params }: BlogProps) {
 	const { slug } = await params;
 	const blog = await getPostBySlug(slug);
+	const allPosts = await getAllPosts();
 
 	if (!blog) {
 		return notFound();
 	}
 
 	const { mdxSource } = blog;
-	return (
-		<main className='flex flex-col items-start gap-8' role='main'>
-			<Hero blog={blog} />
+	const relatedPosts = sortBlogsByDate(allPosts)
+		.filter((post) => post.slug !== slug)
+		.slice(0, 3)
+		.map((post) => ({
+			slug: post.slug,
+			title: post.frontMatter.title,
+			description: post.frontMatter.description,
+			publishedAt: post.frontMatter.publishedAt,
+			readingTimeText: post.readingTime.text,
+			category: getPrimaryCategory(post.frontMatter),
+			categories: getCategories(post.frontMatter),
+		}));
 
-			<article className='prose dark:prose-invert w-full mb-2' role='article' aria-label={blog.frontMatter.title}>
+	return (
+		<section className='flex flex-col items-start gap-8'>
+			<ReadingContainer>
+				<Link href='/blog' className='post-back-link'>← Writings</Link>
+				<Hero blog={blog} />
+			</ReadingContainer>
+
+			<article className='postContent w-full mb-2' aria-label={blog.frontMatter.title}>
 				<Suspense fallback={<Fragment>Loading...</Fragment>}>
 					<MDXRemote source={mdxSource} components={{ Image: BlogImages }} />
 				</Suspense>
 			</article>
 
-			<BlogFooter blog={blog} />
-		</main>
+		<ReadingContainer>
+			<BlogFooter blog={blog} relatedPosts={relatedPosts} />
+		</ReadingContainer>
+		<Footer />
+	</section>
 	);
 }

@@ -1,64 +1,35 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { ProfileIcon } from '@/src/Icons';
-import Button from '@/src/ui/Button';
-import Text from '@/src/ui/Text';
-import AnimatedImage from '../AnimatedImage';
-import Greeting from '../Greeting';
-import SocialButtons from '../SocialButtons';
+import Link from 'next/link';
+import { resumeUrl } from '@/src/utils/constants';
 
 const Intro = () => {
-	const router = useRouter();
 	return (
-		<section className='flex flex-col items-start gap-5' role='region' aria-label='Introduction'>
-			<div className='flex flex-col items-start gap-5 laptop:flex-row-reverse laptop:items-center'>
-				<section>
-					<AnimatedImage
-						className='rounded-2xl'
-						src='/assets/shubhdeepchhabra.png'
-						width={200}
-						height={200}
-						alt='Shubhdeep Chhabra'
-						aria-label='Profile picture of Shubhdeep Chhabra'
-					/>
-				</section>
-				<section className='flex flex-col gap-5 w-full'>
-					<Greeting />
-
-					<div className='flex-wrap flex font-medium'>
-						Passionate about coding and solving problems, I’m a software developer from India, turning ideas into
-						impactful software solutions.
-					</div>
-				</section>
+		<section className='hero-minimal' aria-label='Introduction'>
+			<div className='hero-lead'>
+				<h1 className='hero-name'>Shubhdeep Chhabra</h1>
+				<p className='hero-tagline'>
+					I build, design, and experiment with web and AI tech. Passionate about frontend, LLMs, MCPs.
+				</p>
 			</div>
-			<div className='flex flex-row gap-3 mt-4'>
-				<Button
-					height='h-[42px]'
-					width='w-fit'
-					focusOutlined
-					className='p-4 flex gap-1 justify-center items-center rounded-lg bg-primary-700 hover:-translate-y-[1px] hover:bg-primary-800 hover:shadow-md dark:bg-primary-500 dark:hover:bg-primary-400'
-					hoverable={false}
-					onClick={() => router.push('/about')}
-					aria-label='Learn more about me'
-				>
-					<ProfileIcon
-						width={24}
-						height={24}
-						color='#fff'
-						className='dark:fill-text-dark transition'
-						aria-hidden='true'
-					/>
-					<Text
-						transitioned={false}
-						className='h-full text-white dark:text-text-dark font-extrabold dark:font-bold p-0'
-					>
-						More about me
-					</Text>
-				</Button>
-
-				<SocialButtons bordered />
-			</div>
+			<nav className='hero-links' aria-label='Quick links'>
+				<Link href='/blog' className='hero-link'>
+					Writings
+				</Link>
+				<a href={resumeUrl} target='_blank' rel='noreferrer' className='hero-link'>
+					Resume
+				</a>
+				<a href='mailto:chhabrashubhdeep@gmail.com' className='hero-link'>
+					Email
+				</a>
+				<a href='https://github.com/Shubhdeep12' target='_blank' rel='noreferrer' className='hero-link'>
+					GitHub
+				</a>
+				<a href='https://x.com/okshubhh' target='_blank' rel='noreferrer' className='hero-link'>
+					X (Twitter)
+				</a>
+				<a href='https://www.linkedin.com/in/shubhdeepchhabra/' target='_blank' rel='noreferrer' className='hero-link'>
+					LinkedIn
+				</a>
+			</nav>
 		</section>
 	);
 };

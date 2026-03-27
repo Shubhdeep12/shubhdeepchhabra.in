@@ -4,16 +4,15 @@ type MainProps = {
 export default function MainContent({ children }: MainProps) {
 	return (
 		<main
-			className='
-      w-full
-      max-w-laptop
-      mx-auto
-			pt-[110px]
-			pb-10
-			overflow-x-visible
-			px-2
-
-  '
+			id='main-content'
+			style={{
+				margin: 'auto',
+				maxWidth: '780px',
+				padding: '0 36px',
+				paddingTop: '36px',
+				fontSize: '14px',
+				lineHeight: '1.65',
+			}}
 		>
 			{children}
 		</main>

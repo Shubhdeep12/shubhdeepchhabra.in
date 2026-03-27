@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		lastModified: blog.frontMatter.publishedAt,
 	}));
 
-	const routes = ['', '/about', '/blog', '/projects'].map((route) => ({
+	const routes = ['', '/blog'].map((route) => ({
 		url: `https://www.shubhdeepchhabra.in${route}`,
 		lastModified: new Date().toISOString().split('T')[0],
 	}));

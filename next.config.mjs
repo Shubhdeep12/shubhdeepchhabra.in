@@ -66,6 +66,10 @@ const nextConfig = {
 	},
 	async redirects() {
 		return [
+			// Removed pages
+			{ source: '/about', destination: '/', permanent: true },
+			{ source: '/projects', destination: '/', permanent: true },
+			// Legacy capitalised blog slugs
 			{
 				source: '/blog/Razorpay-Integration-with-Reactjs-and-Node',
 				destination: '/blog/razorpay-integration-in-reactjs',

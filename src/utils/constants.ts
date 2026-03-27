@@ -1,6 +1,3 @@
-import { AuzmorLogo } from '@/src/Icons';
-import { ProjectProps } from './types';
-
 export const resumeUrl = 'https://drive.google.com/file/d/18eSBaG2ysqclknHI2BxtQjwXSmu_LTpd/view?usp=sharing';
 
 export const SKILLS = new Map([
@@ -281,43 +278,19 @@ export const SKILLS = new Map([
 ]);
 
 export const NAVIGATIONBAR_ITEMS = {
-	about: {
-		key: 'about',
-		title: 'About',
-		route: '/about',
-		gFrom: 'from-primary-500',
-		gTo: 'to-green-500',
-	},
-	projects: {
-		key: 'projects',
-		title: 'Projects',
-		route: '/projects',
-		gFrom: 'from-[#c86827]',
-		gTo: 'to-[#c69227]',
-	},
 	blog: {
 		key: 'blog',
-		title: 'Blog',
+		title: 'Writings',
 		route: '/blog',
-		gFrom: 'from-[#bc2f48]',
-		gTo: 'to-[#7a4cbb]',
+		gFrom: 'from-primary-700',
+		gTo: 'to-primary-500',
 	},
 };
 
 export const FOOTER_NAVBAR_ITEMS = [
 	{
-		...NAVIGATIONBAR_ITEMS.about,
-		underline: 'hocus:decoration-primary-500',
-		target: '_self',
-	},
-	{
-		...NAVIGATIONBAR_ITEMS.projects,
-		underline: 'hocus:decoration-[#c86827]',
-		target: '_self',
-	},
-	{
 		...NAVIGATIONBAR_ITEMS.blog,
-		underline: 'hocus:decoration-[#bc2f48]',
+		underline: 'hocus:decoration-primary-600',
 		target: '_self',
 	},
 ];
@@ -338,9 +311,9 @@ export const SOURCE_FOOTER_ITEMS = [
 		title: 'Source',
 		route: 'https://github.com/Shubhdeep12/ShubhdeepChhabra',
 		gradient: true,
-		gFrom: 'from-[#c86827]',
-		gTo: 'to-[#c69227]',
-		underline: 'hocus:decoration-[#c86827]',
+		gFrom: 'from-primary-600',
+		gTo: 'to-primary-500',
+		underline: 'hocus:decoration-primary-600',
 		target: '_blank',
 	},
 ];
@@ -388,104 +361,14 @@ export const SOCIALS = [
 	{
 		key: 'linkedin',
 		icon: 'linkedin',
-		className: 'group-hocus:fill-primary-600 dark:fill-zinc-400',
+		className: 'group-hocus:fill-primary-700 dark:fill-zinc-400',
 		action: 'https://www.linkedin.com/in/shubhdeepchhabra/',
 	},
 	{
-		key: 'twitter',
-		icon: 'twitter',
+		key: 'x',
+		icon: 'x',
 		className:
 			'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-zinc-200 dark:group-hocus:stroke-zinc-200 dark:stroke-zinc-400',
-		action: 'https://twitter.com/okshubhh',
-	},
-	{
-		key: 'medium',
-		icon: 'medium',
-		className:
-			'group-hocus:fill-black group-hocus:stroke-black dark:group-hocus:fill-zinc-200 dark:group-hocus:stroke-zinc-200 dark:stroke-zinc-400',
-		action: 'https://shubhdeepchhabra.medium.com/',
-	},
-];
-
-export const PROJECTS: ProjectProps[] = [
-	{
-		key: 'assessment-agent',
-		title: 'Assessment Agent',
-		description:
-			'An AI agent that processes lessons and data in any format to generate contextually relevant assessment questions.',
-		stack: ['Python', 'Streamlit', 'Transformers', 'LanceDB', 'Pydantic'],
-		bgColor: 'hocus:bg-green-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-green-300',
-		metaDataStyles: 'group-hocus:border-green-200 dark:bg-green-900 bg-green-50',
-		imageStyles: 'bg-green-50 dark:bg-opacity-[0.14] dark:bg-green-300',
-		titleStyles: 'dark:group-hocus:text-green-400 group-hocus:text-green-800',
-		href: 'https://github.com/Shubhdeep12/assessment_agent',
-		src: '/assets/projects/AssessmentAgent.svg',
-		featured: true,
-	},
-	{
-		key: 'auzmor',
-		title: 'Auzmor Learn',
-		description: 'LMS with support of features like E-Sign, Feedbacks, Social Learning, etc.',
-		stack: ['React', 'Styled Components', 'Semantic UI'],
-		bgColor: 'hocus:bg-orange-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-orange-300',
-		metaDataStyles: 'group-hocus:border-orange-200 dark:bg-orange-900 bg-orange-50',
-		imageStyles: 'bg-orange-50 dark:bg-opacity-[0.14] dark:bg-orange-300',
-		titleStyles: 'dark:group-hocus:text-orange-400 group-hocus:text-orange-800',
-		href: 'https://www.auzmor.com',
-		src: AuzmorLogo,
-		featured: false,
-	},
-	{
-		key: 'quedoor-client',
-		title: 'QueDoor - Client',
-		description: 'A social media app specially curated for students preparing for exams.',
-		stack: ['Next.js', 'TailwindCSS', 'shadcn-ui', 'Tiptap', 'react-query'],
-		bgColor: 'hocus:bg-purple-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-purple-300',
-		metaDataStyles: 'group-hocus:border-purple-200 dark:bg-purple-900 bg-purple-50',
-		imageStyles: 'bg-purple-50 dark:bg-opacity-[0.14] dark:bg-purple-300',
-		titleStyles: 'dark:group-hocus:text-purple-400 group-hocus:text-purple-800',
-		href: 'https://github.com/Shubhdeep12/Quedoor_client',
-		src: '/assets/projects/Quedoor.png',
-		featured: true,
-	},
-	{
-		key: 'quedoor-core',
-		title: 'QueDoor - Core',
-		description: 'A social media app specially curated for students preparing for exams.',
-		stack: ['Node.js', 'Express', 'MongoDB', 'PostgresSQL', 'Neo4j', 'Redis'],
-		bgColor: 'hocus:bg-indigo-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-indigo-300',
-		metaDataStyles: 'group-hocus:border-indigo-200 dark:bg-indigo-900 bg-indigo-50',
-		imageStyles: 'bg-indigo-50 dark:bg-opacity-[0.14] dark:bg-indigo-300',
-		titleStyles: 'dark:group-hocus:text-indigo-400 group-hocus:text-indigo-800',
-		href: 'https://github.com/Shubhdeep12/Quedoor_core',
-		src: '/assets/projects/Quedoor.png',
-		featured: false,
-	},
-	{
-		key: 'eslint-config-generator',
-		title: 'ESLint Config Generator',
-		description: 'ESLint config generator, helps you to create config easily for your next javascript app.',
-		stack: ['Next.js', 'Typescript', 'TailwindCSS', 'ESLint'],
-		bgColor: 'hocus:bg-yellow-50 dark:hocus:bg-opacity-[0.14] dark:hocus:bg-yellow-300',
-		metaDataStyles: 'group-hocus:border-yellow-200 dark:bg-yellow-900 bg-yellow-50',
-		imageStyles: 'bg-yellow-50 dark:bg-opacity-[0.14] dark:bg-yellow-300',
-		titleStyles: 'dark:group-hocus:text-yellow-400 group-hocus:text-yellow-800',
-		href: 'https://eslint-config-generator.shubhdeepchhabra.in/',
-		src: '/assets/projects/eslint-config-generator.png',
-		featured: true,
-	},
-	{
-		key: 'performantrics-sdk',
-		title: 'Performance Metrics SDK',
-		description:
-			'A lightweight, extensible JavaScript library for collecting and analyzing web performance metrics with minimal setup.',
-		stack: ['TypeScript', 'JavaScript', 'Web Performance'],
-		bgColor: 'hocus:bg-blue-100 dark:hocus:bg-opacity-[0.18] dark:hocus:bg-blue-400',
-		metaDataStyles: 'group-hocus:border-blue-300 dark:bg-blue-950 bg-blue-100',
-		imageStyles: 'bg-blue-100 dark:bg-opacity-[0.18] dark:bg-blue-400',
-		titleStyles: 'dark:group-hocus:text-blue-500 group-hocus:text-blue-900',
-		href: 'https://www.npmjs.com/package/performantrics',
-		src: '/assets/projects/performantrics-logo.svg',
-		featured: true,
+		action: 'https://x.com/okshubhh',
 	},
 ];

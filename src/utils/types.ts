@@ -25,26 +25,14 @@ export type IconProps = {
 	filled?: boolean;
 };
 
-export type ProjectProps = {
-	key: string;
-	title: string;
-	description?: string;
-	stack?: string[];
-	bgColor: string;
-	metaDataStyles?: string;
-	imageStyles?: string;
-	titleStyles?: string;
-	href: string;
-	featured: boolean;
-	src: string | React.ElementType;
-};
-
 export interface FrontMatter {
 	title: string;
 	publishedAt: string;
 	description: string;
 	cover?: string;
-	color: string;
+	category?: string;
+	categories?: string[];
+	color?: string;
 }
 
 export interface Blog {
