@@ -1,14 +1,14 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Fragment, Suspense } from 'react';
 import { getAllPosts, getPostBySlug } from '@/lib/mdx';
 import BlogFooter from '@/src/components/blog/BlogFooter';
 import BlogImages from '@/src/components/blog/BlogImages';
-import Footer from '@/src/components/Footer';
 import Hero from '@/src/components/blog/Hero';
 import ReadingContainer from '@/src/components/editorial/ReadingContainer';
+import Footer from '@/src/components/Footer';
 import { getCategories, getPrimaryCategory, sortBlogsByDate } from '@/src/utils/blog-shared';
 
 interface BlogProps {
@@ -102,7 +102,9 @@ export default async function BlogPage({ params }: BlogProps) {
 	return (
 		<section className='flex flex-col items-start gap-8'>
 			<ReadingContainer>
-				<Link href='/blog' className='post-back-link'>← Writings</Link>
+				<Link href='/blog' className='post-back-link'>
+					← Writings
+				</Link>
 				<Hero blog={blog} />
 			</ReadingContainer>
 
@@ -112,10 +114,10 @@ export default async function BlogPage({ params }: BlogProps) {
 				</Suspense>
 			</article>
 
-		<ReadingContainer>
-			<BlogFooter blog={blog} relatedPosts={relatedPosts} />
-		</ReadingContainer>
-		<Footer />
-	</section>
+			<ReadingContainer>
+				<BlogFooter blog={blog} relatedPosts={relatedPosts} />
+			</ReadingContainer>
+			<Footer />
+		</section>
 	);
 }
