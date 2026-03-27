@@ -327,8 +327,7 @@
 
 .post-back-link {
 	display: inline-block;
-	margin-top: 64px;
-	margin-bottom: 32px;
+	margin-bottom: 24px;
 	font-family: var(--font-dm-mono), monospace;
 	font-size: 11px;
 	text-transform: uppercase;
@@ -343,7 +342,7 @@
 
 .postTitle {
 	font-family: var(--font-dm-sans), sans-serif;
-	font-size: 32px;
+	font-size: clamp(22px, 5vw, 32px);
 	font-weight: 700;
 	line-height: 1.15;
 	letter-spacing: -0.03em;
@@ -353,12 +352,16 @@
 
 .postSubheader {
 	font-family: var(--font-dm-mono), monospace;
-	font-size: 13px;
+	font-size: clamp(11px, 2.5vw, 13px);
 	font-weight: 400;
 	color: var(--faint);
 	letter-spacing: 0.03em;
 	line-height: 1;
-	margin-bottom: 30px;
+	margin-bottom: 24px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.4rem 0.5rem;
 }
 
 .postContent {

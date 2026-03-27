@@ -7,11 +7,12 @@ const Intro = () => {
 			<div className='hero-lead'>
 				<h1 className='hero-name'>Shubhdeep Chhabra</h1>
 				<p className='hero-tagline'>
-					I build, design, and experiment with web and AI tech. Passionate about frontend, LLMs, MCPs.
+					I build, design, and experiment with web and AI tech. Passionate about frontend, LLMs, CLI, MCPs. Getting to
+					be obsessed with DevTools ☄️.
 				</p>
 			</div>
 			<nav className='hero-links' aria-label='Quick links'>
-				<Link href='/blog' className='hero-link'>
+				<Link href='/writings' className='hero-link'>
 					Writings
 				</Link>
 				<a href={resumeUrl} target='_blank' rel='noreferrer' className='hero-link'>

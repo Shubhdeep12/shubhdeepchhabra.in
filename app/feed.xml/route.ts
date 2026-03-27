@@ -19,8 +19,8 @@ export async function GET() {
 	allBlogs.map((blog) => {
 		feed.item({
 			title: blog.frontMatter.title,
-			guid: `https://www.shubhdeepchhabra.in/blog/${blog.slug}`,
-			url: `https://www.shubhdeepchhabra.in/blog/${blog.slug}`,
+			guid: `https://www.shubhdeepchhabra.in/writings/${blog.slug}`,
+			url: `https://www.shubhdeepchhabra.in/writings/${blog.slug}`,
 			date: blog.frontMatter.publishedAt,
 			description: blog.frontMatter.description,
 			author: 'Shubhdeep Chhabra',

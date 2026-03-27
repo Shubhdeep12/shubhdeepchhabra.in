@@ -281,7 +281,7 @@ export const NAVIGATIONBAR_ITEMS = {
 	blog: {
 		key: 'blog',
 		title: 'Writings',
-		route: '/blog',
+		route: '/writings',
 		gFrom: 'from-primary-700',
 		gTo: 'to-primary-500',
 	},

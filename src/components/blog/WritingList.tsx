@@ -87,7 +87,7 @@ function WritingCard({ item }: { item: WritingListItem }) {
 	return (
 		<li ref={cardRef} className='b-card-wrapper' onMouseMove={handleMouseMove}>
 			<div ref={glowRef} className='b-card-glow' aria-hidden='true' />
-			<Link href={`/blog/${item.slug}`} className='b-card'>
+			<Link href={`/writings/${item.slug}`} className='b-card'>
 				<div className='b-card-top'>
 					<div className='b-card-title'>{item.title}</div>
 					<span className='b-card-date'>
