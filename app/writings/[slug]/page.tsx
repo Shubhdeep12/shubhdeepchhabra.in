@@ -7,6 +7,7 @@ import { getAllPosts, getPostBySlug } from '@/lib/mdx';
 import BlogFooter from '@/src/components/blog/BlogFooter';
 import BlogImages from '@/src/components/blog/BlogImages';
 import Hero from '@/src/components/blog/Hero';
+import ShareButton from '@/src/components/blog/ShareButton';
 import ReadingContainer from '@/src/components/editorial/ReadingContainer';
 import Footer from '@/src/components/Footer';
 import { getCategories, getPrimaryCategory, sortBlogsByDate } from '@/src/utils/blog-shared';
@@ -125,14 +126,7 @@ export default async function WritingPage({ params }: WritingProps) {
 					>
 						Edit on GitHub →
 					</a>
-					<a
-						className='post-action-link'
-						href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(blog.frontMatter.title)}`}
-						target='_blank'
-						rel='noreferrer'
-					>
-						Share Post →
-					</a>
+					<ShareButton title={blog.frontMatter.title} url={postUrl} />
 				</div>
 				<BlogFooter blog={blog} relatedPosts={relatedPosts} />
 			</ReadingContainer>
