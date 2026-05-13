@@ -31,11 +31,11 @@
 		"clsx": "^2.1.1",
 		"framer-motion": "^11.3.28",
 		"gray-matter": "^4.0.3",
-		"next": "15.5.14",
+		"next": "15.5.18",
 		"next-mdx-remote": "^6.0.0",
 		"next-themes": "^0.4.6",
 		"pg": "^8.20.0",
-		"postcss": "8.5.8",
+		"postcss": "8.5.10",
 		"prisma": "^7.5.0",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
@@ -68,9 +68,11 @@
 			"react": "^19.0.0",
 			"react-dom": "^19.0.0",
 			"lodash": "^4.17.23",
-			"hono": "^4.12.7",
-			"@hono/node-server": "^1.19.10",
-			"effect": "^3.20.0"
+			"hono": "^4.12.18",
+			"@hono/node-server": "^1.19.13",
+			"effect": "^3.20.0",
+			"fast-uri": "^3.1.1",
+			"esbuild": "^0.25.3"
 		}
 	}
 }
