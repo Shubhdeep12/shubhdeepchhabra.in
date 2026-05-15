@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { IoLinkOutline } from 'react-icons/io5';
 import { useBlogViews } from '@/src/hooks/useBlogViews';
 
 export type WritingListItem = {
@@ -32,11 +33,55 @@ function GlowTag({ label }: { label: string }) {
 	);
 }
 
+function CardCopyPill({
+	copied,
+	onCopy,
+	'aria-label': ariaLabel,
+	title,
+}: {
+	copied: boolean;
+	onCopy: (e: React.MouseEvent) => void;
+	'aria-label': string;
+	title: string;
+}) {
+	const ref = useRef<HTMLButtonElement>(null);
+
+	const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+		const el = ref.current;
+		if (!el) return;
+		const rect = el.getBoundingClientRect();
+		el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+		el.style.setProperty('--my', `${e.clientY - rect.top}px`);
+	};
+
+	return (
+		<button
+			ref={ref}
+			type='button'
+			className={`b-card-copy-pill ${copied ? 'b-card-copy-pill--done' : ''}`}
+			aria-label={ariaLabel}
+			title={title}
+			onClick={onCopy}
+			onMouseMove={handleMouseMove}
+		>
+			{copied ? (
+				<span className='b-card-copy-pill__icon' aria-hidden>
+					✓
+				</span>
+			) : (
+				<IoLinkOutline className='b-card-copy-pill__icon' aria-hidden />
+			)}
+		</button>
+	);
+}
+
 function WritingCard({ item }: { item: WritingListItem }) {
 	const { views, isLoading } = useBlogViews(item.slug);
+	const [copied, setCopied] = useState(false);
 	const cardRef = useRef<HTMLLIElement>(null);
 	const glowRef = useRef<HTMLDivElement>(null);
 	const rafRef = useRef<number>(0);
+	const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	// Inner spotlight on card surface
 	const handleMouseMove = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -84,25 +129,59 @@ function WritingCard({ item }: { item: WritingListItem }) {
 		};
 	}, []);
 
+	useEffect(() => {
+		return () => {
+			if (copyTimer.current) clearTimeout(copyTimer.current);
+		};
+	}, []);
+
+	const copyPostLink = async (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		const origin = typeof window !== 'undefined' ? window.location.origin : '';
+		const url = `${origin}/writings/${item.slug}`;
+		try {
+			await navigator.clipboard.writeText(url);
+			setCopied(true);
+			if (copyTimer.current) clearTimeout(copyTimer.current);
+			copyTimer.current = setTimeout(() => setCopied(false), 1600);
+		} catch {
+			setCopied(false);
+		}
+	};
+
 	return (
 		<li ref={cardRef} className='b-card-wrapper' onMouseMove={handleMouseMove}>
 			<div ref={glowRef} className='b-card-glow' aria-hidden='true' />
-			<Link href={`/writings/${item.slug}`} className='b-card'>
-				<div className='b-card-top'>
-					<div className='b-card-title'>{item.title}</div>
-					<span className='b-card-date'>
-						{new Date(item.publishedAt).toLocaleDateString('en-US', {
-							month: 'short',
-							year: 'numeric',
-						})}
-					</span>
+			<div className='b-card'>
+				<Link href={`/writings/${item.slug}`} className='b-card-hit' aria-label={`Read: ${item.title}`}>
+					<span className='b-card-hit-text'>{item.title}</span>
+				</Link>
+				<div className='b-card-surface'>
+					<div className='b-card-top'>
+						<div className='b-card-title'>{item.title}</div>
+						<div className='b-card-meta'>
+							<span className='b-card-date'>
+								{new Date(item.publishedAt).toLocaleDateString('en-US', {
+									month: 'short',
+									year: 'numeric',
+								})}
+							</span>
+							<CardCopyPill
+								copied={copied}
+								onCopy={copyPostLink}
+								aria-label={copied ? 'Link copied' : 'Copy link to this post'}
+								title={copied ? 'Copied' : 'Copy link'}
+							/>
+						</div>
+					</div>
+					<div className='b-card-tags'>
+						<GlowTag label={item.category} />
+						<GlowTag label={item.readingTimeText} />
+						{!isLoading && <GlowTag label={`${views || 0} reads`} />}
+					</div>
 				</div>
-				<div className='b-card-tags'>
-					<GlowTag label={item.category} />
-					<GlowTag label={item.readingTimeText} />
-					{!isLoading && <GlowTag label={`${views || 0} reads`} />}
-				</div>
-			</Link>
+			</div>
 		</li>
 	);
 }

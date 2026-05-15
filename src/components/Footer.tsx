@@ -5,7 +5,7 @@ import SocialButtons from './SocialButtons';
 
 const Footer = () => {
 	return (
-		<footer className='site-footer site-footer-container'>
+		<footer className='site-footer site-footer-container w-full'>
 			<Link href='/' className='footer-copyright'>
 				<span className='footer-copyright-name'>Shubhdeep</span>
 			</Link>

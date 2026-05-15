@@ -1,13 +1,15 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import type { MDXRemoteProps } from 'next-mdx-remote/rsc';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Fragment, Suspense } from 'react';
 import { getAllPosts, getPostBySlug } from '@/lib/mdx';
+import mdxOptions from '@/mdxOptions.js';
 import BlogFooter from '@/src/components/blog/BlogFooter';
 import BlogImages from '@/src/components/blog/BlogImages';
 import Hero from '@/src/components/blog/Hero';
-import ShareButton from '@/src/components/blog/ShareButton';
+import PostReadingLayout from '@/src/components/editorial/PostReadingLayout';
 import ReadingContainer from '@/src/components/editorial/ReadingContainer';
 import Footer from '@/src/components/Footer';
 import { getCategories, getPrimaryCategory, sortBlogsByDate } from '@/src/utils/blog-shared';
@@ -101,35 +103,37 @@ export default async function WritingPage({ params }: WritingProps) {
 			categories: getCategories(post.frontMatter),
 		}));
 
+	const githubEditUrl = `https://github.com/Shubhdeep12/ShubhdeepChhabra/tree/master/blog/${blog.slug}.mdx`;
+
 	return (
 		<section className='flex flex-col items-start gap-4 laptop:gap-8'>
-			<ReadingContainer>
-				<Link href='/writings' className='post-back-link'>
-					← Writings
-				</Link>
-				<Hero blog={blog} />
-			</ReadingContainer>
+			<PostReadingLayout
+				mdxMarkdown={mdxSource}
+				githubEditUrl={githubEditUrl}
+				shareTitle={blog.frontMatter.title}
+				shareUrl={postUrl}
+			>
+				<ReadingContainer>
+					<Link href='/writings' className='post-back-link'>
+						← Writings
+					</Link>
+					<Hero blog={blog} />
+				</ReadingContainer>
 
-			<article className='postContent w-full mb-2' aria-label={blog.frontMatter.title}>
-				<Suspense fallback={<Fragment>Loading...</Fragment>}>
-					<MDXRemote source={mdxSource} components={{ Image: BlogImages }} />
-				</Suspense>
-			</article>
+				<article id='post-content' className='postContent w-full mb-2' aria-label={blog.frontMatter.title}>
+					<Suspense fallback={<Fragment>Loading...</Fragment>}>
+						<MDXRemote
+							source={mdxSource}
+							options={{ mdxOptions: mdxOptions as NonNullable<MDXRemoteProps['options']>['mdxOptions'] }}
+							components={{ Image: BlogImages }}
+						/>
+					</Suspense>
+				</article>
 
-			<ReadingContainer>
-				<div className='post-related-actions'>
-					<a
-						className='post-action-link'
-						href={`https://github.com/Shubhdeep12/ShubhdeepChhabra/tree/master/blog/${blog.slug}.mdx`}
-						target='_blank'
-						rel='noreferrer'
-					>
-						Edit on GitHub →
-					</a>
-					<ShareButton title={blog.frontMatter.title} url={postUrl} />
-				</div>
-				<BlogFooter blog={blog} relatedPosts={relatedPosts} />
-			</ReadingContainer>
+				<ReadingContainer>
+					<BlogFooter blog={blog} relatedPosts={relatedPosts} />
+				</ReadingContainer>
+			</PostReadingLayout>
 			<Footer />
 		</section>
 	);

@@ -6,8 +6,8 @@ export default function MainContent({ children }: MainProps) {
 		<main
 			id='main-content'
 			style={{
-				margin: 'auto',
-				maxWidth: '780px',
+				margin: '0 auto',
+				width: '100%',
 				padding: '0 36px',
 				paddingTop: '36px',
 				fontSize: '14px',

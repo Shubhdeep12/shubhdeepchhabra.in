@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import AnimatePage from '@/src/components/AnimatePage';
 import WritingList, { WritingListItem } from '@/src/components/blog/WritingList';
 import Footer from '@/src/components/Footer';
@@ -27,6 +28,9 @@ export default async function Writings() {
 		<AnimatePage>
 			<section className='blog-page'>
 				<div className='blog-page-header'>
+					<Link href='/' className='blog-home-link'>
+						Shubhdeep Chhabra
+					</Link>
 					<h1 className='blog-page-title'>Writings</h1>
 					<p className='page-subheader'>Musings on engineering, product, and whatever else is on my mind.</p>
 					<div className='blog-post-count'>{blogs.length} posts</div>

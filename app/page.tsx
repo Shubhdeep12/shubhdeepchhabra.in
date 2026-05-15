@@ -4,7 +4,9 @@ import Intro from '@/src/components/home/Intro';
 const Home = () => {
 	return (
 		<AnimatePage>
-			<Intro />
+			<section className='home-page'>
+				<Intro />
+			</section>
 		</AnimatePage>
 	);
 };

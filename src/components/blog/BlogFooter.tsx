@@ -16,20 +16,27 @@ const BlogFooter = ({ relatedPosts }: BlogFooterProps) => {
 			<ul className='b-list'>
 				{relatedPosts.map((post) => (
 					<li key={post.slug} className='b-card-wrapper'>
-						<Link href={`/writings/${post.slug}`} className='b-card'>
-							<div className='b-card-top'>
-								<div className='b-card-title'>{post.title}</div>
-								<span className='b-card-date'>
-									{new Date(post.publishedAt).toLocaleDateString('en-US', {
-										month: 'short',
-										year: 'numeric',
-									})}
-								</span>
+						<div className='b-card'>
+							<Link href={`/writings/${post.slug}`} className='b-card-hit' aria-label={`Read: ${post.title}`}>
+								<span className='b-card-hit-text'>{post.title}</span>
+							</Link>
+							<div className='b-card-surface'>
+								<div className='b-card-top'>
+									<div className='b-card-title'>{post.title}</div>
+									<div className='b-card-meta'>
+										<span className='b-card-date'>
+											{new Date(post.publishedAt).toLocaleDateString('en-US', {
+												month: 'short',
+												year: 'numeric',
+											})}
+										</span>
+									</div>
+								</div>
+								<div className='b-card-tags'>
+									<span className='b-card-tag'>{post.category}</span>
+								</div>
 							</div>
-							<div className='b-card-tags'>
-								<span className='b-card-tag'>{post.category}</span>
-							</div>
-						</Link>
+						</div>
 					</li>
 				))}
 			</ul>
