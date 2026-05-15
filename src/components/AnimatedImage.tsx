@@ -14,7 +14,7 @@ type AnimatedImageProps = {
 const AnimatedImage = ({ className, src, width, height, alt, ...props }: AnimatedImageProps) => {
 	const [isLoading, setIsLoading] = useState(true);
 	return (
-		<div className={clsx(className, 'relative flex overflow-hidden')}>
+		<div className={clsx(className, 'relative flex overflow-hidden max-w-full')}>
 			<Image
 				className={clsx(className, 'duration-700 ease-in-out object-contain', isLoading ? 'blur-2xl' : 'blur-0')}
 				src={src}

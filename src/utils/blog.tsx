@@ -1,11 +1,10 @@
 import { getAllPosts } from '@/lib/mdx';
+import { sortBlogsByDate } from './blog-shared';
 import { Blog } from './types';
 
 export const getBlogGroups = async () => {
 	const blogs = await getAllPosts();
-	const sortedBlogs = blogs.sort(
-		(a, b) => Number(new Date(b.frontMatter.publishedAt)) - Number(new Date(a.frontMatter.publishedAt))
-	);
+	const sortedBlogs = sortBlogsByDate(blogs);
 
 	const finalResponse = sortedBlogs.reduce(
 		(previous, currentItem) => {
@@ -28,8 +27,6 @@ export const getBlogGroups = async () => {
 export const getRecentBlogs = async (num = 3) => {
 	const blogs = await getAllPosts();
 
-	const recentBlogs = blogs
-		.sort((a, b) => Number(new Date(b.frontMatter.publishedAt)) - Number(new Date(a.frontMatter.publishedAt)))
-		.slice(0, num);
+	const recentBlogs = sortBlogsByDate(blogs).slice(0, num);
 	return recentBlogs;
 };

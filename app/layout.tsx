@@ -1,26 +1,29 @@
-import Navbar from '@/src/components/Navbar';
-import { Raleway } from 'next/font/google';
+import { DM_Mono, DM_Sans } from 'next/font/google';
 import MainContent from '@/src/components/MainContent';
 import './globals.css';
-import { Providers } from '@/src/providers';
-import Footer from '@/src/components/Footer';
-import { BackToTop } from '@/src/components/BackToTop';
-import { type PropsWithChildren } from 'react';
-import { Metadata } from 'next';
-import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { Analytics } from '@vercel/analytics/react';
+import { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
+import { type PropsWithChildren } from 'react';
+import { Providers } from '@/src/providers';
 
-const raleway = Raleway({
+const dmSans = DM_Sans({
 	subsets: ['latin'],
-	variable: '--font-man',
+	variable: '--font-dm-sans',
+});
+
+const dmMono = DM_Mono({
+	weight: ['400'],
+	subsets: ['latin'],
+	variable: '--font-dm-mono',
 });
 
 export const metadata: Metadata = {
 	title: 'Shubhdeep Chhabra',
 	description:
-		'Shubhdeep Chhabra is a Software Engineer from India specializing in web development. Explore my portfolio to see innovative solutions for complex problems.',
-	applicationName: 'Shubhdeep Chhabra Portfolio',
+		'Shubhdeep Chhabra is a Product focussed Software Engineer writing about software engineering, architecture, and practical product lessons.',
+	applicationName: 'Shubhdeep Chhabra',
 	authors: [{ name: 'Shubhdeep Chhabra', url: 'https://www.shubhdeepchhabra.in' }],
 	keywords: [
 		'next.js',
@@ -30,8 +33,9 @@ export const metadata: Metadata = {
 		'shubh',
 		'web development',
 		'software engineer',
-		'portfolio',
-		'styled-components',
+		'writing',
+		'blog',
+		'engineering',
 		'tailwindcss',
 		'tailwind',
 		'html',
@@ -47,10 +51,10 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		description:
-			'Shubhdeep Chhabra is a Software Engineer from India specializing in web development. Explore my portfolio to see innovative solutions for complex problems.',
+			'Shubhdeep Chhabra is a Product focussed Software Engineer writing about software engineering, architecture, and practical product lessons.',
 		title: 'Shubhdeep Chhabra',
 		locale: 'en_US',
-		siteName: 'Shubhdeep Chhabra Portfolio',
+		siteName: 'Shubhdeep Chhabra',
 		url: 'https://www.shubhdeepchhabra.in/',
 		images: [
 			{
@@ -78,7 +82,7 @@ export const metadata: Metadata = {
 		creator: '@okshubhh',
 		title: 'Shubhdeep Chhabra',
 		description:
-			'Shubhdeep Chhabra is a Software Engineer from India specializing in web development. Explore my portfolio to see innovative solutions for complex problems.',
+			'Shubhdeep Chhabra is a Product Engineer writing about software engineering, architecture, and practical product lessons.',
 		images: ['/assets/shubhdeep-og.png'],
 	},
 	icons: {
@@ -95,13 +99,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en' suppressHydrationWarning>
-			<body className={`${raleway.variable} font-sans bg-body-gradient dark:bg-body-gradient-inverted min-h-screen`}>
+			<body className={`${dmSans.variable} ${dmMono.variable} min-h-screen`} suppressHydrationWarning>
 				<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 					<Providers>
-						<Navbar />
 						<MainContent>{children}</MainContent>
-						<Footer />
-						<BackToTop />
 						<Analytics />
 						{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS ? (
 							<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS || ''} />

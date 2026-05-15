@@ -1,34 +1,35 @@
-import Button from '@/src/ui/Button';
-import Text from '@/src/ui/Text';
 import Link from 'next/link';
 
 const NotFound = () => {
 	return (
-		<section className='flex flex-col items-start gap-5 min-h-[500px] font-semibold'>
-			<Text
-				variant='shadow'
-				gFrom='dark:from-yellow-300'
-				gTo='dark:to-red-300'
-				shadowColor='purple'
-				className='font-bold text-3xl text-heading-dark'
-			>
-				OOPS! Page not found.
-			</Text>
-			<p className='mt-5'>{"Unfortunately, the page you're looking for doesn't exist."}</p>
-			<p className='mb-5'>Please double check the URL. Otherwise,</p>
-			<Button
-				height='h-[42px]'
-				width='w-fit'
-				focusOutlined
-				className='p-4 flex gap-1 justify-center items-center rounded-lg bg-primary-700 hover:-translate-y-[1px] hover:shadow-md hover:bg-primary-800  dark:bg-primary-500 dark:hover:bg-primary-400'
-				hoverable={false}
-				type={Link}
-				href='/'
-			>
-				<Text transitioned={false} className='h-full text-white dark:text-text-dark font-extrabold dark:font-bold p-0'>
-					Go To Home
-				</Text>
-			</Button>
+		<section className='hero-minimal' aria-label='Page not found'>
+			<div className='hero-lead'>
+				<p
+					style={{
+						fontFamily: 'var(--font-dm-mono), ui-monospace, monospace',
+						fontSize: '11px',
+						fontWeight: 400,
+						letterSpacing: '0.1em',
+						textTransform: 'uppercase',
+						color: 'var(--faint)',
+						margin: '0 0 12px',
+					}}
+				>
+					404
+				</p>
+				<h1 className='hero-name'>Page not found.</h1>
+				<p className='hero-tagline'>
+					{"The page you're looking for doesn't exist or has been moved. Double-check the URL."}
+				</p>
+			</div>
+			<nav className='hero-links' aria-label='Recovery links'>
+				<Link href='/' className='hero-link'>
+					Home
+				</Link>
+				<Link href='/writings' className='hero-link'>
+					Writings
+				</Link>
+			</nav>
 		</section>
 	);
 };

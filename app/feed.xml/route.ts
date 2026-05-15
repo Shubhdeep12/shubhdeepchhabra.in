@@ -1,5 +1,5 @@
-import { getAllPosts } from '@/lib/mdx';
 import RSS from 'rss';
+import { getAllPosts } from '@/lib/mdx';
 
 export async function GET() {
 	const allBlogs = await getAllPosts();
@@ -12,15 +12,15 @@ export async function GET() {
 		feed_url: 'https://www.shubhdeepchhabra.in/feed.xml',
 		language: 'en-US',
 		pubDate: new Date().toUTCString(),
-		image_url: 'https://www.shubhdeepchhabra.in/assets/shubhdeepchhabra.png',
+		image_url: 'https://www.shubhdeepchhabra.in/assets/shubhdeep-og.png',
 		categories: ['Shubhdeep Chhabra', 'Blogs', 'portfolio', 'react', 'next.js', 'javascript', 'typescript'],
 	});
 
 	allBlogs.map((blog) => {
 		feed.item({
 			title: blog.frontMatter.title,
-			guid: `https://www.shubhdeepchhabra.in/blog/${blog.slug}`,
-			url: `https://www.shubhdeepchhabra.in/blog/${blog.slug}`,
+			guid: `https://www.shubhdeepchhabra.in/writings/${blog.slug}`,
+			url: `https://www.shubhdeepchhabra.in/writings/${blog.slug}`,
 			date: blog.frontMatter.publishedAt,
 			description: blog.frontMatter.description,
 			author: 'Shubhdeep Chhabra',

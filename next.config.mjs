@@ -1,11 +1,12 @@
 import createMDX from '@next/mdx';
 import { withSentryConfig } from '@sentry/nextjs';
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
-import rehypeSlug from 'rehype-slug';
-import rehypePrettyCode from 'rehype-pretty-code';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+
 /** @type {import('next').NextConfig} */
 
 const ContentSecurityPolicy = `
@@ -65,31 +66,38 @@ const nextConfig = {
 	},
 	async redirects() {
 		return [
+			// Removed pages
+			{ source: '/about', destination: '/', permanent: true },
+			{ source: '/projects', destination: '/', permanent: true },
+			// Legacy capitalised blog slugs → /writings directly (avoids redirect chains)
 			{
 				source: '/blog/Razorpay-Integration-with-Reactjs-and-Node',
-				destination: '/blog/razorpay-integration-in-reactjs',
+				destination: '/writings/razorpay-integration-in-reactjs',
 				permanent: true,
 			},
 			{
 				source: '/blog/What-are-Design-Tokens-How-to-Create-Design-tokens-in-React',
-				destination: '/blog/design-tokens-nextjs',
+				destination: '/writings/design-tokens-nextjs',
 				permanent: true,
 			},
 			{
 				source: '/blog/Structuring-SEO-and-Format-of-a-page-in-Nextjs-Effectively',
-				destination: '/blog/seo-format-nextjs',
+				destination: '/writings/seo-format-nextjs',
 				permanent: true,
 			},
 			{
 				source: '/blog/Connect-Database-with-nodejs-Part-1-MongoDB-using-Mongoose',
-				destination: '/blog/connect-mongodb-with-nodejs',
+				destination: '/writings/connect-mongodb-with-nodejs',
 				permanent: true,
 			},
 			{
 				source: '/blog/Why-Did-Discord-Go-From-MongoDB-To-Cassandra-Then-ScyllaDB-Simplified',
-				destination: '/blog/discord-mongodb-cassandra-scylladb',
+				destination: '/writings/discord-mongodb-cassandra-scylladb',
 				permanent: true,
 			},
+			// /blog and /blog/* → /writings and /writings/*
+			{ source: '/blog', destination: '/writings', permanent: true },
+			{ source: '/blog/:slug*', destination: '/writings/:slug*', permanent: true },
 		];
 	},
 	headers() {
