@@ -1,0 +1,469 @@
+---
+title: 'Your SPA Is Lying to Your Users (And How to Fix It)'
+publishedAt: '2026-05-15'
+description: 'How we stopped serving stale JavaScript after every deployment - and why version polling alone is not enough.'
+categories: ['Engineering']
+---
+
+I just finished migrating a large React SPA - React 18, React Router v6, Rsbuild, styled-components v6, i18next v26 - the whole thing. Dozens of files changed, chunks renamed, APIs shifted. We deployed. And then support tickets rolled in.
+
+- "The page is blank."
+- "I clicked a link and nothing happened."
+- "There's a white screen with some error about loading a chunk."
+
+Classic. The app was serving hashed JS chunks that no longer existed on the server. Users had tabs open from before the deploy. They navigated, the browser tried to lazy-load `4912.74521442e8.js`, got a 404, and boom - white screen.
+
+This is the post I wish I'd read before that deploy. Here's what I learned about keeping a SPA fresh after deployment, what actually works, what's overkill, and what we shipped.
+
+---
+
+## The actual problem (it's not what you think)
+
+Most people think the problem is "the browser cached my old files." That's only half of it.
+
+Modern bundlers (Webpack, Vite, Rsbuild) already solve caching with content-hashed filenames. `app.a1b2c3.js` is immutable - if the content changes, the hash changes, the filename changes. The browser fetches the new file because it's a new URL. Problem solved, right?
+
+Not quite. The issue is **`index.html`**.
+
+Your HTML file is the one unhashed file in the whole build. It's always served at `/`. It contains `<script src="/static/js/app.a1b2c3.js">`. After a deploy, the new `index.html` points to `app.d4e5f6.js`. But the user's browser has the OLD `index.html` cached (or still in memory from a tab opened yesterday), which still references `app.a1b2c3.js`. That file is gone from the server. 404. White screen.
+
+So there are really **two problems**:
+
+1. **Reactive** - a user navigates to a code-split route after deploy, the old chunk is gone, the app crashes
+2. **Proactive** - how do you tell a running SPA "hey, there's a new version, reload yourself"
+
+You need to solve both.
+
+---
+
+## The landscape: approaches to consider
+
+Here's a quick overview of the approaches out there, from essential to overkill. I included a full comparison table at the end if you want the complete picture.
+
+### Foundation (you're hopefully already doing this)
+
+**Content-hashed filenames** - Your bundler does this. `app.[contenthash].js`. Set long cache headers on these. They can be cached forever because the URL changes when the content changes.
+
+**`no-cache` on `index.html`** - This is the one people miss. Your HTML must be served with `Cache-Control: no-cache`. This forces the browser to check with the server on every full page load. Without this, the browser can serve a cached HTML that references dead chunks.
+
+**CDN cache invalidation** - When you deploy, invalidate `index.html` in your CDN. Hashed assets never need invalidation.
+
+If you're not doing all three of these, go set them up first. Everything else builds on this foundation.
+
+### Active detection (pick one or two)
+
+**Version polling (`version.json`)** - Generate a file at build time with a unique hash. The running app polls it every 60 seconds. If the hash does not match what's compiled into the bundle, a new version is live. This is what we went with. Simple, no server logic, works everywhere.
+
+**Route-change check** - Instead of polling on a timer, check for a new version every time the user navigates within the SPA. If stale, do a full page load instead of a client-side transition.
+
+**`X-App-Version` response header** - Your API returns a custom header on every response. An Axios interceptor compares it to the compiled version. Clever, but requires backend changes and CORS config.
+
+**Visibility + Focus events** - When a user switches back to your tab, check for a new version. Catches the "left a tab open overnight" case. Almost free to implement.
+
+**Service Worker update detection** - The browser automatically checks for SW changes every 24 hours. When it finds one, you can prompt a reload. If you're not already using service workers, adding one just for version detection is probably overkill.
+
+### Reactive safety nets (you need at least one)
+
+**`ChunkLoadError` in ErrorBoundary** - When a lazy-loaded chunk 404s, React's error boundary catches it. Detect the error type, auto-reload the page. This is your last line of defense.
+
+**`lazyWithRetry` wrapper** - Wrap `React.lazy()` so that when an import fails, it retries once and if that fails too, reloads the page. Catches the error at the source.
+
+### Fancy stuff (cool but probably not worth it)
+
+**Server-Sent Events / WebSocket push** - Server pushes a "new version" event to all connected clients. Instant detection, but you need server infrastructure just for this.
+
+**Navigation API** - The new browser API (`window.navigation`) that fires a `navigate` event. Cleaner than monkey-patching `history.pushState`. Still too new to rely on fully.
+
+**BroadcastChannel API** - When one tab detects a new version, broadcast to all other tabs. Nice for multi-tab consistency, but frosting on the cake.
+
+---
+
+## What we actually shipped
+
+After evaluating all of this, here's what we built. Three layers, each independent, each solving a different failure mode.
+
+### Layer 1: Build-time version stamp
+
+At build time, we generate a random hash and put it in two places:
+1. A `version.json` file in the build output
+2. A `__BUILD_HASH__` constant compiled into the JS bundle
+
+```js
+// rsbuild.config.mjs (simplified)
+import crypto from 'node:crypto';
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const buildHash = crypto.randomBytes(8).toString('hex');
+
+// Plugin that writes version.json after build
+const pluginVersionJson = () => ({
+  name: 'plugin-version-json',
+  setup(api) {
+    api.onAfterBuild(() => {
+      writeFileSync(
+        join(api.context.distPath, 'version.json'),
+        JSON.stringify({ buildHash, timestamp: Date.now() })
+      );
+    });
+  },
+});
+
+export default defineConfig({
+  // ... existing config
+  plugins: [pluginReact(), pluginStyledComponents(), pluginVersionJson()],
+  tools: {
+    rspack: (config) => {
+      // Inject __BUILD_HASH__ into the bundle
+      const { DefinePlugin } = require('@rspack/core');
+      config.plugins.push(
+        new DefinePlugin({ __BUILD_HASH__: JSON.stringify(buildHash) })
+      );
+      return config;
+    },
+  },
+});
+```
+
+Why a random hash instead of the git SHA? Because the git SHA tells you which commit is deployed, but the build hash tells you which *build output* is live. Two builds from the same commit produce different hashes, which is what you want - if someone re-deploys the same commit, the hash changes, and clients reload. Also, `crypto.randomBytes` is one line. Getting the git SHA reliably in CI is three lines and a `try/catch` for when `.git` doesn't exist.
+
+### Layer 2: Version checker (vanilla JS singleton)
+
+This is the brains. A plain JavaScript module - not a React hook, not a context provider. Why? Because if React crashes (and it will, that's the whole point of this exercise), the version checker keeps running.
+
+```js
+// src/utils/versionChecker.js
+
+const POLL_INTERVAL = 60_000;
+const RELOAD_GUARD_KEY = 'auzmor_reload_ts';
+const RELOAD_COOLDOWN = 120_000; // 2 minutes
+
+let pendingReload = false;
+
+// __BUILD_HASH__ is injected by DefinePlugin at build time
+// In dev mode it doesn't exist, so everything no-ops
+const currentHash = typeof __BUILD_HASH__ !== 'undefined' ? __BUILD_HASH__ : null;
+
+async function checkVersion() {
+  if (!currentHash) return;
+  try {
+    const res = await fetch('/version.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const { buildHash } = await res.json();
+    if (buildHash && buildHash !== currentHash) {
+      pendingReload = true;
+    }
+  } catch {
+    // Network error - ignore, we'll retry next interval
+  }
+}
+
+function safeReload() {
+  // Loop guard: don't reload if we already did within the cooldown
+  const last = sessionStorage.getItem(RELOAD_GUARD_KEY);
+  if (last && Date.now() - Number(last) < RELOAD_COOLDOWN) return;
+  sessionStorage.setItem(RELOAD_GUARD_KEY, String(Date.now()));
+  window.location.reload();
+}
+```
+
+The key insight is **when** to reload. Not immediately - that would yank the rug out from under someone filling out a form. Instead, we intercept SPA navigations:
+
+```js
+function interceptNavigation() {
+  const originalPush = history.pushState.bind(history);
+  const originalReplace = history.replaceState.bind(history);
+
+  history.pushState = function (...args) {
+    if (pendingReload) {
+      const url = args[2];
+      if (url) {
+        sessionStorage.setItem(RELOAD_GUARD_KEY, String(Date.now()));
+        window.location.href = url; // Full page load → new HTML → new chunks
+        return;
+      }
+    }
+    return originalPush(...args);
+  };
+
+  history.replaceState = function (...args) {
+    if (pendingReload) {
+      const url = args[2];
+      if (url) {
+        sessionStorage.setItem(RELOAD_GUARD_KEY, String(Date.now()));
+        window.location.href = url;
+        return;
+      }
+    }
+    return originalReplace(...args);
+  };
+}
+```
+
+When React Router calls `history.pushState('/courses')`, and we know a new version is live, we swap it for `window.location.href = '/courses'`. The browser does a full page load, fetches the new `index.html` (which is `no-cache`), which references the new chunks. From the user's perspective, the page just took half a second longer to load. They don't even notice.
+
+We also check on tab visibility change (catches the "I left this tab open for 3 days" case):
+
+```js
+function handleVisibilityChange() {
+  if (document.visibilityState === 'visible') {
+    checkVersion().then(() => {
+      if (pendingReload) safeReload();
+    });
+  }
+}
+```
+
+And we start the whole thing from `index.js`, before React even mounts:
+
+```js
+// src/index.js
+import { startVersionChecker } from './utils/versionChecker';
+
+startVersionChecker(); // starts polling, hooks into navigation + visibility
+
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
+```
+
+### Layer 3: Chunk error recovery
+
+Two safety nets for when everything else fails.
+
+**`lazyWithRetry`** - wraps every `React.lazy()` call:
+
+```js
+// src/utils/lazyWithRetry.js
+import { lazy } from 'react';
+
+const RETRY_KEY_PREFIX = 'chunk_retry_';
+
+export default function lazyWithRetry(importFn, chunkName = 'unknown') {
+  return lazy(() =>
+    importFn().catch(() => {
+      const key = RETRY_KEY_PREFIX + chunkName;
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, '1');
+        window.location.reload();
+        return new Promise(() => {}); // never resolves - page is reloading
+      }
+      sessionStorage.removeItem(key);
+      throw new Error(`Failed to load chunk: ${chunkName}`);
+    })
+  );
+}
+```
+
+Usage in `App.js`:
+
+```js
+// Before
+const Settings = lazy(() => import('./pages/Settings'));
+
+// After
+const Settings = lazyWithRetry(() => import('./pages/Settings'), 'Settings');
+```
+
+The `new Promise(() => {})` trick is important. When we call `window.location.reload()`, there's a brief moment before the page actually unloads. If we reject the promise during that moment, React shows the error boundary. The never-resolving promise keeps React in the Suspense loading state until the reload completes. Clean.
+
+**Enhanced ErrorBoundary** - catches chunk errors that slip through:
+
+```js
+componentDidCatch(error) {
+  if (isChunkLoadError(error)) {
+    const last = sessionStorage.getItem('auzmor_chunk_reload_ts');
+    if (!last || Date.now() - Number(last) > 120_000) {
+      sessionStorage.setItem('auzmor_chunk_reload_ts', String(Date.now()));
+      window.location.reload();
+      return;
+    }
+    // Already reloaded recently and still failing - show error UI
+  }
+  this.setState({ hasError: true });
+}
+
+function isChunkLoadError(error) {
+  if (!error) return false;
+  if (error.name === 'ChunkLoadError') return true;
+  const msg = error.message || '';
+  return (
+    msg.includes('Loading chunk') ||
+    msg.includes('Failed to fetch dynamically imported module') ||
+    msg.includes('error loading dynamically imported module')
+  );
+}
+```
+
+### Cache headers
+
+One last piece - make sure `version.json` and `index.html` are never cached:
+
+```json
+// firebase.json
+{
+  "hosting": {
+    "headers": [
+      {
+        "source": "/version.json",
+        "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+      },
+      {
+        "source": "/index.html",
+        "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      }
+    ]
+  }
+}
+```
+
+---
+
+## The reload loop problem (and how to prevent it)
+
+The scariest bug in all of this is the infinite reload loop. Imagine:
+
+1. Version checker detects new version
+2. Calls `window.location.reload()`
+3. Browser serves cached `index.html` (CDN hasn't invalidated yet)
+4. Old `index.html` loads old JS with old `__BUILD_HASH__`
+5. Version checker immediately detects mismatch again
+6. `window.location.reload()`
+7. Repeat forever
+
+The user sees a page that keeps flickering. Terrible.
+
+Our fix: `sessionStorage` with a timestamp. Before every reload, we check if we already reloaded within the last 2 minutes. If we did, we skip the reload and let the app run with whatever version it has. `sessionStorage` is perfect for this because it survives page reloads but gets cleared when the tab is closed.
+
+We also clear the guard on successful app startup (in `index.js`). So the flow is:
+
+1. App loads successfully → clear reload guard
+2. Version mismatch detected → check guard → guard is clear → reload → set guard
+3. If still mismatched after reload → check guard → guard is set (< 2 min) → skip reload, run the app
+4. Eventually CDN catches up, user manually refreshes, or 2 min passes and the guard expires
+
+It's not perfect, but it prevents the catastrophic case. And in practice, CDN invalidation completes within seconds, so step 3 almost never happens.
+
+---
+
+## What we decided not to do
+
+**Service Worker** - We had one, it was disabled (`serviceWorker.unregister()`). Adding it back just for version detection adds lifecycle complexity we don't want to maintain. The polling approach is simpler and just as effective for our use case.
+
+**WebSocket/SSE** - We don't have a persistent connection to the server. Building one just for "hey, new version" is not worth the infrastructure.
+
+**Navigation API** - Love the spec. Cleaner than monkey-patching `history.pushState`. But Safari support literally just landed and we're not confident enough to rely on it. We'll switch when it's been Baseline for a year.
+
+**BroadcastChannel** - Nice for multi-tab coordination. But our version checker already runs independently in each tab, so each tab detects the new version on its own. We might add this if we find that one tab reloading while another stays stale is causing issues.
+
+**`stale-while-revalidate`** - Considered this for `index.html`. The problem is that the first load after deploy serves the stale version, which is exactly the scenario we're trying to prevent. `no-cache` with a fast CDN is better for our needs.
+
+---
+
+## The mental model
+
+Think of it as three concentric rings:
+
+```
+Outer ring:  Version polling (proactive, 60s interval)
+             "A new version exists. Reload on next navigation."
+
+Middle ring: Visibility/focus check (opportunistic)
+             "User just came back to this tab. Is it stale? Reload."
+
+Inner ring:  ChunkLoadError recovery (reactive, last resort)
+             "A chunk failed to load. The app is about to crash. Reload NOW."
+```
+
+In the happy path, the outer ring catches everything. The user navigates, the app silently does a full page load instead of a client-side transition. They don't even notice.
+
+The middle ring catches the "left a tab open for a week" case. User switches back, we check, we reload.
+
+The inner ring is the emergency brake. Something went wrong, a chunk is missing, we reload before the user sees an error.
+
+Each ring is independent. If one fails, the next one catches it. Belt, suspenders, and a rope.
+
+---
+
+## The results
+
+After deploying this:
+
+- **Zero** "white screen after deploy" support tickets (we had 3-5 per deploy before)
+- **~1 KB** added to the bundle (version checker + lazyWithRetry)
+- **One** extra network request every 60 seconds (tiny `version.json`, ~80 bytes)
+- **Average time to detect new version**: 30 seconds (half the poll interval)
+- **Time from detection to reload**: next navigation (could be instant, could be minutes — depends on user behavior)
+
+---
+
+## Quick reference: all the approaches
+
+For the completionists, here's every technique I found, grouped by when they help:
+
+### Before the user even notices (proactive)
+
+| Technique | How it works | Complexity | Our take |
+|-----------|-------------|------------|----------|
+| Version polling | Poll a `version.json` every N seconds | Low | **Shipped this** |
+| Route-change check | Check version on every SPA navigation | Low | **Shipped this** (via pushState intercept) |
+| Visibility/Focus check | Check when tab becomes visible | Low | **Shipped this** |
+| `X-App-Version` header | Backend returns version on every API response | Medium | Skipped — needs backend changes |
+| Service Worker update | Browser checks SW every 24h | Medium | Skipped — SW is disabled |
+| SSE push | Server pushes "new version" event | Medium | Skipped — no SSE infra |
+| WebSocket push | Same, over WebSocket | High | Skipped — no WS infra |
+| BroadcastChannel | Cross-tab coordination | Low | Maybe later |
+| Navigation API | Modern `navigate` event listener | Low | Waiting for broader baseline |
+
+### When things break (reactive)
+
+| Technique | How it works | Complexity | Our take |
+|-----------|-------------|------------|----------|
+| `lazyWithRetry` wrapper | Catch import failure, reload | Low | **Shipped this** |
+| ErrorBoundary chunk detection | Catch ChunkLoadError, reload | Low | **Shipped this** |
+| `webpack-retry-chunk-load-plugin` | Bundler-level retry | Low | N/A (Webpack only) |
+| `@plugin-web-update-notification` | Build plugin + polling UI | Low | Evaluated, rolled our own |
+
+### Infrastructure (set and forget)
+
+| Technique | How it works | Complexity | Our take |
+|-----------|-------------|------------|----------|
+| Content-hashed filenames | Bundler hashes output files | Zero | Already had this |
+| `no-cache` on `index.html` | Cache header config | Low | **Shipped this** |
+| CDN invalidation | Purge HTML from CDN on deploy | Medium | Firebase does this on deploy |
+| `no-cache` on `version.json` | Cache header config | Low | **Shipped this** |
+
+### Interesting but not for us (yet)
+
+| Technique | Why interesting | Why we skipped |
+|-----------|----------------|----------------|
+| Import Maps | Runtime module resolution, no rebuild needed | Micro-frontend pattern, we're monolithic |
+| Module Federation 2.0 | Independent deployment of modules | Same — micro-frontend territory |
+| Speculation Rules API | Prerender next pages for instant loads | Chromium-only, doesn't solve version detection |
+| 103 Early Hints | Preload assets during server think-time | Performance optimization, not version detection |
+| HMR in production | Push code updates without reload | Cool in theory, terrifying in practice |
+| Semver-based policy | Major = forced, minor = optional | Adding this when we have more frequent deploys |
+| `stale-while-revalidate` | Fast loads with eventual freshness | Tolerates one stale load — not acceptable for us |
+
+---
+
+## TL;DR
+
+1. **Hash your assets** (your bundler already does this)
+2. **Never cache `index.html`** (add `Cache-Control: no-cache` in your CDN/server config)
+3. **Generate a `version.json` at build time**, poll it from the client
+4. **Intercept SPA navigation** — when a new version is detected, do `window.location.href` instead of client-side routing
+5. **Wrap `React.lazy` with retry logic** — catch chunk load failures and reload
+6. **Enhance your ErrorBoundary** — detect `ChunkLoadError` and auto-reload
+7. **Guard against reload loops** — use `sessionStorage` with a timestamp cooldown
+
+That's it. Seven things. The first two are config. The next four are maybe 150 lines of code total. The last one is three lines.
+
+Your users will never see a white screen after deploy again.
+
+---
+
+I built this while migrating a 3500-file React SPA from CRA to Rsbuild. If you are doing something similar, the chunk error handling alone is worth implementing before you deploy anything.
+
+If you found this helpful or are working on something similar, I'd love to hear about it. Find me on [X (@okshubhh)](https://x.com/okshubhh).
+
+bye
