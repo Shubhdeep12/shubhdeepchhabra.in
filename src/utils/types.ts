@@ -28,11 +28,14 @@ export type IconProps = {
 export interface FrontMatter {
 	title: string;
 	publishedAt: string;
+	updatedAt?: string;
 	description: string;
 	cover?: string;
 	category?: string;
 	categories?: string[];
 	color?: string;
+	keywords?: string[];
+	tldr?: string;
 }
 
 export interface Blog {

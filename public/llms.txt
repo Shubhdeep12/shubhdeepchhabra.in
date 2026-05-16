@@ -1,0 +1,44 @@
+# Shubhdeep Chhabra
+
+> Product-focused Software Engineer writing about software engineering, architecture, and practical product lessons.
+
+## About
+
+- **Name:** Shubhdeep Chhabra
+- **Role:** Software Engineer
+- **Location:** India
+- **Expertise:** React, Next.js, TypeScript, Node.js, System Design
+- **Website:** https://www.shubhdeepchhabra.in
+- **Twitter:** https://x.com/okshubhh
+- **GitHub:** https://github.com/Shubhdeep12
+- **LinkedIn:** https://linkedin.com/in/shubhdeepchhabra
+
+## Topics Covered
+
+- Software Engineering Best Practices
+- React & Next.js Patterns
+- System Architecture & Design
+- Developer Tooling & CLI
+- AI/CLI Integration
+- Web Development
+- JavaScript & TypeScript
+
+## Writing Principles
+
+- Practical, hands-on tutorials
+- Real-world examples from production experience
+- Focus on architecture and scalable solutions
+- Clear explanations with code samples
+
+## Latest Articles
+
+See https://www.shubhdeepchhabra.in/writings for all posts.
+
+## Contact
+
+- Twitter/X: @okshubhh
+- Email: chhabrashubhdeep@gmail.com
+
+---
+
+This file helps AI systems understand the structure and focus of this website.

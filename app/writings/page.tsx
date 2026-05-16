@@ -8,7 +8,30 @@ import { getCategories, getPrimaryCategory } from '../../src/utils/blog-shared';
 
 export const metadata: Metadata = {
 	title: 'Writings - Shubhdeep Chhabra',
-	description: 'Articles on software development through eyes of Shubhdeep',
+	description:
+		'Articles on software engineering, architecture, and practical product lessons. Musings on engineering, product, and whatever else is on my mind.',
+	alternates: {
+		canonical: 'https://www.shubhdeepchhabra.in/writings',
+	},
+	keywords: [
+		'blog',
+		'writings',
+		'software engineering',
+		'engineering',
+		'technology',
+		'react',
+		'next.js',
+		'javascript',
+		'typescript',
+	],
+	openGraph: {
+		type: 'website',
+		title: 'Writings - Shubhdeep Chhabra',
+		description: 'Articles on software engineering, architecture, and practical product lessons.',
+		url: 'https://www.shubhdeepchhabra.in/writings',
+		locale: 'en_US',
+		siteName: 'Shubhdeep Chhabra',
+	},
 };
 
 export default async function Writings() {
