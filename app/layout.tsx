@@ -4,6 +4,7 @@ import './globals.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
+import Script from 'next/script';
 import { ThemeProvider } from 'next-themes';
 import { type PropsWithChildren } from 'react';
 import { Providers } from '@/src/providers';
@@ -20,6 +21,7 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL('https://www.shubhdeepchhabra.in'),
 	title: 'Shubhdeep Chhabra',
 	description:
 		'Shubhdeep Chhabra is a Product focussed Software Engineer writing about software engineering, architecture, and practical product lessons.',
@@ -48,6 +50,15 @@ export const metadata: Metadata = {
 	referrer: 'origin',
 	creator: 'Shubhdeep Chhabra',
 	publisher: 'Shubhdeep Chhabra',
+	alternates: {
+		canonical: 'https://www.shubhdeepchhabra.in',
+		types: {
+			'application/rss+xml': 'https://www.shubhdeepchhabra.in/feed.xml',
+		},
+	},
+	verification: {
+		google: 'zzOxnT2OK-VXnky4seVyjN8t_pbqaA1hA1RT8LJ1osY',
+	},
 	openGraph: {
 		type: 'website',
 		description:
@@ -60,8 +71,8 @@ export const metadata: Metadata = {
 			{
 				url: '/assets/shubhdeep-og.png',
 				alt: 'Shubhdeep Chhabra',
-				width: '1200',
-				height: '474',
+				width: 1200,
+				height: 474,
 			},
 		],
 	},
@@ -94,11 +105,50 @@ export const metadata: Metadata = {
 			url: '/apple-touch-icon.png',
 		},
 	},
+	other: {
+		preconnect: 'https://fonts.googleapis.com',
+		'dns-prefetch': 'https://www.googletagmanager.com',
+	},
+};
+
+const personStructuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: 'Shubhdeep Chhabra',
+	url: 'https://www.shubhdeepchhabra.in',
+	sameAs: ['https://x.com/okshubhh', 'https://github.com/Shubhdeep12', 'https://linkedin.com/in/shubhdeepchhabra'],
+	jobTitle: 'Senior Software Engineer',
+	description:
+		'Shubhdeep Chhabra is a Product focussed Software Engineer writing about software engineering, architecture, and practical product lessons.',
+};
+
+const websiteStructuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: 'Shubhdeep Chhabra',
+	url: 'https://www.shubhdeepchhabra.in',
+	potentialAction: {
+		'@type': 'SearchAction',
+		target: 'https://www.shubhdeepchhabra.in/writings?q={search_term_string}',
+		'query-input': 'required name=search_term_string',
+	},
 };
 
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en' suppressHydrationWarning>
+			<head>
+				<Script
+					id='person-structured-data'
+					type='application/ld+json'
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(personStructuredData) }}
+				/>
+				<Script
+					id='website-structured-data'
+					type='application/ld+json'
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
+				/>
+			</head>
 			<body className={`${dmSans.variable} ${dmMono.variable} min-h-screen`} suppressHydrationWarning>
 				<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 					<Providers>

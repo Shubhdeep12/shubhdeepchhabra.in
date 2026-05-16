@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import type { MDXRemoteProps } from 'next-mdx-remote/rsc';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Fragment, Suspense } from 'react';
@@ -41,6 +42,10 @@ export async function generateMetadata({ params }: WritingProps): Promise<Metada
 		description,
 		creator: 'Shubhdeep Chhabra',
 		publisher: 'Shubhdeep Chhabra',
+		alternates: {
+			canonical: `https://www.shubhdeepchhabra.in/writings/${slug}`,
+		},
+		keywords: blog.frontMatter.keywords || blog.frontMatter.categories || [],
 		openGraph: {
 			type: 'article',
 			description,
@@ -48,6 +53,11 @@ export async function generateMetadata({ params }: WritingProps): Promise<Metada
 			locale: 'en_US',
 			siteName: 'Shubhdeep Chhabra Portfolio',
 			url: `https://www.shubhdeepchhabra.in/writings/${slug}`,
+			publishedTime: blog.frontMatter.publishedAt,
+			modifiedTime: blog.frontMatter.updatedAt || blog.frontMatter.publishedAt,
+			authors: ['https://www.shubhdeepchhabra.in'],
+			section: getPrimaryCategory(blog.frontMatter) || 'Technology',
+			tags: blog.frontMatter.categories || [],
 			images: [
 				{
 					url: ogImage,
@@ -105,8 +115,41 @@ export default async function WritingPage({ params }: WritingProps) {
 
 	const githubEditUrl = `https://github.com/Shubhdeep12/ShubhdeepChhabra/tree/master/blog/${blog.slug}.mdx`;
 
+	// BlogPosting structured data for SEO and AI discovery
+	const blogPostingStructuredData = {
+		'@context': 'https://schema.org',
+		'@type': 'BlogPosting',
+		headline: blog.frontMatter.title,
+		description: blog.frontMatter.description,
+		image: blog.frontMatter.cover ? `https://www.shubhdeepchhabra.in${blog.frontMatter.cover}` : undefined,
+		datePublished: blog.frontMatter.publishedAt,
+		dateModified: blog.frontMatter.updatedAt || blog.frontMatter.publishedAt,
+		author: {
+			'@type': 'Person',
+			name: 'Shubhdeep Chhabra',
+			url: 'https://www.shubhdeepchhabra.in',
+		},
+		publisher: {
+			'@type': 'Person',
+			name: 'Shubhdeep Chhabra',
+			url: 'https://www.shubhdeepchhabra.in',
+		},
+		mainEntityOfPage: {
+			'@type': 'WebPage',
+			'@id': postUrl,
+		},
+		url: postUrl,
+		keywords: blog.frontMatter.keywords?.join(', ') || blog.frontMatter.categories?.join(', ') || '',
+		articleSection: getPrimaryCategory(blog.frontMatter) || 'Technology',
+	};
+
 	return (
 		<section className='flex flex-col items-start gap-4 laptop:gap-8'>
+			<Script
+				id='blog-post-structured-data'
+				type='application/ld+json'
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingStructuredData) }}
+			/>
 			<PostReadingLayout
 				mdxMarkdown={mdxSource}
 				githubEditUrl={githubEditUrl}

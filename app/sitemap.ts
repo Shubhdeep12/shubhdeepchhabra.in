@@ -6,13 +6,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	const blogEntries = blogs.map((blog) => ({
 		url: `https://www.shubhdeepchhabra.in/writings/${blog.slug}`,
-		lastModified: blog.frontMatter.publishedAt,
+		lastModified: blog.frontMatter.updatedAt || blog.frontMatter.publishedAt,
+		priority: 0.8,
+		changeFrequency: 'monthly' as const,
+		images: blog.frontMatter.cover ? [`https://www.shubhdeepchhabra.in${blog.frontMatter.cover}`] : undefined,
 	}));
 
-	const routes = ['', '/writings'].map((route) => ({
-		url: `https://www.shubhdeepchhabra.in${route}`,
-		lastModified: new Date().toISOString().split('T')[0],
-	}));
+	const routes: MetadataRoute.Sitemap = [
+		{
+			url: 'https://www.shubhdeepchhabra.in',
+			lastModified: new Date().toISOString().split('T')[0],
+			priority: 1.0,
+			changeFrequency: 'weekly',
+		},
+		{
+			url: 'https://www.shubhdeepchhabra.in/writings',
+			lastModified: new Date().toISOString().split('T')[0],
+			priority: 0.9,
+			changeFrequency: 'weekly',
+		},
+	];
 
 	return [...routes, ...blogEntries];
 }
