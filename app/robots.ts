@@ -5,6 +5,6 @@ export default function robots() {
 				userAgent: '*',
 			},
 		],
-		sitemap: 'https://www.okshubh.in/sitemap.xml',
+		sitemap: 'https://okshubh.in/sitemap.xml',
 	};
 }

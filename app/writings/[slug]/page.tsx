@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: WritingProps): Promise<Metada
 	}
 
 	const { title, description, cover } = blog.frontMatter;
-	const ogImage = cover ? `https://www.okshubh.in/${cover}` : '';
+	const ogImage = cover ? `https://okshubh.in/${cover}` : '';
 
 	return {
 		title,
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: WritingProps): Promise<Metada
 		creator: 'Shubhdeep Chhabra',
 		publisher: 'Shubhdeep Chhabra',
 		alternates: {
-			canonical: `https://www.okshubh.in/writings/${slug}`,
+			canonical: `https://okshubh.in/writings/${slug}`,
 		},
 		keywords: blog.frontMatter.keywords || blog.frontMatter.categories || [],
 		openGraph: {
@@ -52,10 +52,10 @@ export async function generateMetadata({ params }: WritingProps): Promise<Metada
 			title,
 			locale: 'en_US',
 			siteName: 'Shubhdeep Chhabra Portfolio',
-			url: `https://www.okshubh.in/writings/${slug}`,
+			url: `https://okshubh.in/writings/${slug}`,
 			publishedTime: blog.frontMatter.publishedAt,
 			modifiedTime: blog.frontMatter.updatedAt || blog.frontMatter.publishedAt,
-			authors: ['https://www.okshubh.in'],
+			authors: ['https://okshubh.in'],
 			section: getPrimaryCategory(blog.frontMatter) || 'Technology',
 			tags: blog.frontMatter.categories || [],
 			images: [
@@ -99,7 +99,7 @@ export default async function WritingPage({ params }: WritingProps) {
 	}
 
 	const { mdxSource } = blog;
-	const postUrl = `https://www.okshubh.in/writings/${slug}`;
+	const postUrl = `https://okshubh.in/writings/${slug}`;
 	const relatedPosts = sortBlogsByDate(allPosts)
 		.filter((post) => post.slug !== slug)
 		.slice(0, 3)
@@ -121,18 +121,18 @@ export default async function WritingPage({ params }: WritingProps) {
 		'@type': 'BlogPosting',
 		headline: blog.frontMatter.title,
 		description: blog.frontMatter.description,
-		image: blog.frontMatter.cover ? `https://www.okshubh.in${blog.frontMatter.cover}` : undefined,
+		image: blog.frontMatter.cover ? `https://okshubh.in${blog.frontMatter.cover}` : undefined,
 		datePublished: blog.frontMatter.publishedAt,
 		dateModified: blog.frontMatter.updatedAt || blog.frontMatter.publishedAt,
 		author: {
 			'@type': 'Person',
 			name: 'Shubhdeep Chhabra',
-			url: 'https://www.okshubh.in',
+			url: 'https://okshubh.in',
 		},
 		publisher: {
 			'@type': 'Person',
 			name: 'Shubhdeep Chhabra',
-			url: 'https://www.okshubh.in',
+			url: 'https://okshubh.in',
 		},
 		mainEntityOfPage: {
 			'@type': 'WebPage',

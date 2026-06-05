@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 	description:
 		'Articles on software engineering, architecture, and practical product lessons. Musings on engineering, product, and whatever else is on my mind.',
 	alternates: {
-		canonical: 'https://www.okshubh.in/writings',
+		canonical: 'https://okshubh.in/writings',
 	},
 	keywords: [
 		'blog',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 		type: 'website',
 		title: 'Writings - Shubhdeep Chhabra',
 		description: 'Articles on software engineering, architecture, and practical product lessons.',
-		url: 'https://www.okshubh.in/writings',
+		url: 'https://okshubh.in/writings',
 		locale: 'en_US',
 		siteName: 'Shubhdeep Chhabra',
 	},

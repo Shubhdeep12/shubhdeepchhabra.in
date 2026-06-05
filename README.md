@@ -1,3 +1,3 @@
 # Shubhdeep Chhabra Portfolio
 
-https://www.okshubh.in/
+https://okshubh.in/

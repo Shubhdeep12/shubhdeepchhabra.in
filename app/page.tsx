@@ -8,14 +8,14 @@ export const metadata: Metadata = {
 	description:
 		'Product-focused Software Engineer writing about software engineering, architecture, and practical product lessons.',
 	alternates: {
-		canonical: 'https://www.okshubh.in',
+		canonical: 'https://okshubh.in',
 	},
 	openGraph: {
 		type: 'website',
 		title: 'Shubhdeep Chhabra',
 		description:
 			'Product-focused Software Engineer writing about software engineering, architecture, and practical product lessons.',
-		url: 'https://www.okshubh.in',
+		url: 'https://okshubh.in',
 		locale: 'en_US',
 		siteName: 'Shubhdeep Chhabra',
 	},

@@ -8,7 +8,7 @@
 - **Role:** Software Engineer
 - **Location:** India
 - **Expertise:** React, Next.js, TypeScript, Node.js, System Design
-- **Website:** https://www.okshubh.in
+- **Website:** https://okshubh.in
 - **Twitter:** https://x.com/okshubhh
 - **GitHub:** https://github.com/Shubhdeep12
 - **LinkedIn:** https://linkedin.com/in/shubhdeepchhabra
@@ -32,7 +32,7 @@
 
 ## Latest Articles
 
-See https://www.okshubh.in/writings for all posts.
+See https://okshubh.in/writings for all posts.
 
 ## Contact
 
