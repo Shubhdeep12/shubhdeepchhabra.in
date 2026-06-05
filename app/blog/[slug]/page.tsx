@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata 
 	}
 
 	const { title, description, cover } = blog.frontMatter;
-	const ogImage = cover ? `https://www.shubhdeepchhabra.in/${cover}` : '';
+	const ogImage = cover ? `https://www.okshubh.in/${cover}` : '';
 
 	return {
 		title,
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: BlogProps): Promise<Metadata 
 			title,
 			locale: 'en_US',
 			siteName: 'Shubhdeep Chhabra Portfolio',
-			url: `https://www.shubhdeepchhabra.in/blog/${slug}`,
+			url: `https://www.okshubh.in/blog/${slug}`,
 			images: [
 				{
 					url: ogImage,
@@ -90,7 +90,7 @@ export default async function BlogPage({ params }: BlogProps) {
 
 	const { mdxSource } = blog;
 	const githubEditUrl = `https://github.com/Shubhdeep12/ShubhdeepChhabra/tree/master/blog/${blog.slug}.mdx`;
-	const postUrl = `https://www.shubhdeepchhabra.in/writings/${slug}`;
+	const postUrl = `https://www.okshubh.in/writings/${slug}`;
 	const relatedPosts = sortBlogsByDate(allPosts)
 		.filter((post) => post.slug !== slug)
 		.slice(0, 3)

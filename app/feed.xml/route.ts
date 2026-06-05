@@ -13,19 +13,19 @@ export async function GET() {
 		title: 'Shubhdeep Chhabra',
 		description:
 			'Product-focused Software Engineer writing about software engineering, architecture, and practical product lessons.',
-		site_url: 'https://www.shubhdeepchhabra.in/',
-		feed_url: 'https://www.shubhdeepchhabra.in/feed.xml',
+		site_url: 'https://www.okshubh.in/',
+		feed_url: 'https://www.okshubh.in/feed.xml',
 		language: 'en-US',
 		pubDate: new Date().toUTCString(),
-		image_url: 'https://www.shubhdeepchhabra.in/assets/shubhdeep-og.png',
+		image_url: 'https://www.okshubh.in/assets/shubhdeep-og.png',
 		categories: ['Software Engineering', 'Web Development', 'React', 'Next.js', 'JavaScript', 'TypeScript'],
 	});
 
 	sortedBlogs.forEach((blog) => {
 		feed.item({
 			title: blog.frontMatter.title,
-			guid: `https://www.shubhdeepchhabra.in/writings/${blog.slug}`,
-			url: `https://www.shubhdeepchhabra.in/writings/${blog.slug}`,
+			guid: `https://www.okshubh.in/writings/${blog.slug}`,
+			url: `https://www.okshubh.in/writings/${blog.slug}`,
 			date: blog.frontMatter.publishedAt,
 			description: blog.frontMatter.description,
 			author: 'Shubhdeep Chhabra',

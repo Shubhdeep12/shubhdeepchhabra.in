@@ -21,12 +21,12 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-	metadataBase: new URL('https://www.shubhdeepchhabra.in'),
+	metadataBase: new URL('https://www.okshubh.in'),
 	title: 'Shubhdeep Chhabra',
 	description:
 		'Shubhdeep Chhabra is a Product focussed Software Engineer writing about software engineering, architecture, and practical product lessons.',
 	applicationName: 'Shubhdeep Chhabra',
-	authors: [{ name: 'Shubhdeep Chhabra', url: 'https://www.shubhdeepchhabra.in' }],
+	authors: [{ name: 'Shubhdeep Chhabra', url: 'https://www.okshubh.in' }],
 	keywords: [
 		'next.js',
 		'react',
@@ -51,9 +51,9 @@ export const metadata: Metadata = {
 	creator: 'Shubhdeep Chhabra',
 	publisher: 'Shubhdeep Chhabra',
 	alternates: {
-		canonical: 'https://www.shubhdeepchhabra.in',
+		canonical: 'https://www.okshubh.in',
 		types: {
-			'application/rss+xml': 'https://www.shubhdeepchhabra.in/feed.xml',
+			'application/rss+xml': 'https://www.okshubh.in/feed.xml',
 		},
 	},
 	verification: {
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
 		title: 'Shubhdeep Chhabra',
 		locale: 'en_US',
 		siteName: 'Shubhdeep Chhabra',
-		url: 'https://www.shubhdeepchhabra.in/',
+		url: 'https://www.okshubh.in/',
 		images: [
 			{
 				url: '/assets/shubhdeep-og.png',
@@ -115,7 +115,7 @@ const personStructuredData = {
 	'@context': 'https://schema.org',
 	'@type': 'Person',
 	name: 'Shubhdeep Chhabra',
-	url: 'https://www.shubhdeepchhabra.in',
+	url: 'https://www.okshubh.in',
 	sameAs: ['https://x.com/okshubhh', 'https://github.com/Shubhdeep12', 'https://linkedin.com/in/shubhdeepchhabra'],
 	jobTitle: 'Senior Software Engineer',
 	description:
@@ -126,10 +126,10 @@ const websiteStructuredData = {
 	'@context': 'https://schema.org',
 	'@type': 'WebSite',
 	name: 'Shubhdeep Chhabra',
-	url: 'https://www.shubhdeepchhabra.in',
+	url: 'https://www.okshubh.in',
 	potentialAction: {
 		'@type': 'SearchAction',
-		target: 'https://www.shubhdeepchhabra.in/writings?q={search_term_string}',
+		target: 'https://www.okshubh.in/writings?q={search_term_string}',
 		'query-input': 'required name=search_term_string',
 	},
 };
