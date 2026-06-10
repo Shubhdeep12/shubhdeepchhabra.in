@@ -1,4 +1,4 @@
-export const resumeUrl = 'https://drive.google.com/file/d/1le6TvIqCost3l8ZJ3xSJAsKSN-lh6mQ8/view?usp=sharing';
+export const resumeUrl = 'https://drive.google.com/file/d/1ncn2GYtIvrQQR2puMP7E68bfLhtNEU5v/view?usp=sharing';
 
 export const NAVIGATIONBAR_ITEMS = {
 	blog: {
