@@ -1,0 +1,296 @@
+---
+title: 'Agent Hooks Are (Almost) the Same Everywhere'
+publishedAt: '2026-09-15'
+description: 'Claude Code, Codex, Cursor, Copilot CLI and Gemini CLI all let you run your own code at points in the agent loop, and they have ended up with almost the same protocol. The shared part, the event names side by side, and how to write a hook that works in more than one tool.'
+categories: ['AI', 'Engineering', 'Tooling']
+---
+
+Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI. Open their hook docs one after another and it starts to feel like reading the same page with the words rearranged.
+
+To check whether that was only an impression, I read the source of [Entire](https://github.com/entireio/cli), a tool that installs hooks into eight different coding agents. If anyone has had to deal with all the differences, it’s them. And the impression held: hooks have quietly become the same thing everywhere. Same idea, same input format, and (where it matters) the same "exit 2 means no". Mostly different spelling.
+
+This post is that shared part, a side-by-side table of the events, and the differences that will actually bite you.
+
+**The short version, if you’re in a hurry:**
+
+- A hook is a command the harness runs at a fixed point in the agent loop. Config is `event → matcher → command`.
+- The harness writes a JSON payload to your script’s stdin.
+- Exit `0` means continue. Exit `2` means "no", with stderr as the reason. On a *before* event (`PreToolUse`, prompt submit) that blocks the action. Any other exit code is a warning, not a block.
+- Event names differ (`PreToolUse` vs `preToolUse` vs `BeforeTool`), but the moments are the same.
+- Set your own timeout, exit `0` on your own bugs, and test the script by piping JSON into it.
+
+---
+
+## First: what a hook is
+
+Every coding agent runs the same loop:
+
+```
+session start
+  → you send a prompt
+    → model thinks → calls a tool (read file, edit, run shell) → reads the result → repeat
+  → model stops and answers
+  → (context gets full → compaction)
+session end
+```
+
+A hook is your own program that the harness runs at one of those points. "Before any tool runs." "When the user submits a prompt." "When the session starts."
+
+The big difference from skills or instructions: the model doesn’t decide whether a hook runs, the harness does. Write "always run the formatter" in `AGENTS.md` and the model will do it most of the time. Put the formatter in a hook and it runs every time.
+
+For here: **instructions are suggestions, hooks always run.** A hook guarantees your code gets a say at that moment. It doesn’t guarantee the outcome, because the hook can have bugs or miss a path (more on that below).
+
+---
+
+## The shared protocol
+
+Claude Code shipped this shape first, and most of the others now follow it pretty closely.
+
+### 1. Config: event → matcher → command
+
+```json
+{
+	"hooks": {
+		"PreToolUse": [
+			{
+				"matcher": "Bash",
+				"hooks": [{ "type": "command", "command": "./scripts/guard.sh", "timeout": 10 }]
+			}
+		]
+	}
+}
+```
+
+- The **event** is *when* (`PreToolUse`).
+- The **matcher** filters *which* (only the `Bash` tool).
+- The **command** is *what* runs.
+
+### 2. Input: JSON on stdin
+
+The harness runs your command and writes a JSON payload to its stdin. The common fields look like this (this is Codex’s `PreToolUse`, Claude Code’s is very close):
+
+```json
+{
+	"session_id": "550e8400-e29b-41d4-a716-446655440000",
+	"transcript_path": "/Users/me/.codex/rollouts/.../rollout-....jsonl",
+	"cwd": "/path/to/repo",
+	"hook_event_name": "PreToolUse",
+	"tool_name": "Bash",
+	"tool_input": { "command": "ls -la" }
+}
+```
+
+### 3. Output: exit code first, then JSON
+
+| Exit code | Meaning |
+| --- | --- |
+| `0` | Success. Stdout can contain JSON with a decision or extra context |
+| `2` | "No". On a before-event the action is stopped. Stderr is the reason, and the model sees it |
+| anything else | Non-blocking error. The harness warns and carries on |
+
+Exit `2` is the "no" signal in Claude Code, Cursor and Gemini CLI. I haven’t confirmed it for the others, so check their docs. What it *does* depends on the event:
+
+- **Before events** (`PreToolUse`, prompt submit): the action is blocked.
+- **After events** (`PostToolUse`): the action already happened, so stderr is only fed back to the model.
+- **`Stop`**: exit `2` means "not done, keep working", not "block".
+
+If you remember one rule from this post, make it this one, because **exit `1` does not block.**
+
+### A tiny hook that works
+
+A guard that stops the agent from writing to `.env` files. It reads the path from the payload and blocks anything that looks like a secrets file, except `.env.example`:
+
+```bash
+#!/usr/bin/env bash
+# protect-env.sh: block edits to .env files
+# Claude Code sends tool_input.file_path, Cursor sends tool_input.path
+# This is a security guard, so it fails closed: no jq means no edit.
+command -v jq >/dev/null || { echo "protect-env: jq is required" >&2; exit 2; }
+file=$(jq -r '.tool_input.file_path // .tool_input.path // ""')
+
+case "$(basename "$file")" in
+	.env.example) ;;
+	.env | .env.*)
+		echo "Blocked: $file holds secrets. Ask the user to change it themselves." >&2
+		exit 2
+		;;
+esac
+
+exit 0
+```
+
+Read stdin, decide, exit. That’s the whole contract. Register it on `PreToolUse` with a `Write|Edit` matcher in Claude Code, or on the equivalent event from the table below in your other tools.
+
+You don’t need an agent to test it. Pipe a payload in and check the exit code:
+
+```bash
+echo '{"tool_input":{"file_path":"/repo/.env"}}' | ./protect-env.sh; echo $?     # prints the reason, then 2
+echo '{"tool_input":{"file_path":"src/app.ts"}}' | ./protect-env.sh; echo $?     # 0
+```
+
+One honest caveat. A hook like this stops the *edit tools*. It doesn’t stop the agent from running `echo KEY=x >> .env` through the shell, so pair it with a `Bash` matcher if that matters to you. Hooks are a guardrail, not a sandbox. Also note the `jq` check at the top: if `jq` is missing, the shell exits `127`, which is just a warning, and the edit would go through. A guard has to fail closed on its own, which is why it checks first.
+
+### Richer answers with JSON
+
+Exit codes are just yes or no. When you need more, print JSON on stdout and exit `0`. In Claude Code, for example:
+
+```json
+{
+	"hookSpecificOutput": {
+		"hookEventName": "PreToolUse",
+		"permissionDecision": "deny",
+		"permissionDecisionReason": "Database writes are not allowed in this repo"
+	}
+}
+```
+
+With JSON you can also rewrite the tool’s input (`updatedInput`), ask the user instead of deciding yourself (`"ask"`), or add context for the model (`additionalContext`). More on that last one below.
+
+---
+
+## The events, side by side
+
+These are the main events in the six harnesses that use a config file. The names come from each tool’s docs and from Entire’s integration code. Claude Code, Codex and Factory Droid use the same names, so they share a column.
+
+| Moment | Claude Code, Codex, Factory Droid | Cursor | Copilot CLI | Gemini CLI |
+| --- | --- | --- | --- | --- |
+| Session starts | `SessionStart` | `sessionStart` | `sessionStart` | `SessionStart` |
+| Prompt submitted | `UserPromptSubmit` | `beforeSubmitPrompt` | `userPromptSubmitted` | `BeforeAgent` |
+| Before a tool | `PreToolUse` | `preToolUse` | `preToolUse` | `BeforeTool` |
+| After a tool | `PostToolUse` | `postToolUse` | `postToolUse` | `AfterTool` |
+| Turn ends | `Stop` | `stop` | `agentStop` | `AfterAgent` |
+| Before compaction | `PreCompact` | `preCompact` | n/a | `PreCompress` |
+| Subagent starts | `SubagentStart` | `subagentStart` | `subagentStart` | n/a |
+| Subagent ends | `SubagentStop` | `subagentStop` | `subagentStop` | n/a |
+| Session ends | `SessionEnd` | `sessionEnd` | `sessionEnd` | `SessionEnd` |
+
+One exception to the shared column: Factory Droid only has `SubagentStop`, not `SubagentStart`.
+
+Read across a row and you can see how close they are. Read down the columns and you see the casing split: PascalCase (Claude Code, Codex, Factory, Gemini CLI) vs camelCase (Cursor, Copilot CLI).
+
+On top of that shared core, each tool has its own extras:
+
+- **Claude Code** has the most: 33 events as I write this, including `PermissionRequest`, `PostToolUseFailure`, `PreModelSwitch`, `FileChanged` and `WorktreeCreate`.
+- **Cursor** has fine-grained ones like `beforeShellExecution`, `beforeMCPExecution`, `beforeReadFile`, `afterFileEdit` and `afterAgentThought`, plus hooks for Tab completions.
+- **Gemini CLI** can hook the model call itself: `BeforeModel`, `AfterModel`, `BeforeToolSelection`.
+- **Codex** has `PermissionRequest` and `PostCompact`.
+
+Two harnesses don’t use a config file at all. OpenCode and Pi take plugins written in TypeScript/JavaScript that subscribe to events in-process: `session.created` and `session.compacted` in OpenCode, `session_start`, `tool_call` and `agent_end` in Pi. Same loop, different API.
+
+---
+
+## Where they differ (the parts that bite)
+
+### Where the config lives
+
+| Harness | Hook config |
+| --- | --- |
+| Claude Code | `.claude/settings.json` (or `hooks/hooks.json` in a plugin) |
+| Codex | `.codex/hooks.json` or `~/.codex/hooks.json` |
+| Cursor | `.cursor/hooks.json`, `~/.cursor/hooks.json`, plus team and enterprise levels |
+| Copilot CLI | every JSON file in `.github/hooks/` |
+| Gemini CLI | `.gemini/settings.json` |
+| Factory Droid | `.factory/settings.json` |
+| OpenCode | a plugin file in `.opencode/plugins/` |
+| Pi | an extension in `.pi/extensions/` |
+
+### How the command is written
+
+Most use `"type": "command"` with a `"command"` string. Copilot CLI is the odd one: it uses a `"bash"` key (and `"powershell"` for Windows), plus `"version": 1` at the top:
+
+```json
+{
+	"version": 1,
+	"hooks": {
+		"sessionStart": [{ "type": "command", "bash": "./scripts/on-start.sh", "timeoutSec": 30 }]
+	}
+}
+```
+
+### What kind of handler you can use
+
+- **Claude Code**: five types. `command`, `http` (POST the payload to a URL), `mcp_tool` (call a tool on an MCP server), `prompt` (a single LLM yes/no call) and `agent` (a subagent with tools, still experimental).
+- **Cursor**: `command` and `prompt`.
+- **Gemini CLI**: `command` only.
+
+### The JSON you write back
+
+Same ideas, different field names. Claude Code nests everything under `hookSpecificOutput` in camelCase (`permissionDecision`, `additionalContext`, `updatedInput`). Cursor uses flat snake_case (`permission`, `user_message`, `agent_message`, `updated_input`, `additional_context`). So if you return JSON, you’re writing it once per harness.
+
+### Timeouts
+
+The defaults are all over the place. Claude Code’s command hooks default to 600 seconds but drop to 30 on `UserPromptSubmit`. Gemini CLI’s default is 60000, and that’s milliseconds. Copilot’s `timeoutSec` defaults to 30. Codex caps `SessionEnd` at 3 seconds. Just set the timeout yourself, every time.
+
+---
+
+## Two ways to talk back
+
+A hook can send text to two different audiences, and it helps to keep them apart in your head:
+
+- **The user**: a message shown in the UI. Claude Code and Codex call it `systemMessage`.
+- **The model**: text added to the model’s context. Claude Code, Codex and Gemini CLI return it as `hookSpecificOutput.additionalContext` on the prompt-submitted event (`UserPromptSubmit`, or `BeforeAgent` in Gemini). Claude Code also accepts it on `SessionStart` and several other events, and plain text printed by a `SessionStart` hook goes into context too.
+
+The in-process harnesses do the model side their own way: OpenCode plugins can edit the system prompt through `experimental.chat.system.transform`, and Pi extensions can send a message at `before_agent_start`.
+
+Entire actually has two separate interfaces for this in its code, one for "show the user" and one for "tell the model". I’d copy that. Mixing them up is how debug text ends up in the model’s context.
+
+And one warning. Anything you add to the model’s context is a prompt-injection surface. If your hook passes along text from the internet (package descriptions, issue titles, web pages), label it clearly as untrusted data, not instructions.
+
+---
+
+## They’re starting to read each other’s configs
+
+It’s not only the shape that’s converging. The tools are reading each other’s stuff now:
+
+- **Cursor can load Claude Code hooks** (it calls them "third-party hooks"), sets `CLAUDE_PROJECT_DIR` as an alias, and matches Claude Code’s exit `2` behavior.
+- **Codex** hook payloads include a `permission_mode` field with the values `default`, `acceptEdits`, `plan`, `dontAsk` and `bypassPermissions`. Those are Claude Code’s permission mode names.
+- **Copilot CLI** can install plugins from Claude-style marketplaces.
+
+---
+
+## Writing one hook for several tools
+
+If you want one script to work across harnesses, this is what I’ve found works:
+
+**1. Read the payload defensively.** The same thing has different field names:
+
+```js
+// normalize.mjs: read the hook payload from any of the common harnesses
+const raw = await new Promise((resolve) => {
+	let data = '';
+	process.stdin.on('data', (chunk) => (data += chunk));
+	process.stdin.on('end', () => resolve(data));
+});
+let input = {};
+try {
+	input = raw ? JSON.parse(raw) : {};
+} catch {
+	process.exit(0); // fail open: never break the session over a bad payload
+}
+
+const sessionId = input.session_id ?? input.sessionId ?? input.conversation_id; // Claude/Codex, Copilot, Cursor
+const cwd = input.cwd ?? input.workspace_roots?.[0] ?? process.cwd();           // Cursor sends workspace_roots
+const event = input.hook_event_name ?? process.argv[2];                          // Copilot's payloads don't include it, so pass it as an argument
+```
+
+**2. Don’t depend on `transcript_path`.** It’s `null` in Cursor’s CLI and in Codex’s ephemeral mode, and Copilot only sends `transcriptPath` on `agentStop`.
+
+**3. Read both env var spellings.** `CLAUDE_PROJECT_DIR || PROJECT_DIR`, `CLAUDE_PLUGIN_ROOT || PLUGIN_ROOT`. Claude Code uses the `CLAUDE_` names and some other harnesses use the plain ones (Codex plugins get `PLUGIN_ROOT`, for example). Reading both is what lets a single `hooks.json` work in more than one tool.
+
+**4. Keep decisions in exit codes.** Exit `2` with a reason on stderr works in the most places. JSON output is where all the per-tool differences live.
+
+**5. Pick fail-open or fail-closed on purpose.** A formatter or logger should fail open: if it crashes, exit `0`, because a broken helper shouldn’t kill someone’s session. A security guard should fail closed: if it can’t do its check (missing `jq`, bad payload), exit `2`.
+
+**6. Keep it fast.** Every hook is a new process at that point in the loop, and a hook on every file read adds up fast. Entire decided *not* to hook every `Read` for exactly this reason.
+
+---
+
+## Wrap
+
+**Same loop. Mostly the same exit code. Different spelling.**
+
+If you learn hooks in one harness, you’ve mostly learned them in all of them. The events table is the part to bookmark, and the differences section is the checklist to run before you ship.
+
+The docs I keep open: [Claude Code hooks](https://code.claude.com/docs/en/hooks), [Cursor hooks](https://cursor.com/docs/agent/hooks), [Gemini CLI hooks](https://geminicli.com/docs/hooks/), and [Copilot CLI plugins](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-cli-plugins).
+
+I hope you find this helpful. If you’ve written a hook that works across several agents, I’d love to see it. Find me on [X (@okshubhh)](https://x.com/okshubhh).
