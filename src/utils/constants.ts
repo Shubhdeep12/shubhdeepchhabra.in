@@ -10,7 +10,7 @@ export const NAVIGATIONBAR_ITEMS = {
 	},
 	setup: {
 		key: 'setup',
-		title: 'Setup',
+		title: 'Desk',
 		route: '/setup',
 		gFrom: 'from-primary-700',
 		gTo: 'to-primary-500',

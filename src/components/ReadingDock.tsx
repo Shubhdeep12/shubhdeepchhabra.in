@@ -47,18 +47,15 @@ export default function ReadingDock() {
 
 	const toggleTheme = () => {
 		const next = isDark ? 'light' : 'dark';
-		runViewTransition(
-			() => {
-				// Runs after the old frame is captured. Apply the class directly and flush React so the
-				// new snapshot is complete; next-themes then persists the choice.
-				const root = document.documentElement;
-				root.classList.toggle('dark', next === 'dark');
-				root.classList.toggle('light', next === 'light');
-				root.style.colorScheme = next;
-				flushSync(() => setTheme(next));
-			},
-			'theme'
-		);
+		runViewTransition(() => {
+			// Runs after the old frame is captured. Apply the class directly and flush React so the
+			// new snapshot is complete; next-themes then persists the choice.
+			const root = document.documentElement;
+			root.classList.toggle('dark', next === 'dark');
+			root.classList.toggle('light', next === 'light');
+			root.style.colorScheme = next;
+			flushSync(() => setTheme(next));
+		}, 'theme');
 	};
 
 	return (
