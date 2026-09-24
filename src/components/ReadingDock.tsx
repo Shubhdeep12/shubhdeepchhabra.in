@@ -2,6 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { FiMoon, FiSun } from 'react-icons/fi';
 import { runViewTransition, useReadingMode } from '@/src/hooks/useReadingMode';
 
@@ -44,21 +45,20 @@ export default function ReadingDock() {
 
 	const isDark = mounted && resolvedTheme === 'dark';
 
-	const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const toggleTheme = () => {
 		const next = isDark ? 'light' : 'dark';
-		const rect = e.currentTarget.getBoundingClientRect();
 		runViewTransition(
 			() => {
-				// Apply synchronously so the view transition captures the new state; next-themes persists it.
+				// Runs after the old frame is captured. Apply the class directly and flush React so the
+				// new snapshot is complete; next-themes then persists the choice.
 				const root = document.documentElement;
 				root.classList.toggle('dark', next === 'dark');
 				root.classList.toggle('light', next === 'light');
 				root.style.colorScheme = next;
+				flushSync(() => setTheme(next));
 			},
-			'theme',
-			{ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+			'theme'
 		);
-		setTheme(next);
 	};
 
 	return (

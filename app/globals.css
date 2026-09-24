@@ -1237,7 +1237,7 @@ html[data-reading="on"] {
 	--bg2: #ebe4d5;
 	--ink: #262019;
 	--muted: #4a4136;
-	--faint: #7a6f5e;
+	--faint: #736856;
 	--accent: #9a4a24;
 	--border: #dbd1bd;
 	--border-soft: #e6dece;
@@ -1588,6 +1588,7 @@ html[data-reading="on"] .reading-progress {
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
+	--vt-feather: 30vmax;
 	animation: none;
 	mix-blend-mode: normal;
 }
@@ -1607,8 +1608,15 @@ html[data-vt="reading-off"]::view-transition-new(root) {
 	z-index: 1;
 }
 
+/* Theme: new colours flow in from the top-right corner with a feathered edge */
 html[data-vt="theme"]::view-transition-new(root) {
-	animation: vt-circle 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+	-webkit-mask-image: radial-gradient(
+		circle at 100% 0,
+		#000 calc(var(--vt-r) - var(--vt-feather)),
+		transparent var(--vt-r)
+	);
+	mask-image: radial-gradient(circle at 100% 0, #000 calc(var(--vt-r) - var(--vt-feather)), transparent var(--vt-r));
+	animation: vt-flow 0.9s cubic-bezier(0.45, 0, 0.2, 1) both;
 }
 
 @keyframes vt-unroll {
@@ -1629,12 +1637,19 @@ html[data-vt="theme"]::view-transition-new(root) {
 	}
 }
 
-@keyframes vt-circle {
+@property --vt-r {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@keyframes vt-flow {
 	from {
-		clip-path: circle(0 at var(--vt-x, 100%) var(--vt-y, 0));
+		--vt-r: 0vmax;
 	}
 	to {
-		clip-path: circle(150vmax at var(--vt-x, 100%) var(--vt-y, 0));
+		/* corner-to-corner diagonal (~142vmax) plus the feather width */
+		--vt-r: 175vmax;
 	}
 }
 
