@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import AnimatePage from '@/src/components/AnimatePage';
+import DeskCard from '@/src/components/desk/DeskCard';
 import Footer from '@/src/components/Footer';
 import { DESK } from '@/src/utils/setup';
 
@@ -32,25 +33,9 @@ export default function SetupPage() {
 					<p className='page-subheader'>The few things on my desk I use every day.</p>
 				</div>
 
-				<ul className='desk-list'>
+				<ul className='desk-grid'>
 					{DESK.map((item) => (
-						<li key={item.name}>
-							<a
-								className='desk-row'
-								href={item.href}
-								target='_blank'
-								rel={item.affiliate ? 'sponsored noopener noreferrer' : 'noopener noreferrer'}
-							>
-								<span className='desk-row-main'>
-									<span className='desk-row-kind'>{item.kind}</span>
-									<span className='desk-row-name'>{item.name}</span>
-									<span className='desk-row-note'>{item.note}</span>
-								</span>
-								<span className='desk-row-arrow' aria-hidden='true'>
-									↗
-								</span>
-							</a>
-						</li>
+						<DeskCard key={item.title} item={item} />
 					))}
 				</ul>
 

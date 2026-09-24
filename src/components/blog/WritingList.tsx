@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IoLinkOutline } from 'react-icons/io5';
 import { useBlogViews } from '@/src/hooks/useBlogViews';
+import { useBorderGlow } from '@/src/hooks/useBorderGlow';
 
 export type WritingListItem = {
 	slug: string;
@@ -80,54 +81,9 @@ function WritingCard({ item }: { item: WritingListItem }) {
 	const [copied, setCopied] = useState(false);
 	const cardRef = useRef<HTMLLIElement>(null);
 	const glowRef = useRef<HTMLDivElement>(null);
-	const rafRef = useRef<number>(0);
 	const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	// Inner spotlight on card surface
-	const handleMouseMove = (e: React.MouseEvent<HTMLLIElement>) => {
-		const el = cardRef.current;
-		if (!el) return;
-		const rect = el.getBoundingClientRect();
-		el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-		el.style.setProperty('--my', `${e.clientY - rect.top}px`);
-	};
-
-	// Border glow: tracks window mouse, rotates conic-gradient to face cursor
-	useEffect(() => {
-		const handleMove = (e: MouseEvent) => {
-			if (!cardRef.current || !glowRef.current) return;
-			if (rafRef.current) cancelAnimationFrame(rafRef.current);
-
-			rafRef.current = requestAnimationFrame(() => {
-				const el = cardRef.current!;
-				const glow = glowRef.current!;
-				const { left, top, width, height } = el.getBoundingClientRect();
-
-				const proximity = 80;
-				const isNear =
-					e.clientX > left - proximity &&
-					e.clientX < left + width + proximity &&
-					e.clientY > top - proximity &&
-					e.clientY < top + height + proximity;
-
-				if (!isNear) {
-					glow.style.opacity = '0';
-					return;
-				}
-
-				const angle = (Math.atan2(e.clientY - (top + height / 2), e.clientX - (left + width / 2)) * 180) / Math.PI + 90;
-
-				glow.style.setProperty('--start', `${angle}deg`);
-				glow.style.opacity = '1';
-			});
-		};
-
-		window.addEventListener('mousemove', handleMove);
-		return () => {
-			window.removeEventListener('mousemove', handleMove);
-			if (rafRef.current) cancelAnimationFrame(rafRef.current);
-		};
-	}, []);
+	useBorderGlow(cardRef, glowRef);
 
 	useEffect(() => {
 		return () => {
@@ -151,7 +107,7 @@ function WritingCard({ item }: { item: WritingListItem }) {
 	};
 
 	return (
-		<li ref={cardRef} className='b-card-wrapper' onMouseMove={handleMouseMove}>
+		<li ref={cardRef} className='b-card-wrapper'>
 			<div ref={glowRef} className='b-card-glow' aria-hidden='true' />
 			<div className='b-card'>
 				<Link href={`/writings/${item.slug}`} className='b-card-hit' aria-label={`Read: ${item.title}`}>

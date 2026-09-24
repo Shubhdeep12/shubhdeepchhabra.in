@@ -1,9 +1,8 @@
 export type DeskItem = {
-	name: string;
+	title: string;
 	/** What it is, shown as a small label. */
 	kind: string;
-	/** One line on why it's on the desk. */
-	note: string;
+	description: string;
 	href: string;
 	/** Affiliate links get rel="sponsored". */
 	affiliate?: boolean;
@@ -11,31 +10,31 @@ export type DeskItem = {
 
 export const DESK: DeskItem[] = [
 	{
-		name: 'MacBook Pro',
+		title: 'Apple MacBook Pro',
 		kind: 'Laptop',
-		note: 'Where everything gets built. Fast, silent, and the battery lasts the whole day.',
+		description: 'Apple silicon laptop with a Liquid Retina XDR display and all-day battery life.',
 		href: 'https://link.amazon/B08LL6FBW',
 		affiliate: true,
 	},
 	{
-		name: 'BenQ Monitor',
-		kind: 'Display',
-		note: 'A big, sharp screen for code on one side and the browser on the other.',
-		href: 'https://link.amazon/B0ccTE4C4',
+		title: 'Apple Magic Mouse',
+		kind: 'Mouse',
+		description: 'Wireless, rechargeable mouse with a Multi-Touch surface for gestures on macOS.',
+		href: 'https://link.amazon/B0aKLUJYx',
 		affiliate: true,
 	},
 	{
-		name: 'AULA F75',
+		title: 'AULA F75 Mechanical Keyboard',
 		kind: 'Keyboard',
-		note: 'A 75% mechanical board with a soft, thocky sound. Great to type on all day.',
+		description: '75% gasket-mount, hot-swappable board with wired, 2.4 GHz and Bluetooth modes.',
 		href: 'https://link.amazon/B05hshnNt',
 		affiliate: true,
 	},
 	{
-		name: 'Magic Mouse',
-		kind: 'Mouse',
-		note: 'Gestures just work with macOS, and it keeps the desk clean.',
-		href: 'https://link.amazon/B0aKLUJYx',
+		title: 'BenQ Monitor',
+		kind: 'Display',
+		description: 'Sharp, flicker-free display with eye-care modes for long coding sessions.',
+		href: 'https://link.amazon/B0ccTE4C4',
 		affiliate: true,
 	},
 ];

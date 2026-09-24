@@ -9,8 +9,11 @@
 		--ink: #1a1917;
 		--muted: #4f4c46;
 		--faint: #726e66;
-		--accent: #3148d8;
-		--accent-soft: rgba(49, 72, 216, 0.07);
+		--accent: #1a1917;
+		--accent-soft: rgba(26, 25, 23, 0.04);
+		--glow-a: rgba(26, 25, 23, 0.45);
+		--glow-b: rgba(26, 25, 23, 0.15);
+		--spot: rgba(26, 25, 23, 0.035);
 		--border: #e4e1da;
 		--border-soft: #eeebe5;
 		color-scheme: light;
@@ -26,6 +29,9 @@
 		--border: #23232b;
 		--border-soft: #1a1a20;
 		--accent-soft: rgba(255, 255, 255, 0.04);
+		--glow-a: rgba(255, 255, 255, 0.7);
+		--glow-b: rgba(200, 200, 255, 0.4);
+		--spot: rgba(255, 255, 255, 0.04);
 		color-scheme: dark;
 	}
 
@@ -184,8 +190,8 @@
 	background: conic-gradient(
 		from var(--start, 0deg),
 		transparent 0deg,
-		rgba(255, 255, 255, 0.7) 50deg,
-		rgba(200, 200, 255, 0.4) 80deg,
+		var(--glow-a) 50deg,
+		var(--glow-b) 80deg,
 		transparent 110deg
 	);
 	/* Mask to border area only — same trick as Aceternity */
@@ -201,7 +207,7 @@
 	content: "";
 	position: absolute;
 	inset: 0;
-	background: radial-gradient(260px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.04) 0%, transparent 100%);
+	background: radial-gradient(260px circle at var(--mx) var(--my), var(--spot) 0%, transparent 100%);
 	opacity: 0;
 	transition: opacity 0.3s ease;
 	pointer-events: none;
@@ -1689,71 +1695,10 @@ html[data-vt="theme"]::view-transition-new(root) {
 	transform: translateX(3px);
 }
 
-.desk-cta:focus-visible,
-.desk-row:focus-visible {
+.desk-cta:focus-visible {
 	outline: 2px solid var(--accent);
 	outline-offset: 3px;
 	border-radius: 2px;
-}
-
-.desk-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	border-top: 1px solid var(--border);
-}
-
-.desk-row {
-	display: flex;
-	align-items: baseline;
-	gap: 16px;
-	padding: 18px 0;
-	border-bottom: 1px solid var(--border);
-}
-
-.desk-row-main {
-	display: flex;
-	flex-direction: column;
-	gap: 4px;
-	flex: 1;
-	min-width: 0;
-}
-
-.desk-row-name {
-	font-size: 15px;
-	font-weight: 500;
-	color: var(--ink);
-	transition: color 0.15s ease;
-}
-
-.desk-row-note {
-	font-size: 13px;
-	color: var(--muted);
-	line-height: 1.55;
-}
-
-.desk-row-kind {
-	font-family: var(--font-dm-mono), monospace;
-	font-size: 10px;
-	text-transform: uppercase;
-	letter-spacing: 0.1em;
-	color: var(--faint);
-}
-
-.desk-row-arrow {
-	color: var(--faint);
-	transition:
-		transform 0.2s ease,
-		color 0.15s ease;
-}
-
-.desk-row:hover .desk-row-name {
-	color: var(--accent);
-}
-
-.desk-row:hover .desk-row-arrow {
-	color: var(--ink);
-	transform: translate(2px, -2px);
 }
 
 .desk-note {
@@ -1766,7 +1711,7 @@ html[data-vt="theme"]::view-transition-new(root) {
 /* ── Light mode character + hover states ──────────────────────── */
 
 html:not(.dark):not([data-reading="on"]) ::selection {
-	background: rgba(49, 72, 216, 0.16);
+	background: rgba(26, 25, 23, 0.12);
 }
 
 /* Hero links: the rail segment beside the hovered link lights up */
@@ -1818,50 +1763,6 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 	background-size: 100% 1px;
 }
 
-/* Writing cards and desk rows get a soft accent wash */
-.b-card-wrapper {
-	transition:
-		border-color 0.2s ease,
-		background-color 0.2s ease;
-}
-
-.b-card-wrapper:hover {
-	border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
-	background-color: color-mix(in srgb, var(--accent-soft) 100%, var(--bg2));
-}
-
-.footer-nav-link {
-	background-origin: content-box;
-}
-
-.desk-row {
-	position: relative;
-}
-
-.desk-row::before {
-	content: "";
-	position: absolute;
-	inset: 4px -12px;
-	border-radius: 8px;
-	background: var(--accent-soft);
-	opacity: 0;
-	transition: opacity 0.2s ease;
-	z-index: -1;
-}
-
-.desk-list > li {
-	position: relative;
-	z-index: 0;
-}
-
-.desk-row:hover::before {
-	opacity: 1;
-}
-
-.desk-row:hover .desk-row-arrow {
-	color: var(--accent);
-}
-
 .blog-filter-btn:hover {
 	background: var(--accent-soft);
 }
@@ -1903,4 +1804,81 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 	.reading-dock-slot[data-open] {
 		transition: none;
 	}
+}
+
+/* Desk cards share the writing-card surface (.b-card-wrapper + glow) */
+.desk-grid {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+}
+
+@media (max-width: 600px) {
+	.desk-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.desk-card {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	height: 100%;
+	padding: 18px 20px;
+	position: relative;
+	z-index: 1;
+}
+
+.desk-card:hover {
+	color: inherit;
+}
+
+.desk-card:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+	border-radius: 8px;
+}
+
+.desk-card-kind {
+	font-family: var(--font-dm-mono), monospace;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--faint);
+}
+
+.desk-card-desc {
+	font-size: 13px;
+	line-height: 1.55;
+	color: var(--muted);
+	margin: 0;
+	flex: 1;
+}
+
+.desk-card-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 8px;
+	font-family: var(--font-dm-mono), monospace;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--faint);
+	transition: color 0.15s ease;
+}
+
+.desk-card-arrow {
+	transition: transform 0.2s ease;
+}
+
+.b-card-wrapper:hover .desk-card-cta {
+	color: var(--ink);
+}
+
+.b-card-wrapper:hover .desk-card-arrow {
+	transform: translate(2px, -2px);
 }
