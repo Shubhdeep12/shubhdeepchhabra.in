@@ -42,10 +42,10 @@ export default function SetupPage() {
 								rel={item.affiliate ? 'sponsored noopener noreferrer' : 'noopener noreferrer'}
 							>
 								<span className='desk-row-main'>
+									<span className='desk-row-kind'>{item.kind}</span>
 									<span className='desk-row-name'>{item.name}</span>
 									<span className='desk-row-note'>{item.note}</span>
 								</span>
-								<span className='desk-row-kind'>{item.kind}</span>
 								<span className='desk-row-arrow' aria-hidden='true'>
 									↗
 								</span>

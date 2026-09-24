@@ -287,7 +287,6 @@
 	font-family: var(--font-dm-mono), monospace;
 	font-size: 11px;
 	color: var(--faint);
-	white-space: nowrap;
 }
 
 .b-card-tags {
@@ -1735,7 +1734,6 @@ html[data-vt="theme"]::view-transition-new(root) {
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	color: var(--faint);
-	white-space: nowrap;
 }
 
 .desk-row-arrow {

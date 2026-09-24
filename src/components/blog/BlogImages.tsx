@@ -35,7 +35,7 @@ const BlogImages = ({ src, alt, width, height, className }: BlogImagesProps) => 
 			<button
 				type='button'
 				onClick={() => setExpandImage(true)}
-				className='rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600'
+				className='block max-w-full rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600'
 				aria-label={`Open expanded image: ${alt}`}
 			>
 				<Image
