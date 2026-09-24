@@ -9,34 +9,33 @@ export type DeskItem = {
 	affiliate?: boolean;
 };
 
-// TODO(shubhdeep): swap hrefs for your affiliate links and fill in exact models.
 export const DESK: DeskItem[] = [
 	{
 		name: 'MacBook Pro',
 		kind: 'Laptop',
 		note: 'Where everything gets built. Fast, silent, and the battery lasts the whole day.',
-		href: 'https://www.apple.com/macbook-pro/',
+		href: 'https://link.amazon/B08LL6FBW',
 		affiliate: true,
 	},
 	{
-		name: 'Monitor',
+		name: 'BenQ Monitor',
 		kind: 'Display',
 		note: 'A big, sharp screen for code on one side and the browser on the other.',
-		href: '#',
+		href: 'https://link.amazon/B0ccTE4C4',
 		affiliate: true,
 	},
 	{
 		name: 'AULA F75',
 		kind: 'Keyboard',
 		note: 'A 75% mechanical board with a soft, thocky sound. Great to type on all day.',
-		href: 'https://www.aulacn.com/',
+		href: 'https://link.amazon/B05hshnNt',
 		affiliate: true,
 	},
 	{
 		name: 'Magic Mouse',
 		kind: 'Mouse',
 		note: 'Gestures just work with macOS, and it keeps the desk clean.',
-		href: 'https://www.apple.com/shop/product/MXK53AM/A/magic-mouse-usb-c-white-multi-touch-surface',
+		href: 'https://link.amazon/B0aKLUJYx',
 		affiliate: true,
 	},
 ];

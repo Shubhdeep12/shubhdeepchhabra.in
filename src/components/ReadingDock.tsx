@@ -1,10 +1,11 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { FiMoon, FiSun } from 'react-icons/fi';
-import { runViewTransition, useReadingMode } from '@/src/hooks/useReadingMode';
+import { applyReadingMode, isPostPath, runViewTransition, useReadingMode } from '@/src/hooks/useReadingMode';
 
 const isTypingTarget = (el: EventTarget | null) => {
 	if (!(el instanceof HTMLElement)) return false;
@@ -31,19 +32,28 @@ export default function ReadingDock() {
 	const { isReading, toggleReading } = useReadingMode();
 	const { resolvedTheme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
+	const onPost = isPostPath(usePathname());
 
 	useEffect(() => setMounted(true), []);
 
+	// Paper only exists on posts: keep the page in sync with the saved preference as the reader navigates.
+	// Waits for mount so the hydration pass (which reads the server's "off") can't undo the pre-paint script.
 	useEffect(() => {
+		if (mounted) applyReadingMode(isReading && onPost);
+	}, [mounted, isReading, onPost]);
+
+	useEffect(() => {
+		if (!onPost) return;
 		const onKey = (e: KeyboardEvent) => {
 			if (e.metaKey || e.ctrlKey || e.altKey || e.repeat || isTypingTarget(e.target)) return;
 			if (e.key === 'r' || e.key === 'R') toggleReading();
 		};
 		window.addEventListener('keydown', onKey);
 		return () => window.removeEventListener('keydown', onKey);
-	}, [toggleReading]);
+	}, [toggleReading, onPost]);
 
 	const isDark = mounted && resolvedTheme === 'dark';
+	const showSwitch = mounted && onPost;
 
 	const toggleTheme = () => {
 		const next = isDark ? 'light' : 'dark';
@@ -69,26 +79,30 @@ export default function ReadingDock() {
 			>
 				{mounted ? isDark ? <FiSun aria-hidden /> : <FiMoon aria-hidden /> : <span className='reading-dock-icon-ph' />}
 			</button>
-			<span className='reading-dock-divider' aria-hidden='true' />
-			<button
-				type='button'
-				role='switch'
-				aria-checked={mounted ? isReading : false}
-				aria-keyshortcuts='R'
-				className='reading-dock-btn reading-switch'
-				onClick={toggleReading}
-				title={isReading ? 'Back to screen mode (R)' : 'Reading mode (R)'}
-			>
-				<PageGlyph />
-				<span className='reading-switch-label'>
-					<span className='reading-switch-label-off'>Read</span>
-					<span className='reading-switch-label-on'>Paper</span>
-				</span>
-				<span className='reading-switch-track' aria-hidden='true'>
-					<span className='reading-switch-thumb' />
-				</span>
-				<span className='sr-only'>Reading mode</span>
-			</button>
+			<div className='reading-dock-slot' data-open={showSwitch || undefined} inert={!showSwitch}>
+				<div className='reading-dock-slot-inner'>
+					<span className='reading-dock-divider' aria-hidden='true' />
+					<button
+						type='button'
+						role='switch'
+						aria-checked={mounted ? isReading : false}
+						aria-keyshortcuts='R'
+						className='reading-dock-btn reading-switch'
+						onClick={toggleReading}
+						title={isReading ? 'Back to screen mode (R)' : 'Reading mode (R)'}
+					>
+						<PageGlyph />
+						<span className='reading-switch-label'>
+							<span className='reading-switch-label-off'>Read</span>
+							<span className='reading-switch-label-on'>Paper</span>
+						</span>
+						<span className='reading-switch-track' aria-hidden='true'>
+							<span className='reading-switch-thumb' />
+						</span>
+						<span className='sr-only'>Reading mode</span>
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 }

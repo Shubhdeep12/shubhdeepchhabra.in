@@ -4,14 +4,15 @@
 
 @layer base {
 	:root {
-		--bg: #f5f5f7;
-		--bg2: #ededf0;
-		--ink: #111113;
-		--muted: #4a4a51;
-		--faint: #767680;
-		--accent: #2f2f35;
-		--border: #d9d9df;
-		--border-soft: #e8e8ed;
+		--bg: #fbfaf7;
+		--bg2: #f3f1ec;
+		--ink: #1a1917;
+		--muted: #4f4c46;
+		--faint: #726e66;
+		--accent: #3148d8;
+		--accent-soft: rgba(49, 72, 216, 0.07);
+		--border: #e4e1da;
+		--border-soft: #eeebe5;
 		color-scheme: light;
 	}
 
@@ -24,6 +25,7 @@
 		--accent: #d7d7df;
 		--border: #23232b;
 		--border-soft: #1a1a20;
+		--accent-soft: rgba(255, 255, 255, 0.04);
 		color-scheme: dark;
 	}
 
@@ -1241,6 +1243,7 @@ html[data-reading="on"] {
 	--border: #dbd1bd;
 	--border-soft: #e6dece;
 	--highlight: rgba(245, 197, 66, 0.42);
+	--accent-soft: rgba(154, 74, 36, 0.07);
 	--grain-opacity: 0.35;
 	--grain-blend: multiply;
 	color-scheme: light;
@@ -1256,6 +1259,7 @@ html.dark[data-reading="on"] {
 	--border: #342e26;
 	--border-soft: #27231d;
 	--highlight: rgba(224, 165, 107, 0.3);
+	--accent-soft: rgba(224, 165, 107, 0.07);
 	--grain-opacity: 0.12;
 	--grain-blend: screen;
 	color-scheme: dark;
@@ -1757,4 +1761,146 @@ html[data-vt="theme"]::view-transition-new(root) {
 	font-size: 12px;
 	color: var(--faint);
 	line-height: 1.6;
+}
+
+/* ── Light mode character + hover states ──────────────────────── */
+
+html:not(.dark):not([data-reading="on"]) ::selection {
+	background: rgba(49, 72, 216, 0.16);
+}
+
+/* Hero links: the rail segment beside the hovered link lights up */
+.hero-link {
+	position: relative;
+}
+
+.hero-link::before {
+	content: "";
+	position: absolute;
+	left: calc(-1rem - 1px);
+	top: 20%;
+	bottom: 20%;
+	width: 1px;
+	background: var(--accent);
+	transform: scaleY(0);
+	transition: transform 0.2s ease;
+}
+
+.hero-link:hover {
+	color: var(--accent);
+}
+
+.hero-link:hover::before {
+	transform: scaleY(1);
+}
+
+/* Underline that draws in from the left */
+.desk-cta,
+.blog-home-link,
+.post-back-link,
+.footer-nav-link,
+.section-header-link {
+	background-image: linear-gradient(currentColor, currentColor);
+	background-size: 0% 1px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	transition:
+		color 0.15s ease,
+		background-size 0.25s ease;
+}
+
+.desk-cta:hover,
+.blog-home-link:hover,
+.post-back-link:hover,
+.footer-nav-link:hover,
+.section-header-link:hover {
+	color: var(--accent);
+	background-size: 100% 1px;
+}
+
+/* Writing cards and desk rows get a soft accent wash */
+.b-card-wrapper {
+	transition:
+		border-color 0.2s ease,
+		background-color 0.2s ease;
+}
+
+.b-card-wrapper:hover {
+	border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+	background-color: color-mix(in srgb, var(--accent-soft) 100%, var(--bg2));
+}
+
+.footer-nav-link {
+	background-origin: content-box;
+}
+
+.desk-row {
+	position: relative;
+}
+
+.desk-row::before {
+	content: "";
+	position: absolute;
+	inset: 4px -12px;
+	border-radius: 8px;
+	background: var(--accent-soft);
+	opacity: 0;
+	transition: opacity 0.2s ease;
+	z-index: -1;
+}
+
+.desk-list > li {
+	position: relative;
+	z-index: 0;
+}
+
+.desk-row:hover::before {
+	opacity: 1;
+}
+
+.desk-row:hover .desk-row-arrow {
+	color: var(--accent);
+}
+
+.blog-filter-btn:hover {
+	background: var(--accent-soft);
+}
+
+/* ── Dock: reading switch slides in only on posts ─────────────── */
+
+.reading-dock-slot {
+	display: grid;
+	grid-template-columns: 0fr;
+	opacity: 0;
+	transition:
+		grid-template-columns 0.5s cubic-bezier(0.65, 0, 0.35, 1),
+		opacity 0.2s ease;
+}
+
+.reading-dock-slot[data-open] {
+	grid-template-columns: 1fr;
+	opacity: 1;
+	transition:
+		grid-template-columns 0.5s cubic-bezier(0.65, 0, 0.35, 1),
+		opacity 0.35s ease 0.15s;
+}
+
+.reading-dock-slot-inner {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	min-width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.reading-switch:focus-visible {
+	outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reading-dock-slot,
+	.reading-dock-slot[data-open] {
+		transition: none;
+	}
 }
