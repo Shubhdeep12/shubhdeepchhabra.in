@@ -23,11 +23,6 @@ export const FOOTER_NAVBAR_ITEMS = [
 		underline: 'hocus:decoration-primary-600',
 		target: '_self',
 	},
-	{
-		...NAVIGATIONBAR_ITEMS.setup,
-		underline: 'hocus:decoration-primary-600',
-		target: '_self',
-	},
 ];
 
 export const SOCIALS = [
