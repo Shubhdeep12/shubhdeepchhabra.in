@@ -8,6 +8,13 @@ export const NAVIGATIONBAR_ITEMS = {
 		gFrom: 'from-primary-700',
 		gTo: 'to-primary-500',
 	},
+	setup: {
+		key: 'setup',
+		title: 'Desk',
+		route: '/setup',
+		gFrom: 'from-primary-700',
+		gTo: 'to-primary-500',
+	},
 };
 
 export const FOOTER_NAVBAR_ITEMS = [

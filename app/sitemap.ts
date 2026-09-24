@@ -25,6 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			priority: 0.9,
 			changeFrequency: 'weekly',
 		},
+		{
+			url: 'https://okshubh.in/setup',
+			lastModified: new Date().toISOString().split('T')[0],
+			priority: 0.6,
+			changeFrequency: 'monthly',
+		},
 	];
 
 	return [...routes, ...blogEntries];

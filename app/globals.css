@@ -4,14 +4,18 @@
 
 @layer base {
 	:root {
-		--bg: #f5f5f7;
-		--bg2: #ededf0;
-		--ink: #111113;
-		--muted: #4a4a51;
-		--faint: #767680;
-		--accent: #2f2f35;
-		--border: #d9d9df;
-		--border-soft: #e8e8ed;
+		--bg: #fbfaf7;
+		--bg2: #f3f1ec;
+		--ink: #1a1917;
+		--muted: #4f4c46;
+		--faint: #726e66;
+		--accent: #1a1917;
+		--accent-soft: rgba(26, 25, 23, 0.04);
+		--glow-a: rgba(26, 25, 23, 0.45);
+		--glow-b: rgba(26, 25, 23, 0.15);
+		--spot: rgba(26, 25, 23, 0.035);
+		--border: #e4e1da;
+		--border-soft: #eeebe5;
 		color-scheme: light;
 	}
 
@@ -24,6 +28,10 @@
 		--accent: #d7d7df;
 		--border: #23232b;
 		--border-soft: #1a1a20;
+		--accent-soft: rgba(255, 255, 255, 0.04);
+		--glow-a: rgba(255, 255, 255, 0.7);
+		--glow-b: rgba(200, 200, 255, 0.4);
+		--spot: rgba(255, 255, 255, 0.04);
 		color-scheme: dark;
 	}
 
@@ -182,8 +190,8 @@
 	background: conic-gradient(
 		from var(--start, 0deg),
 		transparent 0deg,
-		rgba(255, 255, 255, 0.7) 50deg,
-		rgba(200, 200, 255, 0.4) 80deg,
+		var(--glow-a) 50deg,
+		var(--glow-b) 80deg,
 		transparent 110deg
 	);
 	/* Mask to border area only — same trick as Aceternity */
@@ -199,7 +207,7 @@
 	content: "";
 	position: absolute;
 	inset: 0;
-	background: radial-gradient(260px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.04) 0%, transparent 100%);
+	background: radial-gradient(260px circle at var(--mx) var(--my), var(--spot) 0%, transparent 100%);
 	opacity: 0;
 	transition: opacity 0.3s ease;
 	pointer-events: none;
@@ -287,7 +295,6 @@
 	font-family: var(--font-dm-mono), monospace;
 	font-size: 11px;
 	color: var(--faint);
-	white-space: nowrap;
 }
 
 .b-card-tags {
@@ -1224,4 +1231,774 @@ a.post-rail-tool {
 		padding-left: 24px;
 		padding-right: 24px;
 	}
+}
+
+/* ────────────────────────────────────────────────────────────────
+   Reading mode ("Paper")
+   Not a light theme — a warm, low-blue, serif page that follows
+   day/night: cream paper by day, lamplit paper at night.
+   ──────────────────────────────────────────────────────────────── */
+
+html[data-reading="on"] {
+	--bg: #f3eee3;
+	--bg2: #ebe4d5;
+	--ink: #262019;
+	--muted: #4a4136;
+	--faint: #736856;
+	--accent: #9a4a24;
+	--border: #dbd1bd;
+	--border-soft: #e6dece;
+	--highlight: rgba(245, 197, 66, 0.42);
+	--accent-soft: rgba(154, 74, 36, 0.07);
+	--grain-opacity: 0.35;
+	--grain-blend: multiply;
+	color-scheme: light;
+}
+
+html.dark[data-reading="on"] {
+	--bg: #1a1713;
+	--bg2: #221e19;
+	--ink: #ece3d2;
+	--muted: #cabea8;
+	--faint: #968a77;
+	--accent: #e0a56b;
+	--border: #342e26;
+	--border-soft: #27231d;
+	--highlight: rgba(224, 165, 107, 0.3);
+	--accent-soft: rgba(224, 165, 107, 0.07);
+	--grain-opacity: 0.12;
+	--grain-blend: screen;
+	color-scheme: dark;
+}
+
+/* Paper grain — fixed so it doesn't scroll with the page */
+html[data-reading="on"] body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 60;
+	pointer-events: none;
+	opacity: var(--grain-opacity);
+	mix-blend-mode: var(--grain-blend);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.42 0 0 0 0 0.3 0 0 0 0.28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+html[data-reading="on"] ::selection {
+	background: var(--highlight);
+	color: inherit;
+}
+
+html[data-reading="on"] .postTitle,
+html[data-reading="on"] .blog-page-title,
+html[data-reading="on"] .hero-name {
+	font-family: var(--font-literata), Georgia, serif;
+	font-weight: 600;
+	letter-spacing: -0.015em;
+}
+
+html[data-reading="on"] .postContent {
+	font-family: var(--font-literata), Georgia, "Times New Roman", serif;
+	font-size: 19px;
+	line-height: 1.78;
+	color: var(--ink);
+	max-width: 66ch;
+	margin-left: auto;
+	margin-right: auto;
+	text-wrap: pretty;
+	hyphens: auto;
+	font-feature-settings: "kern", "liga", "onum";
+}
+
+html[data-reading="on"] .postContent h2,
+html[data-reading="on"] .postContent h3 {
+	font-family: var(--font-literata), Georgia, serif;
+	letter-spacing: -0.01em;
+}
+
+html[data-reading="on"] .postContent h2 {
+	font-size: 24px;
+}
+
+html[data-reading="on"] .postContent h3 {
+	font-size: 20px;
+}
+
+html[data-reading="on"] .postContent a {
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+	text-underline-offset: 3px;
+}
+
+html[data-reading="on"] .postContent blockquote {
+	border-left-color: var(--accent);
+	font-size: 1.05em;
+}
+
+/* Drop cap on the opening paragraph */
+html[data-reading="on"] .postContent > p:first-of-type::first-letter {
+	float: left;
+	font-family: var(--font-literata), Georgia, serif;
+	font-size: 3.6em;
+	font-weight: 600;
+	line-height: 0.86;
+	padding: 0.06em 0.1em 0 0;
+	color: var(--accent);
+}
+
+/* Side rails step back so the page is the only thing in focus */
+html[data-reading="on"] .post-tools-rail,
+html[data-reading="on"] .post-reading-rail {
+	opacity: 0.28;
+	transition: opacity 0.3s ease;
+}
+
+html[data-reading="on"] .post-tools-rail:hover,
+html[data-reading="on"] .post-tools-rail:focus-within,
+html[data-reading="on"] .post-reading-rail:hover,
+html[data-reading="on"] .post-reading-rail:focus-within {
+	opacity: 1;
+}
+
+/* Glows are screen-mode flourishes; ink on paper doesn't glow */
+html[data-reading="on"] .b-card-glow,
+html[data-reading="on"] .b-card-wrapper::before {
+	display: none;
+}
+
+.reading-progress {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	z-index: 70;
+	pointer-events: none;
+}
+
+html[data-reading="on"] .reading-progress {
+	display: block;
+}
+
+.reading-progress-bar {
+	height: 100%;
+	background: var(--accent);
+	transform: scaleX(0);
+	transform-origin: 0 50%;
+	will-change: transform;
+}
+
+/* ── Dock: theme + reading switch ─────────────────────────────── */
+
+.reading-dock {
+	position: fixed;
+	top: 16px;
+	right: 16px;
+	z-index: 80;
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	padding: 4px;
+	border: 1px solid var(--border);
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--bg) 78%, transparent);
+	backdrop-filter: blur(10px) saturate(1.2);
+	-webkit-backdrop-filter: blur(10px) saturate(1.2);
+	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+	transition:
+		background 0.3s ease,
+		border-color 0.3s ease;
+}
+
+.dark .reading-dock {
+	box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+}
+
+.reading-dock-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 30px;
+	border: 0;
+	border-radius: 999px;
+	background: transparent;
+	color: var(--muted);
+	cursor: pointer;
+	transition:
+		color 0.15s ease,
+		background 0.15s ease;
+}
+
+.reading-dock-btn:hover {
+	color: var(--ink);
+	background: var(--bg2);
+}
+
+.reading-dock-btn:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+
+.reading-dock-theme {
+	width: 30px;
+}
+
+.reading-dock-theme svg,
+.reading-dock-icon-ph {
+	width: 15px;
+	height: 15px;
+}
+
+.reading-dock-divider {
+	width: 1px;
+	height: 16px;
+	background: var(--border);
+	margin: 0 2px;
+}
+
+.reading-switch {
+	gap: 8px;
+	padding: 0 6px 0 10px;
+}
+
+.reading-glyph {
+	flex-shrink: 0;
+	overflow: visible;
+}
+
+.reading-glyph-line,
+.reading-glyph-cap {
+	fill: currentColor;
+	transition:
+		transform 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+		opacity 0.3s ease,
+		fill 0.3s ease;
+}
+
+.reading-glyph-cap {
+	opacity: 0;
+	transform: scale(0.2);
+	transform-origin: 2.75px 3.75px;
+	fill: var(--accent);
+}
+
+.reading-glyph-line--wrap {
+	transform-origin: 100% 50%;
+}
+
+.reading-glyph-line--short {
+	transform-origin: 0 50%;
+	transform: scaleX(0.6);
+}
+
+.reading-switch-label {
+	position: relative;
+	display: inline-grid;
+	font-family: var(--font-dm-mono), ui-monospace, monospace;
+	font-size: 10px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	line-height: 1;
+	overflow: hidden;
+}
+
+.reading-switch-label > span {
+	grid-area: 1 / 1;
+	transition:
+		transform 0.35s cubic-bezier(0.65, 0, 0.35, 1),
+		opacity 0.25s ease;
+}
+
+.reading-switch-label-on {
+	transform: translateY(110%);
+	opacity: 0;
+	font-family: var(--font-literata), Georgia, serif;
+	font-style: italic;
+	font-size: 12px;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.reading-switch-track {
+	position: relative;
+	width: 26px;
+	height: 16px;
+	border-radius: 999px;
+	background: var(--border);
+	transition: background 0.3s ease;
+}
+
+.reading-switch-thumb {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: var(--bg);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+/* On */
+.reading-switch[aria-checked="true"] {
+	color: var(--ink);
+}
+
+.reading-switch[aria-checked="true"] .reading-glyph-cap {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.reading-switch[aria-checked="true"] .reading-glyph-line--wrap {
+	transform: scaleX(0.66);
+}
+
+.reading-switch[aria-checked="true"] .reading-switch-label-off {
+	transform: translateY(-110%);
+	opacity: 0;
+}
+
+.reading-switch[aria-checked="true"] .reading-switch-label-on {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.reading-switch[aria-checked="true"] .reading-switch-track {
+	background: var(--accent);
+}
+
+.reading-switch[aria-checked="true"] .reading-switch-thumb {
+	transform: translateX(10px);
+}
+
+@media (max-width: 640px) {
+	.reading-dock {
+		top: auto;
+		bottom: max(16px, env(safe-area-inset-bottom));
+		right: 50%;
+		transform: translateX(50%);
+	}
+
+	/* Keep the footer clear of the bottom dock */
+	body {
+		padding-bottom: 72px;
+	}
+}
+
+@media print {
+	.reading-dock,
+	.reading-progress {
+		display: none !important;
+	}
+}
+
+/* ── View transitions ─────────────────────────────────────────── */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	--vt-feather: 30vmax;
+	animation: none;
+	mix-blend-mode: normal;
+}
+
+/* Paper unrolls down over the screen */
+html[data-vt="reading-on"]::view-transition-new(root) {
+	animation: vt-unroll 0.75s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Paper rolls back up, revealing the screen underneath */
+html[data-vt="reading-off"]::view-transition-old(root) {
+	z-index: 2;
+	animation: vt-roll-up 0.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+html[data-vt="reading-off"]::view-transition-new(root) {
+	z-index: 1;
+}
+
+/* Theme: new colours flow in from the top-right corner with a feathered edge */
+html[data-vt="theme"]::view-transition-new(root) {
+	-webkit-mask-image: radial-gradient(
+		circle at 100% 0,
+		#000 calc(var(--vt-r) - var(--vt-feather)),
+		transparent var(--vt-r)
+	);
+	mask-image: radial-gradient(circle at 100% 0, #000 calc(var(--vt-r) - var(--vt-feather)), transparent var(--vt-r));
+	animation: vt-flow 0.9s cubic-bezier(0.45, 0, 0.2, 1) both;
+}
+
+@keyframes vt-unroll {
+	from {
+		clip-path: inset(0 0 100% 0);
+	}
+	to {
+		clip-path: inset(0 0 0 0);
+	}
+}
+
+@keyframes vt-roll-up {
+	from {
+		clip-path: inset(0 0 0 0);
+	}
+	to {
+		clip-path: inset(0 0 100% 0);
+	}
+}
+
+@property --vt-r {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@keyframes vt-flow {
+	from {
+		--vt-r: 0vmax;
+	}
+	to {
+		/* corner-to-corner diagonal (~142vmax) plus the feather width */
+		--vt-r: 175vmax;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reading-glyph-line,
+	.reading-glyph-cap,
+	.reading-switch-label > span,
+	.reading-switch-thumb {
+		transition: none;
+	}
+}
+
+/* ── Desk setup ───────────────────────────────────────────────── */
+
+.desk-cta {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 6px;
+	font-size: 13px;
+	color: var(--muted);
+	width: fit-content;
+	transition: color 0.15s ease;
+}
+
+.desk-cta:hover {
+	color: var(--ink);
+}
+
+.desk-cta-arrow {
+	transition: transform 0.2s ease;
+}
+
+.desk-cta:hover .desk-cta-arrow {
+	transform: translateX(3px);
+}
+
+.desk-cta:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+.desk-note {
+	margin: 24px 0 0;
+	font-size: 12px;
+	color: var(--faint);
+	line-height: 1.6;
+}
+
+/* ── Light mode character + hover states ──────────────────────── */
+
+html:not(.dark):not([data-reading="on"]) ::selection {
+	background: rgba(26, 25, 23, 0.12);
+}
+
+/* Hero links: the rail segment beside the hovered link lights up */
+.hero-link {
+	position: relative;
+}
+
+.hero-link::before {
+	content: "";
+	position: absolute;
+	left: calc(-1rem - 1px);
+	top: 20%;
+	bottom: 20%;
+	width: 1px;
+	background: var(--accent);
+	transform: scaleY(0);
+	transition: transform 0.2s ease;
+}
+
+.hero-link:hover {
+	color: var(--accent);
+}
+
+.hero-link:hover::before {
+	transform: scaleY(1);
+}
+
+/* Underline that draws in from the left */
+.desk-cta,
+.blog-home-link,
+.post-back-link,
+.footer-nav-link,
+.section-header-link {
+	background-image: linear-gradient(currentColor, currentColor);
+	background-size: 0% 1px;
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	transition:
+		color 0.15s ease,
+		background-size 0.25s ease;
+}
+
+.desk-cta:hover,
+.blog-home-link:hover,
+.post-back-link:hover,
+.footer-nav-link:hover,
+.section-header-link:hover {
+	color: var(--accent);
+	background-size: 100% 1px;
+}
+
+.blog-filter-btn:hover {
+	background: var(--accent-soft);
+}
+
+/* ── Dock: reading switch slides in only on posts ─────────────── */
+
+.reading-dock-slot {
+	display: grid;
+	grid-template-columns: 0fr;
+	opacity: 0;
+	transition:
+		grid-template-columns 0.5s cubic-bezier(0.65, 0, 0.35, 1),
+		opacity 0.2s ease;
+}
+
+.reading-dock-slot[data-open] {
+	grid-template-columns: 1fr;
+	opacity: 1;
+	transition:
+		grid-template-columns 0.5s cubic-bezier(0.65, 0, 0.35, 1),
+		opacity 0.35s ease 0.15s;
+}
+
+.reading-dock-slot-inner {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	min-width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.reading-switch:focus-visible {
+	outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reading-dock-slot,
+	.reading-dock-slot[data-open] {
+		transition: none;
+	}
+}
+
+/* Desk cards share the writing-card surface (.b-card-wrapper + glow) */
+.desk-grid {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 10px;
+}
+
+@media (max-width: 600px) {
+	.desk-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.desk-card {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.desk-card:hover {
+	color: inherit;
+}
+
+.desk-card:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -2px;
+	border-radius: 8px;
+}
+
+/* Illustration stage: a soft pool of light under the product */
+.desk-card-stage {
+	--art-line: color-mix(in srgb, var(--ink) 55%, transparent);
+	--art-screen-a: #1d2733;
+	--art-screen-b: #3b4a5c;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 16 / 9;
+	margin: 6px 6px 0;
+	border-radius: 6px;
+	overflow: hidden;
+	background:
+		radial-gradient(60% 55% at 50% 58%, color-mix(in srgb, var(--bg) 90%, transparent), transparent 75%), var(--bg);
+	border: 1px solid var(--border-soft);
+}
+
+.desk-art-svg {
+	width: 72%;
+	height: auto;
+	overflow: visible;
+	transition: transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1);
+	filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.08));
+}
+
+.b-card-wrapper:hover .desk-art-svg {
+	transform: translateY(-4px) scale(1.03);
+}
+
+.desk-card-photo {
+	object-fit: contain;
+	padding: 12px;
+	transition: transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+.b-card-wrapper:hover .desk-card-photo {
+	transform: translateY(-4px) scale(1.03);
+}
+
+.desk-art-line {
+	stroke: var(--art-line);
+	stroke-width: 1.2;
+}
+
+.desk-art-thin {
+	stroke-width: 0.9;
+}
+
+.desk-art-ink {
+	fill: var(--art-line);
+}
+
+.desk-art-sheen {
+	stroke: rgba(255, 255, 255, 0.9);
+	stroke-width: 2;
+	stroke-linecap: round;
+}
+
+.desk-art-fill-sky {
+	fill: #cbd7e2;
+}
+
+.desk-art-fill-white {
+	fill: #f6f6f4;
+}
+
+.desk-art-fill-black {
+	fill: #2a2a2e;
+}
+
+.desk-art-fill-cedar {
+	fill: #8e9f8a;
+}
+
+.desk-art-key {
+	fill: #eef1ea;
+	stroke: rgba(0, 0, 0, 0.12);
+	stroke-width: 0.4;
+}
+
+.desk-art-key--accent {
+	fill: #c9d6c3;
+}
+
+.desk-art-knob {
+	fill: #d9ded6;
+	stroke: rgba(0, 0, 0, 0.18);
+	stroke-width: 0.6;
+}
+
+.dark .desk-card-stage {
+	--art-line: rgba(255, 255, 255, 0.35);
+}
+
+.dark .desk-art-svg {
+	filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.5));
+}
+
+.desk-card-body {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	flex: 1;
+	padding: 16px 20px 18px;
+}
+
+.desk-card-kind {
+	font-family: var(--font-dm-mono), monospace;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--faint);
+}
+
+.desk-card-specs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.desk-card-spec {
+	font-family: var(--font-dm-mono), monospace;
+	font-size: 10px;
+	letter-spacing: 0.04em;
+	color: var(--faint);
+	border: 1px solid var(--border);
+	border-radius: 3px;
+	padding: 1px 6px;
+}
+
+.desk-card-desc {
+	font-size: 13px;
+	line-height: 1.55;
+	color: var(--muted);
+	flex: 1;
+}
+
+.desk-card-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 8px;
+	font-family: var(--font-dm-mono), monospace;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--faint);
+	transition: color 0.15s ease;
+}
+
+.desk-card-arrow {
+	transition: transform 0.2s ease;
+}
+
+.b-card-wrapper:hover .desk-card-cta {
+	color: var(--ink);
+}
+
+.b-card-wrapper:hover .desk-card-arrow {
+	transform: translate(2px, -2px);
 }
