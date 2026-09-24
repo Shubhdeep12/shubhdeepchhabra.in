@@ -1,4 +1,4 @@
-import { DM_Mono, DM_Sans } from 'next/font/google';
+import { DM_Mono, DM_Sans, Literata } from 'next/font/google';
 import MainContent from '@/src/components/MainContent';
 import './globals.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
@@ -7,6 +7,8 @@ import { Metadata } from 'next';
 import Script from 'next/script';
 import { ThemeProvider } from 'next-themes';
 import { type PropsWithChildren } from 'react';
+import ReadingDock from '@/src/components/ReadingDock';
+import { readingModeInitScript } from '@/src/hooks/useReadingMode';
 import { Providers } from '@/src/providers';
 
 const dmSans = DM_Sans({
@@ -18,6 +20,14 @@ const dmMono = DM_Mono({
 	weight: ['400'],
 	subsets: ['latin'],
 	variable: '--font-dm-mono',
+});
+
+// Reading mode typeface — designed for long-form screen reading.
+const literata = Literata({
+	subsets: ['latin'],
+	style: ['normal', 'italic'],
+	variable: '--font-literata',
+	display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -138,6 +148,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<head>
+				<script dangerouslySetInnerHTML={{ __html: readingModeInitScript }} />
 				<Script
 					id='person-structured-data'
 					type='application/ld+json'
@@ -149,9 +160,13 @@ export default function RootLayout({ children }: PropsWithChildren) {
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
 				/>
 			</head>
-			<body className={`${dmSans.variable} ${dmMono.variable} min-h-screen`} suppressHydrationWarning>
+			<body
+				className={`${dmSans.variable} ${dmMono.variable} ${literata.variable} min-h-screen`}
+				suppressHydrationWarning
+			>
 				<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 					<Providers>
+						<ReadingDock />
 						<MainContent>{children}</MainContent>
 						<Analytics />
 						{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS ? (

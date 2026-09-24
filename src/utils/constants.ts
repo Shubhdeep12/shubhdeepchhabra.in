@@ -8,11 +8,23 @@ export const NAVIGATIONBAR_ITEMS = {
 		gFrom: 'from-primary-700',
 		gTo: 'to-primary-500',
 	},
+	setup: {
+		key: 'setup',
+		title: 'Setup',
+		route: '/setup',
+		gFrom: 'from-primary-700',
+		gTo: 'to-primary-500',
+	},
 };
 
 export const FOOTER_NAVBAR_ITEMS = [
 	{
 		...NAVIGATIONBAR_ITEMS.blog,
+		underline: 'hocus:decoration-primary-600',
+		target: '_self',
+	},
+	{
+		...NAVIGATIONBAR_ITEMS.setup,
 		underline: 'hocus:decoration-primary-600',
 		target: '_self',
 	},

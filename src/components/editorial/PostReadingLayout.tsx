@@ -1,6 +1,7 @@
 import { type PropsWithChildren } from 'react';
 import PostReadingRail from '@/src/components/editorial/PostReadingRail';
 import PostToolsRail from '@/src/components/editorial/PostToolsRail';
+import ReadingProgress from '@/src/components/editorial/ReadingProgress';
 
 type PostReadingLayoutProps = PropsWithChildren<{
 	mdxMarkdown: string;
@@ -18,6 +19,7 @@ export default function PostReadingLayout({
 }: PostReadingLayoutProps) {
 	return (
 		<div className='post-reading-layout'>
+			<ReadingProgress />
 			<PostToolsRail
 				mdxMarkdown={mdxMarkdown}
 				githubEditUrl={githubEditUrl ?? undefined}

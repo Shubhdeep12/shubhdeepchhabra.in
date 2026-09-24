@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import SetupCta from '@/src/components/home/SetupCta';
 import { resumeUrl } from '@/src/utils/constants';
 
 const Intro = () => {
@@ -31,6 +32,7 @@ const Intro = () => {
 					LinkedIn
 				</a>
 			</nav>
+			<SetupCta />
 		</section>
 	);
 };
