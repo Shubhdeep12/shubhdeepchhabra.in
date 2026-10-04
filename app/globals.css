@@ -35,9 +35,31 @@
 		color-scheme: dark;
 	}
 
-	body,
+	/* The visible page background is painted by body::before so theme sweeps stay crisp.
+	   html's own background is what mobile browsers tint their bars from, so it fades at
+	   the same pace as the sweep instead of snapping. */
 	html {
 		background-color: var(--bg);
+		transition: background-color 0.9s cubic-bezier(0.45, 0, 0.2, 1);
+	}
+
+	body {
+		background-color: transparent;
+	}
+
+	body::before {
+		content: "";
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		background-color: var(--bg);
+		pointer-events: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			transition: none;
+		}
 	}
 
 	body {
@@ -1617,14 +1639,38 @@ html[data-vt="reading-off"]::view-transition-new(root) {
 	z-index: 1;
 }
 
-/* Theme: new colours flow in from the top-right corner with a feathered edge */
-html[data-vt="theme"]::view-transition-new(root) {
+/* Theme: new colours flow in with a feathered edge.
+   Desktop: dark sweeps from the top-right, light returns from the bottom-left.
+   Mobile (dock at bottom centre): dark rises from the bottom, light comes down from the top. */
+html[data-vt="theme-dark"] {
+	--vt-origin: 100% 0;
+}
+
+html[data-vt="theme-light"] {
+	--vt-origin: 0 100%;
+}
+
+@media (max-width: 640px) {
+	html[data-vt="theme-dark"] {
+		--vt-origin: 50% 100%;
+	}
+
+	html[data-vt="theme-light"] {
+		--vt-origin: 50% 0;
+	}
+}
+
+html[data-vt^="theme"]::view-transition-new(root) {
 	-webkit-mask-image: radial-gradient(
-		circle at 100% 0,
+		circle at var(--vt-origin),
 		#000 calc(var(--vt-r) - var(--vt-feather)),
 		transparent var(--vt-r)
 	);
-	mask-image: radial-gradient(circle at 100% 0, #000 calc(var(--vt-r) - var(--vt-feather)), transparent var(--vt-r));
+	mask-image: radial-gradient(
+		circle at var(--vt-origin),
+		#000 calc(var(--vt-r) - var(--vt-feather)),
+		transparent var(--vt-r)
+	);
 	animation: vt-flow 0.9s cubic-bezier(0.45, 0, 0.2, 1) both;
 }
 

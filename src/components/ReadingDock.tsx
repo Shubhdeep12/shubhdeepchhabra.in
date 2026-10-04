@@ -36,6 +36,51 @@ export default function ReadingDock() {
 
 	useEffect(() => setMounted(true), []);
 
+	// Mobile browsers colour their bars from theme-color: follow html's fading background frame by frame.
+	useEffect(() => {
+		const root = document.documentElement;
+		let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+		if (!meta) {
+			meta = document.createElement('meta');
+			meta.name = 'theme-color';
+			document.head.appendChild(meta);
+		}
+		const sync = () => {
+			if (meta) meta.content = getComputedStyle(root).backgroundColor;
+		};
+		let frame = 0;
+		let following = false;
+		const follow = () => {
+			sync();
+			frame = following ? requestAnimationFrame(follow) : 0;
+		};
+		// Follow until html's background transition ends (or a safety timeout), then settle on the final colour.
+		let safety = 0;
+		const stop = () => {
+			following = false;
+			window.clearTimeout(safety);
+			sync();
+		};
+		const onTransitionEnd = (e: TransitionEvent) => {
+			if (e.target === root && e.propertyName === 'background-color') stop();
+		};
+		const observer = new MutationObserver(() => {
+			following = true;
+			window.clearTimeout(safety);
+			safety = window.setTimeout(stop, 3000);
+			if (!frame) frame = requestAnimationFrame(follow);
+		});
+		sync();
+		root.addEventListener('transitionend', onTransitionEnd);
+		observer.observe(root, { attributes: true, attributeFilter: ['class', 'data-reading'] });
+		return () => {
+			observer.disconnect();
+			root.removeEventListener('transitionend', onTransitionEnd);
+			window.clearTimeout(safety);
+			cancelAnimationFrame(frame);
+		};
+	}, []);
+
 	// Paper only exists on posts: keep the page in sync with the saved preference as the reader navigates.
 	// Waits for mount so the hydration pass (which reads the server's "off") can't undo the pre-paint script.
 	useEffect(() => {
@@ -65,7 +110,7 @@ export default function ReadingDock() {
 			root.classList.toggle('light', next === 'light');
 			root.style.colorScheme = next;
 			flushSync(() => setTheme(next));
-		}, 'theme');
+		}, `theme-${next}`);
 	};
 
 	return (
