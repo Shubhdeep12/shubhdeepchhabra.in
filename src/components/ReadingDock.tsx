@@ -65,7 +65,7 @@ export default function ReadingDock() {
 			root.classList.toggle('light', next === 'light');
 			root.style.colorScheme = next;
 			flushSync(() => setTheme(next));
-		}, 'theme');
+		}, `theme-${next}`);
 	};
 
 	return (
