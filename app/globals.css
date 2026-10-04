@@ -35,9 +35,31 @@
 		color-scheme: dark;
 	}
 
-	body,
+	/* The visible page background is painted by body::before so theme sweeps stay crisp.
+	   html's own background is what mobile browsers tint their bars from, so it fades at
+	   the same pace as the sweep instead of snapping. */
 	html {
 		background-color: var(--bg);
+		transition: background-color 0.9s cubic-bezier(0.45, 0, 0.2, 1);
+	}
+
+	body {
+		background-color: transparent;
+	}
+
+	body::before {
+		content: "";
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		background-color: var(--bg);
+		pointer-events: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			transition: none;
+		}
 	}
 
 	body {
