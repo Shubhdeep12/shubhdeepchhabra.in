@@ -81,6 +81,27 @@ function register(tools: ModelContextTool[], signal: AbortSignal) {
 	}
 }
 
+/**
+ * Resolves an agent-supplied path against this origin and rejects anything that leaves it.
+ * A prefix check isn't enough: browsers read '/\evil.com' as '//evil.com'.
+ */
+function sitePath(path: unknown) {
+	if (typeof path !== 'string' || !path.startsWith('/')) return null;
+	try {
+		const url = new URL(path, window.location.origin);
+		return url.origin === window.location.origin ? `${url.pathname}${url.search}${url.hash}` : null;
+	} catch {
+		return null;
+	}
+}
+
+// Pages with a markdown twin (see MARKDOWN_PAGES in next.config.mjs).
+const markdownPath = (path: string) => {
+	const clean = path.replace(/\/$/, '') || '/';
+	if (clean === '/') return '/index.md';
+	return /^\/(writings(\/[^/.]+)?|setup|resume)$/.test(clean) ? `${clean}.md` : null;
+};
+
 const pageAction = { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false };
 
 export default function WebMcpTools() {
@@ -115,13 +136,13 @@ export default function WebMcpTools() {
 					annotations: { readOnlyHint: true },
 					execute: async () => {
 						const path = window.location.pathname;
-						const markdown = path === '/' ? '/index.md' : `${path.replace(/\/$/, '')}.md`;
+						const markdown = markdownPath(path);
 						return text(
 							JSON.stringify({
 								path,
 								title: document.title,
 								url: window.location.href,
-								markdown: `${window.location.origin}${markdown}`,
+								...(markdown ? { markdown: `${window.location.origin}${markdown}` } : {}),
 							})
 						);
 					},
@@ -139,11 +160,10 @@ export default function WebMcpTools() {
 					},
 					annotations: pageAction,
 					execute: async ({ path }) => {
-						if (typeof path !== 'string' || !path.startsWith('/') || path.startsWith('//')) {
-							return text("path must be a site path starting with '/', e.g. '/writings'.", true);
-						}
-						live.current.router.push(path);
-						return text(`Opened ${path}.`);
+						const target = sitePath(path);
+						if (!target) return text("path must be a path on this site, e.g. '/writings'.", true);
+						live.current.router.push(target);
+						return text(`Opened ${target}.`);
 					},
 				},
 				{

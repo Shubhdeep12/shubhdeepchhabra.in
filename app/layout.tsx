@@ -65,7 +65,6 @@ export const metadata: Metadata = {
 		canonical: 'https://okshubh.in',
 		types: {
 			'application/rss+xml': 'https://okshubh.in/feed.xml',
-			'text/markdown': 'https://okshubh.in/index.md',
 		},
 	},
 	verification: {
