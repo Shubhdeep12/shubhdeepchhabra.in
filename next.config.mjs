@@ -126,6 +126,11 @@ const nextConfig = {
 					},
 				],
 			},
+			{
+				// Search should land on /resume, not the PDF.
+				source: '/resume/:file*.pdf',
+				headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
+			},
 		];
 	},
 	pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],

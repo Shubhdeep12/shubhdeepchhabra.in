@@ -17,7 +17,13 @@ export type ResumeRole = {
 	company: string;
 	companyUrl?: string;
 	title: string;
+	/** Short badge shown in place of a logo, e.g. 'ATC'. */
+	initials: string;
+	/** Optional logo in /public, replaces the initials badge. */
+	logo?: string;
 	location: string;
+	/** Tech/focus line under the role. */
+	stack: string[];
 	/** YYYY-MM */
 	start: string;
 	/** YYYY-MM, or undefined while current. */
@@ -46,12 +52,25 @@ export type ResumeEducation = {
 
 const merged = (repo: string) => `https://github.com/${repo}/pulls?q=is%3Apr+is%3Amerged+author%3AShubhdeep12`;
 
-export const RESUME = {
+export type Resume = {
+	name: string;
+	label: string;
+	email: string;
+	location: { label: string; country: string; countryCode: string };
+	links: ResumeLink[];
+	summary: string;
+	experience: ResumeRole[];
+	skills: ResumeSkillGroup[];
+	openSource: ResumeProject[];
+	education: ResumeEducation[];
+};
+
+export const RESUME: Resume = {
 	name: 'Shubhdeep Chhabra',
 	label: 'Senior Software Engineer',
 	email: 'chhabrashubhdeep@gmail.com',
-	phone: '+91-9116108753',
-	location: { country: 'India', countryCode: 'IN' },
+	// The phone number is only stamped into the PDF (see scripts/resume-pdf.mjs), never served on the web.
+	location: { label: 'India · Remote', country: 'India', countryCode: 'IN' },
 	links: [
 		{ label: 'okshubh.in', href: SITE_URL },
 		{ label: 'github/Shubhdeep12', href: 'https://github.com/Shubhdeep12', network: 'GitHub' },
@@ -60,7 +79,7 @@ export const RESUME = {
 			href: 'https://www.linkedin.com/in/shubhdeepchhabra/',
 			network: 'LinkedIn',
 		},
-	] satisfies ResumeLink[],
+	],
 	summary:
 		'Software Engineer with 5+ years of experience building multi-tenant SaaS products for enterprise customers. Built features across authentication, authorization, content management, developer experience and AI-assisted workflows. Interested in product engineering, platform development and open-source software.',
 	experience: [
@@ -68,6 +87,8 @@ export const RESUME = {
 			company: 'American Technology Consulting (ATC)',
 			title: 'Senior Software Engineer',
 			location: 'Remote',
+			initials: 'ATC',
+			stack: ['React 18', 'Rsbuild', 'TypeScript', 'LMS'],
 			start: '2026-04',
 			highlights: [
 				[
@@ -83,6 +104,8 @@ export const RESUME = {
 			companyUrl: 'https://auzmor.com',
 			title: 'Senior Software Engineer',
 			location: 'Remote',
+			initials: 'AZ',
+			stack: ['React', 'TypeScript', 'RBAC', 'SSO/SAML', 'AI workflows'],
 			start: '2025-01',
 			end: '2026-03',
 			highlights: [
@@ -102,6 +125,8 @@ export const RESUME = {
 			companyUrl: 'https://auzmor.com',
 			title: 'Software Engineer III',
 			location: 'Remote',
+			initials: 'AZ',
+			stack: ['React', 'Performance', 'WCAG 2.1 AA', 'Mentoring'],
 			start: '2023-01',
 			end: '2024-12',
 			highlights: [
@@ -124,6 +149,8 @@ export const RESUME = {
 			companyUrl: 'https://auzmor.com',
 			title: 'Software Engineer I',
 			location: 'Remote',
+			initials: 'AZ',
+			stack: ['React', 'REST APIs', 'WebSockets', 'MFA'],
 			start: '2021-12',
 			end: '2022-12',
 			highlights: [
@@ -141,6 +168,8 @@ export const RESUME = {
 			companyUrl: 'https://www.accenture.com',
 			title: 'Associate Software Engineer',
 			location: 'Gurugram, Haryana, India',
+			initials: 'AC',
+			stack: ['React', 'JavaScript', 'Java', 'SQL'],
 			start: '2021-01',
 			end: '2021-12',
 			highlights: [
@@ -149,7 +178,7 @@ export const RESUME = {
 				],
 			],
 		},
-	] satisfies ResumeRole[],
+	],
 	skills: [
 		{ name: 'Languages', keywords: ['JavaScript (ES6+)', 'TypeScript', 'Java', 'HTML5', 'CSS3'] },
 		{
@@ -169,7 +198,7 @@ export const RESUME = {
 			keywords: ['Code Reviews', 'Technical Mentorship', 'Cross-functional Collaboration', 'Agile Development'],
 		},
 		{ name: 'AI & Developer Tooling', keywords: ['AI-powered Content Generation', 'MCP'] },
-	] satisfies ResumeSkillGroup[],
+	],
 	openSource: [
 		{
 			name: 'Resend (CLI + MCP Server)',
@@ -213,7 +242,7 @@ export const RESUME = {
 				],
 			],
 		},
-	] satisfies ResumeProject[],
+	],
 	education: [
 		{
 			institution: 'Jaipur Engineering College and Research Center',
@@ -224,7 +253,7 @@ export const RESUME = {
 			end: '2020-08',
 			score: 'CGPA: 7.2/10',
 		},
-	] satisfies ResumeEducation[],
+	],
 };
 
 const MONTHS = [
@@ -251,6 +280,17 @@ export const formatMonth = (ym: string) => {
 export const formatRange = (start: string, end?: string) =>
 	`${formatMonth(start)} – ${end ? formatMonth(end) : 'Present'}`;
 
+/** Inclusive month count → '1 yr 3 mos'. Open-ended roles count up to `now`. */
+export const formatDuration = (start: string, end?: string, now = new Date()) => {
+	const [sy, sm] = start.split('-').map(Number);
+	const [ey, em] = end ? end.split('-').map(Number) : [now.getFullYear(), now.getMonth() + 1];
+	const total = (ey - sy) * 12 + (em - sm) + 1;
+	const years = Math.floor(total / 12);
+	const months = total % 12;
+	const part = (n: number, unit: string) => (n ? `${n} ${unit}${n > 1 ? 's' : ''}` : '');
+	return [part(years, 'yr'), part(months, 'mo')].filter(Boolean).join(' ') || '1 mo';
+};
+
 export const inlineToText = (inline: Inline) =>
 	inline.map((run) => (typeof run === 'string' ? run : run.text)).join('');
 
@@ -264,11 +304,10 @@ export function resumeToMarkdown() {
 	const lines: string[] = [
 		`# ${r.name}`,
 		'',
-		`${r.label} · ${r.location.country}`,
+		`${r.label} · ${r.location.label}`,
 		'',
 		...r.links.map((link) => `- ${link.network ?? 'Website'}: [${link.label}](${link.href})`),
 		`- Email: [${r.email}](mailto:${r.email})`,
-		`- Mobile: ${r.phone}`,
 		`- PDF: ${SITE_URL}${RESUME_PDF_PATH}`,
 		'',
 		'## Summary',
@@ -283,7 +322,7 @@ export function resumeToMarkdown() {
 			'',
 			`### ${role.title} · ${mdLink(role.company, role.companyUrl)}`,
 			'',
-			`*${formatRange(role.start, role.end)} · ${role.location}*`,
+			`*${formatRange(role.start, role.end)} · ${role.location}* — ${role.stack.join(', ')}`,
 			'',
 			...role.highlights.map((h) => `- ${inlineToMarkdown(h)}`)
 		);
@@ -319,7 +358,6 @@ export function resumeToJsonResume() {
 			name: r.name,
 			label: r.label,
 			email: r.email,
-			phone: r.phone,
 			url: SITE_URL,
 			summary: r.summary,
 			location: { countryCode: r.location.countryCode },
@@ -386,7 +424,6 @@ export function resumeToJsonLd() {
 			name: r.name,
 			url: SITE_URL,
 			email: `mailto:${r.email}`,
-			telephone: r.phone,
 			jobTitle: r.label,
 			description: r.summary,
 			nationality: { '@type': 'Country', name: r.location.country },
