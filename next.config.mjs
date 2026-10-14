@@ -100,8 +100,38 @@ const nextConfig = {
 			{ source: '/blog/:slug*', destination: '/writings/:slug*', permanent: true },
 		];
 	},
+	async rewrites() {
+		return {
+			// Agents asking for markdown get the resume as markdown at the same URL.
+			beforeFiles: [
+				{
+					source: '/resume',
+					has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
+					destination: '/resume.md',
+				},
+			],
+		};
+	},
 	headers() {
-		return [{ source: '/(.*)', headers: securityHeaders }];
+		return [
+			{ source: '/(.*)', headers: securityHeaders },
+			{
+				source: '/resume',
+				headers: [
+					{ key: 'Vary', value: 'Accept' },
+					{
+						key: 'Link',
+						value:
+							'</resume.md>; rel="alternate"; type="text/markdown", </resume.json>; rel="alternate"; type="application/json", </resume/Shubhdeep_Chhabra.pdf>; rel="alternate"; type="application/pdf"',
+					},
+				],
+			},
+			{
+				// Search should land on /resume, not the PDF.
+				source: '/resume/:file*.pdf',
+				headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
+			},
+		];
 	},
 	pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };

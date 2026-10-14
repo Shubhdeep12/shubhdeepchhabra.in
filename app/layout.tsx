@@ -124,6 +124,7 @@ export const metadata: Metadata = {
 const personStructuredData = {
 	'@context': 'https://schema.org',
 	'@type': 'Person',
+	'@id': 'https://okshubh.in/#person',
 	name: 'Shubhdeep Chhabra',
 	url: 'https://okshubh.in',
 	sameAs: ['https://x.com/okshubhh', 'https://github.com/Shubhdeep12', 'https://linkedin.com/in/shubhdeepchhabra'],

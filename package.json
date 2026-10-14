@@ -13,7 +13,8 @@
 		"migrate": "prisma migrate dev --name init",
 		"postinstall": "prisma generate",
 		"generate": "prisma generate",
-		"db:setup": "pnpm run migrate && pnpm run generate"
+		"db:setup": "pnpm run migrate && pnpm run generate",
+		"resume:pdf": "node scripts/resume-pdf.mjs"
 	},
 	"dependencies": {
 		"@mdx-js/loader": "^3.0.1",
@@ -58,7 +59,8 @@
 		"@biomejs/biome": "2.4.9",
 		"@types/gtag.js": "^0.0.20",
 		"@types/mdx": "^2.0.13",
-		"@types/rss": "^0.0.32"
+		"@types/rss": "^0.0.32",
+		"playwright-core": "1.56.1"
 	},
 	"volta": {
 		"node": "20.11.0"
