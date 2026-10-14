@@ -315,24 +315,31 @@ export default function ResumePage() {
 								<Section id='education' title='Education'>
 									{r.education.map((edu) => (
 										<div key={edu.institution} className='resume-edu'>
-											<h3 className='resume-aside-title'>
-												{edu.studyType} in {edu.area}
-											</h3>
-											<p>
-												{edu.url ? (
-													<ExtLink href={edu.url} className='resume-company'>
-														{edu.institution}
-													</ExtLink>
-												) : (
-													edu.institution
-												)}
-											</p>
-											<p className='resume-role-meta'>
-												<span>
-													<DateRange start={edu.start} end={edu.end} />
+											{edu.logo ? (
+												<span className='resume-badge'>
+													<Logo logo={edu.logo} className='resume-badge-logo' />
 												</span>
-											</p>
-											<p className='resume-role-meta'>{edu.score}</p>
+											) : null}
+											<div>
+												<h3 className='resume-aside-title'>
+													{edu.studyType} in {edu.area}
+												</h3>
+												<p>
+													{edu.url ? (
+														<ExtLink href={edu.url} className='resume-company'>
+															{edu.institution}
+														</ExtLink>
+													) : (
+														edu.institution
+													)}
+												</p>
+												<p className='resume-role-meta'>
+													<span>
+														<DateRange start={edu.start} end={edu.end} />
+													</span>
+												</p>
+												<p className='resume-role-meta'>{edu.score}</p>
+											</div>
 										</div>
 									))}
 								</Section>

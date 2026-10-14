@@ -100,6 +100,7 @@ export const RESUME: Resume = {
 		{
 			company: 'American Technology Consulting (ATC)',
 			companyUrl: 'https://atc.xyz',
+			logo: '/resume/logos/atc.png',
 			title: 'Senior Software Engineer',
 			location: 'Remote',
 			initials: 'ATC',
@@ -117,6 +118,7 @@ export const RESUME: Resume = {
 		{
 			company: 'Auzmor Technology Pvt. Ltd.',
 			companyUrl: 'https://auzmor.com',
+			logo: '/resume/logos/auzmor.jpg',
 			title: 'Senior Software Engineer',
 			location: 'Remote',
 			initials: 'AZ',
@@ -138,6 +140,7 @@ export const RESUME: Resume = {
 		{
 			company: 'Auzmor Technology Pvt. Ltd.',
 			companyUrl: 'https://auzmor.com',
+			logo: '/resume/logos/auzmor.jpg',
 			title: 'Software Engineer III',
 			location: 'Remote',
 			initials: 'AZ',
@@ -162,6 +165,7 @@ export const RESUME: Resume = {
 		{
 			company: 'Auzmor Technology Pvt. Ltd.',
 			companyUrl: 'https://auzmor.com',
+			logo: '/resume/logos/auzmor.jpg',
 			title: 'Software Engineer I',
 			location: 'Remote',
 			initials: 'AZ',
@@ -268,6 +272,7 @@ export const RESUME: Resume = {
 		{
 			institution: 'Jaipur Engineering College and Research Center',
 			url: 'https://jecrc.ac.in',
+			logo: '/resume/logos/jecrc.jpg',
 			studyType: 'B.Tech',
 			area: 'Electronics and Communication Engineering',
 			start: '2016-08',
