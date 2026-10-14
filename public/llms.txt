@@ -5,13 +5,20 @@
 ## About
 
 - **Name:** Shubhdeep Chhabra
-- **Role:** Software Engineer
+- **Role:** Senior Software Engineer
 - **Location:** India
 - **Expertise:** React, Next.js, TypeScript, Node.js, System Design
 - **Website:** https://okshubh.in
 - **Twitter:** https://x.com/okshubhh
 - **GitHub:** https://github.com/Shubhdeep12
 - **LinkedIn:** https://linkedin.com/in/shubhdeepchhabra
+
+## Resume
+
+- **Page:** https://okshubh.in/resume (send `Accept: text/markdown` to get markdown)
+- **Markdown:** https://okshubh.in/resume.md
+- **JSON Resume:** https://okshubh.in/resume.json
+- **PDF:** https://okshubh.in/resume/Shubhdeep_Chhabra.pdf
 
 ## Topics Covered
 

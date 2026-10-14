@@ -26,6 +26,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			changeFrequency: 'weekly',
 		},
 		{
+			url: 'https://okshubh.in/resume',
+			lastModified: new Date().toISOString().split('T')[0],
+			priority: 0.8,
+			changeFrequency: 'monthly',
+		},
+		{
 			url: 'https://okshubh.in/setup',
 			lastModified: new Date().toISOString().split('T')[0],
 			priority: 0.6,

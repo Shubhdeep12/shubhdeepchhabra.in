@@ -16,9 +16,9 @@ const Intro = () => {
 				<Link href='/writings' className='hero-link'>
 					Writings
 				</Link>
-				<a href={resumeUrl} target='_blank' rel='noreferrer' className='hero-link'>
+				<Link href={resumeUrl} className='hero-link'>
 					Resume
-				</a>
+				</Link>
 				<a href='mailto:chhabrashubhdeep@gmail.com' className='hero-link'>
 					Email
 				</a>
