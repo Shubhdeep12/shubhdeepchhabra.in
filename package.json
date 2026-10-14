@@ -18,6 +18,7 @@
 	},
 	"dependencies": {
 		"@mdx-js/loader": "^3.0.1",
+		"@modelcontextprotocol/server": "2.3.1",
 		"@next/mdx": "16.2.1",
 		"@next/third-parties": "16.2.1",
 		"@prisma/adapter-pg": "^7.10.0",

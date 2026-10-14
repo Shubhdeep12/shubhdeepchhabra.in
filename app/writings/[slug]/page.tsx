@@ -14,6 +14,7 @@ import PostReadingLayout from '@/src/components/editorial/PostReadingLayout';
 import ReadingContainer from '@/src/components/editorial/ReadingContainer';
 import Footer from '@/src/components/Footer';
 import { getCategories, getPrimaryCategory, sortBlogsByDate } from '@/src/utils/blog-shared';
+import { PERSON_ID } from '@/src/utils/resume';
 
 interface WritingProps {
 	params: Promise<{ slug: string }>;
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: WritingProps): Promise<Metada
 	}
 
 	const { title, description, cover } = blog.frontMatter;
-	const ogImage = cover ? `https://okshubh.in/${cover}` : '';
+	const ogImage = cover ? `https://okshubh.in${cover.startsWith('/') ? '' : '/'}${cover}` : '';
 
 	return {
 		title,
@@ -44,6 +45,9 @@ export async function generateMetadata({ params }: WritingProps): Promise<Metada
 		publisher: 'Shubhdeep Chhabra',
 		alternates: {
 			canonical: `https://okshubh.in/writings/${slug}`,
+			types: {
+				'text/markdown': `https://okshubh.in/writings/${slug}.md`,
+			},
 		},
 		keywords: blog.frontMatter.keywords || blog.frontMatter.categories || [],
 		openGraph: {
@@ -126,11 +130,13 @@ export default async function WritingPage({ params }: WritingProps) {
 		dateModified: blog.frontMatter.updatedAt || blog.frontMatter.publishedAt,
 		author: {
 			'@type': 'Person',
+			'@id': PERSON_ID,
 			name: 'Shubhdeep Chhabra',
 			url: 'https://okshubh.in',
 		},
 		publisher: {
 			'@type': 'Person',
+			'@id': PERSON_ID,
 			name: 'Shubhdeep Chhabra',
 			url: 'https://okshubh.in',
 		},

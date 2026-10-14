@@ -29,6 +29,23 @@ const securityHeaders = [
 	{ key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
 ];
 
+const ACCEPTS_MARKDOWN = { type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' };
+
+// HTML pages and their markdown twins. `route` is the handler behind the public .md URL, when they differ.
+const MARKDOWN_PAGES = [
+	{ page: '/', markdown: '/index.md' },
+	{ page: '/writings', markdown: '/writings.md' },
+	// Slugs never contain dots, so this doesn't also match /writings/<slug>.md.
+	{ page: '/writings/:slug([^/.]+)', markdown: '/writings/:slug.md', route: '/md/writings/:slug' },
+	{ page: '/setup', markdown: '/setup.md' },
+	{
+		page: '/resume',
+		markdown: '/resume.md',
+		extra:
+			', </resume.json>; rel="alternate"; type="application/json", </resume/Shubhdeep_Chhabra.pdf>; rel="alternate"; type="application/pdf"',
+	},
+];
+
 const mdxOptions = {
 	remarkPlugins: [remarkGfm, remarkUnwrapImages],
 	rehypePlugins: [
@@ -102,36 +119,44 @@ const nextConfig = {
 	},
 	async rewrites() {
 		return {
-			// Agents asking for markdown get the resume as markdown at the same URL.
 			beforeFiles: [
-				{
-					source: '/resume',
-					has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
-					destination: '/resume.md',
-				},
+				// Markdown twin of every article. Next can't name a folder `[slug].md`, so it lives under /md.
+				{ source: '/writings/:slug([^/.]+).md', destination: '/md/writings/:slug' },
+				// Agents asking for markdown get it at the same URL.
+				...MARKDOWN_PAGES.map(({ page, markdown, route }) => ({
+					source: page,
+					has: [ACCEPTS_MARKDOWN],
+					destination: route ?? markdown,
+				})),
 			],
 		};
 	},
 	headers() {
 		return [
 			{ source: '/(.*)', headers: securityHeaders },
-			{
-				source: '/resume',
+			// Point agents at the markdown twin, and keep caches from mixing up HTML and markdown.
+			...MARKDOWN_PAGES.map(({ page, markdown, extra = '' }) => ({
+				source: page,
 				headers: [
 					{ key: 'Vary', value: 'Accept' },
-					{
-						key: 'Link',
-						value:
-							'</resume.md>; rel="alternate"; type="text/markdown", </resume.json>; rel="alternate"; type="application/json", </resume/Shubhdeep_Chhabra.pdf>; rel="alternate"; type="application/pdf"',
-					},
+					{ key: 'Link', value: `<${markdown}>; rel="alternate"; type="text/markdown"${extra}` },
 				],
-			},
+			})),
 			{
 				// Search should land on /resume, not the PDF.
 				source: '/resume/:file*.pdf',
 				headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
 			},
+			{
+				// /md/* only exists as a rewrite target; the public URLs are the .md ones.
+				source: '/md/:path*',
+				headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
+			},
 		];
+	},
+	// The MCP server reads posts from disk at request time; make sure they ship with the function.
+	outputFileTracingIncludes: {
+		'/api/mcp': ['./blog/**/*'],
 	},
 	pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };

@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import Script from 'next/script';
 import { ThemeProvider } from 'next-themes';
 import { type PropsWithChildren } from 'react';
+import WebMcpTools from '@/src/components/agents/WebMcpTools';
 import ReadingDock from '@/src/components/ReadingDock';
 import { readingModeInitScript } from '@/src/hooks/useReadingMode';
 import { Providers } from '@/src/providers';
@@ -149,6 +150,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<head>
+				{/* WebMCP origin trial (Chrome). Token from https://developer.chrome.com/origintrials */}
+				{process.env.WEBMCP_ORIGIN_TRIAL_TOKEN ? (
+					<meta httpEquiv='origin-trial' content={process.env.WEBMCP_ORIGIN_TRIAL_TOKEN} />
+				) : null}
 				<script dangerouslySetInnerHTML={{ __html: readingModeInitScript }} />
 				<Script
 					id='person-structured-data'
@@ -168,6 +173,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 				<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 					<Providers>
 						<ReadingDock />
+						<WebMcpTools />
 						<MainContent>{children}</MainContent>
 						<Analytics />
 						{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS ? (
