@@ -10,7 +10,7 @@ const CURL = `curl -H "Accept: text/markdown" ${SITE_URL.replace('https://', '')
 
 type Copied = 'markdown' | 'curl' | null;
 
-export default function ResumeToolbar({ markdown, updated }: { markdown: string; updated: string }) {
+export default function ResumeToolbar({ markdown }: { markdown: string }) {
 	const [open, setOpen] = useState(false);
 	const [copied, setCopied] = useState<Copied>(null);
 	const rootRef = useRef<HTMLDivElement>(null);
@@ -51,7 +51,6 @@ export default function ResumeToolbar({ markdown, updated }: { markdown: string;
 				<Link href='/' className='blog-home-link'>
 					Shubhdeep Chhabra
 				</Link>
-				<span className='resume-updated'>Updated {updated}</span>
 			</div>
 			<div className='resume-toolbar-actions' ref={rootRef}>
 				<a className='resume-btn resume-btn--primary' href={RESUME_PDF_PATH} download>

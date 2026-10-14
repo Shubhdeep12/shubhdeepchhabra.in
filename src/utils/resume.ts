@@ -64,8 +64,6 @@ export type ResumeEducation = {
 const merged = (repo: string) => `https://github.com/${repo}/pulls?q=is%3Apr+is%3Amerged+author%3AShubhdeep12`;
 
 export type Resume = {
-	/** YYYY-MM, shown as "Updated …" in the toolbar. Bump when you regenerate the PDF. */
-	updated: string;
 	name: string;
 	label: string;
 	email: string;
@@ -79,7 +77,6 @@ export type Resume = {
 };
 
 export const RESUME: Resume = {
-	updated: '2026-10',
 	name: 'Shubhdeep Chhabra',
 	label: 'Senior Software Engineer',
 	email: 'chhabrashubhdeep@gmail.com',

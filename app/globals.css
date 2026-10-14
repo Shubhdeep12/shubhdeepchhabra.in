@@ -1265,10 +1265,10 @@ body.min-h-screen {
 }
 
 @media (max-width: 600px) {
-	.site-footer {
-		flex-direction: column-reverse;
-		align-items: flex-start;
-		gap: 16px;
+	/* One row on phones: name on the left, social icons on the right. Writings is reachable from the home page. */
+	.footer-nav,
+	.footer-divider {
+		display: none;
 	}
 
 	.site-footer-container {
@@ -2114,13 +2114,6 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 	margin-bottom: 0;
 }
 
-.resume-updated {
-	font-family: var(--font-dm-mono), ui-monospace, monospace;
-	font-size: 0.6875rem;
-	letter-spacing: 0.04em;
-	color: var(--faint);
-}
-
 .resume-toolbar-actions {
 	display: flex;
 	flex-wrap: wrap;
@@ -2131,6 +2124,7 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
+	white-space: nowrap;
 	height: 36px;
 	padding: 0 14px;
 	border-radius: 8px;
@@ -2699,7 +2693,9 @@ a.resume-company:hover {
 		justify-content: space-between;
 	}
 
+	/* Download gets its own row; View and More formats share the next one. */
 	.resume-toolbar-actions {
+		position: relative;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		width: 100%;
@@ -2709,15 +2705,21 @@ a.resume-company:hover {
 	.resume-btn {
 		justify-content: center;
 		height: 44px;
+		padding: 0 12px;
 		font-size: 14px;
 	}
 
-	.resume-menu {
+	.resume-btn--primary {
 		grid-column: 1 / -1;
 	}
 
 	.resume-menu > .resume-btn {
 		width: 100%;
+	}
+
+	/* Anchor the menu to the whole button row so it spans the full width. */
+	.resume-menu {
+		position: static;
 	}
 
 	.resume-menu-panel {
