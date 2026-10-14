@@ -2060,7 +2060,8 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 	--r-line: var(--border);
 	--r-underline: color-mix(in srgb, var(--ink) 30%, transparent);
 	--r-shadow: 0 1px 2px rgba(26, 25, 23, 0.06), 0 24px 48px -28px rgba(26, 25, 23, 0.28);
-	max-width: 1120px;
+	/* Fixed layout, like a document: it never reflows. Phones get the same page scaled down (see viewport in app/resume/page.tsx) and pinch to zoom. */
+	width: 1120px;
 	margin: 0 auto;
 	color: var(--r-ink);
 }
@@ -2656,57 +2657,10 @@ a.resume-company:hover {
 	background: #fff;
 }
 
-@media (max-width: 900px) {
-	.resume-columns {
-		grid-template-columns: minmax(0, 1fr);
-		grid-template-rows: none;
-	}
-
-	.resume-main,
-	.resume-aside,
-	.resume-closing {
-		grid-column: auto;
-		grid-row: auto;
-	}
-
-	.resume-aside {
-		margin-top: 28px;
-		padding-left: 0;
-		border-left: 0;
-	}
-}
-
-@media (max-width: 640px) {
-	.resume-toolbar-info {
-		width: 100%;
-		justify-content: space-between;
-	}
-
-	.resume-menu-panel {
-		right: auto;
-		left: 50%;
-		transform: translateX(-50%);
-	}
-
-	.resume-btn {
-		padding: 0 12px;
-	}
-
-	.resume-hero {
-		padding: 28px 20px 24px;
-	}
-
-	.resume-name {
-		font-size: 32px;
-	}
-
-	.resume-body {
-		padding: 24px 20px 28px;
-	}
-
-	.resume-role {
-		grid-template-columns: minmax(0, 1fr);
-		gap: 10px;
+/* At the fixed 1200px layout (and phones, which render it) keep the toolbar clear of the floating theme toggle. */
+@media (max-width: 1320px) {
+	.resume-toolbar {
+		padding-right: 52px;
 	}
 }
 
@@ -2740,7 +2694,7 @@ a.resume-company:hover {
 		--r-faint: #6b6e76;
 		--r-line: #e1e0dc;
 		--r-underline: rgba(22, 23, 26, 0.35);
-		max-width: none;
+		width: auto;
 	}
 
 	.resume-sheet {

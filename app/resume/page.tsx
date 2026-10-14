@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { Fragment } from 'react';
 import type { IconType } from 'react-icons';
 import { FaAws, FaJava, FaXTwitter } from 'react-icons/fa6';
@@ -38,6 +38,10 @@ import {
 export const revalidate = 86400;
 
 const description = `Resume of ${RESUME.name}, ${RESUME.label}. ${RESUME.summary}`;
+
+// The resume is a fixed-width document: phones render the full 1200px layout fitted to the screen and pinch to zoom.
+// initialScale is unset on purpose; Next's default initial-scale=1 would open the page zoomed into its left edge.
+export const viewport: Viewport = { width: 1200, initialScale: undefined };
 
 export const metadata: Metadata = {
 	title: 'Resume - Shubhdeep Chhabra',
