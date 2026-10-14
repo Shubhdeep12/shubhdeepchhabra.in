@@ -149,7 +149,7 @@ export const RESUME: Resume = {
 					'Built Mentorship, Interactive Training and Checklist experiences used by enterprise learners, helping increase platform engagement by **50%**.'
 				),
 				rich(
-					'Led frontend performance improvements through lazy loading, code splitting and bundle optimization, improving **Core Web Vitals scores from 20 to 85**.'
+					'Led frontend performance improvements through lazy loading, code splitting and bundle optimization, improving the **Lighthouse performance score from 20 to 85**.'
 				),
 				rich(
 					'Improved accessibility across the platform by implementing **WCAG 2.1 AA** standards and partnering closely with design and product teams.'
