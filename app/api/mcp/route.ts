@@ -1,44 +1,25 @@
-import { handleMessage, PARSE_ERROR } from '@/lib/mcp-server';
+import { mcpHandler } from '@/lib/mcp-server';
 
-// Remote MCP endpoint (Streamable HTTP, stateless, JSON responses).
-// Connect with: claude mcp add --transport http okshubh https://okshubh.in/api/mcp
+// Remote MCP endpoint (Streamable HTTP). Connect with:
+// claude mcp add --transport http okshubh https://okshubh.in/api/mcp
 
+// Public, read-only, no cookies: any origin may call it (browser-based MCP clients included).
 const CORS = {
 	'Access-Control-Allow-Origin': '*',
-	'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-	'Access-Control-Allow-Headers': 'Content-Type, Accept, Mcp-Protocol-Version, Mcp-Session-Id, Last-Event-ID',
+	'Access-Control-Allow-Methods': 'POST, GET, DELETE, OPTIONS',
+	'Access-Control-Allow-Headers':
+		'Content-Type, Accept, MCP-Protocol-Version, Mcp-Method, Mcp-Name, Mcp-Session-Id, Last-Event-ID',
+	'Access-Control-Expose-Headers': 'Mcp-Session-Id, MCP-Protocol-Version',
 };
 
-const reply = (body: unknown, status = 200) =>
-	new Response(JSON.stringify(body), {
-		status,
-		headers: { ...CORS, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
-	});
-
-export async function POST(request: Request) {
-	let payload: unknown;
-	try {
-		payload = await request.json();
-	} catch {
-		return reply(PARSE_ERROR, 400);
-	}
-
-	if (Array.isArray(payload)) {
-		const replies = (await Promise.all(payload.map(handleMessage))).filter(Boolean);
-		return replies.length ? reply(replies) : new Response(null, { status: 202, headers: CORS });
-	}
-
-	const response = await handleMessage(payload);
-	return response ? reply(response) : new Response(null, { status: 202, headers: CORS });
+async function handle(request: Request) {
+	const response = await mcpHandler.fetch(request);
+	const headers = new Headers(response.headers);
+	for (const [key, value] of Object.entries(CORS)) headers.set(key, value);
+	return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 }
 
-// No server-initiated stream: this server never sends requests or notifications.
-export function GET() {
-	return new Response('Method Not Allowed. POST JSON-RPC messages to this endpoint.', {
-		status: 405,
-		headers: { ...CORS, Allow: 'POST, OPTIONS' },
-	});
-}
+export { handle as DELETE, handle as GET, handle as POST };
 
 export function OPTIONS() {
 	return new Response(null, { status: 204, headers: CORS });

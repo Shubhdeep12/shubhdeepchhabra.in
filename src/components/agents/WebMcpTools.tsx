@@ -33,13 +33,35 @@ const text = (value: string, isError = false): ToolResult => ({
 	...(isError ? { isError } : {}),
 });
 
+const MCP_PROTOCOL_VERSION = '2026-07-28';
+
 let rpcId = 0;
+// A stateless 2026-07-28 MCP request: version, client info and capabilities travel with each call.
 async function callServerTool(name: string, args: Record<string, unknown>, signal?: AbortSignal): Promise<ToolResult> {
 	try {
 		const response = await fetch('/api/mcp', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-			body: JSON.stringify({ jsonrpc: '2.0', id: ++rpcId, method: 'tools/call', params: { name, arguments: args } }),
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json, text/event-stream',
+				'MCP-Protocol-Version': MCP_PROTOCOL_VERSION,
+				'Mcp-Method': 'tools/call',
+				'Mcp-Name': name,
+			},
+			body: JSON.stringify({
+				jsonrpc: '2.0',
+				id: ++rpcId,
+				method: 'tools/call',
+				params: {
+					name,
+					arguments: args,
+					_meta: {
+						'io.modelcontextprotocol/protocolVersion': MCP_PROTOCOL_VERSION,
+						'io.modelcontextprotocol/clientInfo': { name: 'okshubh-webmcp', version: '1.0.0' },
+						'io.modelcontextprotocol/clientCapabilities': {},
+					},
+				},
+			}),
 			signal,
 		});
 		const message = await response.json();

@@ -1,3 +1,4 @@
+import { createMcpHandler, fromJsonSchema, type JsonSchemaType, McpServer } from '@modelcontextprotocol/server';
 import {
 	getSortedPosts,
 	PROFILE,
@@ -11,11 +12,10 @@ import { getCategories } from '@/src/utils/blog-shared';
 import { resumeToJsonResume, resumeToMarkdown, SITE_URL } from '@/src/utils/resume';
 
 /**
- * A small stateless MCP server (Streamable HTTP, JSON responses only). Every tool is read-only
- * public content, so there are no sessions, no auth and no server-initiated messages.
+ * The remote MCP server, built on the official TypeScript SDK. Every tool is read-only public
+ * content, so there is no auth and no state between requests.
  */
 
-const SUPPORTED_PROTOCOL_VERSIONS = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 const SERVER_INFO = { name: 'okshubh', title: 'Shubhdeep Chhabra', version: '1.0.0', websiteUrl: SITE_URL };
 const INSTRUCTIONS =
 	'Read-only tools for Shubhdeep Chhabra’s site (okshubh.in): profile, resume, contact info, desk setup and articles. Use list_writings to find an article slug, then get_writing to read it.';
@@ -92,63 +92,43 @@ const HANDLERS: Record<ContentToolName, (args: Record<string, unknown>) => Promi
 	get_desk_setup: () => text(setupToMarkdown()),
 };
 
-export async function callTool(name: string, args: Record<string, unknown> = {}): Promise<ToolResult | null> {
-	if (!(name in HANDLERS)) return null;
-	return HANDLERS[name as ContentToolName](args);
-}
+const ONE_HOUR = 60 * 60 * 1000;
 
-// --- JSON-RPC ---
+/** One server instance per request: everything here is stateless public content. */
+export function createServer() {
+	const server = new McpServer(SERVER_INFO, {
+		instructions: INSTRUCTIONS,
+		// 2026-07-28 clients may cache these; they only change on deploy and hold nothing per-user.
+		cacheHints: {
+			'server/discover': { ttlMs: ONE_HOUR, cacheScope: 'public' },
+			'tools/list': { ttlMs: ONE_HOUR, cacheScope: 'public' },
+		},
+	});
 
-type JsonRpcId = string | number | null;
-type JsonRpcRequest = { jsonrpc: '2.0'; id?: JsonRpcId; method: string; params?: Record<string, unknown> };
-
-const result = (id: JsonRpcId, value: unknown) => ({ jsonrpc: '2.0' as const, id, result: value });
-const rpcError = (id: JsonRpcId, code: number, message: string) => ({
-	jsonrpc: '2.0' as const,
-	id,
-	error: { code, message },
-});
-
-export const PARSE_ERROR = rpcError(null, -32700, 'Parse error');
-
-const isRequest = (message: unknown): message is JsonRpcRequest =>
-	typeof message === 'object' &&
-	message !== null &&
-	(message as JsonRpcRequest).jsonrpc === '2.0' &&
-	typeof (message as JsonRpcRequest).method === 'string';
-
-/** Handles one JSON-RPC message. Returns null for notifications (and stray responses), which get no reply. */
-export async function handleMessage(message: unknown) {
-	if (!isRequest(message)) return rpcError(null, -32600, 'Invalid Request');
-	if (message.id === undefined) return null;
-	const { id, method, params = {} } = message;
-
-	switch (method) {
-		case 'initialize': {
-			const requested = str(params.protocolVersion);
-			return result(id, {
-				protocolVersion:
-					requested && SUPPORTED_PROTOCOL_VERSIONS.includes(requested) ? requested : SUPPORTED_PROTOCOL_VERSIONS[0],
-				capabilities: { tools: { listChanged: false } },
-				serverInfo: SERVER_INFO,
-				instructions: INSTRUCTIONS,
-			});
-		}
-		case 'ping':
-			return result(id, {});
-		case 'tools/list':
-			return result(id, { tools: CONTENT_TOOLS });
-		case 'tools/call': {
-			const name = str(params.name) ?? '';
-			const args = typeof params.arguments === 'object' && params.arguments !== null ? params.arguments : {};
-			try {
-				const output = await callTool(name, args as Record<string, unknown>);
-				return output ? result(id, output) : rpcError(id, -32602, `Unknown tool: ${name}`);
-			} catch {
-				return result(id, toolError(`${name} failed. Try again, or read ${SITE_URL}/llms.txt instead.`));
+	for (const tool of CONTENT_TOOLS) {
+		server.registerTool(
+			tool.name,
+			{
+				title: tool.title,
+				description: tool.description,
+				inputSchema: fromJsonSchema(tool.inputSchema as JsonSchemaType),
+				annotations: tool.annotations,
+			},
+			async (args: unknown) => {
+				try {
+					return await HANDLERS[tool.name]((args ?? {}) as Record<string, unknown>);
+				} catch {
+					return toolError(`${tool.name} failed. Try again, or read ${SITE_URL}/llms.txt instead.`);
+				}
 			}
-		}
-		default:
-			return rpcError(id, -32601, `Method not found: ${method}`);
+		);
 	}
+
+	return server;
 }
+
+/**
+ * Streamable HTTP handler. Serves 2026-07-28 (stateless, per-request envelope) clients and,
+ * through the SDK's stateless fallback, 2025-era clients that still open with `initialize`.
+ */
+export const mcpHandler = createMcpHandler(createServer, { responseMode: 'json' });
