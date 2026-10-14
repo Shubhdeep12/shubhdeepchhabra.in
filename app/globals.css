@@ -1150,12 +1150,34 @@ a.post-rail-tool {
 	opacity: 0.5;
 }
 
+/* Sticky footer: on short pages the footer sits at the bottom of the viewport; long pages scroll as usual.
+   body > main > (each wrapper down to the footer) are growing flex columns, and the footer takes the spare space above it. */
+body.min-h-screen {
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+}
+
+#main-content,
+#main-content :has(.site-footer) {
+	display: flex;
+	flex-direction: column;
+	flex: 1 0 auto;
+}
+
+/* Flex items with auto side margins shrink to fit; keep centred blocks at their normal width. */
+#main-content :has(.site-footer) > * {
+	width: 100%;
+}
+
 .site-footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 28px 0;
-	margin-top: 56px;
+	/* The 56px gap above the footer lives in padding so margin-top can absorb the spare height. */
+	padding: 84px 0 28px;
+	margin-top: auto;
 }
 
 .site-footer-container {
