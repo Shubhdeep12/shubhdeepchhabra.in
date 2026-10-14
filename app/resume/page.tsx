@@ -2,9 +2,8 @@ import { Metadata } from 'next';
 import { Fragment } from 'react';
 import type { IconType } from 'react-icons';
 import { FaAws, FaJava, FaXTwitter } from 'react-icons/fa6';
-import { FiArrowUpRight, FiGithub, FiGlobe, FiLayers, FiLinkedin, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
+import { FiGithub, FiGlobe, FiLayers, FiLinkedin, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 import {
-	SiAccenture,
 	SiCss,
 	SiGithubactions,
 	SiHtml5,
@@ -12,12 +11,9 @@ import {
 	SiMysql,
 	SiNextdotjs,
 	SiNodedotjs,
-	SiRazorpay,
 	SiReact,
 	SiReactquery,
 	SiRedux,
-	SiResend,
-	SiSentry,
 	SiTailwindcss,
 	SiTypescript,
 } from 'react-icons/si';
@@ -69,14 +65,8 @@ export const metadata: Metadata = {
 
 const LINK_ICONS: Record<string, IconType> = { GitHub: FiGithub, LinkedIn: FiLinkedin };
 
-/** Keys usable as `logo` in the resume data; anything else is treated as an image path. */
-const BRAND_ICONS: Record<string, IconType> = {
-	accenture: SiAccenture,
-	resend: SiResend,
-	sentry: SiSentry,
-	razorpay: SiRazorpay,
-	'design-systems': FiLayers,
-};
+/** Generic icons for entries without a company logo; every other `logo` value is an official image, shown as is. */
+const GENERIC_ICONS: Record<string, IconType> = { 'design-systems': FiLayers };
 
 const SKILL_ICONS: Record<string, IconType> = {
 	'JavaScript (ES6+)': SiJavascript,
@@ -96,9 +86,9 @@ const SKILL_ICONS: Record<string, IconType> = {
 };
 
 function Logo({ logo, className }: { logo: string; className: string }) {
-	const Icon = BRAND_ICONS[logo];
+	const Icon = GENERIC_ICONS[logo];
 	if (Icon) return <Icon aria-hidden='true' className={className} />;
-	return <img src={logo} alt='' aria-hidden='true' className={className} loading='lazy' />;
+	return <img src={logo} alt='' aria-hidden='true' className={`${className} resume-logo-img`} />;
 }
 
 function ExtLink({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
@@ -116,6 +106,10 @@ function RichText({ value }: { value: Inline }) {
 			{value.map((run, i) =>
 				typeof run === 'string' ? (
 					<Fragment key={i}>{run}</Fragment>
+				) : 'strong' in run ? (
+					<strong key={i} className='resume-strong'>
+						{run.strong}
+					</strong>
 				) : (
 					<ExtLink key={i} href={run.href} className='resume-link'>
 						{run.logo ? <Logo logo={run.logo} className='resume-inline-logo' /> : null}
@@ -151,7 +145,6 @@ function Section({ id, title, children }: { id: string; title: string; children:
 
 export default function ResumePage() {
 	const r = RESUME;
-	const linkedin = r.links.find((link) => link.network === 'LinkedIn');
 
 	return (
 		<AnimatePage>
@@ -345,33 +338,13 @@ export default function ResumePage() {
 								</Section>
 							</aside>
 
-							<section className='resume-contact-card' aria-labelledby='contact-title'>
-								<h2 id='contact-title' className='resume-contact-title'>
-									Let's build something
-								</h2>
-								<p>
-									Hiring for a product or platform team, or working on something in developer tools? I'm always happy to
-									talk.
-								</p>
-								<div className='resume-contact-actions'>
-									<ExtLink href={`mailto:${r.email}`} className='resume-contact-link'>
-										<FiMail aria-hidden='true' />
-										{r.email}
-									</ExtLink>
-									{linkedin ? (
-										<ExtLink href={linkedin.href} className='resume-contact-link'>
-											<FiLinkedin aria-hidden='true' />
-											LinkedIn
-											<FiArrowUpRight aria-hidden='true' />
-										</ExtLink>
-									) : null}
-									<ExtLink href={`${SITE_URL}/writings`} className='resume-contact-link'>
-										<FiGlobe aria-hidden='true' />
-										Writing
-										<FiArrowUpRight aria-hidden='true' />
-									</ExtLink>
-								</div>
-							</section>
+							<p className='resume-closing'>
+								Thinking about hiring? Let's connect at{' '}
+								<ExtLink href={`mailto:${r.email}`} className='resume-link'>
+									{r.email}
+								</ExtLink>
+								.
+							</p>
 						</div>
 					</div>
 				</article>

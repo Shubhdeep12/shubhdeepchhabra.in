@@ -2603,55 +2603,30 @@ a.resume-company:hover {
 	margin-top: 2px !important;
 }
 
-/* Contact card: sits under experience in the left column */
-.resume-contact-card {
+/* Closing line: under experience in the left column */
+.resume-closing {
 	grid-column: 1;
 	grid-row: 2;
 	align-self: start;
-	margin-top: 32px;
-	padding: 20px 22px;
-	border: 1px dashed var(--r-line);
-	border-radius: 10px;
-	background: var(--r-band);
+	margin-top: 28px !important;
+	padding-top: 16px;
+	border-top: 1px solid var(--r-line);
 	color: var(--r-muted);
 }
 
-.resume-contact-title {
-	margin: 0 0 6px;
-	font-size: 16px;
+.resume-strong {
 	font-weight: 600;
-	letter-spacing: -0.01em;
 	color: var(--r-ink);
 }
 
-.resume-contact-actions {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px 18px;
-	margin-top: 12px;
+/* Logos are shown exactly as supplied. In dark mode they sit on a white tile so dark marks stay visible. */
+.dark .resume-logo-img {
+	background: #fff;
+	border-radius: 3px;
 }
 
-.resume-contact-link {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	color: var(--r-ink);
-	font-weight: 500;
-	text-decoration: underline;
-	text-decoration-color: var(--r-underline);
-	text-underline-offset: 3px;
-}
-
-.resume-contact-link:hover {
-	color: var(--r-ink);
-	text-decoration-color: currentColor;
-}
-
-.resume-contact-link svg {
-	width: 14px;
-	height: 14px;
-	flex-shrink: 0;
-	color: var(--r-faint);
+.dark .resume-badge:has(.resume-logo-img) {
+	background: #fff;
 }
 
 @media (max-width: 900px) {
@@ -2662,7 +2637,7 @@ a.resume-company:hover {
 
 	.resume-main,
 	.resume-aside,
-	.resume-contact-card {
+	.resume-closing {
 		grid-column: auto;
 		grid-row: auto;
 	}
@@ -2705,10 +2680,6 @@ a.resume-company:hover {
 	.resume-role {
 		grid-template-columns: minmax(0, 1fr);
 		gap: 10px;
-	}
-
-	.resume-contact-card {
-		padding: 16px;
 	}
 }
 
@@ -2815,26 +2786,11 @@ a.resume-company:hover {
 		border-left: 1px solid var(--r-line);
 	}
 
-	.resume-contact-card {
+	.resume-closing {
 		grid-column: 1;
 		grid-row: 2;
-		margin-top: 12px;
-		padding: 10px 12px;
-	}
-
-	.resume-contact-title {
-		font-size: 11px;
-		margin-bottom: 2px;
-	}
-
-	.resume-contact-actions {
-		margin-top: 6px;
-		gap: 4px 14px;
-	}
-
-	.resume-contact-link svg {
-		width: 10px;
-		height: 10px;
+		margin-top: 12px !important;
+		padding-top: 8px;
 	}
 
 	.resume-roles {

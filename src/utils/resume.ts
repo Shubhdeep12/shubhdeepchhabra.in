@@ -9,8 +9,15 @@ export const RESUME_MD_PATH = '/resume.md';
 export const RESUME_JSON_PATH = '/resume.json';
 
 /** Text with optional inline links: plain strings and { text, href } runs. */
-/** Link runs can carry a small logo (brand icon key or image path) shown before the text on the page. */
-export type Inline = (string | { text: string; href: string; logo?: string })[];
+/** Text runs: plain strings, { strong } for emphasis, and links that can carry a small logo image. */
+export type Inline = (string | { strong: string } | { text: string; href: string; logo?: string })[];
+
+/** 'Cut build times by **60%**' → Inline with the starred parts bold. */
+const rich = (text: string): Inline =>
+	text
+		.split(/\*\*(.+?)\*\*/)
+		.map((part, i) => (i % 2 ? { strong: part } : part))
+		.filter((part) => part !== '');
 
 export type ResumeLink = { label: string; href: string; network?: string };
 
@@ -20,7 +27,7 @@ export type ResumeRole = {
 	title: string;
 	/** Short badge shown in place of a logo, e.g. 'ATC'. */
 	initials: string;
-	/** Logo: a brand icon key (see BRAND_ICONS on the page) or an image path in /public. Falls back to initials. */
+	/** Official logo image in /public (used as is, never recoloured). Falls back to initials. */
 	logo?: string;
 	location: string;
 	/** Tech/focus line under the role. */
@@ -36,7 +43,7 @@ export type ResumeSkillGroup = { name: string; keywords: string[] };
 
 export type ResumeProject = {
 	name: string;
-	/** Brand icon key or image path, shown beside the name. */
+	/** Official logo image in /public, or 'design-systems' for a generic icon. */
 	logo?: string;
 	/** Optional trailing link after the name, e.g. "— github". */
 	link?: { text: string; href: string };
@@ -99,12 +106,12 @@ export const RESUME: Resume = {
 			stack: ['React 18', 'Rsbuild', 'TypeScript', 'LMS'],
 			start: '2026-04',
 			highlights: [
-				[
-					'Led migration of a large React application from React 16, CRA and CRACO to React 18 and Rsbuild, reducing CI build times by 60% and simplifying the development workflow.',
-				],
-				[
-					'Worked across the LMS platform to stabilize existing features, address technical debt and support ongoing product development after the engineering transition.',
-				],
+				rich(
+					'Led migration of a large React application from React 16, CRA and CRACO to **React 18 and Rsbuild**, reducing CI build times by **60%** and simplifying the development workflow.'
+				),
+				rich(
+					'Worked across the **LMS platform** to stabilize existing features, address technical debt and support ongoing product development after the engineering transition.'
+				),
 			],
 		},
 		{
@@ -117,15 +124,15 @@ export const RESUME: Resume = {
 			start: '2025-01',
 			end: '2026-03',
 			highlights: [
-				[
-					'Built a multi-tenant RBAC platform used across 50+ enterprise organizations, allowing administrators to create custom roles and manage access across product modules.',
-				],
-				[
-					'Implemented SSO/SAML integrations, API key management and user provisioning workflows to simplify enterprise onboarding and identity management.',
-				],
-				[
-					'Built an AI-powered content generation workflow that created structured learning material from prompts and uploaded documents, reducing manual content creation effort.',
-				],
+				rich(
+					'Built a **multi-tenant RBAC platform** used across **50+ enterprise organizations**, allowing administrators to create custom roles and manage access across product modules.'
+				),
+				rich(
+					'Implemented **SSO/SAML integrations**, **API key management** and user provisioning workflows to simplify enterprise onboarding and identity management.'
+				),
+				rich(
+					'Built an **AI-powered content generation** workflow that created structured learning material from prompts and uploaded documents, reducing manual content creation effort.'
+				),
 			],
 		},
 		{
@@ -138,18 +145,18 @@ export const RESUME: Resume = {
 			start: '2023-01',
 			end: '2024-12',
 			highlights: [
-				[
-					'Built Mentorship, Interactive Training and Checklist experiences used by enterprise learners, helping increase platform engagement by 50%.',
-				],
-				[
-					'Led frontend performance improvements through lazy loading, code splitting and bundle optimization, improving Core Web Vitals scores from 20 to 85.',
-				],
-				[
-					'Improved accessibility across the platform by implementing WCAG 2.1 AA standards and partnering closely with design and product teams.',
-				],
-				[
-					'Led engineering design reviews, mentored developers, and established code review standards to improve code quality and maintainability.',
-				],
+				rich(
+					'Built Mentorship, Interactive Training and Checklist experiences used by enterprise learners, helping increase platform engagement by **50%**.'
+				),
+				rich(
+					'Led frontend performance improvements through lazy loading, code splitting and bundle optimization, improving **Core Web Vitals scores from 20 to 85**.'
+				),
+				rich(
+					'Improved accessibility across the platform by implementing **WCAG 2.1 AA** standards and partnering closely with design and product teams.'
+				),
+				rich(
+					'Led **engineering design reviews**, mentored developers, and established code review standards to improve code quality and maintainability.'
+				),
 			],
 		},
 		{
@@ -162,19 +169,21 @@ export const RESUME: Resume = {
 			start: '2021-12',
 			end: '2022-12',
 			highlights: [
-				[
-					'Built a multi-tenant branding system that allowed organizations to customize themes and deliver white-labeled learning experiences.',
-				],
-				[
-					'Built social learning features including posts, polls and eSignatures using React, REST APIs and Web Sockets.',
-				],
-				['Implemented multi-factor authentication using SMS and email verification to strengthen platform security.'],
+				rich(
+					'Built a **multi-tenant branding system** that allowed organizations to customize themes and deliver white-labeled learning experiences.'
+				),
+				rich(
+					'Built **social learning features** including posts, polls and eSignatures using React, REST APIs and Web Sockets.'
+				),
+				rich(
+					'Implemented **multi-factor authentication** using SMS and email verification to strengthen platform security.'
+				),
 			],
 		},
 		{
 			company: 'Accenture Solutions Pvt. Ltd.',
 			companyUrl: 'https://www.accenture.com',
-			logo: 'accenture',
+			logo: '/resume/logos/accenture.svg',
 			title: 'Associate Software Engineer',
 			location: 'Gurugram, Haryana, India',
 			initials: 'AC',
@@ -182,9 +191,9 @@ export const RESUME: Resume = {
 			start: '2021-01',
 			end: '2021-12',
 			highlights: [
-				[
-					'Developed and maintained enterprise web applications using React, JavaScript, Java, HTML, SQL, and REST APIs while collaborating with cross-functional teams.',
-				],
+				rich(
+					'Developed and maintained **enterprise web applications** using React, JavaScript, Java, HTML, SQL, and REST APIs while collaborating with cross-functional teams.'
+				),
 			],
 		},
 	],
@@ -211,7 +220,7 @@ export const RESUME: Resume = {
 	openSource: [
 		{
 			name: 'Resend (CLI + MCP Server)',
-			logo: 'resend',
+			logo: '/resume/logos/resend.svg',
 			highlights: [
 				[
 					'Contributed features and test coverage improvements to the official Resend ',
@@ -231,7 +240,7 @@ export const RESUME: Resume = {
 		},
 		{
 			name: 'Sentry Spotlight',
-			logo: 'sentry',
+			logo: '/resume/logos/sentry.png',
 			link: { text: 'github', href: merged('getsentry/spotlight') },
 			highlights: [
 				['Contributed improvements to Sentry Spotlight, an open-source local debugging and observability tool.'],
@@ -245,9 +254,9 @@ export const RESUME: Resume = {
 					'Contributed merged improvements to ',
 					{ text: 'Kobalte', href: merged('kobaltedev/kobalte'), logo: '/resume/logos/kobalte.png' },
 					', ',
-					{ text: 'Razorpay Blade', href: merged('razorpay/blade'), logo: 'razorpay' },
+					{ text: 'Razorpay Blade', href: merged('razorpay/blade'), logo: '/resume/logos/razorpay.svg' },
 					', ',
-					{ text: 'Microsoft Griffel', href: merged('microsoft/griffel') },
+					{ text: 'Microsoft Griffel', href: merged('microsoft/griffel'), logo: '/resume/logos/microsoft.png' },
 					' and ',
 					{ text: 'Adobe React Spectrum', href: merged('adobe/react-spectrum'), logo: '/resume/logos/adobe.png' },
 					'.',
@@ -304,10 +313,14 @@ export const formatDuration = (start: string, end?: string, now = new Date()) =>
 };
 
 export const inlineToText = (inline: Inline) =>
-	inline.map((run) => (typeof run === 'string' ? run : run.text)).join('');
+	inline.map((run) => (typeof run === 'string' ? run : 'strong' in run ? run.strong : run.text)).join('');
 
 const inlineToMarkdown = (inline: Inline) =>
-	inline.map((run) => (typeof run === 'string' ? run : `[${run.text}](${run.href})`)).join('');
+	inline
+		.map((run) =>
+			typeof run === 'string' ? run : 'strong' in run ? `**${run.strong}**` : `[${run.text}](${run.href})`
+		)
+		.join('');
 
 const mdLink = (text: string, href?: string) => (href ? `[${text}](${href})` : text);
 
