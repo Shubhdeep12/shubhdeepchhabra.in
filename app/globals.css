@@ -2060,8 +2060,7 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 	--r-line: var(--border);
 	--r-underline: color-mix(in srgb, var(--ink) 30%, transparent);
 	--r-shadow: 0 1px 2px rgba(26, 25, 23, 0.06), 0 24px 48px -28px rgba(26, 25, 23, 0.28);
-	/* Fixed layout, like a document: it never reflows. Phones get the same page scaled down (see viewport in app/resume/page.tsx) and pinch to zoom. */
-	width: 1120px;
+	max-width: 1120px;
 	margin: 0 auto;
 	color: var(--r-ink);
 }
@@ -2231,7 +2230,14 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 
 /* Sheet */
 
+/* The sheet is a fixed-width document that never reflows: ResumeCanvas zooms it to fit narrower screens,
+   and people pinch-zoom on phones. Its width comes from RESUME_SHEET_WIDTH (src/components/resume/fit.ts). */
+.resume-canvas {
+	overflow-x: auto;
+}
+
 .resume-sheet {
+	zoom: var(--resume-zoom, 1);
 	background: var(--r-sheet);
 	border-radius: 10px;
 	box-shadow: var(--r-shadow);
@@ -2657,10 +2663,55 @@ a.resume-company:hover {
 	background: #fff;
 }
 
-/* At the fixed 1200px layout (and phones, which render it) keep the toolbar clear of the floating theme toggle. */
-@media (max-width: 1320px) {
+/* Keep the toolbar clear of the floating theme toggle (top right on wider screens). */
+@media (max-width: 1320px) and (min-width: 641px) {
 	.resume-toolbar {
 		padding-right: 52px;
+	}
+}
+
+/* Phones: the toolbar is regular, touch-sized UI; only the sheet stays a fixed design. */
+@media (max-width: 640px) {
+	.resume-toolbar-info {
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.resume-toolbar-actions {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		width: 100%;
+		gap: 8px;
+	}
+
+	.resume-btn {
+		justify-content: center;
+		height: 44px;
+		font-size: 14px;
+	}
+
+	.resume-menu {
+		grid-column: 1 / -1;
+	}
+
+	.resume-menu > .resume-btn {
+		width: 100%;
+	}
+
+	.resume-menu-panel {
+		left: 0;
+		right: 0;
+		width: auto;
+		max-width: none;
+	}
+
+	/* Give the zoomed sheet a little more width than the page gutters allow. */
+	.resume-canvas {
+		margin: 0 -20px;
+	}
+
+	.resume-sheet {
+		border-radius: 6px;
 	}
 }
 
@@ -2697,7 +2748,14 @@ a.resume-company:hover {
 		width: auto;
 	}
 
+	.resume-canvas {
+		margin: 0;
+		overflow: visible;
+	}
+
 	.resume-sheet {
+		zoom: 1 !important;
+		width: auto !important;
 		border-radius: 0;
 		box-shadow: none;
 		font-size: 10px;
