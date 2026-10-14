@@ -10,6 +10,9 @@ export const metadata: Metadata = {
 	description: 'The desk setup Shubhdeep Chhabra uses every day.',
 	alternates: {
 		canonical: 'https://okshubh.in/setup',
+		types: {
+			'text/markdown': 'https://okshubh.in/setup.md',
+		},
 	},
 	openGraph: {
 		type: 'website',

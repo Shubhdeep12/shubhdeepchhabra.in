@@ -12,6 +12,9 @@ export const metadata: Metadata = {
 		'Articles on software engineering, architecture, and practical product lessons. Musings on engineering, product, and whatever else is on my mind.',
 	alternates: {
 		canonical: 'https://okshubh.in/writings',
+		types: {
+			'text/markdown': 'https://okshubh.in/writings.md',
+		},
 	},
 	keywords: [
 		'blog',

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
 		'Product-focused Software Engineer writing about software engineering, architecture, and practical product lessons.',
 	alternates: {
 		canonical: 'https://okshubh.in',
+		types: {
+			'text/markdown': 'https://okshubh.in/index.md',
+		},
 	},
 	openGraph: {
 		type: 'website',
