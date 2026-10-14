@@ -24,7 +24,6 @@ import ResumeCanvas from '@/src/components/resume/ResumeCanvas';
 import ResumeToolbar from '@/src/components/resume/ResumeToolbar';
 import {
 	formatDuration,
-	formatMonth,
 	formatRange,
 	type Inline,
 	RESUME,
@@ -152,7 +151,7 @@ export default function ResumePage() {
 		<AnimatePage>
 			<script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(resumeToJsonLd()) }} />
 			<section className='resume-page'>
-				<ResumeToolbar markdown={resumeToMarkdown()} updated={formatMonth(r.updated)} />
+				<ResumeToolbar markdown={resumeToMarkdown()} />
 
 				<ResumeCanvas>
 					<article className='resume-sheet' style={{ width: RESUME_SHEET_WIDTH }}>
