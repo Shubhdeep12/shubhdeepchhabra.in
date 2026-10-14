@@ -6,7 +6,8 @@ import { FiCheck, FiChevronDown, FiCopy, FiDownload, FiExternalLink, FiFileText,
 import { VscJson } from 'react-icons/vsc';
 import { RESUME_JSON_PATH, RESUME_MD_PATH, RESUME_PDF_PATH, SITE_URL } from '@/src/utils/resume';
 
-const CURL = `curl -H "Accept: text/markdown" ${SITE_URL.replace('https://', '')}/resume`;
+// Full URL and -L: without a scheme curl uses http://, and Vercel answers that with a redirect curl won't follow.
+const CURL = `curl -L -H "Accept: text/markdown" ${SITE_URL}/resume`;
 
 type Copied = 'markdown' | 'curl' | null;
 

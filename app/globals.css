@@ -2239,9 +2239,8 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 	font-family: var(--font-dm-mono), ui-monospace, monospace;
 	font-size: 11px;
 	color: var(--muted);
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	/* Wrap rather than truncate: a command people copy should be readable in full. */
+	overflow-wrap: anywhere;
 }
 
 /* Sheet */
