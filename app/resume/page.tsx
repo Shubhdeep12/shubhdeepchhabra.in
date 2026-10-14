@@ -2,20 +2,9 @@ import { Metadata } from 'next';
 import { Fragment } from 'react';
 import type { IconType } from 'react-icons';
 import { FaAws, FaJava, FaXTwitter } from 'react-icons/fa6';
+import { FiArrowUpRight, FiGithub, FiGlobe, FiLayers, FiLinkedin, FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 import {
-	FiAward,
-	FiBookOpen,
-	FiCalendar,
-	FiCode,
-	FiGitBranch,
-	FiGithub,
-	FiGlobe,
-	FiLinkedin,
-	FiMail,
-	FiMapPin,
-	FiPhone,
-} from 'react-icons/fi';
-import {
+	SiAccenture,
 	SiCss,
 	SiGithubactions,
 	SiHtml5,
@@ -23,9 +12,12 @@ import {
 	SiMysql,
 	SiNextdotjs,
 	SiNodedotjs,
+	SiRazorpay,
 	SiReact,
 	SiReactquery,
 	SiRedux,
+	SiResend,
+	SiSentry,
 	SiTailwindcss,
 	SiTypescript,
 } from 'react-icons/si';
@@ -34,6 +26,7 @@ import Footer from '@/src/components/Footer';
 import ResumeToolbar from '@/src/components/resume/ResumeToolbar';
 import {
 	formatDuration,
+	formatMonth,
 	formatRange,
 	type Inline,
 	RESUME,
@@ -76,6 +69,15 @@ export const metadata: Metadata = {
 
 const LINK_ICONS: Record<string, IconType> = { GitHub: FiGithub, LinkedIn: FiLinkedin };
 
+/** Keys usable as `logo` in the resume data; anything else is treated as an image path. */
+const BRAND_ICONS: Record<string, IconType> = {
+	accenture: SiAccenture,
+	resend: SiResend,
+	sentry: SiSentry,
+	razorpay: SiRazorpay,
+	'design-systems': FiLayers,
+};
+
 const SKILL_ICONS: Record<string, IconType> = {
 	'JavaScript (ES6+)': SiJavascript,
 	TypeScript: SiTypescript,
@@ -93,8 +95,14 @@ const SKILL_ICONS: Record<string, IconType> = {
 	'CI/CD': SiGithubactions,
 };
 
+function Logo({ logo, className }: { logo: string; className: string }) {
+	const Icon = BRAND_ICONS[logo];
+	if (Icon) return <Icon aria-hidden='true' className={className} />;
+	return <img src={logo} alt='' aria-hidden='true' className={className} loading='lazy' />;
+}
+
 function ExtLink({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
-	const external = !href.startsWith('mailto:');
+	const external = !href.startsWith('mailto:') && !href.startsWith(SITE_URL);
 	return (
 		<a href={href} className={className} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>
 			{children}
@@ -110,6 +118,7 @@ function RichText({ value }: { value: Inline }) {
 					<Fragment key={i}>{run}</Fragment>
 				) : (
 					<ExtLink key={i} href={run.href} className='resume-link'>
+						{run.logo ? <Logo logo={run.logo} className='resume-inline-logo' /> : null}
 						{run.text}
 					</ExtLink>
 				)
@@ -127,22 +136,13 @@ function DateRange({ start, end }: { start: string; end?: string }) {
 	);
 }
 
-function Section({
-	id,
-	title,
-	icon: Icon,
-	children,
-}: {
-	id: string;
-	title: string;
-	icon?: IconType;
-	children: React.ReactNode;
-}) {
+function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
 	return (
 		<section className='resume-section' id={id} aria-labelledby={`${id}-title`}>
 			<h2 id={`${id}-title`} className='resume-section-title'>
-				{Icon ? <Icon aria-hidden='true' /> : null}
-				{title}
+				<a href={`#${id}`} className='resume-section-anchor'>
+					{title}
+				</a>
 			</h2>
 			{children}
 		</section>
@@ -151,12 +151,13 @@ function Section({
 
 export default function ResumePage() {
 	const r = RESUME;
+	const linkedin = r.links.find((link) => link.network === 'LinkedIn');
 
 	return (
 		<AnimatePage>
 			<script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(resumeToJsonLd()) }} />
 			<section className='resume-page'>
-				<ResumeToolbar markdown={resumeToMarkdown()} />
+				<ResumeToolbar markdown={resumeToMarkdown()} updated={formatMonth(r.updated)} />
 
 				<article className='resume-sheet'>
 					<header className='resume-hero'>
@@ -209,16 +210,17 @@ export default function ResumePage() {
 
 						<div className='resume-columns'>
 							<div className='resume-main'>
-								<Section id='experience' title='Work Experience'>
+								<Section id='experience' title='Experience'>
 									<ol className='resume-roles'>
 										{r.experience.map((role) => (
 											<li key={`${role.company}-${role.start}`} className='resume-role'>
-												<span className='resume-badge' aria-hidden='true'>
-													{role.logo ? <img src={role.logo} alt='' /> : role.initials}
+												<span className='resume-badge'>
+													{role.logo ? <Logo logo={role.logo} className='resume-badge-logo' /> : role.initials}
 												</span>
 												<div className='resume-role-body'>
 													<h3 className='resume-role-title'>
-														<strong>{role.title}</strong>,{' '}
+														<strong>{role.title}</strong>
+														<span className='resume-role-at'> at </span>
 														{role.companyUrl ? (
 															<ExtLink href={role.companyUrl} className='resume-company'>
 																{role.company}
@@ -228,25 +230,28 @@ export default function ResumePage() {
 														)}
 													</h3>
 													<p className='resume-role-meta'>
-														<FiCalendar aria-hidden='true' />
 														<span>
 															<DateRange start={role.start} end={role.end} />
 														</span>
 														<span className='resume-dot' aria-hidden='true'>
-															•
+															/
 														</span>
 														<span>{formatDuration(role.start, role.end)}</span>
 														<span className='resume-dot' aria-hidden='true'>
-															•
+															/
 														</span>
 														<span>{role.location}</span>
 													</p>
-													<p className='resume-role-stack'>{role.stack.join(', ')}</p>
 													<ul className='resume-bullets'>
 														{role.highlights.map((h, i) => (
 															<li key={i}>
 																<RichText value={h} />
 															</li>
+														))}
+													</ul>
+													<ul className='resume-stack' aria-label='Stack'>
+														{role.stack.map((item) => (
+															<li key={item}>{item}</li>
 														))}
 													</ul>
 												</div>
@@ -257,11 +262,12 @@ export default function ResumePage() {
 							</div>
 
 							<aside className='resume-aside'>
-								<Section id='open-source' title='Open Source' icon={FiGitBranch}>
+								<Section id='open-source' title='Open Source'>
 									<ul className='resume-aside-list'>
 										{r.openSource.map((project) => (
 											<li key={project.name}>
 												<h3 className='resume-aside-title'>
+													{project.logo ? <Logo logo={project.logo} className='resume-title-logo' /> : null}
 													{project.link ? (
 														<ExtLink href={project.link.href} className='resume-company'>
 															{project.name}
@@ -282,71 +288,91 @@ export default function ResumePage() {
 									</ul>
 								</Section>
 
-								<Section id='skills' title='Skills' icon={FiCode}>
+								<Section id='skills' title='Skills'>
 									<dl className='resume-skills'>
-										{r.skills.map((group) => (
-											<div key={group.name} className='resume-skill-group'>
-												<dt>{group.name}</dt>
-												<dd>
-													<ul className='resume-chips'>
-														{group.keywords.map((keyword) => {
-															const Icon = SKILL_ICONS[keyword];
-															return (
-																<li key={keyword} className='resume-chip'>
-																	{Icon ? <Icon aria-hidden='true' /> : null}
-																	{keyword}
-																</li>
-															);
-														})}
-													</ul>
-												</dd>
-											</div>
-										))}
+										{r.skills.map((group) => {
+											// Tools get icon chips; practices read better as a plain line.
+											const asChips = group.keywords.some((keyword) => SKILL_ICONS[keyword]);
+											return (
+												<div key={group.name} className='resume-skill-group'>
+													<dt>{group.name}</dt>
+													<dd>
+														{asChips ? (
+															<ul className='resume-chips'>
+																{group.keywords.map((keyword) => {
+																	const Icon = SKILL_ICONS[keyword];
+																	return (
+																		<li key={keyword} className='resume-chip'>
+																			{Icon ? <Icon aria-hidden='true' /> : null}
+																			{keyword}
+																		</li>
+																	);
+																})}
+															</ul>
+														) : (
+															<p className='resume-skill-line'>{group.keywords.join(', ')}</p>
+														)}
+													</dd>
+												</div>
+											);
+										})}
 									</dl>
 								</Section>
 
-								<Section id='education' title='Education' icon={FiAward}>
+								<Section id='education' title='Education'>
 									{r.education.map((edu) => (
 										<div key={edu.institution} className='resume-edu'>
-											<FiBookOpen aria-hidden='true' className='resume-edu-icon' />
-											<div>
-												<h3 className='resume-aside-title'>
-													{edu.studyType} in {edu.area}
-												</h3>
-												<p>
-													{edu.url ? (
-														<ExtLink href={edu.url} className='resume-link'>
-															{edu.institution}
-														</ExtLink>
-													) : (
-														edu.institution
-													)}
-												</p>
-												<p className='resume-role-meta'>
-													<FiCalendar aria-hidden='true' />
-													<span>
-														<DateRange start={edu.start} end={edu.end} />
-													</span>
-												</p>
-												<p className='resume-edu-score'>{edu.score}</p>
-											</div>
+											<h3 className='resume-aside-title'>
+												{edu.studyType} in {edu.area}
+											</h3>
+											<p>
+												{edu.url ? (
+													<ExtLink href={edu.url} className='resume-company'>
+														{edu.institution}
+													</ExtLink>
+												) : (
+													edu.institution
+												)}
+											</p>
+											<p className='resume-role-meta'>
+												<span>
+													<DateRange start={edu.start} end={edu.end} />
+												</span>
+											</p>
+											<p className='resume-role-meta'>{edu.score}</p>
 										</div>
 									))}
 								</Section>
 							</aside>
-						</div>
 
-						<p className='resume-closing'>
-							Want to go deeper? I write about engineering at{' '}
-							<ExtLink href={`${SITE_URL}/writings`} className='resume-link'>
-								okshubh.in/writings
-							</ExtLink>
-							, or reach me at{' '}
-							<ExtLink href={`mailto:${r.email}`} className='resume-link'>
-								{r.email}
-							</ExtLink>
-							.
-						</p>
+							<section className='resume-contact-card' aria-labelledby='contact-title'>
+								<h2 id='contact-title' className='resume-contact-title'>
+									Let's build something
+								</h2>
+								<p>
+									Hiring for a product or platform team, or working on something in developer tools? I'm always happy to
+									talk.
+								</p>
+								<div className='resume-contact-actions'>
+									<ExtLink href={`mailto:${r.email}`} className='resume-contact-link'>
+										<FiMail aria-hidden='true' />
+										{r.email}
+									</ExtLink>
+									{linkedin ? (
+										<ExtLink href={linkedin.href} className='resume-contact-link'>
+											<FiLinkedin aria-hidden='true' />
+											LinkedIn
+											<FiArrowUpRight aria-hidden='true' />
+										</ExtLink>
+									) : null}
+									<ExtLink href={`${SITE_URL}/writings`} className='resume-contact-link'>
+										<FiGlobe aria-hidden='true' />
+										Writing
+										<FiArrowUpRight aria-hidden='true' />
+									</ExtLink>
+								</div>
+							</section>
+						</div>
 					</div>
 				</article>
 			</section>

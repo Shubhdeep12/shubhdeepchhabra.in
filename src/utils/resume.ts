@@ -9,7 +9,8 @@ export const RESUME_MD_PATH = '/resume.md';
 export const RESUME_JSON_PATH = '/resume.json';
 
 /** Text with optional inline links: plain strings and { text, href } runs. */
-export type Inline = (string | { text: string; href: string })[];
+/** Link runs can carry a small logo (brand icon key or image path) shown before the text on the page. */
+export type Inline = (string | { text: string; href: string; logo?: string })[];
 
 export type ResumeLink = { label: string; href: string; network?: string };
 
@@ -19,7 +20,7 @@ export type ResumeRole = {
 	title: string;
 	/** Short badge shown in place of a logo, e.g. 'ATC'. */
 	initials: string;
-	/** Optional logo in /public, replaces the initials badge. */
+	/** Logo: a brand icon key (see BRAND_ICONS on the page) or an image path in /public. Falls back to initials. */
 	logo?: string;
 	location: string;
 	/** Tech/focus line under the role. */
@@ -35,6 +36,8 @@ export type ResumeSkillGroup = { name: string; keywords: string[] };
 
 export type ResumeProject = {
 	name: string;
+	/** Brand icon key or image path, shown beside the name. */
+	logo?: string;
 	/** Optional trailing link after the name, e.g. "— github". */
 	link?: { text: string; href: string };
 	highlights: Inline[];
@@ -42,6 +45,7 @@ export type ResumeProject = {
 
 export type ResumeEducation = {
 	institution: string;
+	logo?: string;
 	url?: string;
 	studyType: string;
 	area: string;
@@ -53,6 +57,8 @@ export type ResumeEducation = {
 const merged = (repo: string) => `https://github.com/${repo}/pulls?q=is%3Apr+is%3Amerged+author%3AShubhdeep12`;
 
 export type Resume = {
+	/** YYYY-MM, shown as "Updated …" in the toolbar. Bump when you regenerate the PDF. */
+	updated: string;
 	name: string;
 	label: string;
 	email: string;
@@ -66,6 +72,7 @@ export type Resume = {
 };
 
 export const RESUME: Resume = {
+	updated: '2026-10',
 	name: 'Shubhdeep Chhabra',
 	label: 'Senior Software Engineer',
 	email: 'chhabrashubhdeep@gmail.com',
@@ -85,6 +92,7 @@ export const RESUME: Resume = {
 	experience: [
 		{
 			company: 'American Technology Consulting (ATC)',
+			companyUrl: 'https://atc.xyz',
 			title: 'Senior Software Engineer',
 			location: 'Remote',
 			initials: 'ATC',
@@ -166,6 +174,7 @@ export const RESUME: Resume = {
 		{
 			company: 'Accenture Solutions Pvt. Ltd.',
 			companyUrl: 'https://www.accenture.com',
+			logo: 'accenture',
 			title: 'Associate Software Engineer',
 			location: 'Gurugram, Haryana, India',
 			initials: 'AC',
@@ -202,6 +211,7 @@ export const RESUME: Resume = {
 	openSource: [
 		{
 			name: 'Resend (CLI + MCP Server)',
+			logo: 'resend',
 			highlights: [
 				[
 					'Contributed features and test coverage improvements to the official Resend ',
@@ -221,6 +231,7 @@ export const RESUME: Resume = {
 		},
 		{
 			name: 'Sentry Spotlight',
+			logo: 'sentry',
 			link: { text: 'github', href: merged('getsentry/spotlight') },
 			highlights: [
 				['Contributed improvements to Sentry Spotlight, an open-source local debugging and observability tool.'],
@@ -228,16 +239,17 @@ export const RESUME: Resume = {
 		},
 		{
 			name: 'Enterprise Design Systems',
+			logo: 'design-systems',
 			highlights: [
 				[
 					'Contributed merged improvements to ',
-					{ text: 'Kobalte', href: merged('kobaltedev/kobalte') },
+					{ text: 'Kobalte', href: merged('kobaltedev/kobalte'), logo: '/resume/logos/kobalte.png' },
 					', ',
-					{ text: 'Razorpay Blade', href: merged('razorpay/blade') },
+					{ text: 'Razorpay Blade', href: merged('razorpay/blade'), logo: 'razorpay' },
 					', ',
 					{ text: 'Microsoft Griffel', href: merged('microsoft/griffel') },
 					' and ',
-					{ text: 'Adobe React Spectrum', href: merged('adobe/react-spectrum') },
+					{ text: 'Adobe React Spectrum', href: merged('adobe/react-spectrum'), logo: '/resume/logos/adobe.png' },
 					'.',
 				],
 			],
