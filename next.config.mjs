@@ -135,6 +135,9 @@ const nextConfig = {
 		return [
 			{ source: '/(.*)', headers: securityHeaders },
 			// Point agents at the markdown twin, and keep caches from mixing up HTML and markdown.
+			// Next's page handler replaces this Vary with its own, so HTML pages don't actually send it (seen in
+			// production too). Vercel picks HTML or markdown before its cache, so only a separate CDN could mix them up.
+			// The markdown responses set Vary themselves (textResponse in src/lib/agent-content.ts).
 			...MARKDOWN_PAGES.map(({ page, markdown, extra = '' }) => ({
 				source: page,
 				headers: [

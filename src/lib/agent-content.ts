@@ -237,6 +237,8 @@ export function textResponse(
 		headers: {
 			'Content-Type': `${type}; charset=utf-8`,
 			'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+			// Markdown is also served at the HTML URLs for `Accept: text/markdown`, so caches must key on Accept.
+			...(type === 'text/markdown' ? { Vary: 'Accept' } : {}),
 			...(canonical ? { Link: `<${canonical}>; rel="canonical"` } : {}),
 		},
 	});
