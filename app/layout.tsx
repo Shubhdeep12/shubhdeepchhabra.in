@@ -175,6 +175,13 @@ export default function RootLayout({ children }: PropsWithChildren) {
 						<ReadingDock />
 						<WebMcpTools />
 						<MainContent>{children}</MainContent>
+						{/* For fetch-only crawlers and agents that don't run JavaScript. */}
+						<noscript>
+							<nav aria-label='Machine-readable versions'>
+								<a href='/llms.txt'>llms.txt</a> · <a href='/index.md'>Markdown</a> ·{' '}
+								<a href='/llms-full.txt'>Full text</a> · <a href='/api/mcp'>MCP server</a>
+							</nav>
+						</noscript>
 						<Analytics />
 						{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS ? (
 							<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || process.env.GOOGLE_ANALYTICS || ''} />
