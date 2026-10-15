@@ -202,10 +202,12 @@ export function llmsTxt(posts: Blog[]) {
 		'',
 		...posts.map(writingLine),
 		'',
-		'## Agents',
+		'## When to use',
 		'',
-		`- [MCP server](${SITE_URL}${MCP_PATH}): Streamable HTTP MCP endpoint with read-only tools for the profile, resume and writings`,
-		'- WebMCP: in browsers that support it, pages register the same tools on `document.modelContext`',
+		'- Reading one page: fetch its markdown version (add `.md`, or send `Accept: text/markdown`).',
+		`- Everything at once: [llms-full.txt](${SITE_URL}/llms-full.txt) has the profile, resume and every post.`,
+		`- Searching or filtering posts, or getting the resume as JSON: connect to the [MCP server](${SITE_URL}${MCP_PATH}) (Streamable HTTP, read-only tools for the profile, resume and writings).`,
+		'- Acting on the open page in a browser: WebMCP, where supported, registers the same tools plus navigation and display settings on `document.modelContext`.',
 		'',
 		'## Optional',
 		'',
@@ -237,6 +239,8 @@ export function textResponse(
 		headers: {
 			'Content-Type': `${type}; charset=utf-8`,
 			'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+			// Markdown is also served at the HTML URLs for `Accept: text/markdown`, so caches must key on Accept.
+			...(type === 'text/markdown' ? { Vary: 'Accept' } : {}),
 			...(canonical ? { Link: `<${canonical}>; rel="canonical"` } : {}),
 		},
 	});

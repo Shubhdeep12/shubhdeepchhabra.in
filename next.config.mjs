@@ -33,7 +33,8 @@ const ACCEPTS_MARKDOWN = { type: 'header', key: 'accept', value: '(.*)text/markd
 
 // HTML pages and their markdown twins. `route` is the handler behind the public .md URL, when they differ.
 const MARKDOWN_PAGES = [
-	{ page: '/', markdown: '/index.md' },
+	// llms.txt is also linked from / so agents reading only headers can find it.
+	{ page: '/', markdown: '/index.md', extra: ', </llms.txt>; rel="describedby"; type="text/plain"' },
 	{ page: '/writings', markdown: '/writings.md' },
 	// Slugs never contain dots, so this doesn't also match /writings/<slug>.md.
 	{ page: '/writings/:slug([^/.]+)', markdown: '/writings/:slug.md', route: '/md/writings/:slug' },
@@ -129,12 +130,17 @@ const nextConfig = {
 					destination: route ?? markdown,
 				})),
 			],
+			// Only reached when no page or file matched: agents asking for markdown get a markdown 404.
+			fallback: [{ source: '/:path*', has: [ACCEPTS_MARKDOWN], destination: '/md/not-found' }],
 		};
 	},
 	headers() {
 		return [
 			{ source: '/(.*)', headers: securityHeaders },
 			// Point agents at the markdown twin, and keep caches from mixing up HTML and markdown.
+			// Next's page handler replaces this Vary with its own, so HTML pages don't actually send it (seen in
+			// production too). Vercel picks HTML or markdown before its cache, so only a separate CDN could mix them up.
+			// The markdown responses set Vary themselves (textResponse in src/lib/agent-content.ts).
 			...MARKDOWN_PAGES.map(({ page, markdown, extra = '' }) => ({
 				source: page,
 				headers: [
