@@ -1,0 +1,162 @@
+---
+title: 'Hook, Skill, MCP, Subagent or AGENTS.md? A Decision Guide'
+publishedAt: '2026-10-20'
+description: 'Every coding agent now gives you the same set of building blocks: instruction files, skills, MCP servers, hooks, subagents and plugins. They overlap just enough to be confusing. What each one is for, what it costs, and a simple way to pick.'
+categories: ['AI', 'Engineering', 'Tooling']
+---
+
+After reading how these tools work, the question I keep coming back to isn’t "how do I write a hook?" or "how do I build an MCP server?".
+
+It’s **"where should this go?"**
+
+You have a rule, a workflow, or an integration, and you want your coding agent to use it. Claude Code, Codex, Cursor, Copilot, Gemini CLI and the rest all give you the same building blocks now, and they overlap just enough that it’s easy to put something in the wrong place. Then the agent "ignores" it and you don’t know why.
+
+So this is the framework I use to decide. It works the same whichever agent you use.
+
+---
+
+## First: the building blocks, in one line each
+
+- **Instruction file** (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, Cursor rules, `copilot-instructions.md`): text loaded into every session.
+- **Skill** (a `SKILL.md` folder): know-how the agent loads only when the task needs it.
+- **MCP server**: tools and data from an external system, over a standard protocol.
+- **Hook**: your program, run by the harness at a fixed point in the agent loop.
+- **Subagent**: a separate agent with its own context window, its own instructions and its own tools.
+- **Plugin**: a package that bundles any of the above so other people can install it.
+
+For here:
+
+**Instructions = always-on context. Skills = on-demand context. MCP = on-demand capability. Hooks = guaranteed behavior. Subagents = isolated context. Plugins = distribution.**
+
+If you only remember that line, you’ll get most of these decisions right.
+
+---
+
+## Who decides, and what it costs
+
+What really separates these is two things: **who decides when it runs**, and **what it costs you**.
+
+| | Who decides it’s used | When it’s loaded | What it costs |
+| --- | --- | --- | --- |
+| Instruction file | Nobody, it’s always there | Every session | Tokens, every single session |
+| Skill | The model (or you, via `/name`) | Name + description at start, body when needed | About 100 tokens per skill until used |
+| MCP server | The model | Tool definitions at start, calls on demand | Tool definitions take context space |
+| Hook | The harness | At its event, every time | A process per event, so latency |
+| Subagent | The model (or you) | When delegated | Extra model calls, but a clean main context |
+| Plugin | You, at install | n/a | Maintenance |
+
+Some numbers to make this concrete:
+
+- The Agent Skills spec puts a skill’s always-loaded part (name + description) at around 100 tokens, and recommends keeping the body under 500 lines.
+- MCP tool definitions aren’t free. While reading [Entire](https://github.com/entireio/cli)’s source I found a note that running Copilot CLI with `--disable-builtin-mcps` (which skips loading the built-in GitHub MCP server) means about **28% fewer input tokens per call**. That’s a lot, for tools you might not even use.
+- Hooks cost time, not tokens. Entire chose *not* to hook every file read, because starting a process for each `Read` would be the most expensive part of a turn.
+
+---
+
+## The questions, in order
+
+When I have something new, I go through these in order and stop at the first "yes".
+
+### 1. Must it happen every time, no exceptions?
+
+→ **Hook.**
+
+If skipping it even once is a bug, the model shouldn’t be the one deciding. Format after every edit. Block `git push --force` to main. Log every tool call for an audit. Check dependencies when a session starts.
+
+Here’s the formatter one in Claude Code. The hook reads the edited file’s path from the JSON on stdin and formats just that file:
+
+```json
+{
+	"hooks": {
+		"PostToolUse": [
+			{ "matcher": "Write|Edit", "hooks": [{ "type": "command", "command": "jq -r '.tool_input.file_path' | xargs npx prettier --write" }] }
+		]
+	}
+}
+```
+
+(How hooks work across agents, with the event names side by side, is in [Agent Hooks Are (Almost) the Same Everywhere](/writings/agent-hooks-same-everywhere).)
+
+### 2. Does the agent need this in almost every session?
+
+→ **Instruction file.**
+
+Build and test commands. "We use pnpm, not npm." The folder layout. Things that are short, stable, and relevant to nearly any task. Keep this file small. Every line is paid for in every session, and a long file gets skimmed by the model the same way it gets skimmed by people.
+
+### 3. Is it a procedure or know-how that’s only needed sometimes?
+
+→ **Skill.**
+
+"How we write PR titles." "How to cut a release." "How to triage a security advisory." The agent only loads it when that task comes up, so you can be as detailed as you want without paying for it in every session. If part of it is deterministic, put that part in a script inside the skill and let the skill call it.
+
+The PR conventions example from my [CLI vs MCP post](/writings/cli-mcp-ai) is a classic skill.
+
+### 4. Does it need live data, auth, or a system without a CLI?
+
+→ **MCP server.**
+
+Querying a production database, pulling a Sentry issue, posting to Slack, anything behind OAuth, anything where the agent has no shell (a browser, a serverless function). If there’s already a good CLI and the agent has a terminal, the CLI is often enough. That was basically the whole point of my March post.
+
+(If you build MCP servers, note that the 2026-07-28 spec made the protocol core stateless, so check what your SDK supports.)
+
+### 5. Will it read a lot when you only need the conclusion? Or can it run in parallel?
+
+→ **Subagent.**
+
+"Find every place we parse dates." "Review this diff for security issues." "Migrate these 40 files." A subagent does all the reading in its own context and gives back a summary, so your main conversation stays clean. You can also limit its tools. Copilot’s custom agents, for example, can get a restricted tool set, so a reviewer agent can’t edit code.
+
+### 6. Do other people need several of these together?
+
+→ **Plugin.**
+
+Plugins don’t add a new capability, they package the others. Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI (as extensions) and Antigravity all have them now.
+
+---
+
+## Some examples
+
+| You want... | Put it in | Why |
+| --- | --- | --- |
+| Run the formatter after every edit | Hook (`PostToolUse`) | Must happen every time |
+| Block force-pushes to main | Hook (`PreToolUse`, exit `2`) | A policy, not a suggestion |
+| "Use pnpm, not npm" | Instruction file | Short, needed in almost every session |
+| Our PR title and label conventions | Skill | Detailed, only needed when opening PRs |
+| Query prod Postgres, read-only | MCP server | Live data, auth, a long-lived connection |
+| Fetch the Sentry issue for this stack trace | MCP server | External system, auth |
+| Security review of a diff | Subagent with read-only tools | Lots of reading, only the verdict matters |
+| Check deps for new CVEs at session start | Hook + skill | The hook makes sure it runs, the skill knows what to do with the result |
+
+That last row matters: **real things are usually combinations.** A dependency-security check might be a skill (the know-how), a script (the logic), a hook (the guarantee that it runs) and a plugin (so people can install it). A code review agent might be the `git` CLI for the diff, a Sentry MCP server for production errors, and a GitHub MCP server for the comments.
+
+---
+
+## Common mistakes
+
+**Putting judgment in a hook.** Hooks are great at "always" and bad at "it depends". A hook that tries to pull package names out of shell commands will happily read `npm i vite 2>&1` as a package called `2`. Working out what a command *means* is the model’s job, so that kind of thing belongs in a skill.
+
+**Putting a must-happen rule in an instruction file.** "Always run tests before finishing" in `AGENTS.md` will be followed most of the time. If "most of the time" isn’t good enough, it’s a hook. In Claude Code, for example, a `Stop` hook can block the agent from finishing and tell it why.
+
+**A giant instruction file.** If your `AGENTS.md` has a 200-line section on the release process, that’s a skill sitting in the wrong place.
+
+**One MCP tool per API endpoint.** Hundreds of tool definitions eat the context window before the agent has done anything. Fewer, higher-level tools work better, or the code-mode approach I mentioned in March.
+
+**A subagent for a two-line task.** Subagents cost extra model calls and don’t have your conversation’s context. Use them when the isolation actually helps.
+
+**Trusting text from outside.** Anything a hook, skill or MCP server pulls into the model’s context from the internet (issue titles, package descriptions, web pages) can contain instructions. Label it as untrusted data.
+
+---
+
+## The short version
+
+1. Must always happen → **hook**
+2. Needed in every session → **instruction file**
+3. Needed sometimes, and detailed → **skill**
+4. Needs live data or auth → **MCP server**
+5. Lots of reading, small answer → **subagent**
+6. Sharing a bundle → **plugin**
+
+**Instructions tell. Skills teach. MCP connects. Hooks enforce. Subagents focus.**
+
+My main takeaway from reading how these tools work is that they look very different from the outside, but they’re all the same loop with the same building blocks. Learn the blocks once and switching agents stops feeling like starting over.
+
+I hope you find this helpful. If you have a case that doesn’t fit any of the six, I’d really like to hear it. Find me on [X (@okshubhh)](https://x.com/okshubhh).

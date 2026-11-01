@@ -8,8 +8,8 @@ import { Fragment, Suspense } from 'react';
 import { getAllPosts, getPostBySlug } from '@/lib/mdx';
 import mdxOptions from '@/mdxOptions.js';
 import BlogFooter from '@/src/components/blog/BlogFooter';
-import BlogImages from '@/src/components/blog/BlogImages';
 import Hero from '@/src/components/blog/Hero';
+import mdxComponents from '@/src/components/blog/mdxComponents';
 import PostReadingLayout from '@/src/components/editorial/PostReadingLayout';
 import ReadingContainer from '@/src/components/editorial/ReadingContainer';
 import Footer from '@/src/components/Footer';
@@ -174,7 +174,7 @@ export default async function WritingPage({ params }: WritingProps) {
 						<MDXRemote
 							source={mdxSource}
 							options={{ mdxOptions: mdxOptions as NonNullable<MDXRemoteProps['options']>['mdxOptions'] }}
-							components={{ Image: BlogImages }}
+							components={mdxComponents}
 						/>
 					</Suspense>
 				</article>
