@@ -2039,7 +2039,7 @@ html:not(.dark):not([data-reading="on"]) ::selection {
 	background-size: 100% 1px;
 }
 
-.blog-filter-btn:hover {
+.blog-filter-btn:not(.blog-filter-btn--active):hover {
 	background: var(--accent-soft);
 }
 
@@ -2717,6 +2717,13 @@ a.resume-company:hover {
 
 .resume-dot {
 	opacity: 0.5;
+}
+
+.resume-role-note {
+	margin-top: 8px !important;
+	font-size: 13px;
+	font-style: italic;
+	color: var(--r-faint);
 }
 
 .resume-bullets {
