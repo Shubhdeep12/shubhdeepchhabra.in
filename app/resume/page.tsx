@@ -237,6 +237,7 @@ export default function ResumePage() {
 															</span>
 															<span>{role.location}</span>
 														</p>
+														{role.note && <p className='resume-role-note'>{role.note}</p>}
 														<ul className='resume-bullets'>
 															{role.highlights.map((h, i) => (
 																<li key={i}>

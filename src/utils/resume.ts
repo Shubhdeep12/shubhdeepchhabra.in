@@ -36,6 +36,8 @@ export type ResumeRole = {
 	start: string;
 	/** YYYY-MM, or undefined while current. */
 	end?: string;
+	/** Optional context line shown above the highlights. */
+	note?: string;
 	highlights: Inline[];
 };
 
@@ -78,7 +80,7 @@ export type Resume = {
 
 export const RESUME: Resume = {
 	name: 'Shubhdeep Chhabra',
-	label: 'Senior Software Engineer',
+	label: 'Product Engineer · Frontend, Enterprise SaaS & Agentic AI',
 	email: 'chhabrashubhdeep@gmail.com',
 	// The phone number is only stamped into the PDF (see scripts/resume-pdf.mjs), never served on the web.
 	location: { label: 'India · Remote', country: 'India', countryCode: 'IN' },
@@ -92,7 +94,7 @@ export const RESUME: Resume = {
 		},
 	],
 	summary:
-		'Software Engineer with 5+ years of experience building multi-tenant SaaS products for enterprise customers. Built features across authentication, authorization, content management, developer experience and AI-assisted workflows. Interested in product engineering, platform development and open-source software.',
+		'Product engineer who figures things out. 5+ years building multi-tenant enterprise SaaS with React and TypeScript, turning ambiguity into shipped features: granular permissions for 50+ organizations, Lighthouse 20 to 85, and 60% faster CI builds. Open-source contributor to Resend and Sentry; now co-designing agentic test automation.',
 	experience: [
 		{
 			company: 'American Technology Consulting (ATC)',
@@ -101,14 +103,15 @@ export const RESUME: Resume = {
 			title: 'Senior Software Engineer',
 			location: 'Remote',
 			initials: 'ATC',
-			stack: ['React 18', 'Rsbuild', 'TypeScript', 'LMS'],
+			stack: ['React 18', 'Rsbuild', 'TypeScript', 'LMS', 'Multi-agent AI'],
 			start: '2026-04',
+			note: "Auzmor's engineering team moved to ATC (same ownership); continuing to build the Auzmor LMS platform.",
 			highlights: [
 				rich(
-					'Led migration of a large React application from React 16, CRA and CRACO to **React 18 and Rsbuild**, reducing CI build times by **60%** and simplifying the development workflow.'
+					'Led migration from React 16/CRA/CRACO to **React 18 and Rsbuild**, cutting CI build time by **60%**.'
 				),
 				rich(
-					'Worked across the **LMS platform** to stabilize existing features, address technical debt and support ongoing product development after the engineering transition.'
+					'Co-designing a **multi-agent test automation system**: a goal-based explorer agent builds a product map of the web app, test cases are generated from it, and an executor agent runs them (in active development).'
 				),
 			],
 		},
@@ -124,13 +127,11 @@ export const RESUME: Resume = {
 			end: '2026-03',
 			highlights: [
 				rich(
-					'Built a **multi-tenant RBAC platform** used across **50+ enterprise organizations**, allowing administrators to create custom roles and manage access across product modules.'
+					'Moved a role-only B2B product to **granular CRUD permissions**: mapped every app feature to permissions and built frontend enforcement, enabling custom roles for **50+ enterprise organizations**.'
 				),
+				rich('Built frontend flows for **SSO/SAML**, **API key management** and user provisioning.'),
 				rich(
-					'Implemented **SSO/SAML integrations**, **API key management** and user provisioning workflows to simplify enterprise onboarding and identity management.'
-				),
-				rich(
-					'Built an **AI-powered content generation** workflow that created structured learning material from prompts and uploaded documents, reducing manual content creation effort.'
+					'Built the **AI-powered content generation** UI turning prompts and documents into learning material.'
 				),
 			],
 		},
@@ -146,16 +147,16 @@ export const RESUME: Resume = {
 			end: '2024-12',
 			highlights: [
 				rich(
-					'Built Mentorship, Interactive Training and Checklist experiences used by enterprise learners, helping increase platform engagement by **50%**.'
+					'Built Mentorship, Interactive Training and Checklist features, helping increase platform engagement by **50%**.'
 				),
 				rich(
-					'Led frontend performance improvements through lazy loading, code splitting and bundle optimization, improving the **Lighthouse performance score from 20 to 85**.'
+					'Raised the **Lighthouse performance score from 20 to 85** through code splitting and bundle optimization.'
 				),
 				rich(
-					'Improved accessibility across the platform by implementing **WCAG 2.1 AA** standards and partnering closely with design and product teams.'
+					'Implemented **WCAG 2.1 AA** accessibility standards across the platform with design and product teams.'
 				),
 				rich(
-					'Led **engineering design reviews**, mentored developers, and established code review standards to improve code quality and maintainability.'
+					'Led **engineering design reviews**, mentored developers and set code review standards for the team.'
 				),
 			],
 		},
@@ -171,13 +172,13 @@ export const RESUME: Resume = {
 			end: '2022-12',
 			highlights: [
 				rich(
-					'Built a **multi-tenant branding system** that allowed organizations to customize themes and deliver white-labeled learning experiences.'
+					'Built a **multi-tenant branding system** for custom themes and white-labeled learning experiences.'
 				),
 				rich(
-					'Built **social learning features** including posts, polls and eSignatures using React, REST APIs and Web Sockets.'
+					'Built **social learning features** (posts, polls, eSignatures) using React, REST APIs and WebSockets.'
 				),
 				rich(
-					'Implemented **multi-factor authentication** using SMS and email verification to strengthen platform security.'
+					'Built **multi-factor authentication** flows using SMS and email verification to strengthen platform security.'
 				),
 			],
 		},
@@ -193,30 +194,31 @@ export const RESUME: Resume = {
 			end: '2021-12',
 			highlights: [
 				rich(
-					'Developed and maintained **enterprise web applications** using React, JavaScript, Java, HTML, SQL, and REST APIs while collaborating with cross-functional teams.'
+					'Built and maintained **enterprise web applications** using React, JavaScript, Java, SQL and REST APIs.'
 				),
 			],
 		},
 	],
 	skills: [
-		{ name: 'Languages', keywords: ['JavaScript (ES6+)', 'TypeScript', 'Java', 'HTML5', 'CSS3'] },
+		{ name: 'Languages', keywords: ['JavaScript (ES6+)', 'TypeScript', 'HTML5', 'CSS3'] },
+		{ name: 'Frontend', keywords: ['React', 'Next.js', 'Redux Toolkit', 'React Query', 'Tailwind CSS'] },
 		{
-			name: 'Frontend',
-			keywords: ['React', 'Next.js', 'Redux Toolkit', 'React Query', 'Tailwind CSS', 'Responsive UI Development'],
+			name: 'Enterprise SaaS',
+			keywords: ['Multi-tenancy', 'RBAC & Permissions', 'SSO/SAML', 'OAuth', 'MFA', 'API Key Management'],
 		},
-		{ name: 'Backend', keywords: ['Node.js', 'REST APIs'] },
-		{ name: 'Auth & Security', keywords: ['OAuth', 'SSO/SAML', 'RBAC', 'MFA'] },
 		{
 			name: 'Performance & Accessibility',
-			keywords: ['Core Web Vitals', 'Code Splitting', 'Lazy Loading', 'WCAG 2.1 AA'],
+			keywords: ['Lighthouse', 'Core Web Vitals', 'Code Splitting', 'Lazy Loading', 'WCAG 2.1 AA'],
 		},
-		{ name: 'Cloud & Data', keywords: ['AWS', 'MySQL', 'CI/CD'] },
-		{ name: 'Architecture', keywords: ['Multi-tenant Systems', 'Design Systems', 'Microfrontends', 'Monorepos'] },
 		{
-			name: 'Collaboration',
-			keywords: ['Code Reviews', 'Technical Mentorship', 'Cross-functional Collaboration', 'Agile Development'],
+			name: 'Architecture & Tooling',
+			keywords: ['Design Systems', 'Microfrontends', 'Monorepos', 'Rsbuild', 'CI/CD'],
 		},
-		{ name: 'AI & Developer Tooling', keywords: ['AI-powered Content Generation', 'MCP'] },
+		{ name: 'APIs & Node', keywords: ['REST APIs', 'WebSockets', 'Node.js (CLIs and tooling)'] },
+		{
+			name: 'Agentic AI',
+			keywords: ['LLM Agents', 'Multi-agent Systems', 'MCP', 'Agent Skills & Plugins'],
+		},
 	],
 	openSource: [
 		{
@@ -351,6 +353,7 @@ export function resumeToMarkdown() {
 			'',
 			`*${formatRange(role.start, role.end)} · ${role.location}* — ${role.stack.join(', ')}`,
 			'',
+			...(role.note ? [`*${role.note}*`, ''] : []),
 			...role.highlights.map((h) => `- ${inlineToMarkdown(h)}`)
 		);
 	}
